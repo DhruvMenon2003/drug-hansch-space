@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "python3 -m http.server 4173 --directory site",
     "test": "playwright test",
-    "test:unit": "node --test tests/unit/",
+    "test:unit": "node --test tests/unit/*.test.mjs",
     "check": "node tools/check-imports.mjs && python3 -I tools/check_site.py"
   },
   "devDependencies": {
