@@ -73,7 +73,7 @@ export function renderFrame(t = 0, dt = 0) {
   return animating || moved === true || controls.autoRotate === true;
 }
 
-// Label tidy-up, once per changed frame. Axis titles hang off the axis ends: slide any that would leave the label layer back
+// Label tidy-up, once per changed frame. Axis titles (and the selected drug's name) hang off the axis ends: slide any that would leave the label layer back
 // inside it (both ways: a title below the stage is as lost as one beside it), and off the legend or the buttons if they would sit
 // on them. The CSS translate property composes with the transform CSS2DRenderer writes every frame, so the two do not fight.
 // Tick labels are then thinned: closest to the middle of the plot first, a tick that would cover an axis title or a tick already
@@ -84,7 +84,7 @@ const _o = new THREE.Vector3();
 function tidyLabels() {
   const host = stage.labels.domElement, box = host.getBoundingClientRect();
   const keepOut = ['.hud', '.stage-tools'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height && rectsOverlap(r, box, 0));
-  const titles = [...host.querySelectorAll('.ax-title')].map(el => ({ el, r: el.getBoundingClientRect() })).filter(o => o.r.width);
+  const titles = [...host.querySelectorAll('.ax-title, .sel-label')].map(el => ({ el, r: el.getBoundingClientRect() })).filter(o => o.r.width);
   const ticks = [...host.querySelectorAll('.ax-label')].map(el => ({ el, r: el.getBoundingClientRect() }));
   const kept = [];
   for (const { el, r } of titles) {

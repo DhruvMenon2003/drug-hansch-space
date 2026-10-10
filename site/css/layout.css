@@ -116,6 +116,14 @@ select { text-overflow: ellipsis; }
   .rail { padding-inline: 24px max(24px, var(--inset-r)); }
 }
 
+/* Tablets and narrow windows: the stage column is 400 to 700 px wide, so Reset, Spin and Expand become icons (as on phones) and the axis key keeps clear of them */
+@media (min-width: 701px) and (max-width: 1279px) {
+  .hud { max-width: calc(100% - 200px); }
+  .stage-tools { gap: 4px; }
+  .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; font-size: 0; position: relative; }
+  .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+}
+
 /* ---------------------------------------------------------------------------------------------------------------- compact stages: phones in portrait and landscape
    A 44 px toolbar row (legend on the left, icon buttons on the right) sits above the plot; the plot has the rest of the stage. */
 @media (max-width: 700px) and (orientation: portrait), (orientation: landscape) and (max-height: 520px) {
@@ -228,6 +236,13 @@ select { text-overflow: ellipsis; }
   .sheet-body > h2 { margin-top: 12px; }
   body[data-sheet-open] { padding-bottom: var(--sheet-h, 0px); }
   body[data-sheet-open="full"] .fab { display: none; }
+}
+/* narrow sheets: Close is an icon, so the name and the three numbers keep the width (the button keeps its accessible name) */
+@media not all and (min-width: 701px) and (min-height: 521px) and (hover: hover) and (pointer: fine) {
+  @media (max-width: 479px) {
+    .sheet-close { width: var(--target); padding: 0; font-size: 0; position: relative; }
+    .sheet-close::before { content: ""; position: absolute; inset: 14px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 3.6 12 10.6l7-7L20.4 5l-7 7 7 7-1.4 1.4-7-7-7 7L3.6 19l7-7-7-7z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 3.6 12 10.6l7-7L20.4 5l-7 7 7 7-1.4 1.4-7-7-7 7L3.6 19l7-7-7-7z'/%3E%3C/svg%3E") center / contain no-repeat; }
+  }
 }
 /* tablets and landscape phones: a 360 px card at the bottom right instead of a full-width sheet */
 @media not all and (min-width: 701px) and (min-height: 521px) and (hover: hover) and (pointer: fine) {
