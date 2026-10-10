@@ -63,9 +63,14 @@ def read_data_stamp(text):
     return json.loads(text)["meta"].get("app_build")
 
 
+def read_text(path):
+    with open(path, encoding="utf-8") as f:
+        return f.read()
+
+
 def write_if_changed(path, text):
     try:
-        if open(path, encoding="utf-8").read() == text:
+        if read_text(path) == text:
             return False
     except OSError:
         pass
@@ -85,7 +90,7 @@ def main(argv=None):
     a = ap.parse_args(argv)
     vpath, dpath = os.path.join(a.site, "js", "version.js"), os.path.join(a.site, "data", "drugs.json")
     try:
-        vtext, dtext = open(vpath, encoding="utf-8").read(), open(dpath, encoding="utf-8").read()
+        vtext, dtext = read_text(vpath), read_text(dpath)
         if a.check:
             code, data = read_version_js(vtext), read_data_stamp(dtext)
             ok = (code == "dev" and data is None) or (code != "dev" and code == data)
