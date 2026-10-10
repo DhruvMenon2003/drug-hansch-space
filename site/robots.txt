@@ -1,0 +1,3 @@
+# Drug Hansch Space: a static educational page. Everything is public; there is nothing to hide from crawlers.
+User-agent: *
+Allow: /

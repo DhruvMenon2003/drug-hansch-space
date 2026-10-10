@@ -3,9 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Drug Hansch Space</title>
+<!-- Content Security Policy. A <meta> CSP cannot set frame-ancestors, report-uri or sandbox: framing protection would need an
+     HTTP header, which GitHub Pages does not let us set. The sha256 in script-src allows exactly the inline import map below
+     (an external import map is not supported by browsers); if the import map text changes, recompute it (tests/e2e/shell.spec.mjs
+     checks that it matches). style-src needs 'unsafe-inline' because three.js CSS2DRenderer and the page's JS set style attributes. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bgMiZ5XudRc3ON+iOP7TJVjZSb2mE636fa8zgcfI2dE='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>Drug Hansch Space: drugs in a 3D descriptor space</title>
+<meta name="description" content="Explore drugs from a curated DrugBank-derived table as a 3D scatter of RDKit descriptors, with a guided tour of Hansch-type fits of potency on log P, molar refractivity and TPSA. Educational exploration, not medical advice.">
+<link rel="canonical" href="https://dhruvmenon2003.github.io/drug-hansch-space/">
+<meta name="theme-color" content="#eef2f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1416" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Drug Hansch Space">
+<meta property="og:title" content="Drug Hansch Space">
+<meta property="og:description" content="Drugs as spheres in a 3D descriptor space, with a guided tour of Hansch-type fits. Educational exploration, not medical advice.">
+<meta property="og:url" content="https://dhruvmenon2003.github.io/drug-hansch-space/">
+<meta property="og:image" content="https://dhruvmenon2003.github.io/drug-hansch-space/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A 3D scatter of drugs as coloured spheres inside an axis cube.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Drug Hansch Space">
+<meta name="twitter:description" content="Drugs as spheres in a 3D descriptor space, with a guided tour of Hansch-type fits. Educational exploration, not medical advice.">
+<meta name="twitter:image" content="https://dhruvmenon2003.github.io/drug-hansch-space/assets/og.png">
+<meta name="twitter:image:alt" content="A 3D scatter of drugs as coloured spheres inside an axis cube.">
+<!-- The two faces used above the fold: Newsreader for the text, Bricolage Grotesque (one variable file, weights 500 to 800) for headings -->
+<link rel="preload" href="vendor/fonts/newsreader-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="vendor/fonts/bricolage-grotesque-normal-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<!-- preload:start (module preload hints are written between these markers by the data/perf stage) -->
+<!-- preload:end -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/kbd.css">
+<link rel="stylesheet" href="css/export.css">
+<link rel="stylesheet" href="css/xr.css">
+<noscript><style>.step{opacity:1;--step-ink:var(--ink);--step-head:var(--ink)}.stage{display:none}.skip-link{display:none}</style></noscript>
 <script type="importmap">
 { "imports": {
   "three": "./vendor/three/three.module.min.js",
@@ -17,12 +55,24 @@
 <script src="vendor/smiles-drawer/smiles-drawer.min.js"></script>
 </head>
 <body>
+<div class="skip-links">
+  <a class="skip-link" href="#explore">Skip to controls</a>
+  <a class="skip-link" href="#space-skip">Skip to the 3D plot</a>
+  <a class="skip-link" href="#table-details">Skip to the data table</a>
+  <a class="skip-link" href="#rail">Skip to the tour text</a>
+</div>
+<noscript>
+  <div class="noscript-note">
+    <p><strong>This page draws its 3D chart with JavaScript, which is switched off or blocked here.</strong> The explanation below is readable without it, but the 3D view, the controls, the numbers that the text quotes from the data and the data table need JavaScript. The raw data is available as <a href="data/drugs.json">drugs.json</a> and <a href="data/hansch.json">hansch.json</a>; the sources and licences are listed under <a href="#sources">Data sources and licences</a>.</p>
+  </div>
+</noscript>
+<div id="sr-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <div class="app" id="app">
   <header class="masthead">
     <div class="brand">
       <h1>Drug Hansch Space</h1>
-      <p class="sub"><span id="m-count">759</span> approved drugs from the curated DrugBank set, placed by RDKit descriptors with PubChem enrichment</p>
+      <p class="sub"><span id="m-count">759</span> drugs from a curated DrugBank-derived table, placed by RDKit descriptors with PubChem enrichment</p>
     </div>
     <nav class="jump" aria-label="Sections">
       <a href="#tour">Tour</a>
@@ -35,27 +85,51 @@
   <div class="layout">
     <section class="stage" id="stage" aria-label="3D chemical space">
       <div class="stage-inner">
-        <canvas id="space" aria-label="3D scatter of drugs; use the search box or the data table to pick a drug"></canvas>
+        <span id="space-skip" tabindex="-1"></span>
+        <canvas id="space" tabindex="0" role="application" aria-roledescription="3D scatter plot" aria-label="Interactive 3D scatter plot of drugs, one sphere per drug. Press the arrow keys to move to the nearest drug in that direction, Enter to open its panel." aria-describedby="kbd-help" aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown Enter Escape"></canvas>
+        <p id="kbd-help" class="sr-only">Keyboard: with the plot focused, the arrow keys move the selection to the nearest visible drug in that direction on screen. Enter or Space opens the drug panel for the selected drug. Escape clears the selection. D jumps to the data table. Every drug is also listed in the data table and the search box below.</p>
         <div id="labels" class="labels" aria-hidden="true"></div>
         <div class="hud">
           <div class="axis-key" id="axis-key"></div>
           <div class="legend" id="legend"></div>
         </div>
-        <div class="tooltip" id="tooltip" role="status" hidden></div>
-        <div class="stage-status" id="stage-status">Loading data…</div>
+        <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
+        <div class="stage-status" id="stage-status" role="status"><progress id="load-progress" max="4" value="0" aria-label="Loading data and 3D scene"></progress><span class="status-text">Loading data…</span></div>
         <div class="stage-tools">
           <button type="button" id="btn-reset" class="ghost" title="Reset the camera">Reset view</button>
           <button type="button" id="btn-spin" class="ghost" aria-pressed="false" title="Turn the scene slowly">Spin</button>
+          <button type="button" id="btn-expand" class="ghost" aria-label="Expand view" title="Make the 3D view larger" hidden>Expand view</button>
+          <button type="button" id="btn-copy" class="ghost" aria-label="Copy link" title="Copy a link to this exact view" hidden>Copy link</button>
+          <button type="button" id="btn-png" class="ghost" aria-label="Save image" title="Save the current view as a PNG image" hidden>Save image</button>
+          <button type="button" id="btn-csv" class="ghost" aria-label="Download CSV" title="Download the drugs in this view as a CSV file" hidden>Download CSV</button>
+          <button type="button" id="btn-vr" class="ghost" aria-label="Enter VR" title="View in a VR headset" hidden>Enter VR</button>
+          <button type="button" id="btn-ar" class="ghost" aria-label="View in AR" title="Place the chart in your room with augmented reality" hidden>View in AR</button>
         </div>
+      </div>
+      <div id="fallback-2d" class="stage-card" hidden>
+        <h2>The 3D view could not start</h2>
+        <p data-fallback-text>This browser could not create the WebGL graphics context that the 3D plot needs. Nothing else is lost: the tour text, the Explore controls, the drug search, the Hansch fits and the data table all work without it.</p>
+        <p class="stage-card-actions">
+          <button type="button" id="fallback-table" class="primary">Open the data table</button>
+          <button type="button" id="fallback-csv" class="ghost" hidden>Download CSV</button>
+        </p>
+      </div>
+      <div id="fatal" class="stage-card" role="alert" hidden>
+        <h2>The page could not finish loading</h2>
+        <p id="fatal-msg" data-fatal-text>Something went wrong while loading the data or the 3D scene.</p>
+        <p class="stage-card-actions">
+          <button type="button" id="fatal-reload" class="primary">Reload the page</button>
+          <a href="data/drugs.json">Open the raw data (drugs.json)</a>
+        </p>
       </div>
     </section>
 
-    <main class="rail">
+    <main class="rail" id="rail" tabindex="-1">
       <section id="tour" class="tour" aria-label="Guided tour">
         <article class="step" data-step="space">
           <p class="eyebrow">Step 1 of 8 · Chemical space</p>
           <h2>Every sphere is one drug</h2>
-          <p>Each point is a drug from the curated DrugBank table (one point per PubChem compound, salts removed). Its position comes from a principal component analysis of nine RDKit descriptors computed from the curated SMILES (sizes and counts on a log scale, so a few large peptides do not flatten the rest), so drugs with similar size, polarity and lipophilicity sit close together.</p>
+          <p>Each point is a drug from the curated DrugBank-derived table (one point per PubChem compound, salts removed). Its position comes from a principal component analysis of nine RDKit descriptors computed from the curated SMILES (sizes and counts on a log scale, so a few large peptides do not flatten the rest), so drugs with similar size, polarity and lipophilicity sit close together.</p>
           <p class="fig" id="t-pca"></p>
           <p class="hint">Drag to turn the space, pinch or Ctrl + scroll to zoom, and hover or tap a sphere to name it.</p>
         </article>
@@ -114,7 +188,7 @@
         </article>
       </section>
 
-      <section id="explore" class="panel" aria-labelledby="explore-h">
+      <section id="explore" class="panel" aria-labelledby="explore-h" tabindex="-1">
         <h2 id="explore-h">Explore</h2>
         <p class="lede">Choose the three axes and the colour, narrow the set by ATC group or route, or find a drug by name.</p>
         <div class="controls">
@@ -135,16 +209,16 @@
           <div class="field"><label for="f-l2">ATC level 2</label><select id="f-l2"><option value="">All</option></select></div>
           <div class="field"><label for="f-l3">ATC level 3</label><select id="f-l3"><option value="">All</option></select></div>
           <div class="field"><label for="f-route">Route</label><select id="f-route"><option value="">All routes</option></select></div>
-          <div class="field"><span class="label">Size</span><label class="check"><input type="checkbox" id="f-small"> Only drugs up to 1000 Da, as in the fits</label></div>
+          <div class="field"><span class="label">Size</span><label class="check" for="f-small"><input type="checkbox" id="f-small"> Only drugs up to 1000 Da, as in the fits</label></div>
           <div class="field wide"><label for="search">Find a drug</label>
             <input id="search" type="search" list="drug-names" placeholder="e.g. dexamethasone" autocomplete="off">
             <datalist id="drug-names"></datalist>
           </div>
         </div>
-        <p class="count" id="count" aria-live="polite"></p>
+        <p class="count" id="count"></p>
       </section>
 
-      <section id="detail" class="panel detail" aria-labelledby="detail-h" aria-live="polite">
+      <section id="detail" class="panel detail" aria-labelledby="detail-h">
         <h2 id="detail-h">Drug</h2>
         <p class="lede" id="detail-empty">Click a sphere or search for a drug to see its PubChem 3D conformer, ATC codes and descriptors.</p>
         <div id="detail-body" hidden>
@@ -153,13 +227,13 @@
             <p class="drug-ids" id="d-ids"></p>
           </div>
           <div class="mol-wrap">
-            <canvas id="mol" aria-label="3D conformer, ball and stick"></canvas>
+            <canvas id="mol" role="img" aria-label="3D conformer, ball and stick"></canvas>
             <div class="mol-tools">
               <span class="mol-src" id="d-src"></span>
-              <label class="check"><input type="checkbox" id="show-h" checked> Hydrogens</label>
+              <label class="check" for="show-h"><input type="checkbox" id="show-h" checked> Hydrogens</label>
             </div>
           </div>
-          <div class="depict" id="d-2d" aria-label="2D structure"></div>
+          <div class="depict" id="d-2d" role="group" aria-label="2D structure"></div>
           <dl class="kv" id="d-desc"></dl>
           <div id="d-act"></div>
           <h4>ATC codes and routes</h4>
@@ -182,7 +256,7 @@
       </section>
 
       <section class="panel" aria-labelledby="table-h">
-        <details id="table-details">
+        <details id="table-details" tabindex="-1">
           <summary><h2 id="table-h">Data table</h2></summary>
           <p class="lede">The drugs in the current view with the three axis values. Click a row to select the drug.</p>
           <div class="table-wrap"><table id="table"><thead></thead><tbody></tbody></table></div>
@@ -192,19 +266,68 @@
       <section id="method" class="panel method" aria-labelledby="method-h">
         <h2 id="method-h">Method and checks</h2>
         <ul>
-          <li><strong>Drugs.</strong> One point per PubChem compound in <code>drugbank_curated_dedup.csv</code> (curation/colab_curate_all.py). The curated SMILES is the neutral parent; its InChIKey finds the parent CID in PubChem.</li>
+          <li><strong>Drugs.</strong> One point per PubChem compound in the curated table <code>drugbank_curated_dedup.csv</code>, which is the input of the data build (the curation step that produced it is not part of this repository). The page does not verify the regulatory status of any drug. The curated SMILES is the neutral parent; its InChIKey finds the parent CID in PubChem.</li>
           <li><strong>Descriptors.</strong> RDKit on the curated SMILES for every drug, so all drugs are described the same way: Crippen log P and molar refractivity, TPSA (Ertl, N and O), molecular weight, Lipinski H-bond donors (NH + OH) and acceptors (N + O), rotatable bonds, aromatic rings, Fsp3. These drive the PCA and every regression. PubChem PUG REST adds XLogP3 and complexity where it has the parent record, and its weight and TPSA are a cross-check.</li>
-          <li><strong>Structure map.</strong> marimo-chem-utils: Morgan count fingerprints (radius 3, 2048 bits), PCA to 50 components, then t-SNE (seed 42). The same library checks that each curated SMILES gives back its curated InChIKey. <code>explorer/hansch_marimo.py</code> is a marimo notebook over the same data.</li>
+          <li><strong>Structure map.</strong> marimo-chem-utils: Morgan count fingerprints (radius 3, 2048 bits), PCA to 50 components, then t-SNE (seed 42). The same library checks that each curated SMILES gives back its curated InChIKey. <code>tools/hansch_marimo.py</code> is a marimo notebook over the same data.</li>
           <li><strong>3D conformers.</strong> PubChem's first 3D conformer where one exists; otherwise RDKit ETKDGv3 with an MMFF clean-up, labelled as such.</li>
           <li><strong>Activity.</strong> Median ChEMBL pChEMBL at the mechanism target, needing two or more documents. Toxicity is still empty in the source table.</li>
           <li><strong>Regressions.</strong> Ordinary least squares on log P, log P², MR and TPSA, for drugs up to 1000 Da (Crippen log P of large peptides reaches −43 and would set every slope). Model choice by leave-one-out q²; chance correlation checked by refitting on 100 shuffled activity vectors.</li>
+          <li><strong>Headset and phone AR.</strong> The Enter VR and View in AR buttons appear only when your browser reports WebXR support for that mode; without it they stay hidden and everything else works the same. The WebXR code has been exercised only on an emulated runtime, not on a physical headset or phone.</li>
         </ul>
         <p id="m-checks" class="checks"></p>
-        <p class="small">Rebuild the data with <code>python explorer/build_data.py</code>. Every PubChem and WHO request it makes is listed in <code>explorer/data/provenance.csv</code>, and the cross-checks are in <code>explorer/data/validation.md</code>.</p>
+        <p class="small">Rebuild the data with <code>python tools/build_data.py</code>. Every PubChem and WHO request it makes is listed in <a href="data/provenance.csv">data/provenance.csv</a>, and the cross-checks are in <a href="data/validation.md">data/validation.md</a>. The sources, their terms and the changes made to them are listed under <a href="#sources">Data sources and licences</a>.</p>
       </section>
     </main>
   </div>
 </div>
+
+<footer id="sources" class="site-foot" aria-labelledby="sources-h">
+  <div class="foot-inner">
+    <h2 id="sources-h">Data sources and licences</h2>
+    <p class="foot-disclaimer"><strong>Educational exploration only.</strong> This is not medical advice and not a toxicity predictor. Do not use it to choose, change or stop any medicine, or for any clinical, regulatory, safety or purchasing decision. Ask a qualified health professional and read the current official label.</p>
+    <p class="foot-line">Data: drug list and ATC assignments from a DrugBank-derived table (DrugBank); ATC names from the WHO Collaborating Centre for Drug Statistics Methodology, ATC/DDD Index 2026; activities from ChEMBL (CC BY-SA 3.0); structures and 3D conformers from PubChem (NCBI/NLM); routes from WHO codes and US drug labels (openFDA, DailyMed). Descriptors computed with RDKit. Built with three.js (MIT), GSAP, SmilesDrawer (MIT); fonts under the SIL OFL 1.1. Source code: <a href="https://github.com/DhruvMenon2003/drug-hansch-space" target="_blank" rel="noopener noreferrer">github.com/DhruvMenon2003/drug-hansch-space</a>.</p>
+    <p>Drug Hansch Space is a non-commercial, educational exploration. It places drugs in a 3D descriptor space and walks through exploratory Hansch-type fits. It combines records from the sources below with values computed for this project. It is not affiliated with or endorsed by any of them, and it uses no source's logo. Each source keeps its own terms; where a source asks for a citation it is given here.</p>
+
+    <h3>What comes from where</h3>
+    <div class="sources-wrap">
+      <table class="sources-table">
+        <thead><tr><th scope="col">On the page</th><th scope="col">Source</th><th scope="col">Terms</th></tr></thead>
+        <tbody>
+          <tr><td data-label="On the page">The 759 drugs, generic names (salts removed), PubChem compound IDs, ATC code assignments</td><td data-label="Source">A DrugBank-derived table (DrugBank). The DrugBank release is not recorded by the data build.</td><td data-label="Terms"><span class="link-list"><a href="https://trust.drugbank.com/drugbank-trust-center/terms-of-use" target="_blank" rel="noopener noreferrer">DrugBank Terms of Use</a></span> DrugBank offers its academic release under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC 4.0</a>.</td></tr>
+          <tr><td data-label="On the page">ATC level 1 to 4 names, ATC code structure, administration-route codes</td><td data-label="Source"><span class="link-list"><a href="https://atcddd.fhi.no/atc_ddd_index/" target="_blank" rel="noopener noreferrer">WHO Collaborating Centre for Drug Statistics Methodology, ATC/DDD Index 2026</a></span></td><td data-label="Terms"><span class="link-list"><a href="https://atcddd.fhi.no/copyright_disclaimer/" target="_blank" rel="noopener noreferrer">WHOCC copyright notice</a></span></td></tr>
+          <tr><td data-label="On the page">Potency (median pChEMBL at the drug's mechanism target), target names and IDs, compound IDs</td><td data-label="Source"><a href="https://www.ebi.ac.uk/chembl/" target="_blank" rel="noopener noreferrer">ChEMBL</a>. The release is not recorded by the data build.</td><td data-label="Terms"><span class="link-list"><a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a><a href="https://www.ebi.ac.uk/about/terms-of-use/" target="_blank" rel="noopener noreferrer">EMBL-EBI Terms of Use</a></span></td></tr>
+          <tr><td data-label="On the page">XLogP3, structural complexity, parent compound ID, titles, 3D conformers (649 drugs)</td><td data-label="Source"><a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">PubChem</a> (NCBI, National Library of Medicine)</td><td data-label="Terms"><span class="link-list"><a href="https://www.ncbi.nlm.nih.gov/home/about/policies/" target="_blank" rel="noopener noreferrer">NCBI data usage policies</a></span> Records may carry depositor rights.</td></tr>
+          <tr><td data-label="On the page">Routes of administration where the WHO table had none (about a third of drug-ATC pairs)</td><td data-label="Source">US drug labels via <a href="https://open.fda.gov/terms/" target="_blank" rel="noopener noreferrer">openFDA</a> and <a href="https://dailymed.nlm.nih.gov/dailymed/about-dailymed.cfm" target="_blank" rel="noopener noreferrer">DailyMed</a>; route names from the <a href="https://www.fda.gov/industry/structured-product-labeling-resources/route-administration" target="_blank" rel="noopener noreferrer">FDA route list</a></td><td data-label="Terms">openFDA CC0 unless noted; FDA and NLM government content is public domain</td></tr>
+          <tr><td data-label="On the page">Crippen log P, molar refractivity, TPSA, weight, H-bond counts, rotatable bonds, aromatic rings, Fsp3, 89 further 3D conformers, structure map</td><td data-label="Source">Computed here with <a href="https://www.rdkit.org/" target="_blank" rel="noopener noreferrer">RDKit</a> (BSD-3-Clause) and <a href="https://pypi.org/project/marimo-chem-utils/" target="_blank" rel="noopener noreferrer">marimo-chem-utils</a> (MIT)</td><td data-label="Terms">Computed values; RDKit code is not distributed</td></tr>
+          <tr><td data-label="On the page">PCA scores, Hansch-type fits, leave-one-out and shuffled-activity checks</td><td data-label="Source">Computed here from the values above</td><td data-label="Terms">Exploratory, see the notice below</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Citations</h3>
+    <ul class="foot-list">
+      <li>DrugBank: Knox C, Wilson M, Klinger CM, et al. DrugBank 6.0: the DrugBank Knowledgebase for 2024. Nucleic Acids Res. 2024;52(D1):D1265-D1275. <a href="https://doi.org/10.1093/nar/gkad976" target="_blank" rel="noopener noreferrer">doi:10.1093/nar/gkad976</a></li>
+      <li>ChEMBL: Zdrazil B, Felix E, Hunter F, et al. The ChEMBL Database in 2023: a drug discovery platform spanning multiple bioactivity data types and time periods. Nucleic Acids Res. 2024;52(D1):D1180-D1192. <a href="https://doi.org/10.1093/nar/gkad1004" target="_blank" rel="noopener noreferrer">doi:10.1093/nar/gkad1004</a>. Davies M, Nowotka M, Papadatos G, et al. ChEMBL web services: streamlining access to drug discovery data and utilities. Nucleic Acids Res. 2015;43(W1):W612-W620. <a href="https://doi.org/10.1093/nar/gkv352" target="_blank" rel="noopener noreferrer">doi:10.1093/nar/gkv352</a></li>
+      <li>PubChem: Kim S, Chen J, Cheng T, et al. PubChem 2025 update. Nucleic Acids Res. 2025;53(D1):D1516-D1525. <a href="https://doi.org/10.1093/nar/gkae1059" target="_blank" rel="noopener noreferrer">doi:10.1093/nar/gkae1059</a>. Source: National Library of Medicine.</li>
+      <li>WHO ATC: WHO Collaborating Centre for Drug Statistics Methodology, ATC classification index with DDDs, 2026. Oslo, Norway 2026.</li>
+      <li>openFDA: Data provided by the U.S. Food and Drug Administration (<a href="https://open.fda.gov" target="_blank" rel="noopener noreferrer">open.fda.gov</a>).</li>
+      <li>SmilesDrawer (structure drawings): Probst D, Reymond J-L. J Chem Inf Model. 2018;58(1):1-7. <a href="https://doi.org/10.1021/acs.jcim.7b00425" target="_blank" rel="noopener noreferrer">doi:10.1021/acs.jcim.7b00425</a></li>
+    </ul>
+
+    <h3>Changes made to the source data</h3>
+    <p>Generic names have counter-ions removed (14 names). Structures are PubChem SMILES, neutralised and re-canonicalised with RDKit, one record per PubChem compound. Potency is the median of all ChEMBL pChEMBL values at the drug's mechanism targets, kept only when at least two documents and two assays report one. WHO route codes were mapped to FDA route names (the WHO code P becomes PARENTERAL, which is coarse). Drugs are grouped by their first ChEMBL mechanism target for the fits. Every PubChem and WHO request the data build made is listed in <a href="data/provenance.csv">data/provenance.csv</a>; cross-checks are in <a href="data/validation.md">data/validation.md</a>. The requests made in the earlier curation step (ChEMBL, openFDA, DailyMed) are not listed in this repository.</p>
+
+    <h3>Software and fonts</h3>
+    <p><a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">three.js</a> 0.169.0 (MIT), <a href="https://gsap.com/standard-license/" target="_blank" rel="noopener noreferrer">GSAP</a> 3.12.5 (GSAP Standard "No Charge" License), <a href="https://github.com/reymond-group/smilesDrawer" target="_blank" rel="noopener noreferrer">SmilesDrawer</a> 2.1.7 (MIT). Fonts, served from this site: Bricolage Grotesque (Copyright 2022 The Bricolage Grotesque Project Authors), IBM Plex Mono (Copyright 2017 IBM Corp.), Newsreader (Copyright 2020 The Newsreader Project Authors), all under the <a href="https://openfontlicense.org/" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a>; the notices are in <a href="vendor/fonts/LICENSES.md">vendor/fonts/LICENSES.md</a>. All third-party notices: <a href="https://github.com/DhruvMenon2003/drug-hansch-space/blob/main/THIRD_PARTY_LICENSES.md" target="_blank" rel="noopener noreferrer">THIRD_PARTY_LICENSES.md</a>. This page makes no request to any third-party server.</p>
+
+    <h3>About the data</h3>
+    <p>Drug Hansch Space is an educational exploration of 759 drugs. It is not medical advice, does not recommend, rank, dose or diagnose, and is not a toxicity, safety or efficacy predictor. Toxicity is not part of the data. The 3D positions come from descriptors computed with RDKit from each drug's structure, not from experiments on that drug. The Hansch-type fits relate the median ChEMBL pChEMBL potency to log P, molar refractivity and TPSA within groups of drugs that share a mechanism target. Those groups are not congeneric series, the potencies are medians across different assays, and TPSA is a whole-molecule polarity proxy, so the fits are exploratory; the page labels each one "predictive within this set", "weak" or "not predictive", and most are weak or not predictive. No model on this page predicts how a drug behaves in a person. ATC groups classify drugs for drug-utilisation statistics; membership of a group does not mean therapeutic equivalence or a difference in effectiveness. Routes of administration are summaries of WHO codes and US label listings, not dosing or labelling information, and the DailyMed "in use" labelling may differ from the FDA's own labelling. Source records can be incomplete, outdated or wrong. The site is provided "as is" without warranty and is not affiliated with or endorsed by DrugBank, EMBL-EBI, WHO or its Collaborating Centre, NCBI/NLM, the FDA or any other source named.</p>
+    <p>Non-commercial, educational use. A licence for this project's own code and data has not been chosen yet; each source above keeps its own terms.</p>
+  </div>
+</footer>
+
+<div id="xr-overlay" hidden></div>
+
 
 <script type="module" src="js/main.js"></script>
 </body>

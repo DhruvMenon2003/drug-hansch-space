@@ -3,9 +3,9 @@
 // scene is rebuilt in the order it always was (axes, extras, colours) before the HUD and the table redraw.
 import * as THREE from 'three';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-import { $, S, ORDER, app, bus, cap, neg, reduceMotion } from '../kernel.js';
+import { $, S, ORDER, anim, app, bus, cap, neg, reduceMotion } from '../kernel.js';
 import { AX, axLong, colorOf } from '../model.js';
-import { disposeGroup, stage } from './scene.js';
+import { assignSlots, disposeGroup, stage, wake } from './scene.js';
 
 const _c = new THREE.Color();
 
@@ -71,7 +71,7 @@ export function buildExtras() {
     mat.transparent = true;
     if (reduceMotion.matches || !window.gsap) { mat.opacity = to; return; }
     mat.opacity = 0;
-    window.gsap.to(mat, { opacity: to, duration: 0.8, delay: 0.6 });
+    window.gsap.to(mat, { opacity: to, duration: 0.8, delay: 0.6, onUpdate: wake, onComplete: wake });   // each tick is a frame: the loop is on demand
   };
   // Veber et al. 2002: oral bioavailability falls above 140 Å² of polar surface
   const axisOf = ['x', 'y', 'z'].find(a => v[a] === 'tpsa');
@@ -121,17 +121,26 @@ export function buildExtras() {
   stage.extras = g;
 }
 
-/** Paint the instance colours for the current colour mode and tint the selection ring. */
+/** Paint the instance colours of the drawn slots for the current colour mode and tint the selection ring. */
 export function recolor() {
-  app.drugs.forEach((d, i) => stage.points.setColorAt(i, _c.set(colorOf(d) || '#888')));
-  stage.points.instanceColor.needsUpdate = true;
+  const { points, drugAt } = stage;
+  for (let s = 0, n = points.count; s < n; s++) points.setColorAt(s, _c.set(colorOf(app.drugs[drugAt[s]]) || '#888'));
+  points.instanceColor.needsUpdate = true;
   stage.ring.material.color.set(app.tokens.mark);
 }
 
-/** Subscribe the scene to layout, recolor, theme and selection events. Call once, after initScene(). */
+/**
+ * Subscribe the scene to layout, recolor, theme and selection events. Call once, after initScene().
+ * @returns {() => void} unsubscribe
+ */
 export function initScenery() {
-  bus.on('layout', () => { buildAxes(); buildExtras(); recolor(); }, ORDER.GL);
-  bus.on('recolor', recolor, ORDER.GL);
-  bus.on('theme', () => { recolor(); buildAxes(); buildExtras(); }, ORDER.GL);
-  bus.on('selection', ({ index }) => { stage.selLabel.element.textContent = cap(app.drugs[index].name); }, ORDER.GL);
+  stage.recolor = recolor;
+  const offs = [
+    // the slots come first (axes and colours are painted for them); a running tween keeps every drug that is visible at either end
+    bus.on('layout', () => { assignSlots(); stage.dirty.settle = anim.t < 1; buildAxes(); buildExtras(); recolor(); }, ORDER.GL),
+    bus.on('recolor', recolor, ORDER.GL),
+    bus.on('theme', () => { recolor(); buildAxes(); buildExtras(); }, ORDER.GL),
+    bus.on('selection', ({ index }) => { stage.selLabel.element.textContent = cap(app.drugs[index].name); }, ORDER.GL),
+  ];
+  return () => { for (const off of offs) off(); stage.recolor = null; };
 }

@@ -43,14 +43,17 @@ export function makeScale(key, list) {
 }
 
 // ---------------------------------------------------------------- filter
-/** Does drug `d` pass the current view's filters? `axes` also requires a value on each chosen axis. */
-export function passes(d, axes = true) {
+/**
+ * Does drug `d` pass the current view's filters? `axes` also requires a value on each chosen axis; `ignoreSize` skips the
+ * 1000 Da filter (to count what that filter alone removes, without touching the view).
+ */
+export function passes(d, axes = true, ignoreSize = false) {
   const v = app.view;
   if (v.l1 && !d.atc.some(a => a.code.startsWith(v.l1))) return false;
   if (v.l2 && !d.atc.some(a => a.code.startsWith(v.l2))) return false;
   if (v.l3 && !d.atc.some(a => a.code.startsWith(v.l3))) return false;
   if (v.route && !d.routes.includes(v.route)) return false;
-  if (v.small && !(d.d.mw <= app.hansch.max_mw)) return false;
+  if (v.small && !ignoreSize && !(d.d.mw <= app.hansch.max_mw)) return false;
   if (v.group && !app.groups.get(v.group)?.cids.has(d.cid)) return false;
   if (axes) for (const k of [v.x, v.y, v.z]) if (!AX[k].pseudo && !fin(AX[k].get(d))) return false;
   return true;

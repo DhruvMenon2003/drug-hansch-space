@@ -1,6 +1,7 @@
 // Layer 2. The drug detail panel (identifiers, descriptors, activity, ATC) and the 2D depiction. The 3D conformer is
 // drawn by the GL layer, which listens to the same `selection` event.
-import { app, bus, $, cap, esc, fin, fx, fmtConc, isDark } from './kernel.js';
+import { app, bus, ORDER, $, cap, esc, fin, fx, fmtConc, isDark } from './kernel.js';
+import { announce } from './announce.js';
 
 /** SmilesDrawer depiction of `d` into #d-2d; a no-op when the vendored library is missing. */
 export function drawDepiction(d) {
@@ -16,6 +17,28 @@ export function drawDepiction(d) {
     try { drawer.draw(tree, svg, isDark() ? 'dark' : 'light'); svg.removeAttribute('style'); }
     catch { host.textContent = '2D depiction not available for this structure.'; }
   }, () => { host.textContent = '2D depiction not available for this structure.'; });
+}
+
+// The selected drug may be filtered out of the current view (the ring then disappears from the plot): say so in the panel
+// and to screen readers, once per change of state.
+let outAnnounced = null;
+function noteEl() {
+  let el = $('#d-note');
+  if (!el) {
+    el = document.createElement('p');
+    el.id = 'd-note';
+    el.className = 'flags';
+    el.setAttribute('role', 'note');
+    $('#detail-body .drug-head')?.after(el);
+  }
+  return el;
+}
+function updateViewNote() {
+  if (app.selected < 0 || $('#detail-body').hidden) return;
+  const d = app.drugs[app.selected], out = !app.visible.includes(d);
+  noteEl().textContent = out ? `${cap(d.name)} is not in the current view: the filters or the chosen axes leave it out.` : '';
+  if (out && outAnnounced !== d) announce(`${cap(d.name)} is not in the current view.`);
+  outAnnounced = out ? d : null;
 }
 
 function showDetail({ index }) {
@@ -50,10 +73,13 @@ function showDetail({ index }) {
   $('#d-flags').textContent = d.flags.length ? 'Curation notes: ' + d.flags.join('; ') + '.' : '';
   $('#d-src').textContent = d.conf ? d.conf : 'No 3D conformer';
   drawDepiction(d);
+  outAnnounced = null;
+  updateViewNote();
 }
 
 /** Show the panel on `selection`; redraw the depiction when the theme changes. */
 export function initDetail() {
   bus.on('selection', showDetail);
+  bus.on('layout', updateViewNote, ORDER.UI);
   bus.on('theme', () => { if (app.selected >= 0) drawDepiction(app.drugs[app.selected]); });
 }

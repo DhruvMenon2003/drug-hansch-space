@@ -5,6 +5,10 @@
 // A snapshot is a JSON-able description of the app after a settled action: filtered/visible counts, scales, hashes of the
 // layout targets, instance colours and instance matrices, the HUD texts, the table, the scene's object counts, the camera,
 // the drug detail panel and the Hansch panel. Both apps expose the same debug names (original: window.__dbg, new: window.__hansch).
+//
+// Instances are hashed ORDER-INDEPENDENTLY (tests/golden/README.md, "Instance compaction"): the new site draws only the
+// visible drugs, compacted to the front of the instanced mesh, while the original draws one instance per drug and hides the
+// filtered-out ones with scale 0. Both are reduced to the same thing: the drawn instances (scale > 0) keyed by drug cid.
 import { createHash } from 'node:crypto';
 
 export const sha1 = s => createHash('sha1').update(typeof s === 'string' ? s : JSON.stringify(s)).digest('hex');
@@ -45,6 +49,15 @@ export async function snapshot(page, hook, keepRaw = false) {
     const sc = s => (s.pseudo ? { pseudo: true } : { lo: s.lo, hi: s.hi, step: s.step, ticks: s.ticks });
     const opac = g => { const out = []; g.traverse(o => { if (o.material) for (const m of [].concat(o.material)) out.push(Math.round(m.opacity * 1000)); }); return out; };
     const sel = ['#ax-x', '#ax-y', '#ax-z', '#color-by', '#f-l1', '#f-l2', '#f-l3', '#f-route', '#h-group'].map(q => $(q).value);
+    // the drawn instances keyed by cid; `stage.drugAt` maps slot -> drug index in the new site, the original is one slot per drug
+    const mat = stage.points.instanceMatrix.array, col = stage.points.instanceColor.array, slotDrug = s => (stage.drugAt ? stage.drugAt[s] : s);
+    const drawn = [];
+    for (let s = 0; s < stage.points.count; s++) {
+      const o = s * 16;
+      if (!(mat[o] > 0)) continue;                                           // scale 0: a filtered-out drug in the original
+      drawn.push({ cid: app.drugs[slotDrug(s)].cid, m: r3([mat[o + 12], mat[o + 13], mat[o + 14], mat[o]]), c: Array.from(col.subarray(s * 3, s * 3 + 3), v => Math.round(v * 10000)) });
+    }
+    drawn.sort((a, b) => a.cid - b.cid);
     const det = app.selected >= 0 && !$('#detail-body').hidden ? {
       name: $('#d-name').textContent, ids: $('#d-ids').innerHTML, desc: $('#d-desc').innerHTML, act: $('#d-act').innerHTML, atc: $('#d-atc').innerHTML,
       flags: $('#d-flags').textContent, src: $('#d-src').textContent, depiction: $('#d-2d').innerHTML, depictionHasSvg: !!$('#d-2d svg'),
@@ -54,11 +67,11 @@ export async function snapshot(page, hook, keepRaw = false) {
     return {
       step: app.step, view: JSON.parse(JSON.stringify(app.view)), selected: app.selected, hover: app.hover,
       visible: app.visible.length, scales: { x: sc(app.scales.x), y: sc(app.scales.y), z: sc(app.scales.z) },
-      animT: anim.t, animTo: r3(anim.to), colors: Array.from(stage.points.instanceColor.array, v => Math.round(v * 10000)), matrices: r3(stage.points.instanceMatrix.array),
+      animT: anim.t, animTo: r3(anim.to), drawn: drawn.length, drawnMatrices: drawn.map(d => [d.cid, ...d.m]), drawnColors: drawn.map(d => [d.cid, ...d.c]),
       legend: { text: $('#legend').textContent, html: $('#legend').innerHTML }, axisKey: { text: $('#axis-key').textContent, html: $('#axis-key').innerHTML },
       count: $('#count').textContent, atcWrapHidden: $('#atc-pick-wrap').hidden, selects: sel, small: $('#f-small').checked,
       chips: [...document.querySelectorAll('#atc-pick .chip')].map(c => [c.getAttribute('aria-pressed'), c.disabled, c.querySelector('.sw').style.background]),
-      table: { open: $('#table-details').open, rows: document.querySelectorAll('#table tbody tr').length, text: $('#table').textContent, selectedRows: [...document.querySelectorAll('#table tbody tr[aria-selected="true"]')].map(t => t.dataset.cid) },
+      table: { open: $('#table-details').open, rows: document.querySelectorAll('#table tbody tr').length, text: $('#table').textContent, selectedRows: [...document.querySelectorAll('#table tbody tr[aria-selected="true"], #table tbody tr[aria-current="true"]')].map(t => t.dataset.cid) },
       scene: { axes: stage.axes.children.length, extras: stage.extras.children.length, extrasOpacity: opac(stage.extras), axesOpacity: opac(stage.axes), ring: [stage.ring.visible, stage.ring.material.color.getHexString()], selLabel: [stage.selLabel.visible, stage.selLabel.element.textContent], autoRotate: stage.controls.autoRotate },
       labels: [...document.querySelectorAll('#labels .ax-label, #labels .ax-title, #labels .ax-plane, #labels .sel-label')].map(e => [e.className, e.textContent, e.dataset.shift ?? '', e.style.translate]),
       camera: { pos: stage.camera.position.toArray().map(v => Math.round(v * 100)), target: stage.controls.target.toArray().map(v => Math.round(v * 100)), aspect: Math.round(stage.camera.aspect * 1000) },
@@ -69,10 +82,10 @@ export async function snapshot(page, hook, keepRaw = false) {
       tokens: app.tokens,
     };
   }, hook);
-  const { animTo, colors, matrices, detail, hansch, ...rest } = raw;
+  const { animTo, drawnMatrices, drawnColors, detail, hansch, ...rest } = raw;
   return {
     ...(keepRaw ? { _raw: raw } : {}),
-    ...rest, animToSha1: sha1(animTo), animToN: animTo.length, colorsSha1: sha1(colors), colorsN: colors.length, matricesSha1: sha1(matrices),
+    ...rest, animToSha1: sha1(animTo), animToN: animTo.length, colorsSha1: sha1(drawnColors), matricesSha1: sha1(drawnMatrices),
     detail: detail && { name: detail.name, src: detail.src, flags: detail.flags, emptyHidden: detail.emptyHidden, mol: detail.mol, molDist: detail.molDist, depictionHasSvg: detail.depictionHasSvg, depiction: sha1(unrandom(detail.depiction)), depictionLen: detail.depiction.length, html: sha1([detail.ids, detail.desc, detail.act, detail.atc]) },
     hansch: { out: sha1(hansch.out), cands: sha1(hansch.cands), plot: sha1(hansch.plot) },
     labels: sha1(rest.labels), labelsN: rest.labels.length, table: { ...rest.table, text: sha1(rest.table.text) },

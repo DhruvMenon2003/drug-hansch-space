@@ -1,6 +1,7 @@
 // Layer 3. The Explore panel: axis, colour and filter selects, the ATC chips and the drug search. It mirrors the view
 // state into the DOM (on view:patched) and writes user changes back through setView; it never touches the GL scene.
 import { app, bus, $, cap, esc } from './kernel.js';
+import { announce } from './announce.js';
 import { AX, l1sOf, passes } from './model.js';
 import { selectDrug, setView } from './view.js';
 
@@ -66,15 +67,35 @@ export function initControls() {
   $('#f-small').addEventListener('change', e => setView({ small: e.target.checked, group: null }));
   // search
   $('#drug-names').innerHTML = [...app.drugs].sort((a, b) => a.name.localeCompare(b.name)).map(d => `<option value="${esc(cap(d.name))}">`).join('');
-  const find = () => {
-    const q = $('#search').value.trim().toLowerCase();
-    if (!q) return;
-    const d = app.drugs.find(x => x.name.toLowerCase() === q) || app.drugs.find(x => x.name.toLowerCase().startsWith(q));
-    if (d) {
-      if (!passes(d)) setView({ l1: '', l2: '', l3: '', route: '', small: false, group: null });
-      selectDrug(d.cid);
+  // Enter and the later 'change' (on blur) used to run the search twice; an Enter-handled query is consumed by that change.
+  let enterQuery = null, note = null;
+  const say = text => {
+    const input = $('#search');
+    if (!note && input) {
+      note = document.createElement('p');
+      note.id = 'search-note';
+      note.className = 'small';
+      note.setAttribute('role', 'note');
+      (input.closest('.field') || input.parentNode).appendChild(note);
     }
+    if (note) { note.textContent = text; note.hidden = !text; }
+    if (text) input?.setAttribute('aria-invalid', 'true'); else input?.removeAttribute('aria-invalid');
   };
-  $('#search').addEventListener('change', find);
-  $('#search').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); find(); } });
+  const find = () => {
+    const raw = $('#search').value.trim(), q = raw.toLowerCase();
+    if (!q) { say(''); return; }
+    const d = app.drugs.find(x => x.name.toLowerCase() === q) || app.drugs.find(x => x.name.toLowerCase().startsWith(q));
+    if (!d) {
+      const msg = `No drug named “${raw}”.`;
+      say(msg);
+      announce(msg);
+      return;
+    }
+    say('');
+    if (!passes(d)) setView({ l1: '', l2: '', l3: '', route: '', small: false, group: null });
+    selectDrug(d.cid);
+  };
+  $('#search').addEventListener('change', () => { const q = $('#search').value; if (q === enterQuery) { enterQuery = null; return; } find(); });
+  $('#search').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); enterQuery = $('#search').value; find(); } });
+  $('#search').addEventListener('input', () => { if (note && note.textContent) say(''); });
 }

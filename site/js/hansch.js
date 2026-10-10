@@ -1,6 +1,6 @@
 // Layer 3. The Hansch fits panel (equation, statistics, observed-vs-predicted plot) and the copy of the page that is
 // derived from the data, so the numbers in the text always match the figures. Works with WebGL absent.
-import { app, bus, narrow, reduceMotion, $, cap, esc, fin, fx, neg, sig, median, quant, pearson, fmtConc } from './kernel.js';
+import { app, bus, ORDER, narrow, reduceMotion, $, cap, esc, fin, fx, neg, sig, median, quant, pearson, fmtConc } from './kernel.js';
 import { selectDrug, setView } from './view.js';
 
 // ---------------------------------------------------------------- formatting of a fit
@@ -37,6 +37,9 @@ export function initHansch() {
   sel.innerHTML = app.hansch.groups.map(g => `<option value="${esc(g.id)}">${g.id === 'ALL' ? 'All drugs with an activity value' : esc(cap(g.label))} (n = ${g.n}, q² = ${fx(g.q2)})</option>`).join('');
   sel.value = app.seriesId || app.hansch.groups[0].id;
   sel.addEventListener('change', renderHansch);
+  // The view can change the group without the user touching the select (tour steps, "Show this fit"); the panel must then follow
+  // the select, after controls.syncControls has written it (UX-18: the select used to say 'All drugs' above a CHEMBL233 fit).
+  bus.on('view:patched', () => { if (sel.value !== shown) renderHansch(); }, ORDER.LATE);
   $('#h-show').addEventListener('click', () => {
     setView({ x: 'logp', y: 'act', z: 'mr', color: 'single', group: sel.value, l1: '', l2: '', l3: '', route: '', small: true, veber: false });
     bus.emit('cmd:camera', { preset: 'series' });
@@ -46,9 +49,11 @@ export function initHansch() {
   bus.on('theme', () => { if ($('#h-group').value) renderHansch(); });
   renderHansch();
 }
+let shown = null;                                 // the target group the panel currently describes
 /** Redraw the equation, statistics, candidate table and plot for the selected target group. */
 export function renderHansch() {
-  const g = app.groups.get($('#h-group').value).fit, [word, why] = verdict(g);
+  shown = $('#h-group').value;
+  const g = app.groups.get(shown).fit, [word, why] = verdict(g);
   const head = g.id === 'ALL' ? '' : `<p class="lede">First mechanism target <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(g.id)}/" target="_blank" rel="noopener">${esc(g.id)}</a>, ${esc(g.label)}.</p>`;
   $('#h-out').innerHTML = `${head}<p class="fig eq-block">${esc(equation(g))}</p>${statsTable(g)}<p class="verdict"><b>${word}.</b> ${esc(why)}</p>`;
   $('#h-cands').innerHTML = `<table class="stats"><thead><tr><th>Model</th><th>r²</th><th>q²</th></tr></thead><tbody>${g.candidates.map(c => `<tr><td>${esc(c.terms.map(t => TERM[t]).join(' + '))}</td><td>${fx(c.r2, 3)}</td><td>${fx(c.q2, 3)}</td></tr>`).join('')}</tbody></table>`;

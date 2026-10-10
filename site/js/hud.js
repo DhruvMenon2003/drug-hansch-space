@@ -37,8 +37,8 @@ export function renderCount() {
   const grp = v.group && app.groups.get(v.group);
   const big = d => v.small && !(d.d.mw <= app.hansch.max_mw);
   const missing = app.drugs.filter(d => !(v.group && !grp?.cids.has(d.cid)) && !big(d) && [v.x, v.y, v.z].some(k => !AX[k].pseudo && !fin(AX[k].get(d)))).length;
-  let nBig = 0;                                  // drugs the size filter alone removes from this view
-  if (v.small && !v.group) { v.small = false; nBig = app.drugs.filter(d => !(d.d.mw <= app.hansch.max_mw) && passes(d, false)).length; v.small = true; }
+  // drugs the size filter alone removes from this view (counted with the filter ignored; the view itself is never touched)
+  const nBig = v.small && !v.group ? app.drugs.filter(d => !(d.d.mw <= app.hansch.max_mw) && passes(d, false, true)).length : 0;
   let s = `Showing ${n} of ${total} drugs`;
   if (grp) s += ` in the fit for ${grp.fit.id === 'ALL' ? 'all drugs with an activity value' : grp.fit.label}`;
   if (nBig) s += `; ${nBig} drugs over ${app.hansch.max_mw} Da are left out`;
