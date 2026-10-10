@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why the Greasiest Drug Isn't the Best One</title>
+<meta name="description" content="An explorable explanation of lipophilicity, membranes and the Hansch equation: why drug potency rises with logP, then falls.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<!-- Fonts are the site's own self-hosted copies: site/ loads nothing from another origin (tools/check_site.py). -->
+<link rel="stylesheet" href="../vendor/fonts/fonts.css">
+<style>
+  /* Concept colors, used the same way in prose and figures:
+     c1 = drug molecules, c2 = water, c3 = oil (octanol, membrane lipid), c4 = a fitted equation. */
+  :root {
+    --bg: #fbfaf7; --fg: #1f1f22; --muted: #6d6b66; --rule: #e6e2d8; --panel: #ffffff; --grid: #ece8de;
+    --c1: #e0662f; --c2: #2f6fd6; --c3: #c8961f; --c4: #7a5bd0;
+    --good: #2e9a5e; --bad: #d23c3c;
+    --shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141416; --fg: #ececef; --muted: #9a9892; --rule: #2a2a2e; --panel: #1b1b1f; --grid: #25252a;
+      --c1: #f08a55; --c2: #6b9cf0; --c3: #dcae40; --c4: #a58af0;
+      --good: #52c283; --bad: #f06060;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 19px/1.62 Newsreader, Georgia, serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px 20px 96px; }
+  .back { font: 500 14px "Bricolage Grotesque", system-ui, sans-serif; margin: 0 0 28px; }
+  a { color: inherit; text-underline-offset: 2px; }
+  h1 { font: 500 2.35em/1.12 "Bricolage Grotesque", system-ui, sans-serif; margin: 0 0 .3em; letter-spacing: -.01em; }
+  h2 { font: 500 1.28em/1.3 "Bricolage Grotesque", system-ui, sans-serif; margin: 2.2em 0 .6em; }
+  .lede { font-size: 1.12em; color: var(--muted); margin: 0 0 2em; }
+  p { margin: 0 0 1.05em; }
+  .eq { font: 15px/1.5 "IBM Plex Mono", ui-monospace, monospace; background: var(--panel); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; overflow-x: auto; }
+  .c1 { color: var(--c1); font-weight: 600; } .c2 { color: var(--c2); font-weight: 600; }
+  .c3 { color: var(--c3); font-weight: 600; } .c4 { color: var(--c4); font-weight: 600; }
+  figure { margin: 1.8em -12px 2em; padding: 14px 14px 10px; background: var(--panel); border-radius: 14px; box-shadow: var(--shadow); }
+  canvas { display: block; width: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
+  figcaption { font: 14px/1.5 "Bricolage Grotesque", system-ui, sans-serif; color: var(--muted); margin-top: 8px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font: 14px/1.3 "Bricolage Grotesque", system-ui, sans-serif; margin-top: 10px; }
+  .controls label { display: flex; align-items: center; gap: 10px; flex: 1 1 210px; }
+  .controls label span.k { white-space: nowrap; color: var(--muted); min-width: 4.5em; }
+  .controls output { font-variant-numeric: tabular-nums; min-width: 3.5em; text-align: right; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  input[type=range] { flex: 1; accent-color: var(--fg); min-width: 90px; }
+  button { font: 500 14px "Bricolage Grotesque", system-ui, sans-serif; color: var(--fg); background: transparent; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  button:hover { border-color: var(--muted); }
+  button.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .readout { font: 14px/1.45 "Bricolage Grotesque", system-ui, sans-serif; margin-top: 8px; font-variant-numeric: tabular-nums; min-height: 2.9em; }
+  footer { margin-top: 4em; padding-top: 1.2em; border-top: 1px solid var(--rule); font: 14px/1.6 "Bricolage Grotesque", system-ui, sans-serif; color: var(--muted); }
+  footer li { margin-bottom: .4em; }
+  @media (max-width: 560px) { body { font-size: 17.5px; } figure { margin-left: -8px; margin-right: -8px; padding: 10px; } }
+</style>
+</head>
+<body>
+<main>
+<p class="back"><a href="../">← Back to the Drug Hansch Space explorer</a></p>
+<h1>Why the Greasiest Drug Isn't the Best One</h1>
+<p class="lede">Make a drug more oily and it often gets more potent. Keep going and the potency falls again. Three small simulations show why: a drug has to dissolve in oil to cross a cell membrane, and then it has to leave the oil again.</p>
+
+<h2>Oil or water?</h2>
+<p>Shake a drug with two liquids that don't mix, <span class="c3">octanol</span> (an oily alcohol) on top and <span class="c2">water</span> below, and let it settle. The <span class="c1">drug molecules</span> keep hopping across the boundary in both directions. They end up split between the layers in a fixed ratio, called the partition coefficient <i>P</i>. Chemists use its logarithm, <b>logP</b>. Octanol is the standard stand-in for the fatty inside of a cell membrane.</p>
+
+<figure id="fig-flask">
+  <canvas data-aspect="0.56" aria-label="A beaker with an octanol layer on top of a water layer and drug molecules moving between them"></canvas>
+  <div class="controls">
+    <label><span class="k">logP</span><input type="range" min="-2" max="5" step="0.01" value="1"><output></output></label>
+  </div>
+  <div class="controls chips" data-role="presets"></div>
+  <div class="readout"></div>
+  <figcaption>Each dot is one drug molecule. Drag logP from −2 to 5 and watch them move between the layers, or pick a real drug to use its measured logP. At logP 0 the drug has no preference.</figcaption>
+</figure>
+
+<p>Each step of 1 in logP is a tenfold change in preference. At logP 3 a drug prefers oil a thousand to one, and at −1 it prefers water ten to one. That makes logP a single number for how greasy a molecule is.</p>
+
+<h2>A drug has to swim, then squeeze through</h2>
+<p>A swallowed pill dissolves in the <span class="c2">water</span> of the gut. To reach its receptor it has to cross the gut wall into the blood, then cross another barrier into the tissue where the receptor sits. Each barrier is a cell membrane: a sheet of <span class="c3">fat</span> two molecules thick. A molecule gets through by dissolving into the fat and then leaving it on the far side, so it moves from water to fat to water, twice.</p>
+<p>Below, the chance of a <span class="c1">molecule</span> stepping from water into fat, or from fat back into water, follows its logP, just as in the beaker. Then a clock runs and we count how many reach the receptor before time is up.</p>
+
+<figure id="fig-membrane">
+  <canvas data-aspect="0.54" aria-label="Five compartments from left to right: gut water, membrane, blood, membrane, target tissue with a receptor"></canvas>
+  <div class="controls">
+    <label><span class="k">logP</span><input type="range" min="-1" max="5" step="0.01" value="2"><output></output></label>
+    <button data-role="reset">Dose again</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption>200 molecules start in the gut. Try logP 0, 2 and 4. At 0 they stay in the water, at 4 they get stuck inside the first membrane, and around 2 the most get through.</figcaption>
+</figure>
+
+<p>Both ends fail for opposite reasons. A water-loving drug rarely enters a membrane. A very greasy drug enters the first membrane easily but rarely leaves it. The best drugs sit in between, where the step in and the step out are about equally likely.</p>
+
+<h2>Why Hansch's straight lines bend</h2>
+<p>In 1964 Corwin Hansch and Toshio Fujita proposed that you could predict how potent each member of a family of related drugs would be from a few numbers, logP among them. Potency is written as log(1/<i>C</i>), where <i>C</i> is the dose needed for a fixed effect, so bigger means more potent. In its simplest form the equation is a straight line:</p>
+<p class="eq">log(1/C) = a·logP + c</p>
+<p>The trouble is that a straight line can't rise and then fall. Below, the hidden "truth" is the membrane model from the figure above: potency is the log of the share of the dose that reaches the receptor in time. A <span class="c1">series of seven related drugs</span> samples one slice of it, and we fit an <span class="c4">equation</span> to those seven points, as a chemist would.</p>
+
+<figure id="fig-curve">
+  <canvas data-aspect="0.62" aria-label="Potency against logP for seven drugs in a series with a fitted line or parabola"></canvas>
+  <div class="controls">
+    <label><span class="k">Series at</span><input type="range" min="-1" max="5" step="0.01" value="0"><output></output></label>
+  </div>
+  <div class="controls">
+    <span class="chips" data-role="fit"><button data-fit="line" class="on">Straight line</button><button data-fit="parabola">Parabola</button></span>
+    <button data-role="truth">Show the whole curve</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption>Slide the series from left to right with a straight line fitted. Around logP 2 the line goes flat and stops fitting, so switch to the parabola. The scatter on the points is added for realism and is illustrative.</figcaption>
+</figure>
+
+<p>Where the series sits decides what the chemist sees. A series of water-loving compounds gives a clean rising line, so "more greasy, more potent" looks like a rule. A series of greasy compounds gives a falling line. Only a series that spans the optimum shows the bend, and only a curved equation can describe it. In 1968 Hansch added a squared term, giving the parabola log(1/C) = −a·(logP)² + b·logP + c with its peak at logP₀ = b/2a. In 1977 Hugo Kubinyi showed that a "bilinear" shape, straight on both sides with a rounded top, fits real series better. That is the shape this membrane model produces.</p>
+
+<footer>
+  <p>An explorable explanation. The figures are live simulations running in your browser.</p>
+  <ul>
+    <li><b>Simplified and illustrative.</b> The beaker has equal volumes of the two liquids. The membrane model has two membranes, one hopping rate (k = 1 per time unit), a membrane that holds β = 0.01 of a water compartment's volume and a fixed measuring time (5 units). These numbers were chosen for illustration and are not fitted to any drug. The optimum at logP ≈ 2 comes from β (it sits at logP = −log β), so a different body or assay would move it. Potency in the third figure is relative, with an arbitrary offset.</li>
+    <li><b>The membrane model.</b> Molecules step from water into fat at rate k·βP/(1 + βP) and from fat into water at k/(1 + βP), so the fat-to-water concentration ratio at equilibrium is P. The receptor compartment keeps any molecule that arrives. The share reaching it is computed by integrating the rate equations (RK4), and the moving dots are one random run of the same rates. This follows Penniston, Beckett, Bentley and Hansch (1969); its shape is Kubinyi's bilinear equation.</li>
+    <li><b>Measured logP</b> for the drug buttons comes from PubChem's experimental values: caffeine −0.07 and atenolol 0.16 (Hansch, Leo and Hoekman 1995), paracetamol 0.46 and diazepam 2.82 (Sangster 1994), propranolol 3.48 (Avdeef 1997), haloperidol 4.30 (El Tayar et al. 1985). The "computed" value next to each one is the Crippen logP from RDKit that this site's explorer uses (<a href="../data/drugs.json">data/drugs.json</a>). The two methods differ by up to 1 here, and by more for big molecules (<a href="../data/validation.md">data/validation.md</a>).</li>
+    <li>Hansch &amp; Fujita, J. Am. Chem. Soc. 1964, 86, 1616 (doi:10.1021/ja01062a035). Hansch, Steward, Anderson &amp; Bentley, J. Med. Chem. 1968, 11, 1 (doi:10.1021/jm00307a001). Penniston, Beckett, Bentley &amp; Hansch, Mol. Pharmacol. 1969, 5, 333. Kubinyi, J. Med. Chem. 1977, 20, 625 (doi:10.1021/jm00215a002).</li>
+  </ul>
+</footer>
+</main>
+
+<script>
+(() => {
+  // ---------- helpers (from the explorable template) ----------
+  const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const SANS = '"Bricolage Grotesque", system-ui, sans-serif';
+
+  // A canvas drawn in logical units: `width` units across, height = width × data-aspect.
+  function surface(canvas, width = 680) {
+    const ctx = canvas.getContext('2d');
+    const aspect = +canvas.dataset.aspect || 0.5;
+    const s = { canvas, ctx, w: width, h: width * aspect, k: 1, draw: null };
+    const fit = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = canvas.clientWidth, cssH = Math.round(cssW * aspect);
+      canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
+      canvas.style.height = cssH + 'px';
+      s.k = cssW / width;
+      ctx.setTransform(dpr * s.k, 0, 0, dpr * s.k, 0, 0);
+    };
+    fit();
+    new ResizeObserver(() => { fit(); s.draw && s.draw(); }).observe(canvas);
+    return s;
+  }
+
+  // Run step(timeSeconds, dtSeconds) every frame, but only while `el` is on screen.
+  const animated = new Set();
+  function animate(el, step) {
+    const entry = { step, visible: false };
+    new IntersectionObserver(([e]) => { entry.visible = e.isIntersecting; }).observe(el);
+    animated.add(entry);
+  }
+  let lastT = performance.now();
+  requestAnimationFrame(function frame(now) {
+    const dt = Math.min(0.05, (now - lastT) / 1000); lastT = now;
+    for (const e of animated) if (e.visible) e.step(now / 1000, dt);
+    requestAnimationFrame(frame);
+  });
+
+  function label(ctx, text, x, y, color = css('--muted'), align = 'left', size = 12, weight = 500) {
+    const m = ctx.getTransform(), k = Math.hypot(m.a, m.b) / (window.devicePixelRatio || 1);   // keep labels at least 10 screen px on phones
+    ctx.font = `${weight} ${Math.max(size, 10 / k)}px ${SANS}`;
+    ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'middle';
+    ctx.fillText(text, x, y);
+  }
+  function polyline(ctx, pts, color, width = 2, dash = []) {
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.setLineDash(dash);
+    ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineJoin = 'round'; ctx.stroke();
+    ctx.setLineDash([]);
+  }
+  function roundRect(ctx, x, y, w, h, r, fill) {
+    ctx.beginPath(); ctx.roundRect(x, y, w, h, r); ctx.fillStyle = fill; ctx.fill();
+  }
+  function tint(color, alpha) { // hex token → rgba with alpha, so layers stay readable in both schemes
+    const n = parseInt(color.slice(1), 16);
+    return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${alpha})`;
+  }
+  function dot(ctx, x, y, r, fill) { ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = fill; ctx.fill(); }
+  const fsz = (s, size = 12) => Math.max(size, 10 / s.k); // label size in logical units, as label() will draw it
+  const fmt = (x, digits = 0) => (Number.isFinite(x) ? x.toFixed(digits).replace('-', '−') : '—');
+  const fmtP = (P) => (P >= 100 ? Math.round(P).toLocaleString('en') : P >= 1 ? P.toPrecision(2) : P.toPrecision(2));
+  // Small seeded random generator so the "scatter" in figure 3 is the same every visit.
+  const rng = (seed) => () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+
+  // ---------- shared model: water/fat partitioning ----------
+  // Equal-volume beaker: water→octanol at k·P/(1+P), octanol→water at k/(1+P); equilibrium ratio octanol:water = P.
+  const flaskRates = (logp, k) => { const P = 10 ** logp; return { toOil: k * P / (1 + P), toWater: k / (1 + P) }; };
+
+  // Membrane chain (after Penniston et al. 1969): compartments W M W M W, last one keeps what arrives (receptor).
+  // A membrane holds BETA of a water compartment's volume, so amounts at equilibrium are fat:water = BETA·P
+  // and the rates are water→fat k·βP/(1+βP), fat→water k/(1+βP). BETA, K and T_END are illustrative.
+  const BETA = 0.01, K = 1, T_END = 5, NC = 5;
+  const chainRates = (logp) => { const bP = BETA * 10 ** logp; return { wf: K * bP / (1 + bP), fw: K / (1 + bP) }; };
+  const isFat = (i) => i % 2 === 1;
+  function chainDeriv(n, r) {
+    const d = new Array(NC).fill(0);
+    for (let i = 0; i < NC - 1; i++) {           // flow i → i+1
+      const f = (isFat(i) ? r.fw : r.wf) * n[i];
+      d[i] -= f; d[i + 1] += f;
+    }
+    for (let i = 1; i < NC - 1; i++) {           // flow i → i-1 (nothing leaves the receptor compartment)
+      const f = (isFat(i) ? r.fw : r.wf) * n[i];
+      d[i] -= f; d[i - 1] += f;
+    }
+    return d;
+  }
+  // Share of the dose in the receptor compartment at time T_END, by RK4 on the rate equations.
+  function arrived(logp) {
+    const r = chainRates(logp), h = 0.01;
+    let n = [1, 0, 0, 0, 0];
+    const add = (a, b, s) => a.map((x, i) => x + s * b[i]);
+    for (let t = 0; t < T_END - 1e-9; t += h) {
+      const k1 = chainDeriv(n, r), k2 = chainDeriv(add(n, k1, h / 2), r);
+      const k3 = chainDeriv(add(n, k2, h / 2), r), k4 = chainDeriv(add(n, k3, h), r);
+      n = n.map((x, i) => x + h / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]));
+    }
+    return n[NC - 1];
+  }
+  // Precompute on a grid; potency = log10(share) + offset (relative units, offset arbitrary).
+  const GRID = []; for (let x = -2; x <= 6.0001; x += 0.02) GRID.push([x, Math.log10(arrived(x))]);
+  const shareAt = (logp) => {
+    const i = clamp((logp + 2) / 0.02, 0, GRID.length - 1.001), j = Math.floor(i), f = i - j;
+    return 10 ** (GRID[j][1] * (1 - f) + GRID[j + 1][1] * f);
+  };
+  const OFFSET = 6;
+  const potency = (logp) => Math.log10(shareAt(logp)) + OFFSET;
+
+  // ---------- figure 1: the beaker ----------
+  {
+    const fig = document.getElementById('fig-flask');
+    const s = surface(fig.querySelector('canvas'));
+    const slider = fig.querySelector('input'), out = fig.querySelector('output');
+    const readout = fig.querySelector('.readout');
+    // Measured logP from PubChem's experimental section (sources in the footer); "calc" = Crippen logP in data/drugs.json.
+    const DRUGS = [
+      { name: 'Caffeine', logp: -0.07, calc: -1.029 },
+      { name: 'Atenolol', logp: 0.16, calc: 0.452 },
+      { name: 'Paracetamol', logp: 0.46, calc: 1.351 },
+      { name: 'Diazepam', logp: 2.82, calc: 3.154 },
+      { name: 'Propranolol', logp: 3.48, calc: 2.578 },
+      { name: 'Haloperidol', logp: 4.30, calc: 4.426 },
+    ];
+    let picked = null;
+    const chips = fig.querySelector('[data-role=presets]');
+    DRUGS.forEach((d) => {
+      const b = document.createElement('button'); b.textContent = d.name;
+      b.onclick = () => { slider.value = d.logp; picked = d; sync(); };
+      chips.appendChild(b);
+    });
+
+    // Beaker geometry (logical units).
+    const BX = 150, BW = 380, TOP = 40, MID = 190, BOT = 350;
+    const N = 60, R = rng(7);
+    const mols = Array.from({ length: N }, (_, i) => ({ oil: i % 2 === 0, x: BX + 14 + R() * (BW - 28), y: 0 }));
+    mols.forEach((m) => (m.y = m.oil ? TOP + 14 + R() * (MID - TOP - 28) : MID + 14 + R() * (BOT - MID - 28)));
+
+    function sync() {
+      chips.querySelectorAll('button').forEach((b) => b.classList.toggle('on', picked && b.textContent === picked.name));
+      out.textContent = fmt(+slider.value, 2);
+      draw();
+    }
+    slider.oninput = () => { picked = null; sync(); };
+
+    function step(_, dt) {
+      const r = flaskRates(+slider.value, 1.2);
+      for (const m of mols) {
+        if (Math.random() < (m.oil ? r.toWater : r.toOil) * dt) {   // hop across the boundary
+          m.oil = !m.oil; m.y = m.oil ? MID - 10 : MID + 10;
+        }
+        m.x = clamp(m.x + (Math.random() - 0.5) * 6, BX + 10, BX + BW - 10);
+        const lo = m.oil ? TOP + 10 : MID + 8, hi = m.oil ? MID - 8 : BOT - 10;
+        m.y = clamp(m.y + (Math.random() - 0.5) * 6, lo, hi);
+      }
+      draw();
+    }
+
+    function draw() {
+      const { ctx, w, h } = s, logp = +slider.value, P = 10 ** logp;
+      ctx.clearRect(0, 0, w, h);
+      roundRect(ctx, BX, TOP, BW, MID - TOP, 0, tint(css('--c3'), 0.16));
+      roundRect(ctx, BX, MID, BW, BOT - MID, 0, tint(css('--c2'), 0.14));
+      ctx.strokeStyle = css('--muted'); ctx.lineWidth = 2;               // glass: open top, rounded bottom
+      ctx.beginPath(); ctx.moveTo(BX, TOP - 18); ctx.lineTo(BX, BOT - 10); ctx.quadraticCurveTo(BX, BOT, BX + 10, BOT);
+      ctx.lineTo(BX + BW - 10, BOT); ctx.quadraticCurveTo(BX + BW, BOT, BX + BW, BOT - 10); ctx.lineTo(BX + BW, TOP - 18); ctx.stroke();
+      ctx.strokeStyle = tint(css('--muted'), 0.6); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(BX, MID); ctx.lineTo(BX + BW, MID); ctx.stroke();
+      const inOil = mols.filter((m) => m.oil).length;
+      for (const m of mols) dot(ctx, m.x, m.y, 5, css('--c1'));
+      const dy = fsz(s, 13) * 0.72;
+      label(ctx, 'octanol', BX - 12, (TOP + MID) / 2 - dy, css('--c3'), 'right', 13, 600);
+      label(ctx, `${inOil} here`, BX - 12, (TOP + MID) / 2 + dy, css('--muted'), 'right');
+      label(ctx, 'water', BX - 12, (MID + BOT) / 2 - dy, css('--c2'), 'right', 13, 600);
+      label(ctx, `${N - inOil} here`, BX - 12, (MID + BOT) / 2 + dy, css('--muted'), 'right');
+      // Expected split from the model, as a bar on the right.
+      const share = P / (1 + P), bx = BX + BW + 40, bw = 18;
+      roundRect(ctx, bx, TOP, bw, (MID - TOP + BOT - MID) * share, 3, tint(css('--c3'), 0.7));
+      roundRect(ctx, bx, TOP + (BOT - TOP) * share, bw, (BOT - TOP) * (1 - share), 3, tint(css('--c2'), 0.6));
+      label(ctx, 'expected', bx + bw / 2, TOP - 6 - fsz(s) / 2, css('--muted'), 'center');
+      label(ctx, `${fmt(share * 100, share > 0.995 || share < 0.005 ? 1 : 0)}%`, bx + bw + 6, TOP + (BOT - TOP) * share / 2, css('--c3'), 'left');
+      let txt = `logP ${fmt(logp, 2)} means P = ${fmtP(P)}: `;
+      txt += P >= 1 ? `for every molecule in the water, about ${fmtP(P)} sit in the octanol.` : `for every molecule in the octanol, about ${fmtP(1 / P)} sit in the water.`;
+      if (picked) txt += ` ${picked.name}: measured logP ${fmt(picked.logp, 2)}; this site's dataset computes ${fmt(picked.calc, 2)}.`;
+      readout.textContent = txt;
+    }
+    s.draw = draw;
+    animate(fig, step);
+    sync();
+  }
+
+  // ---------- figure 2: across two membranes ----------
+  {
+    const fig = document.getElementById('fig-membrane');
+    const s = surface(fig.querySelector('canvas'));
+    const slider = fig.querySelector('input'), out = fig.querySelector('output');
+    const readout = fig.querySelector('.readout');
+    // Compartment boxes left to right: gut water, membrane, blood, membrane, tissue with the receptor.
+    const BOXES = [[20, 160], [180, 60], [240, 150], [390, 60], [450, 210]];
+    const NAMES = ['gut', 'membrane', 'blood', 'membrane', 'tissue'];
+    const TOP = 60, BOT = 300, N = 200, SPEED = T_END / 7;  // the 5 time units take 7 seconds on screen
+    let mols = [], clock = 0;
+    function dose() {
+      clock = 0;
+      mols = Array.from({ length: N }, () => ({ c: 0, x: BOXES[0][0] + 8 + Math.random() * (BOXES[0][1] - 16), y: TOP + 8 + Math.random() * (BOT - TOP - 16) }));
+      out.textContent = fmt(+slider.value, 2);
+      draw();
+    }
+    slider.oninput = dose;
+    fig.querySelector('[data-role=reset]').onclick = dose;
+
+    function place(m) {
+      const [x0, bw] = BOXES[m.c];
+      m.x = clamp(m.x, x0 + 6, x0 + bw - 6);
+    }
+    function step(_, dt) {
+      if (clock >= T_END) return;
+      const h = Math.min(dt * SPEED, T_END - clock), r = chainRates(+slider.value);
+      for (const m of mols) {
+        if (m.c === NC - 1) continue;                      // held by the receptor side
+        const rate = isFat(m.c) ? r.fw : r.wf;
+        if (m.c > 0 && Math.random() < rate * h) { m.c -= 1; m.x = BOXES[m.c][0] + BOXES[m.c][1] - 8; }
+        else if (Math.random() < rate * h) { m.c += 1; m.x = BOXES[m.c][0] + 8; }
+        m.x += (Math.random() - 0.5) * 5; m.y = clamp(m.y + (Math.random() - 0.5) * 5, TOP + 6, BOT - 6);
+        place(m);
+      }
+      clock += h;
+      draw();
+    }
+
+    function bilayer(ctx, x0, bw) {
+      roundRect(ctx, x0, TOP, bw, BOT - TOP, 0, tint(css('--c3'), 0.16));
+      ctx.strokeStyle = tint(css('--c3'), 0.55); ctx.lineWidth = 1.2;
+      for (let y = TOP + 6; y < BOT; y += 11) {
+        for (const [hx, dir] of [[x0 + 6, 1], [x0 + bw - 6, -1]]) {   // heads at the edges, tails pointing inward
+          dot(ctx, hx, y, 4, tint(css('--c3'), 0.75));
+          ctx.beginPath(); ctx.moveTo(hx + dir * 4, y - 1.5); ctx.lineTo(hx + dir * (bw / 2 - 8), y - 1.5);
+          ctx.moveTo(hx + dir * 4, y + 1.5); ctx.lineTo(hx + dir * (bw / 2 - 8), y + 1.5); ctx.stroke();
+        }
+      }
+    }
+    function draw() {
+      const { ctx, w, h } = s;
+      ctx.clearRect(0, 0, w, h);
+      BOXES.forEach(([x0, bw], i) => (isFat(i) ? bilayer(ctx, x0, bw) : roundRect(ctx, x0, TOP, bw, BOT - TOP, 8, tint(css('--c2'), 0.12))));
+      // Receptor: a cup-shaped protein on the far wall of the tissue.
+      const rx = 640, ry = (TOP + BOT) / 2;
+      ctx.fillStyle = tint(css('--muted'), 0.35);
+      ctx.beginPath(); ctx.moveTo(rx + 20, ry - 60); ctx.lineTo(rx - 4, ry - 60); ctx.quadraticCurveTo(rx - 30, ry, rx - 4, ry + 60);
+      ctx.lineTo(rx + 20, ry + 60); ctx.closePath(); ctx.fill();
+      const counts = new Array(NC).fill(0);
+      for (const m of mols) { counts[m.c]++; dot(ctx, m.x, m.y, 3.2, css('--c1')); }
+      BOXES.forEach(([x0, bw], i) => {
+        label(ctx, NAMES[i], x0 + bw / 2, TOP - 6 - fsz(s) * 1.6, isFat(i) ? css('--c3') : css('--c2'), 'center', 12, 600);
+        label(ctx, String(counts[i]), x0 + bw / 2, TOP - 6 - fsz(s) * 0.5, css('--muted'), 'center');
+      });
+      label(ctx, 'receptor', rx - 2, ry + 76, css('--muted'), 'center');
+      // Clock.
+      const cw = 640 * clock / T_END;
+      roundRect(ctx, 20, BOT + 18, 640, 6, 3, css('--grid'));
+      roundRect(ctx, 20, BOT + 18, Math.max(6, cw), 6, 3, css('--fg'));
+      label(ctx, clock >= T_END ? 'time is up' : 'time', 20, BOT + 26 + fsz(s) * 0.6, css('--muted'));
+      const logp = +slider.value, expected = shareAt(logp) * 100;
+      const stuck = counts.slice(0, NC - 1).indexOf(Math.max(...counts.slice(0, NC - 1)));
+      const where = stuck === 0 ? 'Most are still in the gut water.' : isFat(stuck) ? `Most are stuck in the ${stuck === 1 ? 'first' : 'second'} membrane.` : 'Most are in the blood.';
+      readout.innerHTML = `${clock >= T_END ? '' : 'So far, '}<b>${counts[NC - 1]} of ${N}</b> molecules reached the receptor${clock >= T_END ? ' in time' : ''}. ${where} The model expects ${fmt(expected, expected < 1 ? 2 : 0)}% at logP ${fmt(logp, 2)}.`;
+    }
+    s.draw = draw;
+    animate(fig, step);
+    dose();
+  }
+
+  // ---------- figure 3: fitting a series ----------
+  {
+    const fig = document.getElementById('fig-curve');
+    const s = surface(fig.querySelector('canvas'));
+    const slider = fig.querySelector('input'), out = fig.querySelector('output');
+    const readout = fig.querySelector('.readout');
+    const truthBtn = fig.querySelector('[data-role=truth]');
+    let fitKind = 'line', truth = false;
+    fig.querySelectorAll('[data-fit]').forEach((b) => (b.onclick = () => {
+      fitKind = b.dataset.fit;
+      fig.querySelectorAll('[data-fit]').forEach((x) => x.classList.toggle('on', x === b));
+      draw();
+    }));
+    truthBtn.onclick = () => { truth = !truth; truthBtn.classList.toggle('on', truth); truthBtn.textContent = truth ? 'Hide the whole curve' : 'Show the whole curve'; draw(); };
+    slider.oninput = draw;
+
+    const SPAN = 2.6, NS = 7, R = rng(42), JITTER = Array.from({ length: NS }, () => (R() - 0.5) * 0.3); // ±0.15, illustrative
+    // Least squares polynomial fit of degree 1 or 2 (normal equations, solved by Gaussian elimination).
+    function polyfit(xs, ys, deg) {
+      const m = deg + 1, A = Array.from({ length: m }, () => new Array(m + 1).fill(0));
+      xs.forEach((x, k) => { for (let i = 0; i < m; i++) { for (let j = 0; j < m; j++) A[i][j] += x ** (i + j); A[i][m] += ys[k] * x ** i; } });
+      for (let i = 0; i < m; i++) {
+        for (let r = i + 1; r < m; r++) { const f = A[r][i] / A[i][i]; for (let c = i; c <= m; c++) A[r][c] -= f * A[i][c]; }
+      }
+      const coef = new Array(m).fill(0);
+      for (let i = m - 1; i >= 0; i--) { let v = A[i][m]; for (let j = i + 1; j < m; j++) v -= A[i][j] * coef[j]; coef[i] = v / A[i][i]; }
+      return coef; // coef[i] multiplies x^i
+    }
+    const evalPoly = (c, x) => c.reduce((a, ci, i) => a + ci * x ** i, 0);
+
+    // Plot frame.
+    const L = 58, Rt = 664, T = 20, B = 360, X0 = -2, X1 = 6, Y0 = -2, Y1 = 6;
+    const px = (x) => L + (x - X0) / (X1 - X0) * (Rt - L), py = (y) => B - (clamp(y, Y0 - 0.5, Y1 + 0.5) - Y0) / (Y1 - Y0) * (B - T);
+
+    function draw() {
+      const { ctx, w, h } = s, c0 = +slider.value;
+      out.textContent = fmt(c0, 2);
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = css('--grid'); ctx.lineWidth = 1;
+      for (let x = X0; x <= X1; x += 2) { ctx.beginPath(); ctx.moveTo(px(x), T); ctx.lineTo(px(x), B); ctx.stroke(); label(ctx, fmt(x), px(x), B + 4 + fsz(s) * 0.6, css('--muted'), 'center'); }
+      for (let y = Y0; y <= Y1; y += 2) { ctx.beginPath(); ctx.moveTo(L, py(y)); ctx.lineTo(Rt, py(y)); ctx.stroke(); label(ctx, fmt(y), L - 8, py(y), css('--muted'), 'right'); }
+      label(ctx, 'logP', (L + Rt) / 2, B + 8 + fsz(s) * 1.7, css('--muted'), 'center');
+      ctx.save(); ctx.translate(16, (T + B) / 2); ctx.rotate(-Math.PI / 2); label(ctx, 'potency, log(1/C), relative', 0, 0, css('--muted'), 'center'); ctx.restore();
+
+      if (truth) polyline(ctx, GRID.map(([x]) => [px(x), py(potency(x))]), css('--muted'), 1.5, [5, 5]);
+
+      const xs = Array.from({ length: NS }, (_, i) => c0 - SPAN / 2 + SPAN * i / (NS - 1));
+      const ys = xs.map((x, i) => potency(x) + JITTER[i]);
+      const coef = polyfit(xs, ys, fitKind === 'line' ? 1 : 2);
+      const mean = ys.reduce((a, b) => a + b, 0) / NS;
+      const ssr = ys.reduce((a, y, i) => a + (y - evalPoly(coef, xs[i])) ** 2, 0), sst = ys.reduce((a, y) => a + (y - mean) ** 2, 0);
+      const r2 = 1 - ssr / sst;
+      const fx = []; for (let x = xs[0] - 0.3; x <= xs[NS - 1] + 0.3001; x += 0.05) fx.push([px(x), py(evalPoly(coef, x))]);
+      polyline(ctx, fx, css('--c4'), 2.5);
+      xs.forEach((x, i) => dot(ctx, px(x), py(ys[i]), 5, css('--c1')));
+
+      const good = r2 >= 0.9;
+      let txt;
+      if (fitKind === 'line') {
+        const [c, a] = coef;
+        const verdict = Math.abs(a) < 0.3 ? 'logP seems not to matter' : a > 0 ? 'more greasy looks more potent' : 'more greasy looks less potent';
+        txt = `Fitted line: log(1/C) = ${fmt(a, 2)}·logP ${c < 0 ? '−' : '+'} ${fmt(Math.abs(c), 2)}. Fit quality r² = <b style="color:var(${good ? '--good' : '--bad'})">${fmt(r2, 2)}</b>. Reading: ${verdict}.`;
+      } else {
+        const [c, b, a] = coef;
+        if (a < -0.02) {
+          const opt = -b / (2 * a), inside = opt >= xs[0] && opt <= xs[NS - 1];
+          txt = `Fitted parabola: log(1/C) = −${fmt(-a, 2)}·logP² ${b < 0 ? '−' : '+'} ${fmt(Math.abs(b), 2)}·logP ${c < 0 ? '−' : '+'} ${fmt(Math.abs(c), 2)}. r² = <b style="color:var(${good ? '--good' : '--bad'})">${fmt(r2, 2)}</b>. ${inside ? `Optimum logP₀ = b/2a = <b>${fmt(opt, 1)}</b>, inside this series.` : Math.abs(opt - c0) < 3 ? `Optimum logP₀ = b/2a = <b>${fmt(opt, 1)}</b>, outside this series, so it is an extrapolation.` : 'The bend is too slight to place an optimum anywhere believable.'}`;
+        } else {
+          txt = `Fitted parabola: almost no bend in this slice (squared term ${fmt(a, 2)}), so it gives no real optimum. r² = <b style="color:var(${good ? '--good' : '--bad'})">${fmt(r2, 2)}</b>.`;
+        }
+      }
+      readout.innerHTML = txt;
+    }
+    s.draw = draw;
+    draw();
+  }
+})();
+</script>
+</body>
+</html>
