@@ -6,7 +6,8 @@ export const S = 10;
 
 const mq = q => (typeof matchMedia === 'function' ? matchMedia(q) : { matches: false, addEventListener() {}, removeEventListener() {} });
 export const reduceMotion = mq('(prefers-reduced-motion: reduce)');
-export const narrow = mq('(max-width: 900px)');
+/** The stacked layout (stage on top, text below): phones in portrait. Chosen by shape, not width alone: a landscape phone and a tablet get two columns. */
+export const narrow = mq('(max-width: 700px) and (orientation: portrait)');
 export const darkQuery = mq('(prefers-color-scheme: dark)');
 
 // ---------------------------------------------------------------- event bus

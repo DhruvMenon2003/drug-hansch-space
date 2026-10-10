@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the data files for the Hansch Space 3D explorer (explorer/index.html).
+"""Build the data files for Drug Hansch Space (site/index.html).
 
 Reads the curated table written by curation/colab_curate_all.py. RDKit computes every descriptor the fits use from the
 curated SMILES, so all drugs are described the same way; PubChem adds XLogP3, complexity and 3D conformers wherever it
@@ -10,8 +10,10 @@ Colab:
     !wget -q -O build_data.py https://raw.githubusercontent.com/DhruvMenon2003/drug-toxicity-qsar-prediction/main/explorer/build_data.py
     %run build_data.py --curated curated/drugbank_curated_dedup.csv --out explorer_data
 
-Local:
-    python explorer/build_data.py --curated path/to/drugbank_curated_dedup.csv --out explorer/data
+Local (from the repository root):
+    python3 tools/build_data.py --curated path/to/drugbank_curated_dedup.csv
+    # writes site/data/{drugs,hansch}.json, provenance.csv, validation.md and tools/data/molecules.json, then the conformer
+    # shards site/data/mol/*.json (tools/shard_molecules.py); --out / --full-out / --no-shard change that
 
 Sources (APIs only, no scraping of drug pages):
     RDKit               Crippen logP and molar refractivity, TPSA, weight, H-bond counts, rotatable bonds, aromatic rings,
@@ -22,12 +24,15 @@ Sources (APIs only, no scraping of drug pages):
 
 --no-pubchem builds from RDKit alone (for when PubChem is down); a later run with PubChem fills its fields from the cache.
 
-Outputs (in --out):
+Outputs (--out is site/data by default, the published folder):
     drugs.json       one record per drug: ATC codes and names, routes, descriptors, PCA scores, ChEMBL activity
-    molecules.json   one 3D conformer per drug: atomic numbers, coordinates in angstrom, bonds
+    mol/<n>.json     the 3D conformers, 32 shards by CID modulo 32 (atomic numbers, coordinates in angstrom, bonds); the page
+                     fetches only the shard of the drug that is opened. Written by tools/shard_molecules.py.
     hansch.json      Hansch-type regressions of activity on logP, MR and TPSA per ChEMBL target, and for all drugs
     provenance.csv   every HTTP request with URL, status, size and UTC time (cached answers are marked)
     validation.md    cross-checks to read before trusting the page
+and in --full-out (tools/data by default, NOT published):
+    molecules.json   the full conformer table the shards are cut from (the rebuild source)
 """
 import argparse, csv, datetime as dt, hashlib, io, json, math, os, re, threading, time
 from concurrent.futures import ThreadPoolExecutor
@@ -259,12 +264,16 @@ def hansch(rows, rng):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--curated", default="curated/drugbank_curated_dedup.csv")
-    ap.add_argument("--out", default="explorer/data")
+    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ap.add_argument("--out", default=os.path.join(repo, "site", "data"), help="published data folder (drugs.json, hansch.json, provenance.csv, validation.md, mol/)")
+    ap.add_argument("--full-out", default=os.path.join(repo, "tools", "data"), help="where the full molecules.json goes (rebuild source, not published)")
+    ap.add_argument("--no-shard", action="store_true", help="skip the conformer shards (run tools/shard_molecules.py later)")
     ap.add_argument("--cache", default=".pubchem_cache")
     ap.add_argument("--fix-curated-l3", action="store_true", help="write the corrected ATC_L3_name back into --curated")
     ap.add_argument("--no-pubchem", action="store_true", help="RDKit only: use cached PubChem answers but make no new PubChem requests")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
+    os.makedirs(a.full_out, exist_ok=True)
     http = Http(a.cache)
     if a.no_pubchem:
         http.offline["pubchem.ncbi.nlm.nih.gov"] = True
@@ -436,14 +445,26 @@ def main():
                     "loadings": {f: [round(float(v), 3) for v in Vt[:3, i]] for i, f in enumerate(feats)}},
             "sources": {"pubchem": PUG, "who_atc": "https://atcddd.fhi.no/atc_ddd_index/", "curated": os.path.basename(a.curated)}}
     json.dump({"meta": meta, "drugs": out_drugs}, open(os.path.join(a.out, "drugs.json"), "w"), separators=(",", ":"))
-    json.dump(molecules, open(os.path.join(a.out, "molecules.json"), "w"), separators=(",", ":"))
+    json.dump(molecules, open(os.path.join(a.full_out, "molecules.json"), "w"), separators=(",", ":"))
     json.dump({"min_group": MIN_GROUP, "max_mw": MAX_MW, "seed": SEED, "groups": [overall, *groups]}, open(os.path.join(a.out, "hansch.json"), "w"), separators=(",", ":"))
     with open(os.path.join(a.out, "provenance.csv"), "w", newline="") as f:
         w = csv.DictWriter(f, ["url", "status", "bytes", "utc", "cached"])
         w.writeheader()
         w.writerows(http.log)
     write_validation(a, drugs, molecules, groups, overall, names, l3s, missing_l3, http.log, explained, feats, logged, started)
-    print("done:", ", ".join(sorted(os.listdir(a.out))))
+    shard_py = os.path.join(os.path.dirname(os.path.abspath(__file__)), "shard_molecules.py")
+    if a.no_shard:
+        pass
+    elif not os.path.exists(shard_py):         # e.g. build_data.py downloaded on its own into Colab
+        print("tools/shard_molecules.py is not next to this script: run it on the full molecules.json to write site/data/mol/")
+    else:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("shard_molecules", shard_py)
+        shard = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(shard)
+        if shard.main(["--src", os.path.join(a.full_out, "molecules.json"), "--out", os.path.join(a.out, "mol")]) != 0:
+            raise SystemExit("could not write the conformer shards")
+    print("done:", ", ".join(sorted(os.listdir(a.out))), "| full conformer table in", a.full_out)
 
 
 def write_validation(a, drugs, molecules, groups, overall, names, l3s, missing_l3, log, explained, feats, logged, started):

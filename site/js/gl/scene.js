@@ -16,6 +16,7 @@ import { createGovernor } from './quality.js';
 export const stage = {
   renderer: null, labels: null, scene: null, camera: null, controls: null, points: null, axes: null, extras: null, ring: null, selLabel: null,
   loop: null, quality: null, drugAt: null, slotOf: null, warm: [], onResize: null,
+  collapsed: false,           // set by render.js while the stage is the 56 px strip (phones, reading sections): resize and draw are skipped
   // what the next frame has to redo: instance matrices (inst), title placement (labels), the compaction that follows a
   // finished layout tween (settle), and the animation time the matrices were last written for (t)
   dirty: { inst: true, labels: true, settle: false, t: -1 },
@@ -145,8 +146,8 @@ function warmShaders() {
 
 /** Fit the renderer, the label layer and the camera to the stage element. */
 export function resize() {
-  const host = $('.stage-inner'), w = host.clientWidth, h = host.clientHeight;
-  if (!w || !h || !stage.renderer) return;
+  const canvas = $('#space'), w = canvas.clientWidth, h = canvas.clientHeight;     // the canvas, not its host: on a phone a toolbar row sits above it
+  if (!w || !h || !stage.renderer || stage.collapsed) return;                      // collapsed: the stage is a thin legend strip, nothing is drawn
   stage.renderer.setSize(w, h, false);
   stage.labels.setSize(w, h);
   stage.camera.aspect = w / h;

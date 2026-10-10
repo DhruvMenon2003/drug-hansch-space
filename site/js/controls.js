@@ -8,7 +8,11 @@ import { selectDrug, setView } from './view.js';
 /** Copy the current view into the form controls. */
 export function syncControls() {
   const v = app.view;
-  for (const a of ['x', 'y', 'z']) $('#ax-' + a).value = v[a];
+  for (const a of ['x', 'y', 'z']) {
+    $('#ax-' + a).value = v[a];
+    const hint = $(`#ax-${a}-hint`), k = AX[v[a]];                // the long name under the select; the options themselves carry the short label
+    if (hint) hint.textContent = k && k.long && k.long !== k.label ? k.long : '';
+  }
   $('#color-by').value = v.color;
   fillAtcSelects();
   $('#f-route').value = v.route;
@@ -33,7 +37,7 @@ export function initControls() {
   for (const a of ['x', 'y', 'z']) {
     const sel = $('#ax-' + a);
     sel.innerHTML = Object.entries(AX).filter(([k]) => a === 'x' ? !AX[k].pseudo : true)
-      .map(([k, o]) => `<option value="${k}">${esc(o.long || o.label)}</option>`).join('');
+      .map(([k, o]) => `<option value="${k}" title="${esc(o.long || o.label)}">${esc(o.label)}</option>`).join('');
     sel.addEventListener('change', () => setView({ [a]: sel.value, group: null, veber: false }));
   }
   $('#color-by').addEventListener('change', e => setView({ color: e.target.value }));
@@ -94,6 +98,7 @@ export function initControls() {
     say('');
     if (!passes(d)) setView({ l1: '', l2: '', l3: '', route: '', small: false, group: null });
     selectDrug(d.cid);
+    if (matchMedia('(pointer: coarse)').matches) $('#search').blur();     // a touch screen: put the keyboard away so the stage comes back and shows the chosen drug
   };
   $('#search').addEventListener('change', () => { const q = $('#search').value; if (q === enterQuery) { enterQuery = null; return; } find(); });
   $('#search').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); enterQuery = $('#search').value; find(); } });

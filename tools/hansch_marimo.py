@@ -7,9 +7,10 @@
 #     "altair",
 # ]
 # ///
-"""Hansch Space in marimo: the structure map and the Hansch fits from explorer/data, with structures on hover and
-molecule grids for any selection. Run with `marimo edit explorer/hansch_marimo.py` (or `marimo run` for app view).
-The data files are written by explorer/build_data.py; when they are not next to the notebook it reads them from GitHub."""
+"""Hansch Space in marimo: the structure map and the Hansch fits from site/data, with structures on hover and
+molecule grids for any selection. Run with `marimo edit tools/hansch_marimo.py` (or `marimo run` for app view).
+The data files are written by tools/build_data.py into site/data; the notebook looks there first (and in a data/ folder next
+to it), then reads them from GitHub."""
 
 import marimo
 
@@ -23,7 +24,7 @@ def _(mo):
     ## Hansch Space in marimo
     The curated DrugBank drugs, placed by structure (Morgan count fingerprints and t-SNE from `marimo_chem_utils`) and
     fitted with Hansch-type regressions of ChEMBL potency on RDKit Crippen log P, log P², molar refractivity and TPSA.
-    The same data drive the 3D page in `explorer/index.html`. The fits are exploratory: drugs that share a target are not
+    The same data drive the 3D page in `site/index.html`. The fits are exploratory: drugs that share a target are not
     a congeneric series.
     """)
     return
@@ -43,12 +44,14 @@ def _():
 
 @app.cell
 def _(json, mo, urllib):
-    _local = mo.notebook_dir() / "data"
-    _remote = "https://raw.githubusercontent.com/DhruvMenon2003/drug-toxicity-qsar-prediction/main/explorer/data/"
+    # tools/ is next to site/ in this repository; a data/ folder next to the notebook (the Colab layout) wins if it exists
+    _local = [mo.notebook_dir() / "data", mo.notebook_dir().parent / "site" / "data"]
+    _remote = "https://raw.githubusercontent.com/DhruvMenon2003/drug-hansch-space/main/site/data/"
 
     def load(name):
-        if (_local / name).exists():
-            return json.loads((_local / name).read_text())
+        for _dir in _local:
+            if (_dir / name).exists():
+                return json.loads((_dir / name).read_text())
         with urllib.request.urlopen(_remote + name) as r:
             return json.load(r)
 

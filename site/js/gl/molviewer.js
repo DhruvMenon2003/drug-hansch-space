@@ -2,8 +2,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { $, ORDER, app, bus, reduceMotion } from '../kernel.js';
-import { loadMolecules } from '../data.js';
+import { loadMolecule } from '../data.js';
 import { announce } from '../announce.js';
+import { expectConformer, setConformerRetry } from '../detail.js';
 import { createScheduler } from '../scheduler.js';
 import { disposeGroup, watchContext, watchDpr } from './scene.js';
 
@@ -75,13 +76,21 @@ function initMolViewer() {
 export async function showMolecule(d) {
   if (!molv.renderer) initMolViewer();
   $('#d-src').textContent = 'Loading conformer…';
+  setConformerRetry(null);
   let m;
-  try { m = (await loadMolecules())[String(d.cid)]; }
-  catch { $('#d-src').textContent = 'Could not load the conformer file.'; return; }
+  try { m = await loadMolecule(d.cid); }     // one shard of the conformer table, not the whole table
+  catch {
+    if (app.drugs[app.selected] !== d) return;
+    $('#d-src').textContent = 'Could not load the conformer file.';
+    setConformerRetry(() => showMolecule(d));
+    announce('Could not load the 3D conformer. A Retry button is next to the message.');
+    bus.emit('conformer:shown', { cid: d.cid });      // settled, without a conformer: the 2D depiction need not wait
+    return;
+  }
   if (app.drugs[app.selected] !== d) return;
   disposeGroup(molv.group);
   molv.group = null;
-  if (!m) { $('#d-src').textContent = 'No 3D conformer (PubChem has none and RDKit could not embed it).'; molv.renderer.clear(); return; }
+  if (!m) { $('#d-src').textContent = 'No 3D conformer (PubChem has none and RDKit could not embed it).'; molv.renderer.clear(); bus.emit('conformer:shown', { cid: d.cid }); return; }
   $('#d-src').textContent = molv.src = m.src;
   const showH = $('#show-h').checked, n = m.z.length, keep = [];
   for (let i = 0; i < n; i++) if (showH || m.z[i] !== 1) keep.push(i);
@@ -129,6 +138,7 @@ export async function showMolecule(d) {
   molv.controls.autoRotate = !reduceMotion.matches;
   molv.spinUntil = performance.now() + SPIN_MS;
   wake();
+  bus.emit('conformer:shown', { cid: d.cid });      // the 2D depiction waits for this (detail.js)
 }
 
 /**
@@ -138,7 +148,8 @@ export async function showMolecule(d) {
 export function initMolEvents() {
   const ac = new AbortController(), { signal } = ac;
   const off = bus.on('selection', ({ index }) => showMolecule(app.drugs[index]), ORDER.LATE);
+  expectConformer(true);
   $('#show-h').addEventListener('change', () => { if (app.selected >= 0) showMolecule(app.drugs[app.selected]); }, { signal });
   reduceMotion.addEventListener('change', () => { if (molv.controls && reduceMotion.matches) molv.controls.autoRotate = false; }, { signal });
-  return () => { off(); ac.abort(); molv.dispose?.(); };
+  return () => { off(); expectConformer(false); setConformerRetry(null); ac.abort(); molv.dispose?.(); };
 }

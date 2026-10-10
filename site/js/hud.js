@@ -22,6 +22,17 @@ export function renderLegend() {
     ch.disabled = slot < 0 && !v.atc.includes(null);
   });
   $('#atc-pick-wrap').hidden = v.color !== 'atc';
+  const grp = $('#g-atc');
+  if (grp) grp.hidden = v.color !== 'atc';                   // the whole 'ATC highlight' group has nothing to show in another colour mode
+  renderBadges();
+}
+
+/** The counts on the closed Explore groups: how many ATC groups are highlighted, how many filters are on. */
+export function renderBadges() {
+  const v = app.view, fb = $('#g-filters-badge'), ab = $('#g-atc-badge');
+  const n = [v.l1, v.l2, v.l3, v.route, v.small].filter(Boolean).length;
+  if (fb) fb.textContent = n ? `${n} on` : '';
+  if (ab) ab.textContent = v.color === 'atc' && v.atc.some(Boolean) ? `${v.atc.filter(Boolean).length} chosen` : '';
 }
 
 /** One line per chosen axis, with its long name. */

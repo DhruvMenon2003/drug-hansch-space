@@ -8,6 +8,7 @@
 import { $, app, bus, narrow, STEPS } from './kernel.js';
 import { setView } from './view.js';
 import { announce } from './announce.js';
+import { isSheetMode, readingLine, restoreAnchor } from './layout.js';
 
 const NAMES = Object.keys(STEPS);
 
@@ -27,17 +28,13 @@ export function goStep(name) {
 }
 
 // ---------------------------------------------------------------- the reading line
-/** Height of what sticks above the reading area: the masthead, plus the stage on phones where the stage sits on top. */
-const stack = () => ($('.masthead')?.offsetHeight ?? 0) + (narrow.matches ? ($('#stage')?.offsetHeight ?? 0) : 0);
-/** y (px from the viewport top) of the reading line. Wide: 62% of the viewport. Phones: 30% down the visible reading area, below the sticky stack. */
-export function readingLine() {
-  const H = innerHeight;
-  const y = narrow.matches ? stack() + 0.3 * (H - stack()) : 0.62 * H;
-  return Math.max(1, Math.min(H - 3, Math.round(y)));
-}
+// The line itself comes from js/layout.js (readingLine): on a phone 30% down the reading area that is left under the sticky
+// stack (header + stage, measured), elsewhere 62% of the viewport. A step is active while its box crosses the line, so scrolling
+// a step's heading to just under the stack always makes that step the active one (UX-08, also at 320 x 568).
+export { readingLine };
 
 let io = null, line = 0, margin = '', built = { w: 0, h: 0 }, skipFirst = false, ctx = null, jump = { id: '', at: 0 }, off = () => {};
-const targets = () => [...document.querySelectorAll('.step'), ...['#explore', '#detail', '#hansch', '#method'].map(s => $(s)), $('#table-details')?.closest('section')].filter(Boolean);
+const targets = () => [...document.querySelectorAll('.step'), ...['#explore', ...(isSheetMode() ? [] : ['#detail']), '#hansch', '#method'].map(s => $(s)), $('#table-details')?.closest('section')].filter(Boolean);   // a sheet is fixed to the screen, not part of the reading order
 
 /** "Show this fit in 3D" for the Hansch group in the select, unless the stage already shows it. */
 function showSelectedFit() {
@@ -84,6 +81,7 @@ function maybeRebuild() {
   const widthChanged = innerWidth !== built.w, dh = Math.abs(innerHeight - built.h);
   if (!widthChanged && dh > 0 && dh < 150) return;
   if (!widthChanged && dh === 0 && Math.abs(readingLine() - line) < 2) return;
+  if (widthChanged) restoreAnchor();                  // the screen turned: put the reader back where they were reading, then measure
   refreshTourBand();
 }
 
@@ -106,13 +104,13 @@ export function initTour() {
   const ac = new AbortController(), { signal } = ac;
   let timer = 0;
   addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(maybeRebuild, 120); }, { signal });
-  narrow.addEventListener('change', refreshTourBand, { signal });
+  narrow.addEventListener('change', () => { restoreAnchor(); refreshTourBand(); }, { signal });
   const noteJump = () => { jump = { id: location.hash.slice(1), at: performance.now() }; };
   addEventListener('hashchange', noteJump, { signal });
   noteJump();                                         // a page opened on #hansch counts as a jump
   // the sticky stack can change height by itself (wrapped header, collapsing header)
   const ro = new ResizeObserver(maybeRebuild);
-  for (const el of [$('.masthead'), $('#stage')]) if (el) ro.observe(el);
+  for (const el of [$('.masthead'), $('.stage-inner')]) if (el) ro.observe(el);   // the visible stage (the sticky box around it keeps one height)
   off = () => { ac.abort(); clearTimeout(timer); ro.disconnect(); io?.disconnect(); io = null; $('#tour')?.classList.remove('tour-live'); };
   return off;
 }
