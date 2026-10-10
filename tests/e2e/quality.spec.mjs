@@ -34,7 +34,7 @@ test.describe('adaptive resolution', () => {
     const floor = await feed(page, 200, 200);
     expect(floor.learned, 'the floor holds').toBe(0.75);
     expect(floor.ratio, 'and the renderer is at it').toBe(0.75);
-    expect(floor.width, 'the drawing buffer follows the ratio').toBe(Math.round(floor.cssW * 0.75));
+    expect(floor.width, 'the drawing buffer follows the ratio').toBe(Math.floor(floor.cssW * 0.75));
     await expectInk(page, '#space', 0.01, 'a lower resolution still draws the plot');
     // 3 fast verdicts of 90 frames each: back up, one rung per verdict, never above the cap
     const up = [0.75];

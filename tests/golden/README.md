@@ -34,12 +34,14 @@ scale 0. The old snapshot hashed the raw instance arrays, which differ by constr
 
 | Change | Where it shows in a snapshot | How it is checked instead |
 | --- | --- | --- |
-| Table rows use `aria-current="true"` instead of the invalid `aria-selected` (D22) | `table.selectedRows` (the snapshot reads both attributes, so the value is unchanged) | `tests/e2e/shell.spec.mjs` / `lod.spec.mjs` do not depend on it; the snapshot selector accepts either attribute. **CSS dependency (shell):** `#table tbody tr[aria-selected="true"]` in `style.css` must become `[aria-current="true"]`. |
-| The Hansch panel follows the group chosen by the tour / Explore (UX-18). The original left the panel on the previous group while the select already read the new one | `hansch.out`, `hansch.cands`, `hansch.plot` in views where `view.group` changes without the select being used | parity.spec.mjs: those hashes are compared strictly except in the views listed in `HANSCH_FOLLOWS_VIEW`; for them the spec asserts the panel text names the group that the select shows (`selects[8]`). |
+| Table rows use `aria-current="true"` instead of the invalid `aria-selected` (D22) | `table.selectedRows` (the snapshot reads both attributes, so the value is unchanged) | `tests/e2e/shell.spec.mjs` / `lod.spec.mjs` do not depend on it; the snapshot selector accepts either attribute. `style.css` highlights the selected row through `[aria-current="true"]` (the shell stage added it next to the old selector). |
+| The Hansch panel follows the group chosen by the tour / Explore (UX-18). The original left the panel on the previous group while the select already read the new one | `hansch.out`, `hansch.cands`, `hansch.plot` (and the new field `hanschFor`, the group the panel is drawn for) in the 11 views where the original's `selects[8]` and `hanschFor` disagree: `step:all` .. `select:dexamethasone`, `step:series-again` | parity.spec.mjs derives the set from the GOLDEN (`selects[8] !== hanschFor`), skips the panel hashes there and asserts instead that the new panel describes the group the select shows; everywhere else the hashes are strict. |
+| The search box no longer searches a second time when it loses focus (D21; the original re-ran the search on the pending `change` event, which in the recipe re-selected caffeine and reset the filters inside the unrelated `ui:reset-view` step) | the recipe | `search()` in snapshot.mjs blurs the input inside the search step, so both apps reach the same state; goldens regenerated from the original with that recipe. |
+| Hover is cleared when a layout changes (D23) | none (the recipe never hovers across a layout) | lod.spec.mjs |
 
 ### Pixel comparison with the original (sphere LOD 18x12 -> 10x7)
 
-`node tests/tools/pixel-compare.mjs --orig http://localhost:<oracle>/ --new http://localhost:<site>/ --head-shell`
+`node tests/tools/pixel-compare.mjs --orig http://localhost:<oracle>/ --new http://localhost:<site>/ --shell-rev 291bdae`
 (screenshots of the 8 tour steps, live, original vs new site). Numbers from the S2a run are in the stage report and in
 `docs/DECISIONS.md`. Metric: share of pixels that differ visibly (pixelmatch YIQ, threshold 0.2, the metric of Playwright's
 `toHaveScreenshot`); the share of pixels that differ by even one grey level is larger (silhouette anti-aliasing of 759

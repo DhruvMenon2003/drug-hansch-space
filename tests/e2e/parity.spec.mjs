@@ -38,6 +38,17 @@ const ORIGINAL_TOKENS_CSS = `
 :root[data-theme="dark"] { --point: ${ORIGINAL_TOKENS.dark.point}; }
 `;
 const withoutTokens = ({ tokens, ...rest }) => rest;
+// 3. HANSCH PANEL FOLLOWS THE VIEW (runtime stage, UX-18). In the original the target-group select changed with the view (tour
+//    step 8, Explore, "Show this fit") but the equation, statistics and plot kept describing the previous group. Wherever the
+//    GOLDEN's select and panel disagree (`selects[8]` against `hanschFor`) the three panel hashes are not compared; instead the
+//    panel must describe the group the select shows. Everywhere else they are compared strictly.
+//    Also: the search box no longer searches a second time when it loses focus (D21); the recipe blurs the input inside the
+//    search steps so both apps reach the same state. See tests/golden/README.md.
+const hanschStale = v => v.selects[8] !== v.hanschFor;
+const withoutHansch = ({ hansch, hanschFor, ...rest }) => rest;
+/** The view as compared against the golden: tokens never (checked directly), the Hansch panel only where the original showed it consistently. */
+const comparable = (actual, gold) => (hanschStale(gold) ? withoutHansch(withoutTokens(actual)) : withoutTokens(actual));
+const comparableGold = gold => (hanschStale(gold) ? withoutHansch(withoutTokens(gold)) : withoutTokens(gold));
 
 /** Open the site with ?debug and collect console problems and every request origin. `originalTokens` restores the pre-fix token values (see the allow-list). */
 async function open(browser, baseURL, { originalTokens = false } = {}) {
@@ -66,7 +77,11 @@ test.describe('parity with the original app', () => {
     expect(Object.keys(actual.views), 'same recipe as the golden file').toEqual(golden.meta.recipe);
     expect.soft(actual.boot, 'copy and controls filled at load').toEqual(golden.boot);
     // every field strict, except the tokens hash: the page now also reads the new `bg` token, so the object it hashes has one more key
-    for (const id of golden.meta.recipe) expect.soft(withoutTokens(actual.views[id]), `view ${id}`).toEqual(withoutTokens(golden.views[id]));
+    for (const id of golden.meta.recipe) {
+      expect.soft(comparable(actual.views[id], golden.views[id]), `view ${id}`).toEqual(comparableGold(golden.views[id]));
+      if (hanschStale(golden.views[id])) expect.soft(actual.views[id].hanschFor, `view ${id}: the Hansch panel describes the group the select shows`).toBe(actual.views[id].selects[8]);
+    }
+    expect(golden.meta.recipe.filter(id => hanschStale(golden.views[id])).length, 'the stale-panel views of the original (allow-list item 3)').toBeGreaterThan(5);
     // ... and the tokens themselves are checked directly: the original values (the reconstruction is proven against the golden hashes) plus bg
     expect(sha1(ORIGINAL_TOKENS.light), 'the reconstructed original light tokens are the ones the original app had').toBe(golden.views.load.tokens);
     expect(sha1(ORIGINAL_TOKENS.dark), 'the reconstructed original dark tokens are the ones the original app had').toBe(golden.views['theme:dark'].tokens);
@@ -121,7 +136,7 @@ test.describe('parity with the original app', () => {
     await page.context().close();
   });
 
-  test('scrolling the tour still drives the steps (ScrollTrigger is unchanged in this stage)', async ({ browser, baseURL }) => {
+  test('scrolling the tour still drives the steps (IntersectionObserver band, no ScrollTrigger)', async ({ browser, baseURL }) => {
     const { page } = await open(browser, baseURL);
     await waitReady(page, '__hansch');
     for (const name of STEP_NAMES) {

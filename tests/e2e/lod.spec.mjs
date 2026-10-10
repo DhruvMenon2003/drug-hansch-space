@@ -90,7 +90,7 @@ test.describe('sphere LOD and instance compaction', () => {
 
   test('picking: the sphere under the pointer is the drug that was aimed at, in a compacted view (20 random drugs)', async () => {
     // a filter that reorders the slots (drug index != slot), then aim at 20 isolated drugs by projected position
-    await page.evaluate(() => window.__hansch.setView({ x: 'ts1', y: 'none', z: 'ts2', color: 'atc', l1: 'N', l2: '', l3: '', route: '', group: null, small: false, veber: false }));
+    await page.evaluate(() => window.__hansch.setView({ x: 'ts1', y: 'none', z: 'ts2', color: 'atc', l1: '', l2: '', l3: '', route: 'ORAL', group: null, small: false, veber: false }));
     await page.waitForFunction(() => window.__hansch.anim.t >= 1, null, { timeout: 30_000 });
     await page.evaluate(() => window.__hansch.camTo([0, 37, 3], { instant: true }));
     await quiet(page, 600);
@@ -102,7 +102,7 @@ test.describe('sphere LOD and instance compaction', () => {
         if (Math.abs(v.x) > 0.9 || Math.abs(v.y) > 0.9 || v.z > 1) return;
         pts.push({ i, x: (v.x * 0.5 + 0.5) * r.width + r.left, y: (-v.y * 0.5 + 0.5) * r.height + r.top });
       });
-      const iso = pts.filter(p => pts.every(q => q === p || Math.hypot(p.x - q.x, p.y - q.y) > 18));
+      const iso = pts.filter(p => pts.every(q => q === p || Math.hypot(p.x - q.x, p.y - q.y) > 12));
       // a deterministic shuffle so a failure reproduces
       let seed = 12345; const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32;
       for (let k = iso.length - 1; k > 0; k--) { const j = Math.floor(rnd() * (k + 1)); [iso[k], iso[j]] = [iso[j], iso[k]]; }
@@ -169,6 +169,22 @@ test.describe('sphere LOD and instance compaction', () => {
     await page.evaluate(() => window.__hansch.selectDrug(window.__hansch.app.visible[0].cid));
     await page.waitForFunction(() => window.__hansch.molv.group, null, { timeout: 30_000 });
     await expect(page.locator('#d-name')).toHaveText(name);
+  });
+
+  test('shader programs are pre-warmed at boot: the Veber plane, the fitted surface and the selection ring compile nothing new', async () => {
+    const programs = () => page.evaluate(() => window.__hansch.stage.renderer.info.programs.length);
+    const boot = await programs();
+    await page.evaluate(() => window.__hansch.goStep('tpsa'));
+    await page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.__hansch.stage.extras.children.length > 0, null, { timeout: 30_000 });
+    await quiet(page, 400);
+    expect(await programs(), 'the first TPSA step (Veber plane + edge) used to compile two programs on the spot').toBe(boot);
+    await page.evaluate(() => window.__hansch.selectDrug(window.__hansch.app.visible[0].cid));     // the selection ring
+    await page.waitForFunction(() => window.__hansch.stage.ring.visible, null, { timeout: 30_000 });
+    await quiet(page, 400);
+    await page.evaluate(() => window.__hansch.goStep('series'));                                    // surface, wireframe, residual sticks
+    await page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.__hansch.stage.extras.children.length >= 3, null, { timeout: 30_000 });
+    await quiet(page, 400);
+    expect(await programs()).toBe(boot);
   });
 
   test('a selected drug that a filter leaves out loses its ring and gets a note in the panel (D23)', async () => {

@@ -5,10 +5,11 @@
 // oracle server); the S2a numbers are in tests/golden/README.md.
 //
 //   python3 -m http.server 4203 --directory <scratchpad>/arch/site          # the oracle
-//   node tests/tools/pixel-compare.mjs --orig http://localhost:4203/ --new http://localhost:4201/ [--head-shell] [--out dir]
+//   node tests/tools/pixel-compare.mjs --orig http://localhost:4203/ --new http://localhost:4201/ [--shell-rev 291bdae] [--out dir]
 //
-// --head-shell serves the committed (HEAD) index.html and style.css to the new site, so that deliberate shell changes
-// (tokens, layout) do not count as pixel differences and only the 3D rendering is compared.
+// --shell-rev <git rev> serves index.html and style.css of that commit to the new site (291bdae = the S1 split, whose shell
+// is the original's), so that deliberate shell changes (tokens, layout, wording) do not count as pixel differences and only
+// the 3D rendering is compared.
 import { chromium } from '@playwright/test';
 import { execSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -19,9 +20,9 @@ import { STEP_NAMES } from '../helpers/snapshot.mjs';
 
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const orig = arg('--orig', 'http://localhost:4203/'), neu = arg('--new', 'http://localhost:4201/'), out = resolve(arg('--out', 'test-results/pixels'));
-const headShell = process.argv.includes('--head-shell');
+const shellRev = arg('--shell-rev', '');
 mkdirSync(out, { recursive: true });
-const head = p => execSync(`git show HEAD:${p}`, { cwd: resolve(import.meta.dirname, '../..'), maxBuffer: 1 << 24 });
+const head = p => execSync(`git show ${shellRev}:${p}`, { cwd: resolve(import.meta.dirname, '../..'), maxBuffer: 1 << 24 });
 
 async function shoot(browser, base, hook, opts, name, useHead) {
   const page = await (await browser.newContext(opts)).newPage();
@@ -53,7 +54,7 @@ const configs = [
 let worst = 0;
 for (const [label, opts] of configs) {
   const A = await shoot(browser, orig, '__dbg', opts, `orig-${label}`, false);
-  const B = await shoot(browser, neu, '__hansch', opts, `new-${label}`, headShell);
+  const B = await shoot(browser, neu, '__hansch', opts, `new-${label}`, !!shellRev);
   console.log(`== ${label}`);
   for (const s of STEP_NAMES) {
     const d = { ...diffPng(A[s], B[s]), ...diffPerceptual(A[s], B[s]) };

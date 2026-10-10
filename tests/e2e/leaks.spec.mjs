@@ -27,10 +27,14 @@ test.describe('GPU resources do not leak', () => {
     const pick = async (cid) => {
       await page.evaluate(c => window.__hansch.selectDrug(c), cid);
       await page.waitForFunction(c => window.__hansch.molv.group && window.__hansch.app.drugs[window.__hansch.app.selected].cid === c && !/Loading/.test(document.querySelector('#d-src').textContent), cid, { timeout: 30_000 });
+      // the viewer only draws (and so only allocates GL buffers) while it is on screen
+      await page.locator('#mol').scrollIntoViewIfNeeded();
+      await page.waitForFunction(() => window.__hansch.molv.visible, null, { timeout: 10_000 });
+      await page.evaluate(() => window.__hansch.molv.loop.renderNow());
     };
     const AXES = ['logp', 'mr', 'tpsa', 'mw', 'hbd', 'hba', 'rotb', 'arom', 'fsp3', 'cx'];
     const change = async i => {
-      await page.evaluate(([a, b, c, atc]) => window.__hansch.setView({ x: a, y: b, z: c, l1: atc, group: null, veber: i % 3 === 0 && b === 'tpsa' }, { instant: true }), [AXES[i % 10], AXES[(i + 3) % 10], AXES[(i + 6) % 10], i % 4 === 0 ? 'N' : '']);
+      await page.evaluate(([a, b, c, atc, veber]) => window.__hansch.setView({ x: a, y: b, z: c, l1: atc, group: null, veber }, { instant: true }), [AXES[i % 10], AXES[(i + 3) % 10], AXES[(i + 6) % 10], i % 4 === 0 ? 'N' : '', i % 3 === 0 && AXES[(i + 3) % 10] === 'tpsa']);
     };
     // warm up: every kind of object has been created once
     for (let i = 0; i < 4; i++) { await pick(withConformer[i * 7]); await change(i); }
@@ -50,6 +54,7 @@ test.describe('GPU resources do not leak', () => {
     await page.waitForFunction(() => window.__hansch.anim.t >= 1, null, { timeout: 30_000 });
     await quiet(page, 800);
     const after = await mem(page);
+    expect(before.molBuffers, 'the viewer has really allocated GL buffers (the check is not vacuous)').toBeGreaterThan(5);
     expect(after.molBuffers, `molecule viewer live GL buffers ${before.molBuffers} -> ${after.molBuffers}`).toBe(before.molBuffers);
     expect(after.molGeo, 'molecule viewer geometries').toBe(before.molGeo);
     expect(after.molTex).toBe(before.molTex);

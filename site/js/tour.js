@@ -36,7 +36,7 @@ export function readingLine() {
   return Math.max(1, Math.min(H - 3, Math.round(y)));
 }
 
-let io = null, line = 0, margin = '', built = { w: 0, h: 0 }, skipFirst = false, ctx = null, off = () => {};
+let io = null, line = 0, margin = '', built = { w: 0, h: 0 }, skipFirst = false, ctx = null, jump = { id: '', at: 0 }, off = () => {};
 const targets = () => [...document.querySelectorAll('.step'), ...['#explore', '#detail', '#hansch', '#method'].map(s => $(s)), $('#table-details')?.closest('section')].filter(Boolean);
 
 /** "Show this fit in 3D" for the Hansch group in the select, unless the stage already shows it. */
@@ -49,11 +49,14 @@ function showSelectedFit() {
   bus.emit('cmd:camera', { preset: 'series' });
 }
 
+// Explore and Hansch change the stage only when the reader ARRIVES from the tour (or lands there), or follows a link to them:
+// scrolling on from Explore through the drug panel into Hansch must not throw away a view the reader just built.
+const jumped = id => jump.id === id && performance.now() - jump.at < 1500;
 function activate(el) {
   if (el.classList.contains('step')) { ctx = 'step'; goStep(el.dataset.step); return; }
-  const id = el.id || 'table';
-  if (id === 'explore') { if (ctx === 'step' || ctx === null) goStep('all'); }   // came from the tour (or landed here): the all-drugs view
-  else if (id === 'hansch') { if (ctx !== 'hansch') showSelectedFit(); }
+  const id = el.id || 'table', fresh = ctx === 'step' || ctx === null;
+  if (id === 'explore' && (fresh || jumped(id))) goStep('all');      // the all-drugs view
+  else if (id === 'hansch' && (fresh || jumped(id))) showSelectedFit();
   ctx = id;
 }
 
@@ -104,6 +107,9 @@ export function initTour() {
   let timer = 0;
   addEventListener('resize', () => { clearTimeout(timer); timer = setTimeout(maybeRebuild, 120); }, { signal });
   narrow.addEventListener('change', refreshTourBand, { signal });
+  const noteJump = () => { jump = { id: location.hash.slice(1), at: performance.now() }; };
+  addEventListener('hashchange', noteJump, { signal });
+  noteJump();                                         // a page opened on #hansch counts as a jump
   // the sticky stack can change height by itself (wrapped header, collapsing header)
   const ro = new ResizeObserver(maybeRebuild);
   for (const el of [$('.masthead'), $('#stage')]) if (el) ro.observe(el);

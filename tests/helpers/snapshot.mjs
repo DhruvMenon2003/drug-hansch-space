@@ -22,7 +22,7 @@ const RESET = { l1: '', l2: '', l3: '', route: '', small: false, group: null, ve
 /** Name of the debug hook the page exposes: window.__hansch (new) or window.__dbg (original), or null. */
 export const hookOf = page => page.evaluate(() => (window.__hansch ? '__hansch' : window.__dbg ? '__dbg' : null));
 
-/** Wait until the layout tween, every other running gsap tween (ScrollTrigger keeps a paused delayedCall) and the next frames are done, and a pending conformer has loaded. */
+/** Wait until the layout tween, every other running gsap tween and the next frames are done, and a pending conformer has loaded. */
 export async function settle(page, hook) {
   await page.waitForFunction(h => {
     const H = window[h];
@@ -78,11 +78,12 @@ export async function snapshot(page, hook, keepRaw = false) {
       spin: $('#btn-spin').getAttribute('aria-pressed'),
       tooltip: { hidden: $('#tooltip').hidden, html: $('#tooltip').innerHTML, left: $('#tooltip').style.left, top: $('#tooltip').style.top, cursor: $('#space').style.cursor },
       detail: det,
+      hanschFor: (($('#h-out').textContent.match(/First mechanism target (CHEMBL\d+)/) || [])[1]) || 'ALL',   // the group the Hansch panel is drawn for
       hansch: { out: $('#h-out').innerHTML, cands: $('#h-cands').innerHTML, plot: $('#h-plot').innerHTML },
       tokens: app.tokens,
     };
   }, hook);
-  const { animTo, drawnMatrices, drawnColors, detail, hansch, ...rest } = raw;
+  const { animTo, drawnMatrices, drawnColors, detail, hansch, ...rest } = raw;   // rest keeps hanschFor
   return {
     ...(keepRaw ? { _raw: raw } : {}),
     ...rest, animToSha1: sha1(animTo), animToN: animTo.length, colorsSha1: sha1(drawnColors), matricesSha1: sha1(drawnMatrices),
@@ -123,7 +124,10 @@ const frontPoint = (page, hook) => page.evaluate(h => {
 }, hook);
 
 const view = (id, patch) => ({ id, run: (page, h) => page.evaluate(([hook, p]) => window[hook].setView(p), [h, { ...RESET, ...patch }]) });
-const search = (id, text) => ({ id, run: async page => { await page.fill('#search', text); await page.press('#search', 'Enter'); } });
+// The input is blurred right after Enter: the original app searched a second time when a later click blurred the input (its
+// pending 'change' event), which re-selected the drug and reset the filters in the middle of an unrelated step (D21). Blurring
+// inside the step makes both apps reach the same state, so the recipe tests the search and not that bug.
+const search = (id, text) => ({ id, run: async page => { await page.fill('#search', text); await page.press('#search', 'Enter'); await page.evaluate(() => document.querySelector('#search').blur()); } });
 const select = (id, byName) => ({ id, run: (page, h) => page.evaluate(([hook, n]) => { const H = window[hook], d = n ? H.app.drugs.find(x => x.name === n) : H.app.drugs.find(x => !x.conf); H.selectDrug(d.cid); }, [h, byName]) });
 
 /** The ordered list of actions. Each is run, the app is settled, and a snapshot is taken. */

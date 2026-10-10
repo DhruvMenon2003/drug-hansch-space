@@ -135,6 +135,8 @@ function warmShaders() {
     new THREE.LineSegments(new THREE.EdgesGeometry(plane), new THREE.LineBasicMaterial({ transparent: true })),              // plane edge, residual sticks, axes
   ];
   for (const p of parts) { p.frustumCulled = false; warm.add(p); }
+  // the light counts are part of every program's cache key, even an unlit material's: mirror the main scene's lights
+  warm.add(new THREE.HemisphereLight(), new THREE.DirectionalLight());
   try { renderer.compile(warm, camera); } catch (err) { console.warn('shader pre-warm failed', err); }
   plane.dispose();
   parts[2].geometry.dispose();

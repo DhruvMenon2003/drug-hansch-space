@@ -14,6 +14,17 @@ import { fillMethod, fillTourText, initHansch } from './hansch.js';
 import { goStep, initTour, refreshTourBand, tourBand } from './tour.js';
 import { hideStatus, setProgress, setStatus } from './fallback.js';
 
+/** "Skip to the 3D plot": the target is a marker span; hand focus to the canvas itself (when it is shown). */
+function bindSkipLink() {
+  document.addEventListener('click', e => {
+    if (!e.target.closest?.('a[href="#space-skip"]')) return;
+    const plot = $('#space');
+    if (!plot || plot.hidden) return;                // 2D-only mode: the default jump to the marker stands
+    e.preventDefault();
+    plot.focus();
+  });
+}
+
 /**
  * Load the data and build every non-3D part of the page. `caps` comes from caps.js. Throws on a data error (an Error with
  * `phase: 'data'`, so main.js can tell it from a bug). Loading progress: 1 = data in, 2 = the page built.
@@ -22,6 +33,7 @@ export async function bootCore(caps) {
   if (new URLSearchParams(location.search).has('debug')) window.__hansch = { app, anim, selectDrug, setView, goStep, STEPS, bus, caps, tour: { band: tourBand, refresh: refreshTourBand } };
   // gsap keeps its ticker (a rAF loop) alive for 120 ticks after the last tween by default; 20 is plenty and shortens the tail before true idle
   window.gsap?.config({ autoSleep: 20 });
+  bindSkipLink();
   setStatus('Loading data…');
   try { await loadData(); } catch (err) { err.phase = 'data'; throw err; }
   setProgress(1);

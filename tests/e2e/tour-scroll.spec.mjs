@@ -111,7 +111,8 @@ for (const [label, opts] of VIEWPORTS) {
       await page.waitForTimeout(400);
       expect(await page.evaluate(() => JSON.stringify(window.__hansch.app.view)), 'Method does not touch the stage').toBe(hanschView);
       await go('#tour');
-      await page.waitForFunction(() => window.__hansch.app.step === 'space', null, { timeout: 15_000 });
+      // the step under the reading line (on a phone the first step sits partly under the sticky stack when #tour is scrolled to the top)
+      await page.waitForFunction(() => { const line = window.__hansch.tour.band().line, el = [...document.querySelectorAll('.step')].find(e => { const r = e.getBoundingClientRect(); return r.top <= line && r.bottom >= line; }); return el && window.__hansch.app.step === el.dataset.step; }, null, { timeout: 15_000 });
       // landing straight on #hansch from the top (the tour skipped entirely) also shows the fit
       await page.evaluate(() => { window.scrollTo({ top: 0, behavior: 'instant' }); });
       await page.waitForFunction(() => window.__hansch.app.step === 'space');
@@ -120,16 +121,18 @@ for (const [label, opts] of VIEWPORTS) {
       await ctx.close();
     });
 
-    test('scrolling from the tour into Explore does not reset a view the user built there', async ({ browser, baseURL }) => {
+    test('scrolling on from Explore through the drug panel into Hansch does not reset a view the user built there', async ({ browser, baseURL }) => {
       const { ctx, page } = await boot(browser, baseURL, opts);
       await page.evaluate(() => { location.hash = '#explore'; });
       await page.waitForFunction(() => window.__hansch.app.step === 'all');
       await page.selectOption('#ax-x', 'mw');
       await page.waitForFunction(() => window.__hansch.app.view.x === 'mw');
-      await page.evaluate(() => document.querySelector('#detail').scrollIntoView({ block: 'center', behavior: 'instant' }));
-      await page.evaluate(() => document.querySelector('#explore').scrollIntoView({ block: 'center', behavior: 'instant' }));
-      await page.waitForTimeout(600);
-      expect(await page.evaluate(() => window.__hansch.app.view.x), 'moving between panels keeps the custom view').toBe('mw');
+      // read down the page the way a person does: Explore, the drug panel, the Hansch panel, the table, Method (no jump links)
+      for (const id of ['#detail', '#hansch', '#method', '#explore']) {
+        await page.evaluate(sel => document.querySelector(sel).scrollIntoView({ block: 'start', behavior: 'instant' }), id);
+        await page.waitForTimeout(500);
+        expect(await page.evaluate(() => window.__hansch.app.view.x), `after scrolling to ${id} the custom view is still there`).toBe('mw');
+      }
       await ctx.close();
     });
   });
