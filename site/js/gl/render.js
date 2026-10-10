@@ -5,10 +5,11 @@
 // (layout tween running, orbit damping or a camera tween moving, Spin on). Everything else wakes the loop explicitly:
 // orbit controls, hover and selection, layout / recolor / theme, resize, fonts, tween updates. Idle = no rAF, no draw call.
 import * as THREE from 'three';
-import { $, ORDER, STEPS, anim, app, bus, cap, esc, fx, reduceMotion } from '../kernel.js';
+import { $, ORDER, S, STEPS, anim, app, bus, cap, esc, fx, narrow, reduceMotion } from '../kernel.js';
 import { AX } from '../model.js';
 import { selectDrug } from '../view.js';
-import { assignSlots, stage, wake } from './scene.js';
+import { enableExpand, layoutState } from '../layout.js';
+import { assignSlots, resize, stage, wake } from './scene.js';
 
 const _m = new THREE.Matrix4();
 const camSig = new Float64Array(9);           // position (3), quaternion (4), zoom, aspect of the last frame
@@ -29,7 +30,7 @@ function cameraMoved() {
  */
 export function renderFrame(t = 0, dt = 0) {
   const { points, controls, camera, ring, selLabel, quality } = stage;
-  if (!points) return false;
+  if (!points || stage.collapsed) return false;      // collapsed: the stage is a legend strip, nothing is drawn
   if (dt > 0) { quality.active(); quality.sample(dt, true); }   // may re-allocate the buffer: before drawing, never after
   const moved = controls.update();
   const D = stage.dirty, animating = anim.t < 1, C = anim.cur;
@@ -67,33 +68,76 @@ export function renderFrame(t = 0, dt = 0) {
   const camMoved = cameraMoved();
   stage.renderer.render(stage.scene, camera);
   stage.labels.render(stage.scene, camera);
-  if (D.labels || camMoved) { D.labels = false; keepTitlesInside(); }
+  if (D.labels || camMoved) { D.labels = false; tidyLabels(); }
   if (firstFrame) { firstFrame = false; bus.emit('gl:firstframe'); }
   return animating || moved === true || controls.autoRotate === true;
 }
 
-// Axis titles hang off the axis ends; slide any that would run past the stage edge back inside it, and below the legend
-// or the buttons if they would sit on them. The CSS translate property composes with the transform CSS2DRenderer
-// writes every frame, so the two do not fight. All rectangles are read before any style is written (no forced layout per title).
-function keepTitlesInside() {
+// Label tidy-up, once per changed frame. Axis titles hang off the axis ends: slide any that would leave the label layer back
+// inside it (both ways: a title below the stage is as lost as one beside it), and off the legend or the buttons if they would sit
+// on them. The CSS translate property composes with the transform CSS2DRenderer writes every frame, so the two do not fight.
+// Tick labels are then thinned: closest to the middle of the plot first, a tick that would cover an axis title or a tick already
+// kept, or that is not entirely inside the layer, is hidden (visibility, so the label stays in the DOM and the scene is unchanged).
+// All rectangles are read before any style is written (no forced layout per label).
+const rectsOverlap = (a, b, pad = 2) => a.left < b.right + pad && a.right > b.left - pad && a.top < b.bottom + pad && a.bottom > b.top - pad;
+const _o = new THREE.Vector3();
+function tidyLabels() {
   const host = stage.labels.domElement, box = host.getBoundingClientRect();
-  const keepOut = ['.hud', '.stage-tools'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height);
+  const keepOut = ['.hud', '.stage-tools'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height && rectsOverlap(r, box, 0));
   const titles = [...host.querySelectorAll('.ax-title')].map(el => ({ el, r: el.getBoundingClientRect() })).filter(o => o.r.width);
+  const ticks = [...host.querySelectorAll('.ax-label')].map(el => ({ el, r: el.getBoundingClientRect() }));
+  const kept = [];
   for (const { el, r } of titles) {
     const [wx, wy] = (el.dataset.shift || '0 0').split(' ').map(Number);
     const left = r.left - wx, right = r.right - wx, top = r.top - wy, bottom = r.bottom - wy;
     const x = Math.round(Math.max(box.left + 8 - left, Math.min(0, box.right - 8 - right)));
     let y = 0;
     for (const k of keepOut) if (left + x < k.right && right + x > k.left && top + y < k.bottom && bottom + y > k.top) y = Math.round(k.bottom + 6 - top);
+    // never below the bottom edge or above the top edge of the layer (the clamp wins over the keep-out: a title on a button beats a lost title)
+    if (bottom + y > box.bottom - 4) y = Math.round(box.bottom - 4 - bottom);
+    if (top + y < box.top + 4) y = Math.round(box.top + 4 - top);
     const shift = `${x} ${y}`;
     if (shift !== (el.dataset.shift || '0 0')) { el.dataset.shift = shift; el.style.translate = x || y ? `${x}px ${y}px` : ''; }
+    kept.push({ left: left + x, right: right + x, top: top + y, bottom: bottom + y });
+  }
+  if (!ticks.length) return;
+  _o.set(0, 0, 0).project(stage.camera);
+  const ox = (_o.x * 0.5 + 0.5) * box.width + box.left, oy = (-_o.y * 0.5 + 0.5) * box.height + box.top;
+  const order = ticks.map(t => ({ ...t, d: Math.hypot((t.r.left + t.r.right) / 2 - ox, (t.r.top + t.r.bottom) / 2 - oy) })).sort((a, b) => a.d - b.d);
+  for (const t of order) {
+    const inside = t.r.left >= box.left && t.r.right <= box.right && t.r.top >= box.top && t.r.bottom <= box.bottom;
+    const show = inside && !kept.some(k => rectsOverlap(t.r, k, 1));
+    if (show) kept.push(t.r);
+    const v = show ? '' : 'hidden';
+    if (t.el.style.visibility !== v) t.el.style.visibility = v;
   }
 }
 
 // ---------------------------------------------------------------- hover, click, tooltip
-const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
-/** Drug index under the pointer, or -1. Instances are compacted, so the hit's slot is mapped back to its drug. */
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), _p = new THREE.Vector3();
+/** How far (CSS px) a finger or pen may be from a sphere's centre and still select it. */
+export const TOUCH_RADIUS = 22;
+/**
+ * Touch and pen: the visible sphere whose centre is nearest the contact point on screen, within TOUCH_RADIUS px (a fingertip is
+ * far wider than a 9 px sphere); two within 1.5 px of each other: the one nearer the camera wins. -1 when none is that close.
+ */
+function pickNearest(clientX, clientY, canvas) {
+  const r = canvas.getBoundingClientRect(), { camera, points, drugAt } = stage, cur = anim.cur;
+  let best = -1, bestD = Infinity, bestZ = Infinity;
+  for (let s = 0, n = points.count; s < n; s++) {
+    const i = drugAt[s], k = i * 4;
+    if (cur[k + 3] <= 0.5) continue;
+    _p.set(cur[k], cur[k + 1], cur[k + 2]).project(camera);
+    if (_p.z < -1 || _p.z > 1) continue;                                   // behind the camera or past the far plane
+    const d = Math.hypot((_p.x * 0.5 + 0.5) * r.width + r.left - clientX, (-_p.y * 0.5 + 0.5) * r.height + r.top - clientY);
+    if (d > TOUCH_RADIUS) continue;
+    if (best < 0 || d < bestD - 1.5 || (d <= bestD + 1.5 && _p.z < bestZ)) { best = i; bestD = Math.min(d, bestD); bestZ = _p.z; }
+  }
+  return best;
+}
+/** Drug index under the pointer, or -1. Touch and pen take the nearest sphere within reach; a mouse needs an exact ray hit. Instances are compacted, so the hit's slot is mapped back to its drug. */
 function pick(ev, canvas) {
+  if (ev.pointerType === 'touch' || ev.pointerType === 'pen') { const i = pickNearest(ev.clientX, ev.clientY, canvas); if (i >= 0) return i; }
   const r = canvas.getBoundingClientRect();
   ndc.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
   ray.setFromCamera(ndc, stage.camera);
@@ -101,6 +145,8 @@ function pick(ev, canvas) {
   for (const h of hits) { const i = stage.drugAt[h.instanceId]; if (anim.cur[i * 4 + 3] > 0.5) return i; }
   return -1;
 }
+/** The drug a pointer of `pointerType` would select at viewport position (clientX, clientY), or -1 (tests, ?debug). */
+export const pickAt = (clientX, clientY, pointerType = 'mouse') => pick({ clientX, clientY, pointerType }, $('#space'));
 let tipEl = null, canvasEl = null;
 function setHover(i) {
   if (i === app.hover) return;
@@ -118,6 +164,7 @@ function clearHover() {
 export function bindPointer(canvas, host) {
   const tip = $('#tooltip'), ac = new AbortController(), { signal } = ac;
   tipEl = tip; canvasEl = canvas;
+  if (window.__hansch) window.__hansch.pickAt = pickAt;
   let down = null, pending = null;
   canvas.addEventListener('pointermove', ev => {
     if (pending) return;
@@ -148,16 +195,78 @@ export function bindPointer(canvas, host) {
   return () => { ac.abort(); if (pending) cancelAnimationFrame(pending); tipEl = canvasEl = null; };
 }
 
-// ---------------------------------------------------------------- camera moves
-/** Move the camera to `pos` (scaled up on narrow stages) looking at the origin: tweened, or at once when `instant` or reduced motion. */
+// ---------------------------------------------------------------- camera moves and fit
+// The camera distance of a pose comes from two rules. The original one scales the pose up on stages that are narrower than
+// 1.2 : 1. The fit (UX-09) additionally pulls the camera back until all eight corners of the plot cube, with a margin for the
+// tick labels and axis titles, are inside the view: it applies to compact stages (shorter or narrower than COMPACT px: phones,
+// landscape phones, narrow columns) where the original rule cropped the cube and its labels. It never brings the camera
+// nearer than the original rule, and a big desktop stage keeps the original distance (the cube's near corner may be cropped
+// there, which costs nothing: it is empty).
+export const FIT = { margin: { x: 0.03, top: 0.04, bottom: 0.09 }, compact: 560, reach: 0.3 };
+const _dir = new THREE.Vector3(), _bx = new THREE.Vector3(), _by = new THREE.Vector3(), _bz = new THREE.Vector3(), _cc = new THREE.Vector3(), _mat = new THREE.Matrix4(), _tmp = new THREE.Vector3();
+const ORIGIN = new THREE.Vector3(), UP = new THREE.Vector3(0, 1, 0);
+const CORNERS = [];
+for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) CORNERS.push(new THREE.Vector3(x, y, z).multiplyScalar(S + FIT.reach));
+
+/**
+ * Distance from the origin along the unit direction `dir` at which the plot cube fits a perspective view of `aspect` (width / height)
+ * and vertical field of view `fov` (degrees), inside the margins `m` (fractions of the half-view).
+ */
+export function fitDistance(dir, aspect, fov, m = FIT.margin) {
+  _mat.lookAt(_tmp.copy(dir), ORIGIN, UP);
+  _mat.extractBasis(_bx, _by, _bz);                                   // camera right, up and backward (= dir) in world space
+  const tanV = Math.tan(THREE.MathUtils.degToRad(fov / 2)), tanH = aspect * tanV;
+  let d = 0;
+  for (const c of CORNERS) {
+    const w = c.dot(_bz), xr = Math.abs(c.dot(_bx)), yr = c.dot(_by);   // depth of a corner along the view axis is D - w
+    d = Math.max(d, w + xr / ((1 - m.x) * tanH), w + (yr >= 0 ? yr / ((1 - m.top) * tanV) : -yr / ((1 - m.bottom) * tanV)));
+  }
+  return d;
+}
+const stageBox = () => { const c = $('#space'); return [c?.clientWidth || 0, c?.clientHeight || 0]; };
+/** The factor on a preset's own distance: the original aspect rule, or the fit where the stage is compact. */
+function distanceFactor(base, dir, aspect, compact) {
+  const k = Math.max(1, 1.2 / Math.max(0.3, aspect));
+  return compact ? Math.max(k, fitDistance(dir, aspect, stage.camera.fov) / base) : k;
+}
+/** What the last pose was fitted for: the preset's distance, the stage aspect and whether the fit rule applied; and the preset itself. */
+const fit = { base: 0, aspect: 0, compact: false, pos: null };
+
+/** Move the camera to `pos` (scaled to fit the stage) looking at the origin: tweened, or at once when `instant` or reduced motion. */
 export function camTo(pos, { instant = false } = {}) {
-  const c = stage.camera, k = Math.max(1, 1.2 / Math.max(0.3, c.aspect));
+  const c = stage.camera, [w, h] = stageBox(), compact = Math.min(w, h) < FIT.compact;
+  const base = Math.hypot(...pos), dir = _dir.set(...pos).normalize();
+  const k = distanceFactor(base, dir, c.aspect, compact);
+  Object.assign(fit, { base, aspect: c.aspect, compact, pos: [...pos] });
   const p = new THREE.Vector3(...pos).multiplyScalar(k);
+  stage.controls.maxDistance = Math.max(90, p.length() * 1.6);
   if (instant || reduceMotion.matches || !window.gsap) { c.position.copy(p); stage.controls.target.set(0, 0, 0); wake(); return; }
   window.gsap.killTweensOf(c.position);
   window.gsap.killTweensOf(stage.controls.target);
   window.gsap.to(c.position, { x: p.x, y: p.y, z: p.z, duration: 1.4, ease: 'power2.inOut', onUpdate: wake, onComplete: wake });
   window.gsap.to(stage.controls.target, { x: 0, y: 0, z: 0, duration: 1.4, ease: 'power2.inOut', onUpdate: wake, onComplete: wake });
+}
+
+/**
+ * The stage changed size (rotation, another section's stage height, Expand): pull the camera in or out along its current line of
+ * sight by the ratio of the fitted distances, so the cube still fits and the viewer's own zoom and orbit are kept. A move that
+ * is still running is simply aimed again at its preset.
+ */
+export function refit() {
+  const c = stage.camera, ctl = stage.controls, [w, h] = stageBox();
+  if (!c || !w || !h || !fit.base || stage.collapsed) return;
+  const compact = Math.min(w, h) < FIT.compact, aspect = w / h;
+  if (aspect === fit.aspect && compact === fit.compact) return;
+  if (window.gsap?.isTweening(c.position) && fit.pos) { camTo(fit.pos); return; }
+  const off = _tmp.copy(c.position).sub(ctl.target), dist = off.length();
+  if (!dist) return;
+  const dir = off.divideScalar(dist), kOld = distanceFactor(fit.base, dir, fit.aspect, fit.compact), kNew = distanceFactor(fit.base, dir, aspect, compact);
+  Object.assign(fit, { aspect, compact });
+  const ratio = kNew / kOld;
+  if (Math.abs(ratio - 1) < 0.005) return;
+  c.position.copy(ctl.target).addScaledVector(dir, dist * ratio);
+  ctl.maxDistance = Math.max(90, dist * ratio * 1.6, ctl.maxDistance);
+  wake();
 }
 
 /**
@@ -172,7 +281,20 @@ export function bindStageTools() {
   offs.push(bus.on('recolor', () => wake(), ORDER.LATE));
   offs.push(bus.on('theme', () => { D.labels = true; wake(); }, ORDER.LATE));
   offs.push(bus.on('selection', () => { D.inst = true; D.labels = true; wake(); }, ORDER.LATE));
-  stage.onResize = () => { D.labels = true; };
+  stage.onResize = () => { D.labels = true; refit(); };
+  // the stage became a strip (nothing is drawn) or came back; Expand changes who owns one-finger drags
+  stage.collapsed = layoutState.collapsed;
+  offs.push(bus.on('stage:size', ({ collapsed }) => { stage.collapsed = collapsed; D.labels = true; wake(); }, ORDER.LATE));
+  const touchMode = () => {
+    const { controls } = stage;
+    if (!controls) return;
+    // compact (stacked, not expanded): one finger scrolls the page, two fingers turn and zoom. Otherwise one finger turns, two zoom and pan.
+    controls.touches = narrow.matches && !layoutState.expanded ? { ONE: null, TWO: THREE.TOUCH.DOLLY_ROTATE } : { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+  };
+  touchMode();
+  offs.push(bus.on('stage:expand', () => { touchMode(); D.labels = true; wake(); }, ORDER.LATE));
+  narrow.addEventListener('change', touchMode);
+  enableExpand();
   const reset = () => camTo(STEPS[app.step]?.cam || STEPS.space.cam);
   const spin = e => {
     stage.controls.autoRotate = !stage.controls.autoRotate;
@@ -185,6 +307,7 @@ export function bindStageTools() {
     for (const off of offs) off();
     $('#btn-reset')?.removeEventListener('click', reset);
     $('#btn-spin')?.removeEventListener('click', spin);
+    narrow.removeEventListener('change', touchMode);
     stage.onResize = null;
   };
 }

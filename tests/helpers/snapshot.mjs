@@ -30,12 +30,16 @@ export async function settle(page, hook) {
   }, hook, { timeout: 30_000 }).catch(() => {});
   await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(r)))));
   await page.waitForFunction(() => document.querySelector('#detail-body').hidden || document.querySelector('#d-src').textContent !== 'Loading conformer…', null, { timeout: 30_000 });
+  // the 2D depiction is drawn from an idle callback after the conformer (the original drew it at once): wait for it
+  await page.waitForFunction(() => !document.querySelector('#d-2d[data-state="pending"]'), null, { timeout: 30_000 });
   await page.waitForTimeout(250);
 }
 
 /** Wait for the app to be ready (status line hidden, scene built). */
 export async function waitReady(page, hook) {
   await page.waitForFunction(h => window[h]?.stage?.points && document.querySelector('#stage-status').hidden, hook, { timeout: 60_000 });
+  // the step-2 sentence is computed from an idle callback after the first paint (the original computed it during boot)
+  await page.waitForFunction(() => document.querySelector('#t-ts').textContent.length > 0, null, { timeout: 60_000 });
   await settle(page, hook);
 }
 
@@ -84,6 +88,10 @@ export async function snapshot(page, hook, keepRaw = false) {
     };
   }, hook);
   const { animTo, drawnMatrices, drawnColors, detail, hansch, ...rest } = raw;   // rest keeps hanschFor
+  // External links now carry rel="noopener noreferrer" (the original had rel="noopener"): compare them as the original wrote them
+  const nr = h => h.replace(/ rel="noopener noreferrer"/g, ' rel="noopener"');
+  if (detail) for (const k of ['ids', 'desc', 'act', 'atc']) detail[k] = nr(detail[k]);
+  for (const k of Object.keys(hansch)) hansch[k] = nr(hansch[k]);
   return {
     ...(keepRaw ? { _raw: raw } : {}),
     ...rest, animToSha1: sha1(animTo), animToN: animTo.length, colorsSha1: sha1(drawnColors), matricesSha1: sha1(drawnMatrices),
@@ -104,7 +112,7 @@ export function bootSnapshot(page) {
       tourEq: ['#t-series-eq', '#t-all-eq'].map(s => $(s).innerHTML), seriesTail: $('[data-step="series"] p:last-of-type').textContent,
       method: [t('#m-count'), t('#m-checks')],
       options: ['#ax-x', '#ax-y', '#ax-z', '#color-by', '#f-l1', '#f-l2', '#f-l3', '#f-route', '#h-group', '#drug-names'].map(q => [...document.querySelectorAll(q + ' option')].map(o => o.value + '|' + o.textContent)),
-      chipsHtml: $('#atc-pick').innerHTML, hanschOut: $('#h-out').innerHTML, stageTop: document.documentElement.style.getPropertyValue('--stage-top'),
+      chipsHtml: $('#atc-pick').innerHTML, hanschOut: $('#h-out').innerHTML.replace(/ rel="noopener noreferrer"/g, ' rel="noopener"'), stageTop: document.documentElement.style.getPropertyValue('--stage-top'),
     };
   }).then(b => ({ ...b, options: b.options.map(o => ({ n: o.length, sha1: sha1(o) })), chipsHtml: sha1(b.chipsHtml), hanschOut: sha1(b.hanschOut) }));
 }

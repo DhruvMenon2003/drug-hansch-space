@@ -1,7 +1,9 @@
 // Layer 3. The Hansch fits panel (equation, statistics, observed-vs-predicted plot) and the copy of the page that is
 // derived from the data, so the numbers in the text always match the figures. Works with WebGL absent.
-import { app, bus, ORDER, narrow, reduceMotion, $, cap, esc, fin, fx, neg, sig, median, quant, pearson, fmtConc } from './kernel.js';
+import { app, bus, ORDER, narrow, $, cap, esc, fin, fx, neg, sig, median, quant, pearson, fmtConc } from './kernel.js';
 import { selectDrug, setView } from './view.js';
+import { afterPaint, runSliced } from './idle.js';
+import { revealStage } from './layout.js';
 
 // ---------------------------------------------------------------- formatting of a fit
 const TERM = { logP: 'log P', 'logP²': '(log P)²', MR: 'MR', TPSA: 'TPSA' };
@@ -43,10 +45,13 @@ export function initHansch() {
   $('#h-show').addEventListener('click', () => {
     setView({ x: 'logp', y: 'act', z: 'mr', color: 'single', group: sel.value, l1: '', l2: '', l3: '', route: '', small: true, veber: false });
     bus.emit('cmd:camera', { preset: 'series' });
-    if (narrow.matches) $('#stage').scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    if (narrow.matches) revealStage();               // the stage is a thin strip while the Hansch panel is being read: bring the plot up
   });
   $('#h-plot').addEventListener('click', e => { const c = e.target.closest('circle[data-cid]'); if (c) selectDrug(+c.dataset.cid); });
   bus.on('theme', () => { if ($('#h-group').value) renderHansch(); });
+  // the plot is drawn at its CSS size where that is narrow (so its text stays 12 px): redraw when the column's width changes
+  const svg = $('#h-plot');
+  if (svg && typeof ResizeObserver === 'function') new ResizeObserver(() => { if (lastFit && plotNeedsRedraw(svg.clientWidth)) drawObsPred(lastFit); }).observe(svg);
   renderHansch();
 }
 let shown = null;                                 // the target group the panel currently describes
@@ -54,13 +59,21 @@ let shown = null;                                 // the target group the panel 
 export function renderHansch() {
   shown = $('#h-group').value;
   const g = app.groups.get(shown).fit, [word, why] = verdict(g);
-  const head = g.id === 'ALL' ? '' : `<p class="lede">First mechanism target <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(g.id)}/" target="_blank" rel="noopener">${esc(g.id)}</a>, ${esc(g.label)}.</p>`;
+  const head = g.id === 'ALL' ? '' : `<p class="lede">First mechanism target <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(g.id)}/" target="_blank" rel="noopener noreferrer">${esc(g.id)}</a>, ${esc(g.label)}.</p>`;
   $('#h-out').innerHTML = `${head}<p class="fig eq-block">${esc(equation(g))}</p>${statsTable(g)}<p class="verdict"><b>${word}.</b> ${esc(why)}</p>`;
   $('#h-cands').innerHTML = `<table class="stats"><thead><tr><th>Model</th><th>r²</th><th>q²</th></tr></thead><tbody>${g.candidates.map(c => `<tr><td>${esc(c.terms.map(t => TERM[t]).join(' + '))}</td><td>${fx(c.r2, 3)}</td><td>${fx(c.q2, 3)}</td></tr>`).join('')}</tbody></table>`;
   drawObsPred(g);
 }
+// The observed-against-predicted plot. Its 10-unit text scales with the SVG: in a column narrower than 384 CSS px that is under
+// 12 px on screen, so there the plot is drawn in CSS pixels (viewBox = its width, 12 px text); wider, the original 320 x 260 box.
+let lastFit = null, lastW = 320, lastFitMode = false;
+const plotWidthFor = cw => (cw > 0 && cw < 384 ? Math.max(220, Math.round(cw)) : 320);
+const plotNeedsRedraw = cw => { const w = plotWidthFor(cw), fit = cw > 0 && cw < 384; return fit !== lastFitMode || (fit && Math.abs(w - lastW) >= 4); };
 function drawObsPred(g) {
-  const svg = $('#h-plot'), W = 320, H = 260, m = { l: 40, r: 12, t: 12, b: 34 };
+  const svg = $('#h-plot'), cw = svg.clientWidth, fitMode = cw > 0 && cw < 384, W = plotWidthFor(cw), H = Math.round(W * 260 / 320), m = { l: 40, r: 12, t: 12, b: 34 };
+  lastFit = g; lastW = W; lastFitMode = fitMode;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  if (fitMode) svg.dataset.fit = ''; else delete svg.dataset.fit;
   const vals = g.points.flatMap(p => [p.obs, p.loo]).filter(fin);
   let lo = Math.floor(Math.min(...vals)), hi = Math.ceil(Math.max(...vals));
   if (lo === hi) hi = lo + 1;
@@ -90,7 +103,8 @@ export function fillTourText() {
   const ex = M.pca.explained.map(v => (v * 100).toFixed(0) + '%');
   const top = k => Object.entries(M.pca.loadings).sort((a, b) => Math.abs(b[1][k]) - Math.abs(a[1][k])).slice(0, 2).map(e => pcaNames[e[0]] || e[0]).join(' and ');
   $('#t-pca').textContent = `PC1, PC2 and PC3 explain ${ex[0]}, ${ex[1]} and ${ex[2]} of the variance across ${D.filter(d => d.pc).length} drugs. PC1 is driven mostly by ${top(0)}, PC2 by ${top(1)}, PC3 by ${top(2)}. Colours mark the three largest ATC groups.`;
-  $('#t-ts').textContent = structureMapText(D);
+  // three O(n²) passes over the 759 drugs: computed in slices from idle callbacks after the first paint, the paragraph is filled when done
+  afterPaint().then(() => runSliced(() => structureMapSteps(D)).done).then(text => { $('#t-ts').textContent = text; }, err => console.error('structure map text failed', err));
   const lp = D.filter(d => fin(d.d.logp) && d.d.mw <= app.hansch.max_mw), lpv = lp.map(d => d.d.logp), nBig = D.length - lp.length;
   const lo = lp.reduce((a, b) => (b.d.logp < a.d.logp ? b : a)), hi = lp.reduce((a, b) => (b.d.logp > a.d.logp ? b : a));
   const over5 = lpv.filter(v => v > 5).length;
@@ -119,28 +133,50 @@ export function fillTourText() {
 
 // How often a drug's nearest neighbour shares its ATC anatomical group: in the fingerprint map, in descriptor (PCA) space,
 // and by chance. Fingerprints see scaffolds; bulk descriptors do not, which is why Hansch analysis needs a congeneric series.
-function structureMapText(D) {
-  const pts = D.filter(d => d.ts && d.pc), L1 = pts.map(d => new Set(d.atc.map(e => e.code[0])));
-  const share = (i, j) => [...L1[i]].some(c => L1[j].has(c));
-  const nnShare = key => {
+// A generator so that runSliced() can stop between rows (it yields every ROWS rows, a millisecond or two of work); the
+// arithmetic and its order are those of the original single function, so the numbers are identical.
+const ROWS = 16;
+function* structureMapSteps(D) {
+  const pts = D.filter(d => d.ts && d.pc), n = pts.length;
+  // each drug's set of ATC level-1 letters as a bit mask: "shares a group" is one AND
+  const bit = new Map(), mask = new Int32Array(n), L1 = pts.map(d => new Set(d.atc.map(e => e.code[0])));
+  L1.forEach((set, i) => { for (const c of set) { if (!bit.has(c)) bit.set(c, bit.size); mask[i] |= 1 << bit.get(c); } });
+  const wide = bit.size > 31;                    // cannot happen with the 14 ATC groups; keep the exact (slow) test as the fallback
+  const share = (i, j) => (wide ? [...L1[i]].some(c => L1[j].has(c)) : (mask[i] & mask[j]) !== 0);
+  const nnShare = function* (key) {
+    const K = pts.map(key), dim = n ? K[0].length : 0;
     let hit = 0;
-    for (let i = 0; i < pts.length; i++) {
+    for (let i = 0; i < n; i++) {
       let best = -1, bd = Infinity;
-      for (let j = 0; j < pts.length; j++) {
+      const a = K[i];
+      for (let j = 0; j < n; j++) {
         if (j === i || pts[j].smiles === pts[i].smiles) continue;
+        const b = K[j];
         let s = 0;
-        for (let k = 0; k < key(pts[i]).length; k++) { const t = key(pts[i])[k] - key(pts[j])[k]; s += t * t; }
+        for (let k = 0; k < dim; k++) { const t = a[k] - b[k]; s += t * t; }
         if (s < bd) { bd = s; best = j; }
       }
       if (best >= 0 && share(i, best)) hit++;
+      if (i % ROWS === ROWS - 1) yield;
     }
-    return hit / pts.length;
+    return hit / n;
   };
   let chance = 0;
-  for (let i = 0; i < pts.length; i++) { let c = 0; for (let j = 0; j < pts.length; j++) if (j !== i && share(i, j)) c++; chance += c / (pts.length - 1); }
-  chance /= pts.length;
+  for (let i = 0; i < n; i++) {
+    let c = 0;
+    for (let j = 0; j < n; j++) if (j !== i && share(i, j)) c++;
+    chance += c / (n - 1);
+    if (i % (ROWS * 4) === ROWS * 4 - 1) yield;
+  }
+  chance /= n;
+  const ts = yield* nnShare(d => d.ts), pc = yield* nnShare(d => d.pc);
   const pct = v => (100 * v).toFixed(0) + '%';
-  return `In this map ${pct(nnShare(d => d.ts))} of ${pts.length} drugs have a nearest neighbour from the same ATC anatomical group, against ${pct(nnShare(d => d.pc))} in the descriptor space of step 1 and ${pct(chance)} by chance.`;
+  return `In this map ${pct(ts)} of ${n} drugs have a nearest neighbour from the same ATC anatomical group, against ${pct(pc)} in the descriptor space of step 1 and ${pct(chance)} by chance.`;
+}
+/** The sentence for step 2, computed in one go (tests; the page uses structureMapSteps through runSliced). */
+export function structureMapText(D) {
+  const g = structureMapSteps(D);
+  for (let r = g.next(); ; r = g.next()) if (r.done) return r.value;
 }
 
 /** Fill the "Method and checks" counts. */

@@ -122,7 +122,7 @@ main[tabindex="-1"]:focus { outline: none; }
 .jump a:hover { background: var(--grid); color: var(--ink); }
 /* Between phone and wide desktop the brand line is nearly as wide as the viewport, so whether the navigation fits beside it
    depends on which font is showing; pin it to its own row there, so a font swap can never re-wrap the header. */
-@media (min-width: 901px) and (max-width: 1400px) { .jump { flex: 1 0 100%; } }
+@media (min-width: 1280px) and (max-width: 1400px) { .jump { flex: 1 0 100%; } }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); }
 .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--stage-top, var(--head-h))); height: calc(100dvh - var(--stage-top, var(--head-h))); align-self: start; }   /* --stage-top: the measured masthead, which wraps to two rows on phones */
@@ -267,18 +267,7 @@ details > summary h2 { display: inline; }
 .link-list { display: flex; flex-direction: column; align-items: flex-start; }
 .link-list a { display: inline-flex; align-items: center; min-height: var(--target); }   /* a link that stands alone in a table cell is a tap target, not running text */
 
-@media (max-width: 900px) {
-  :root { --head-h: 56px; }
-  .brand .sub { display: none; }
-  .layout { grid-template-columns: minmax(0, 1fr); }
-  .stage { height: 46dvh; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
-  .rail { border-left: 0; padding-inline: max(16px, var(--inset-l)) max(16px, var(--inset-r)); }
-  .step { min-height: 52vh; padding-block: 8vh 6vh; }
-  .step h2 { font-size: 1.5rem; }
-  .hud .axis-key { display: none; }
-  .legend { font-size: 12px; gap: 2px 12px; }
-  .legend > span { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* one line per group keeps the plot clear */
-}
+/* The responsive layout (stacked phones, two columns, landscape phones, the collapsing header, the stage height policy and the sheet) lives in css/layout.css. */
 @media (max-width: 700px) {
   /* The sources table reads as one block per source on phones, so it never needs a sideways scroll */
   .sources-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -295,3 +284,9 @@ details > summary h2 { display: inline; }
 @media (prefers-reduced-motion: reduce) {
   .step { transition: none; }
 }
+
+/* Data and loading plumbing: the "newer version" banner, the large-molecule note, the conformer Retry button */
+.version-banner { position: fixed; z-index: 60; inset: auto max(12px, var(--inset-l, 0px)) max(12px, env(safe-area-inset-bottom)) max(12px, var(--inset-r, 0px)); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px; padding: 4px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); color: var(--ink); box-shadow: 0 4px 18px rgb(0 0 0 / 0.18); font: 500 0.9rem/1.4 var(--font-display); }
+.depict-note { display: flex; flex-direction: column; align-items: center; gap: 6px; max-width: 34rem; text-align: center; }
+.depict-note p { margin: 0; font-size: 0.85rem; color: var(--ink-2); }
+#d-retry { margin: 0 0 0 auto; }

@@ -184,8 +184,9 @@ test.describe('parity with the original app', () => {
   test('a failed conformer fetch is reported with the usual text and the next selection retries it', async ({ browser, baseURL }) => {
     const { page } = await open(browser, baseURL);
     await waitReady(page, '__hansch');
+    // the conformer table is cut into shards now (data/mol/<cid % 32>.json): fail the first shard request, whichever shard it is
     let calls = 0;
-    await page.route('**/data/molecules.json', route => (++calls === 1 ? route.fulfill({ status: 503, body: 'nope' }) : route.continue()));
+    await page.route('**/data/mol/*.json', route => (++calls === 1 ? route.fulfill({ status: 503, body: 'nope' }) : route.continue()));
     await page.evaluate(() => window.__hansch.selectDrug(window.__hansch.app.drugs[10].cid));
     await expect(page.locator('#d-src')).toHaveText('Could not load the conformer file.');
     await page.evaluate(() => window.__hansch.selectDrug(window.__hansch.app.drugs[11].cid));

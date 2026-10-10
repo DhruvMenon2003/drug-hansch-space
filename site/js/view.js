@@ -49,10 +49,14 @@ export function layout({ instant = false } = {}) {
   bus.emit('layout', { instant });
 }
 
-/** Select the drug with PubChem CID `cid` (ignored when unknown) and announce it on the bus. */
-export function selectDrug(cid) {
+/**
+ * Select the drug with PubChem CID `cid` (ignored when unknown) and announce it on the bus.
+ * `reveal: false` is for selections that are not a reader's action (restoring a link): the drug panel is then not scrolled into view.
+ * @param {number} cid @param {{ reveal?: boolean }} [opts]
+ */
+export function selectDrug(cid, { reveal = true } = {}) {
   const i = app.drugs.findIndex(d => d.cid === cid);
   if (i < 0) return;
   app.selected = i;
-  bus.emit('selection', { index: i, cid });
+  bus.emit('selection', { index: i, cid, reveal });
 }

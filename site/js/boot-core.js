@@ -2,7 +2,7 @@
 // the tour. Loaded first by main.js; boot-gl.js attaches the 3D scene afterwards, and startTour() then picks the first
 // step (so the scene is listening when the first layout is emitted).
 import { app, anim, bus, STEPS, $ } from './kernel.js';
-import { initAnnounce } from './announce.js';
+import { announce, initAnnounce } from './announce.js';
 import { loadData } from './data.js';
 import { initTheme, readTokens } from './theme.js';
 import { initView, selectDrug, setView } from './view.js';
@@ -12,6 +12,9 @@ import { initControls, syncControls } from './controls.js';
 import { initTable } from './table.js';
 import { fillMethod, fillTourText, initHansch } from './hansch.js';
 import { goStep, initTour, refreshTourBand, tourBand } from './tour.js';
+import { initLayout, layoutState } from './layout.js';
+import { initSheet } from './sheet.js';
+import { APP_BUILD, buildMismatch } from './version.js';
 import { hideStatus, setProgress, setStatus } from './fallback.js';
 
 /** "Skip to the 3D plot": the target is a marker span; hand focus to the canvas itself (when it is shown). */
@@ -26,29 +29,50 @@ function bindSkipLink() {
 }
 
 /**
+ * "A newer version of this page is available": reveal #version-banner when the data file was published by a different build
+ * than the code that is running (cached old scripts with new data, or the reverse). Non-blocking: a banner with a Reload
+ * button and a polite announcement. An unstamped ('dev') build never shows it. Returns whether the banner was shown.
+ * @param {{ app_build?: unknown } | null | undefined} meta data meta  @param {string} [build] this code's build id (tests may pass one)
+ */
+export function checkBuild(meta, build = APP_BUILD) {
+  const el = $('#version-banner');
+  if (!el || !buildMismatch(build, meta?.app_build)) return false;
+  if (!el.dataset.wired) {
+    el.dataset.wired = '1';
+    $('#version-reload', el)?.addEventListener('click', () => location.reload());
+  }
+  el.hidden = false;
+  announce('A newer version of this page is available. Use the Reload button to get it.');
+  return true;
+}
+
+/**
  * Load the data and build every non-3D part of the page. `caps` comes from caps.js. Throws on a data error (an Error with
  * `phase: 'data'`, so main.js can tell it from a bug). Loading progress: 1 = data in, 2 = the page built.
  */
 export async function bootCore(caps) {
-  if (new URLSearchParams(location.search).has('debug')) window.__hansch = { app, anim, selectDrug, setView, goStep, STEPS, bus, caps, tour: { band: tourBand, refresh: refreshTourBand } };
+  if (new URLSearchParams(location.search).has('debug')) window.__hansch = { app, anim, selectDrug, setView, goStep, STEPS, bus, caps, layout: layoutState, tour: { band: tourBand, refresh: refreshTourBand } };
   // gsap keeps its ticker (a rAF loop) alive for 120 ticks after the last tween by default; 20 is plenty and shortens the tail before true idle
   window.gsap?.config({ autoSleep: 20 });
   bindSkipLink();
   setStatus('Loading data…');
   try { await loadData(); } catch (err) { err.phase = 'data'; throw err; }
   setProgress(1);
+  checkBuild(app.meta);                              // code and data from different deploys: offer a reload (never for a 'dev' build)
   setStatus('Building the page…');
   readTokens();
   initView();
   initHud();
   initTable();
   initDetail();
+  initSheet();
   initAnnounce();
   initControls();
   initHansch();
   fillTourText();
   fillMethod();
   syncControls();
+  initLayout();                                     // header, stage size policy, Expand, jump links, reading aids
   setProgress(2);
 }
 

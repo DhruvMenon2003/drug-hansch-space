@@ -1,3 +1,246 @@
 /* css/layout.css
-   Responsive layout: header collapse, stage height policy, expand/fullscreen toggle, bottom-sheet drug panel, landscape phones (owned by the mobile layout stage).
-   Loaded after style.css; intentionally empty until that stage lands. */
+   Responsive layout: the collapsing header and its Contents menu, the stage height policy, the expand (full-screen) view, the
+   drug panel as a bottom sheet, landscape phones, the Explore groups, the back-to-top button and the scroll-progress bar
+   (owned by the mobile layout stage; js/layout.js and js/sheet.js drive the classes and variables used here).
+
+   Layout is chosen by SHAPE, not by width alone:
+     stacked      (max-width: 700px) and (orientation: portrait)         stage on top, text under it       phones
+     landscape    (orientation: landscape) and (max-height: 520px)       two columns, static slim header    landscape phones
+     two columns  everything else (from 701 px)                          sticky stage beside the text       tablets, desktops
+   The drug panel is a sheet on everything except a mouse-driven window of at least 701 x 521 px, where it stays a card in the text column.
+
+   JS-driven state (all optional: without JS the page is the plain stacked or two-column layout with the stage at its tour height):
+     body.layout-ready          js/layout.js has started (reveals the Contents button, hides the inline navigation on phones)
+     body[data-stage]           tour | explore | read: which part of the page is under the reading line (stacked layout)
+     body[data-stage-size]      tour | explore | strip: the stage height class that follows from it (strip = 56 px legend bar)
+     body.header-hidden         the header has slid away on scroll-down (stacked layout)
+     body.stage-full            the stage is expanded over the whole screen
+     body.kb                    a text field or select has focus (the soft keyboard is up): the stage becomes the strip
+     #detail[data-sheet]        closed | peek | half | full
+   Custom properties set by JS on <html>: --stage-top (header height), --sticky-stack (header + stage on phones, header elsewhere),
+   --jump-pad (scroll padding while a jump link scrolls), --sheet-h (height of the open sheet), --tools-w (width of the stage buttons). */
+
+/* ---------------------------------------------------------------------------------------------------------------- tokens */
+:root { --svh: 1vh; --stage-strip: 56px; --sheet-peek: 96px; }
+@supports (height: 1svh) { :root { --svh: 1svh; } }   /* the SMALL viewport height: it does not change when a mobile browser's address bar slides away */
+/* Registered so the stage heights resolve to pixels and js/layout.js can read the height a section WILL have before it is reached */
+@property --stage-tour { syntax: "<length>"; inherits: true; initial-value: 190px; }
+@property --stage-explore { syntax: "<length>"; inherits: true; initial-value: 140px; }
+:root {
+  --stage-tour: 190px;
+  --stage-explore: 140px;
+  /* Where the browser puts a jump-link target: just under whatever sticks to the top (the header and, on phones, the stage), plus 12 px */
+  scroll-padding-top: var(--jump-pad, calc(var(--sticky-stack, 64px) + 12px));
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- all shapes */
+/* Below 1280 px the long sentence goes: the header is one row (brand + navigation) and never wraps. From 1280 px it keeps the original two-row header. */
+@media (max-width: 1279px) {
+  :root { --head-h: 56px; }
+  .brand .sub { display: none; }
+  .masthead { flex-wrap: nowrap; padding-block: 6px; }
+  .brand { flex-wrap: nowrap; }
+  .brand h1 { font-size: 1.3rem; white-space: nowrap; }
+}
+
+/* Contents menu: hidden until js/layout.js says it is ready, and only used where the inline navigation does not fit */
+.contents { display: none; position: relative; flex: none; }
+.contents-btn { display: inline-flex; align-items: center; gap: 8px; padding-inline: 14px; }
+.contents-btn::after { content: ""; width: 8px; height: 8px; margin-top: -4px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 0.15s; }
+.contents-btn[aria-expanded="true"]::after { transform: rotate(-135deg); margin-top: 4px; }
+.contents-menu {
+  position: absolute; z-index: 50; top: calc(100% + 6px); right: 0; min-width: 240px; padding: 6px;
+  display: flex; flex-direction: column; gap: 2px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 10px 30px rgb(0 0 0 / 0.2);
+}
+.contents-menu a { display: flex; align-items: center; min-height: 48px; padding: 0 16px; border-radius: 10px; color: var(--ink); text-decoration: none; font: 600 1rem/1.2 var(--font-display); }
+.contents-menu a:hover, .contents-menu a:focus-visible { background: var(--grid); }
+.contents-menu a[data-top] { border-top: 1px solid var(--line); border-radius: 0 0 10px 10px; margin-top: 4px; color: var(--ink-2); }
+
+/* The stage as one box: the sticky element keeps a fixed height (its place in the page never changes), the visible part inside
+   it (.stage-inner) changes height with the section being read. Content that is uncovered when the stage shrinks simply shows
+   through the transparent box; nothing in the text column moves, so the reading position cannot jump. */
+.stage-inner { transition: none; }
+.stage { height: calc(100 * var(--svh) - var(--stage-top, var(--head-h))); }
+
+/* Stage buttons that are icons on a phone (Reset, Spin, Expand); the labels stay for screen readers */
+.stage-tools > #btn-expand[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
+.stage-status { max-width: calc(100% - 24px); }
+
+/* Expand: the stage covers the whole screen. The sticky box stays where it is; only its visible part (.stage-inner) goes fixed. */
+body.stage-full { overflow: hidden; }
+body.stage-full .stage { transform: none !important; z-index: 1000; pointer-events: auto; }
+body.stage-full .stage .stage-inner { position: fixed; inset: 0; width: auto; height: auto; z-index: 1000; border: 0; background: var(--bg); padding-inline: 0; }
+body.stage-full .masthead { visibility: hidden; }
+body.stage-full #space { touch-action: none !important; }
+body.stage-full .fab, body.stage-full .read-progress { display: none; }
+
+/* No WebGL, or a fatal error: the message card goes in the page flow where the stage was, and the plot area is not needed */
+html.no-webgl .stage-inner { display: none; }
+
+/* ---------------------------------------------------------------------------------------------------------------- Explore: three groups */
+.panel .field-hint { display: block; min-height: 0; font: 400 0.78rem/1.35 var(--font-display); color: var(--ink-2); overflow-wrap: anywhere; }
+.panel .field-hint:empty { display: none; }
+.group { border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.group > summary { display: flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 14px; border-radius: 10px; list-style: none; font: 600 0.92rem/1.2 var(--font-display); cursor: pointer; }
+.group > summary::-webkit-details-marker { display: none; }
+.group > summary::after { content: ""; flex: none; width: 8px; height: 8px; margin: -4px 4px 0 auto; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform 0.15s; }
+.group[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
+.group > .controls { padding: 4px 14px 14px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: 600 0.72rem/1.3 var(--font-display); }
+.badge:empty { display: none; }
+@media (max-width: 479px) { .controls { grid-template-columns: minmax(0, 1fr); } }
+select { text-overflow: ellipsis; }
+.check { align-items: flex-start; padding-block: 10px; }
+.check input[type="checkbox"] { margin-top: 1px; }
+
+/* The reading aids: a 3 px progress bar at the very top, and the back-to-top button */
+.read-progress { position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: 3px; pointer-events: none; }
+.read-progress i { display: block; width: 100%; height: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.fab {
+  position: fixed; z-index: 40; right: max(12px, var(--inset-r)); bottom: calc(max(12px, var(--inset-b)) + var(--sheet-h, 0px));
+  display: inline-flex; align-items: center; justify-content: center; width: var(--target); height: var(--target); padding: 0; border-radius: 50%;
+  background: var(--panel); border: 1px solid var(--line); box-shadow: 0 4px 16px rgb(0 0 0 / 0.18); font-size: 0;
+}
+.fab::before { content: ""; width: 12px; height: 12px; margin-top: 4px; border-left: 2.5px solid var(--ink); border-top: 2.5px solid var(--ink); transform: rotate(45deg); }
+
+/* Hansch observed-against-predicted plot: when it is drawn at its CSS size (narrow columns) its text is 12 px */
+.obs-pred svg[data-fit] text { font-size: 12px; }
+
+/* The conformer viewer must not trap a one-finger scroll on a touch screen (vertical drags scroll the page, sideways drags turn the molecule) */
+@media (pointer: coarse) { #mol { touch-action: pan-y !important; } }
+
+/* ---------------------------------------------------------------------------------------------------------------- two columns, from 701 px */
+@media (min-width: 701px) and (max-width: 1279px) {
+  .layout { grid-template-columns: minmax(0, 1.15fr) minmax(320px, 1fr); }
+  .rail { padding-inline: 24px max(24px, var(--inset-r)); }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- compact stages: phones in portrait and landscape
+   A 44 px toolbar row (legend on the left, icon buttons on the right) sits above the plot; the plot has the rest of the stage. */
+@media (max-width: 700px) and (orientation: portrait), (orientation: landscape) and (max-height: 520px) {
+  .stage-inner { --tb: 44px; }
+  /* a toolbar row (legend left, buttons right) on top; the plot has the rest */
+  #space { margin-top: var(--tb); height: calc(100% - var(--tb)); }
+  .labels { top: var(--tb); }
+  .hud { top: 0; left: 0; right: var(--tools-w, 156px); height: var(--tb); max-width: none; flex-direction: row; align-items: center; padding-left: max(12px, var(--inset-l)); }
+  .hud .axis-key { display: none; }
+  .legend { flex: 1 1 auto; min-width: 0; flex-wrap: nowrap; align-items: center; gap: 4px 16px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; pointer-events: auto; font-size: 12px; scroll-snap-type: x proximity; }
+  .legend::-webkit-scrollbar { display: none; }
+  .legend { -webkit-mask: linear-gradient(90deg, #000 calc(100% - 18px), transparent); mask: linear-gradient(90deg, #000 calc(100% - 18px), transparent); padding-right: 18px; }   /* a fade says: more to the right */
+  .legend > span { flex: none; white-space: nowrap; scroll-snap-align: start; }
+  .stage-tools { top: 0; right: 0; height: var(--tb); flex-wrap: nowrap; align-items: center; gap: 4px; max-width: 70%; padding-right: max(8px, var(--inset-r)); overflow-x: auto; scrollbar-width: none; }
+  .stage-tools > button { flex: none; }
+  .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; font-size: 0; position: relative; }
+  .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
+  .stage-status { bottom: 6px; }
+  .tooltip { display: none; }
+  .show3d { position: absolute; top: 6px; right: max(8px, var(--inset-r)); }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- stacked: phones in portrait */
+@media (max-width: 700px) and (orientation: portrait) {
+  :root {
+    --head-h: 52px;
+    /* header + stage <= 45% of the screen: 38 svh, but never more than 44 svh minus the header, and 360 px at most */
+    --stage-tour: max(190px, min(calc(38 * var(--svh)), calc(44 * var(--svh) - var(--head-h)), 360px));
+    --stage-explore: max(140px, min(calc(30 * var(--svh)), calc(44 * var(--svh) - var(--head-h)), 300px));
+  }
+  body.layout-ready .jump { display: none; }
+  body.layout-ready .contents { display: block; }
+  .masthead { min-height: var(--head-h); padding-block: 4px; padding-inline: max(16px, var(--inset-l)) max(16px, var(--inset-r)); gap: 8px; transition: transform 0.22s ease; }
+  .brand { flex: 1 1 auto; min-width: 0; }
+  .brand h1 { font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; }
+  /* the header slides away on scroll-down and back on scroll-up; the stage rides with it, so the sticky part is the stage alone */
+  body.header-hidden .masthead { transform: translateY(calc(-100% - env(safe-area-inset-top, 0px))); }
+  body.header-hidden .stage { transform: translateY(calc(-1 * (var(--stage-top, var(--head-h)) + env(safe-area-inset-top, 0px)))); }
+  .stage { transition: transform 0.22s ease; }
+
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .stage { height: var(--stage-tour); z-index: 10; background: none; border: 0; pointer-events: none; }
+  .stage > * { pointer-events: auto; }
+  .stage-inner { height: var(--stage-tour); background: var(--bg); border-bottom: 1px solid var(--line); }
+  body[data-stage-size="explore"] .stage-inner { height: var(--stage-explore); }
+  body[data-stage-size="strip"] .stage-inner { height: var(--stage-strip); }
+  /* the strip: only the legend and the Show 3D button */
+  body[data-stage-size="strip"] #space, body[data-stage-size="strip"] .labels, body[data-stage-size="strip"] .stage-tools, body[data-stage-size="strip"] .stage-status { visibility: hidden; }
+  body[data-stage-size="strip"] .hud { right: 124px; }
+
+  .step { min-height: calc(52 * var(--svh)); padding-block: calc(8 * var(--svh)) calc(6 * var(--svh)); }
+  .step h2 { font-size: 1.5rem; }
+  .rail { border-left: 0; padding-inline: max(16px, var(--inset-l)) max(16px, var(--inset-r)); }
+  /* the fallback and fatal cards sit in the page flow where the stage was */
+  .stage:has(.stage-card:not([hidden])) { position: static; height: auto; pointer-events: auto; }
+  .stage:has(.stage-card:not([hidden])) .stage-inner { display: none; }
+  .stage-card { position: static; }
+  /* touch: one finger scrolls the page over the stage, two fingers turn and zoom (js/gl/render.js sets the controls to match); Expand gives one-finger control */
+  @media (pointer: coarse) { #space { touch-action: pan-y !important; } body.stage-full #space { touch-action: none !important; } }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- landscape phones */
+@media (orientation: landscape) and (max-height: 520px) {
+  :root { --head-h: 44px; }
+  body.layout-ready .jump { display: none; }
+  body.layout-ready .contents { display: block; }
+  .app { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-rows: auto 1fr; }
+  .masthead { grid-column: 2; grid-row: 1; position: static; min-height: 44px; padding-block: 0; padding-inline: 16px max(16px, var(--inset-r)); backdrop-filter: none; background: var(--bg); transform: none !important; }
+  .brand h1 { font-size: 1.05rem; overflow: hidden; text-overflow: ellipsis; }
+  .layout { display: contents; }
+  .stage { grid-column: 1; grid-row: 1 / span 2; top: 0; height: calc(100 * var(--svh)); }
+  .rail { grid-column: 2; grid-row: 2; border-left: 1px solid var(--line); padding-inline: 16px max(16px, var(--inset-r)); gap: 20px; }
+  .step { min-height: calc(86 * var(--svh)); padding-block: calc(10 * var(--svh)) calc(8 * var(--svh)); }
+  .step h2 { font-size: 1.5rem; }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- icons for the stage buttons (masks; the buttons keep their text for screen readers) */
+.stage-tools > #btn-reset { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 5V2L7 6.5 12 11V8a6 6 0 1 1-6 6H4a8 8 0 1 0 8-9z'/%3E%3C/svg%3E"); }
+.stage-tools > #btn-spin { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4a8 8 0 0 0-8 8h2.2a5.8 5.8 0 0 1 9.5-4.4L14 10h6V4l-2.2 2.2A8 8 0 0 0 12 4zm7.8 8a5.8 5.8 0 0 1-9.5 4.4L12 14H6v6l2.2-2.2A8 8 0 0 0 20 12z'/%3E%3C/svg%3E"); }
+.stage-tools > #btn-expand { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z'/%3E%3C/svg%3E"); }
+.stage-tools > #btn-expand[aria-expanded="true"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4h2v7H4V9h5zm4 0h2v5h5v2h-7zM4 13h7v7H9v-5H4zm9 0h7v2h-5v5h-2z'/%3E%3C/svg%3E"); }
+
+/* ---------------------------------------------------------------------------------------------------------------- the drug panel as a sheet
+   (not on a mouse-driven window of at least 701 x 521 px, where #detail stays a card in the text column) */
+.sheet-head { display: none; }
+.sheet-body { display: contents; }
+@media not all and (min-width: 701px) and (min-height: 521px) and (hover: hover) and (pointer: fine) {
+  #detail {
+    position: fixed; z-index: 1100; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; gap: 0;
+    display: flex; flex-direction: column; overflow: hidden;
+    border: 0; border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; background: var(--panel); box-shadow: 0 -8px 28px rgb(0 0 0 / 0.2);
+    transition: height 0.22s ease;
+  }
+  #detail[data-sheet="closed"] { display: none; }
+  #detail[data-sheet="peek"] { height: calc(var(--sheet-peek) + var(--inset-b)); }
+  #detail[data-sheet="half"] { height: calc(50 * var(--svh)); }
+  #detail[data-sheet="full"] { height: calc(88 * var(--svh)); }
+  .sheet-head { display: flex; align-items: stretch; flex: none; min-height: var(--sheet-peek); }
+  .sheet-handle {
+    flex: 1 1 auto; min-width: 0; min-height: var(--sheet-peek); padding: 22px 8px 8px max(16px, var(--inset-l)); border: 0; border-radius: 18px 0 0 0; background: none; text-align: left;
+    display: flex; flex-direction: column; justify-content: center; gap: 3px; position: relative; touch-action: none; font: inherit; color: var(--ink);
+  }
+  .sheet-grip { position: absolute; top: 9px; left: 50%; width: 44px; height: 5px; margin-left: -22px; border-radius: 3px; background: var(--line); }
+  .sheet-handle:hover .sheet-grip { background: var(--ink-2); }
+  .sheet-title { font: 800 1.15rem/1.2 var(--font-display); text-transform: capitalize; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sheet-metrics { font: 400 0.85rem/1.3 var(--font-data); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sheet-close { flex: none; align-self: center; margin-right: max(12px, var(--inset-r)); }
+  .sheet-body { display: none; flex-direction: column; gap: 14px; flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 4px max(16px, var(--inset-r)) calc(24px + var(--inset-b)) max(16px, var(--inset-l)); border-top: 1px solid var(--line); }
+  #detail[data-sheet="half"] .sheet-body, #detail[data-sheet="full"] .sheet-body { display: flex; }
+  .sheet-body > h2 { margin-top: 12px; }
+  body[data-sheet-open] { padding-bottom: var(--sheet-h, 0px); }
+  body[data-sheet-open="full"] .fab { display: none; }
+}
+/* tablets and landscape phones: a 360 px card at the bottom right instead of a full-width sheet */
+@media not all and (min-width: 701px) and (min-height: 521px) and (hover: hover) and (pointer: fine) {
+  @media (min-width: 701px), (orientation: landscape) {
+    #detail { left: auto; right: max(12px, var(--inset-r)); bottom: max(12px, var(--inset-b)); width: min(360px, calc(100vw - 24px)); border: 1px solid var(--line); border-radius: 18px; }
+    #detail[data-sheet="peek"] { height: var(--sheet-peek); }
+    #detail[data-sheet="full"] { height: min(calc(88 * var(--svh)), 760px); }
+    .sheet-handle { border-radius: 18px 0 0 0; }
+    body[data-sheet-open] { padding-bottom: 0; }
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------- motion */
+@media (prefers-reduced-motion: reduce) {
+  .masthead, .stage, #detail, .contents-btn::after, .group > summary::after { transition: none !important; }
+}

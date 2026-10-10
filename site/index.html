@@ -35,8 +35,6 @@
 <!-- The two faces used above the fold: Newsreader for the text, Bricolage Grotesque (one variable file, weights 500 to 800) for headings -->
 <link rel="preload" href="vendor/fonts/newsreader-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="vendor/fonts/bricolage-grotesque-normal-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<!-- preload:start (module preload hints are written between these markers by the data/perf stage) -->
-<!-- preload:end -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -51,7 +49,43 @@
 } }
 </script>
 <script src="vendor/gsap/gsap.min.js"></script>
-<script src="vendor/smiles-drawer/smiles-drawer.min.js"></script>
+<!-- Hints for the app's own files, written by tools/check_site.py --write-preload (it checks them against the import graph). They come
+     LAST in the head on purpose: the preload scanner requests in document order, and the stylesheets and gsap above are what the
+     first paint waits for. Measured (1.6 Mbps, 150 ms, 4x CPU): hints before the stylesheets delayed first paint from 1.4 s to 2.9 s. -->
+<!-- preload:start (written by tools/check_site.py --write-preload from the import graph of js/main.js; do not edit by hand) -->
+<link rel="modulepreload" href="js/main.js">
+<link rel="modulepreload" href="js/caps.js">
+<link rel="modulepreload" href="js/fallback.js">
+<link rel="modulepreload" href="js/boot-gl.js">
+<link rel="modulepreload" href="js/boot-core.js">
+<link rel="modulepreload" href="js/kernel.js">
+<link rel="modulepreload" href="js/announce.js">
+<link rel="modulepreload" href="vendor/three/three.module.min.js">
+<link rel="modulepreload" href="js/gl/scene.js">
+<link rel="modulepreload" href="js/gl/scenery.js">
+<link rel="modulepreload" href="js/gl/render.js">
+<link rel="modulepreload" href="js/gl/molviewer.js">
+<link rel="modulepreload" href="js/data.js">
+<link rel="modulepreload" href="js/theme.js">
+<link rel="modulepreload" href="js/view.js">
+<link rel="modulepreload" href="js/hud.js">
+<link rel="modulepreload" href="js/detail.js">
+<link rel="modulepreload" href="js/controls.js">
+<link rel="modulepreload" href="js/table.js">
+<link rel="modulepreload" href="js/hansch.js">
+<link rel="modulepreload" href="js/tour.js">
+<link rel="modulepreload" href="js/layout.js">
+<link rel="modulepreload" href="js/sheet.js">
+<link rel="modulepreload" href="js/version.js">
+<link rel="modulepreload" href="vendor/three/addons/controls/OrbitControls.js">
+<link rel="modulepreload" href="vendor/three/addons/renderers/CSS2DRenderer.js">
+<link rel="modulepreload" href="js/scheduler.js">
+<link rel="modulepreload" href="js/gl/quality.js">
+<link rel="modulepreload" href="js/model.js">
+<link rel="modulepreload" href="js/idle.js">
+<link rel="preload" href="data/drugs.json" as="fetch" type="application/json" crossorigin fetchpriority="low">
+<link rel="preload" href="data/hansch.json" as="fetch" type="application/json" crossorigin fetchpriority="low">
+<!-- preload:end -->
 </head>
 <body>
 <div class="skip-links">
@@ -66,6 +100,7 @@
   </div>
 </noscript>
 <div id="sr-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+<div id="version-banner" class="version-banner" hidden><span>A newer version of this page is available.</span> <button type="button" id="version-reload" class="ghost">Reload</button></div>
 
 <div class="app" id="app">
   <header class="masthead">
@@ -79,6 +114,18 @@
       <a href="#hansch">Hansch fits</a>
       <a href="#method">Method</a>
     </nav>
+    <!-- Phones (and landscape phones): the four links collapse into one Contents button. js/layout.js drives it; without JS the
+         button does nothing and the menu stays hidden, but the page is still one scroll away from every section. -->
+    <div class="contents" id="contents">
+      <button type="button" id="contents-btn" class="contents-btn ghost" aria-expanded="false" aria-controls="contents-menu">Contents</button>
+      <nav id="contents-menu" class="contents-menu" aria-label="Contents" hidden>
+        <a href="#tour">Tour</a>
+        <a href="#explore">Explore</a>
+        <a href="#hansch">Hansch fits</a>
+        <a href="#method">Method</a>
+        <a href="#app" data-top>Back to top</a>
+      </nav>
+    </div>
   </header>
 
   <div class="layout">
@@ -104,6 +151,7 @@
           <button type="button" id="btn-vr" class="ghost" aria-label="Enter VR" title="View in a VR headset" hidden>Enter VR</button>
           <button type="button" id="btn-ar" class="ghost" aria-label="View in AR" title="Place the chart in your room with augmented reality" hidden>View in AR</button>
         </div>
+        <button type="button" id="btn-show3d" class="ghost show3d" aria-expanded="false" aria-controls="stage" hidden>Show 3D</button>
       </div>
       <div id="fallback-2d" class="stage-card" hidden>
         <h2>The 3D view could not start</h2>
@@ -189,35 +237,60 @@
 
       <section id="explore" class="panel" aria-labelledby="explore-h" tabindex="-1">
         <h2 id="explore-h">Explore</h2>
-        <p class="lede">Choose the three axes and the colour, narrow the set by ATC group or route, or find a drug by name.</p>
-        <div class="controls">
-          <div class="field"><label for="ax-x">X axis</label><select id="ax-x"></select></div>
-          <div class="field"><label for="ax-y">Y axis (up)</label><select id="ax-y"></select></div>
-          <div class="field"><label for="ax-z">Z axis (depth)</label><select id="ax-z"></select></div>
-          <div class="field"><label for="color-by">Colour</label>
-            <select id="color-by">
-              <option value="single">One colour</option>
-              <option value="atc">ATC anatomical group</option>
-              <option value="oral">Oral route or not</option>
-              <option value="act">Activity (pChEMBL)</option>
-              <option value="ro5">Rule-of-five violations</option>
-            </select>
-          </div>
-          <div class="field wide" id="atc-pick-wrap"><span class="label">Highlight up to three ATC groups</span><div class="chips" id="atc-pick" role="group" aria-label="ATC groups to highlight"></div></div>
-          <div class="field"><label for="f-l1">ATC level 1</label><select id="f-l1"><option value="">All groups</option></select></div>
-          <div class="field"><label for="f-l2">ATC level 2</label><select id="f-l2"><option value="">All</option></select></div>
-          <div class="field"><label for="f-l3">ATC level 3</label><select id="f-l3"><option value="">All</option></select></div>
-          <div class="field"><label for="f-route">Route</label><select id="f-route"><option value="">All routes</option></select></div>
-          <div class="field"><span class="label">Size</span><label class="check" for="f-small"><input type="checkbox" id="f-small"> Only drugs up to 1000 Da, as in the fits</label></div>
-          <div class="field wide"><label for="search">Find a drug</label>
-            <input id="search" type="search" list="drug-names" placeholder="e.g. dexamethasone" autocomplete="off">
-            <datalist id="drug-names"></datalist>
-          </div>
+        <p class="lede">Find a drug by name, choose the three axes and the colour, or narrow the set by ATC group or route.</p>
+        <div class="field wide"><label for="search">Find a drug</label>
+          <input id="search" type="search" list="drug-names" placeholder="e.g. dexamethasone" autocomplete="off" inputmode="search" enterkeyhint="search">
+          <datalist id="drug-names"></datalist>
         </div>
+        <details class="group" id="g-axes" open>
+          <summary>Axes and colour</summary>
+          <div class="controls">
+            <div class="field"><label for="ax-x">X axis</label><select id="ax-x" aria-describedby="ax-x-hint"></select><small class="field-hint" id="ax-x-hint"></small></div>
+            <div class="field"><label for="ax-y">Y axis (up)</label><select id="ax-y" aria-describedby="ax-y-hint"></select><small class="field-hint" id="ax-y-hint"></small></div>
+            <div class="field"><label for="ax-z">Z axis (depth)</label><select id="ax-z" aria-describedby="ax-z-hint"></select><small class="field-hint" id="ax-z-hint"></small></div>
+            <div class="field"><label for="color-by">Colour</label>
+              <select id="color-by">
+                <option value="single">One colour</option>
+                <option value="atc">ATC anatomical group</option>
+                <option value="oral">Oral route or not</option>
+                <option value="act">Activity (pChEMBL)</option>
+                <option value="ro5">Rule-of-five violations</option>
+              </select>
+            </div>
+          </div>
+        </details>
+        <details class="group" id="g-atc">
+          <summary>ATC highlight <span class="badge" id="g-atc-badge"></span></summary>
+          <div class="controls">
+            <div class="field wide" id="atc-pick-wrap"><span class="label">Highlight up to three ATC groups</span><div class="chips" id="atc-pick" role="group" aria-label="ATC groups to highlight"></div></div>
+          </div>
+        </details>
+        <details class="group" id="g-filters">
+          <summary>Filters <span class="badge" id="g-filters-badge"></span></summary>
+          <div class="controls">
+            <div class="field"><label for="f-l1">ATC level 1</label><select id="f-l1"><option value="">All groups</option></select></div>
+            <div class="field"><label for="f-l2">ATC level 2</label><select id="f-l2"><option value="">All</option></select></div>
+            <div class="field"><label for="f-l3">ATC level 3</label><select id="f-l3"><option value="">All</option></select></div>
+            <div class="field"><label for="f-route">Route</label><select id="f-route"><option value="">All routes</option></select></div>
+            <div class="field wide"><span class="label">Size</span><label class="check" for="f-small"><input type="checkbox" id="f-small"> Only drugs up to 1000 Da, as in the fits</label></div>
+          </div>
+        </details>
         <p class="count" id="count"></p>
       </section>
 
-      <section id="detail" class="panel detail" aria-labelledby="detail-h">
+      <section id="detail" class="panel detail" aria-labelledby="detail-h" data-sheet="closed">
+        <!-- On phones, tablets and landscape phones this panel is a sheet fixed to the bottom of the screen (js/sheet.js): the handle
+             shows the name and three numbers and opens it half and fully. On a desktop it is an ordinary card in the text column. -->
+        <div class="sheet-head" id="sheet-head">
+          <button type="button" id="sheet-handle" class="sheet-handle" aria-expanded="false" aria-controls="sheet-body">
+            <span class="sheet-grip" aria-hidden="true"></span>
+            <span class="sheet-title" id="sheet-title"></span>
+            <span class="sheet-metrics" id="sheet-metrics"></span>
+            <span class="sr-only" id="sheet-state">Show details</span>
+          </button>
+          <button type="button" id="sheet-close" class="sheet-close ghost" aria-label="Close the drug panel">Close</button>
+        </div>
+        <div class="sheet-body" id="sheet-body">
         <h2 id="detail-h">Drug</h2>
         <p class="lede" id="detail-empty">Click a sphere or search for a drug to see its PubChem 3D conformer, ATC codes and descriptors.</p>
         <div id="detail-body" hidden>
@@ -239,18 +312,19 @@
           <ul class="atc-list" id="d-atc"></ul>
           <p class="flags" id="d-flags"></p>
         </div>
+        </div>
       </section>
 
       <section id="hansch" class="panel" aria-labelledby="hansch-h">
         <h2 id="hansch-h">Hansch fits</h2>
         <p class="lede">Drugs are grouped by their first ChEMBL mechanism target. Drugs up to 1000 Da are fitted. A group with at least five drugs gets the regression with the best leave-one-out q², allowing one descriptor per five drugs.</p>
         <div class="field wide"><label for="h-group">Target group</label><select id="h-group"></select></div>
+        <button type="button" id="h-show" class="primary">Show this fit in 3D</button>
         <div id="h-out"></div>
         <figure class="obs-pred">
           <svg id="h-plot" viewBox="0 0 320 260" role="img" aria-labelledby="h-plot-cap"></svg>
           <figcaption id="h-plot-cap">Observed against leave-one-out predicted pChEMBL. Points on the diagonal are predicted perfectly.</figcaption>
         </figure>
-        <button type="button" id="h-show" class="primary">Show this fit in 3D</button>
         <details class="cands"><summary>All models tried</summary><div id="h-cands"></div></details>
       </section>
 
@@ -324,6 +398,9 @@
     <p>Non-commercial, educational use. A licence for this project's own code and data has not been chosen yet; each source above keeps its own terms.</p>
   </div>
 </footer>
+
+<div class="read-progress" id="read-progress" aria-hidden="true"><i></i></div>
+<button type="button" id="fab-top" class="fab" aria-label="Back to top" title="Back to top" hidden>Top</button>
 
 <div id="xr-overlay" hidden></div>
 
