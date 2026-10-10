@@ -125,7 +125,8 @@ class Site:
 
     def text(self, rel):
         if rel not in self._text:
-            self._text[rel] = open(self.path(rel), encoding="utf-8", errors="replace").read()
+            with open(self.path(rel), encoding="utf-8", errors="replace") as f:
+                self._text[rel] = f.read()
         return self._text[rel]
 
     def raw(self, rel):
@@ -725,7 +726,6 @@ def check_preload(cx):
         if u and not site.exists(u):
             rep.error(f"preload of {u}: the file does not exist")
     # everywhere in the page: fonts as=font crossorigin, nothing third-party, modulepreload only in the block
-    outside_mods = 0
     for a, ln in cx.index.find("link"):
         rel = set((a.get("rel") or "").lower().split())
         href = a.get("href", "")
@@ -739,8 +739,6 @@ def check_preload(cx):
             t = norm("", href)
             if t is None or not site.exists(t):
                 rep.error(f"index.html:{ln}: font preload target {href} does not exist")
-    if outside_mods:
-        pass
     rep.note(f"{len(mods)} modules + {len(fetches)} data files; the list equals the import graph" if not rep.failed("preload") else "")
 
 

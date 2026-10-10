@@ -99,7 +99,8 @@ def main(argv=None):
     for name, data in files.items():
         path = os.path.join(a.out, name)
         try:
-            same = open(path, "rb").read() == data
+            with open(path, "rb") as f:
+                same = f.read() == data
         except OSError:
             same = False
         if not same:

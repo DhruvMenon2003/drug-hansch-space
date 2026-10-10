@@ -91,7 +91,8 @@ class Fixture(unittest.TestCase):
             f.write(text)
 
     def read(self, rel):
-        return open(os.path.join(self.dir, *rel.split("/")), encoding="utf-8").read()
+        with open(os.path.join(self.dir, *rel.split("/")), encoding="utf-8") as f:
+            return f.read()
 
     def edit(self, rel, old, new, count=1):
         t = self.read(rel)
@@ -477,7 +478,7 @@ class Budget(Fixture):
         self.assertTrue(any("first-load JS" in m or "three.module.min.js" in m for c, m in rep.errors), rep.errors)
 
     def test_first_load_data_budget(self):
-        d = {"meta": {"n_drugs": 2}, "drugs": [{"cid": 1, "conf": "RDKit", "pad": base64.b64encode(os.urandom(130 * 1024)).decode()}, {"cid": 2, "conf": ""}]}
+        d = {"meta": {"n_drugs": 2}, "drugs": [{"cid": 1, "conf": "RDKit", "pad": base64.b64encode(os.urandom(190 * 1024)).decode()}, {"cid": 2, "conf": ""}]}
         self.write("data/drugs.json", json.dumps(d))
         rep = self.run_check()
         self.assertTrue(any(c == "budget" and "DATA" in m for c, m in rep.errors), rep.errors)
@@ -486,7 +487,8 @@ class Budget(Fixture):
         self.write("vendor/fonts/a.woff2", os.urandom(130 * 1024))
         self.write("vendor/fonts/b.woff2", os.urandom(130 * 1024))
         self.write("vendor/fonts/c.woff2", os.urandom(130 * 1024))
-        self.write("vendor/fonts/fonts.css", "@font-face{font-family:A;src:url(a.woff2)} @font-face{font-family:B;src:url(b.woff2)} @font-face{font-family:C;src:url(c.woff2)}\n")
+        self.write("vendor/fonts/d.woff2", os.urandom(130 * 1024))
+        self.write("vendor/fonts/fonts.css", "@font-face{font-family:A;src:url(a.woff2)} @font-face{font-family:B;src:url(b.woff2)} @font-face{font-family:C;src:url(c.woff2)} @font-face{font-family:D;src:url(d.woff2)}\n")
         self.edit("index.html", 'href="style.css">', 'href="style.css"><link rel="stylesheet" href="vendor/fonts/fonts.css">')
         rep = self.run_check()
         self.assertEqual(rep.errors, [])
