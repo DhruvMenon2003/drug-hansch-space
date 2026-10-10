@@ -90,16 +90,26 @@ test.describe('GPU resources do not leak', () => {
     const ctx = await browser.newContext(CONTEXT), page = await ctx.newPage();
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     await openReady(page, baseURL);
-    const r = await page.evaluate(async () => {
-      const H = window.__hansch;
-      H.gl.dispose();
-      const gone = { renderer: H.stage.renderer, labels: document.querySelectorAll('#labels canvas, #labels > div > div').length };
-      return gone;
-    });
+    const count = () => page.evaluate(() => ({ labels: document.querySelectorAll('#labels *').length, renderer: !!window.__hansch.stage.renderer }));
+    const before = await count();
+    expect(before.labels, 'the plot has axis labels before dispose').toBeGreaterThan(0);
+    const r = await page.evaluate(() => { window.__hansch.gl.dispose(); return { renderer: window.__hansch.stage.renderer, gl: window.__hansch.gl }; });
     expect(r.renderer).toBeNull();
+    expect(r.gl, 'the handle is gone with it').toBeUndefined();
+    expect((await count()).labels, 'the CSS2D labels are removed').toBe(0);
     // after dispose nothing may react (and nothing may throw) when the app emits events
-    await page.evaluate(() => { window.__hansch.goStep('mr'); window.__hansch.bus.emit('theme'); });
+    const drawn = () => page.evaluate(() => window.__draws.space || 0);
+    const d0 = await drawn();
+    await page.evaluate(() => { window.__hansch.goStep('mr'); window.__hansch.bus.emit('theme'); window.__hansch.bus.emit('layout', { instant: true }); });
     await page.waitForTimeout(500);
+    expect(await drawn(), 'no draw call after dispose').toBe(d0);
+    expect(errors).toEqual([]);
+    // booting again works: a fresh scene on the same canvas draws
+    await page.evaluate(async () => { const m = await import('/js/boot-gl.js'); m.bootGl(); });
+    await page.waitForFunction(() => window.__hansch.stage.points && window.__hansch.stage.points.count > 0, null, { timeout: 30_000 });
+    await page.evaluate(() => window.__hansch.bus.emit('layout', { instant: true }));
+    await page.waitForFunction(d0 => (window.__draws.space || 0) > d0, d0, { timeout: 30_000 });
+    expect((await count()).labels).toBeGreaterThan(0);
     expect(errors).toEqual([]);
     await ctx.close();
   });

@@ -39,7 +39,14 @@ export function describeDrug(index) {
   return `Selected ${cap(d.name)}.${parts.length ? ' ' + parts.join(', ') + '.' : ''}`;
 }
 
-/** Announce every selection. Other modules call announce() themselves for their own events. */
+/**
+ * Announce every selection, in ONE message: the debounce keeps only the last call, so a drug that is already outside the
+ * current view (a click on a Hansch point, a search that leaves a filter on) says so here instead of in a second message
+ * that this one would replace. Other modules call announce() themselves for their own events.
+ */
 export function initAnnounce() {
-  bus.on('selection', ({ index }) => announce(describeDrug(index)));
+  bus.on('selection', ({ index }) => {
+    const d = app.drugs[index], text = describeDrug(index);
+    announce(d && !app.visible.includes(d) ? `${text} ${cap(d.name)} is not in the current view.` : text);
+  });
 }

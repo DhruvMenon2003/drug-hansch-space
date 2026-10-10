@@ -13,9 +13,17 @@ const open = async (browser, baseURL, dsf) => {
   await page.evaluate(() => { window.__hansch.quality.injectOnly(true); window.__hansch.quality.reset(); });
   return { ctx, page };
 };
-// Feed frame times and read the state in the same task: after 200 ms of calm the page shows a crisp frame at the full cap,
-// so the renderer's ratio between two evaluate() calls is not the learned rung. `learned` is.
-const feed = (page, ms, n) => page.evaluate(([ms, n]) => { for (let i = 0; i < n; i++) window.__hansch.quality.sample(ms); return { learned: window.__hansch.quality.learned, ratio: window.__hansch.stage.renderer.getPixelRatio(), width: window.__hansch.stage.renderer.domElement.width, cssW: document.querySelector('.stage-inner').clientWidth }; }, [ms, n]);
+// Feed frame times and read the state in the same task. After 200 ms of calm the page shows a crisp frame at the full cap
+// (by design), and while it is crisp a further governor move does not touch the renderer, so the renderer's ratio between
+// two evaluate() calls is NOT the learned rung when the round trip took longer than 200 ms (a loaded machine). Calling
+// quality.active() first returns the renderer to the learned rung inside the same task, which makes every read deterministic;
+// `learned` is the governor's own verdict and does not depend on it.
+const feed = (page, ms, n) => page.evaluate(([ms, n]) => {
+  const q = window.__hansch.quality, r = window.__hansch.stage.renderer;
+  q.active();
+  for (let i = 0; i < n; i++) q.sample(ms);
+  return { learned: q.learned, ratio: r.getPixelRatio(), width: r.domElement.width, cssW: document.querySelector('.stage-inner').clientWidth };
+}, [ms, n]);
 const ratio = page => page.evaluate(() => window.__hansch.quality.learned);
 
 test.describe('adaptive resolution', () => {
@@ -92,6 +100,24 @@ test.describe('adaptive resolution', () => {
     await page.mouse.move(500, 400); await page.mouse.down(); await page.mouse.move(540, 420, { steps: 3 });
     await page.waitForFunction(() => window.__hansch.stage.renderer.getPixelRatio() < 2, null, { timeout: 10_000 });
     await page.mouse.up();
+    await ctx.close();
+  });
+
+  test('real frame times reach the governor: a continuously spinning plot at DSF 2 on software GL steps the ratio down (not injected)', async ({ browser, baseURL }) => {
+    const ctx = await browser.newContext({ ...CONTEXT, deviceScaleFactor: 2 });
+    const page = await ctx.newPage();
+    await openReady(page, baseURL);
+    await hideOverlays(page);
+    // NOT injectOnly: the frame times come from the scheduler itself. Start from the cap, then keep frames coming.
+    await page.evaluate(() => { window.__hansch.quality.injectOnly(false); window.__hansch.quality.reset(); });
+    expect(await ratio(page)).toBe(2);
+    const spin = () => page.evaluate(() => document.querySelector('#btn-spin').click());          // the stage tools are hidden for the ink check
+    await spin();
+    await page.waitForFunction(() => window.__hansch.quality.level >= 1, null, { timeout: 90_000 });       // SwiftShader draws 2560x1600 at a few fps
+    expect(await ratio(page), 'a lower rung, learned from measured frames only').toBeLessThan(2);
+    await spin();                                                                                           // spin off: the page settles
+    await quiet(page, 800);
+    await expectInk(page, '#space', 0.01, 'still drawing after the governor stepped down');
     await ctx.close();
   });
 

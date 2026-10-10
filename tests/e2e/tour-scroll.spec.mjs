@@ -8,6 +8,8 @@ import { installCounters } from '../helpers/probes.mjs';
 const VIEWPORTS = [
   ['1280x800', CONTEXT],
   ['390x844', { viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, colorScheme: 'light', reducedMotion: 'no-preference' }],
+  // the smallest phone: UX-08 (the activation line sat under the sticky stack) was measured here, where the stack takes the most room
+  ['320x568', { viewport: { width: 320, height: 568 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true, colorScheme: 'light', reducedMotion: 'no-preference' }],
 ];
 
 async function boot(browser, baseURL, opts) {
@@ -140,7 +142,7 @@ for (const [label, opts] of VIEWPORTS) {
 
 test.describe('tour band rebuild policy', () => {
   test.setTimeout(120_000);
-  const phone = VIEWPORTS[1][1];
+  const phone = VIEWPORTS[1][1];                      // 390x844
 
   test('a same-width height change under 150 px (browser chrome) keeps the band; a real resize rebuilds it', async ({ browser, baseURL }) => {
     const { ctx, page } = await boot(browser, baseURL, phone);

@@ -27,17 +27,20 @@ scale 0. The old snapshot hashed the raw instance arrays, which differ by constr
   Both apps reduce to the same thing, so the comparison stays exact.
 * `drawn` (new field) is the number of drawn instances; `colorsN` was dropped (it was `3 * 759`, a constant).
 * Verified: regenerating from the original with the new function changes ONLY `matricesSha1`, `colorsSha1`, `colorsN`,
-  `drawn` in every view; `boot` and every other field are byte-identical to the previous golden.
+  `drawn` per view (and adds `hanschFor`, see the UX-18 row below); `boot` is byte-identical to the previous golden. The
+  later search-blur recipe change (D21 row below) altered further fields in 8 views: `ui:reset-view`, `step:series-again`,
+  `ui:show-fit` (view, selection, scene, labels, animation hash, detail), and `animToSha1` in `search:prefix`,
+  `pointer:hover`, `pointer:click`, `ui:spin-on`, `ui:spin-off`.
 * `table.selectedRows` reads rows with `aria-selected="true"` (original) or `aria-current="true"` (new, see below).
 
 ### Deliberate behaviour changes (allow-list)
 
 | Change | Where it shows in a snapshot | How it is checked instead |
 | --- | --- | --- |
-| Table rows use `aria-current="true"` instead of the invalid `aria-selected` (D22) | `table.selectedRows` (the snapshot reads both attributes, so the value is unchanged) | `tests/e2e/shell.spec.mjs` / `lod.spec.mjs` do not depend on it; the snapshot selector accepts either attribute. `style.css` highlights the selected row through `[aria-current="true"]` (the shell stage added it next to the old selector). |
+| Table rows use `aria-current="true"` instead of the invalid `aria-selected` (D22) | `table.selectedRows` (the snapshot reads both attributes, so the value is unchanged) | `tests/e2e/p7-fixes.spec.mjs` (one `aria-current="true"` row, no `aria-selected` anywhere in the table); the snapshot selector accepts either attribute. `style.css` highlights the selected row through `[aria-current="true"]` (the shell stage added it next to the old selector). |
 | The Hansch panel follows the group chosen by the tour / Explore (UX-18). The original left the panel on the previous group while the select already read the new one | `hansch.out`, `hansch.cands`, `hansch.plot` (and the new field `hanschFor`, the group the panel is drawn for) in the 11 views where the original's `selects[8]` and `hanschFor` disagree: `step:all` .. `select:dexamethasone`, `step:series-again` | parity.spec.mjs derives the set from the GOLDEN (`selects[8] !== hanschFor`), skips the panel hashes there and asserts instead that the new panel describes the group the select shows; everywhere else the hashes are strict. |
-| The search box no longer searches a second time when it loses focus (D21; the original re-ran the search on the pending `change` event, which in the recipe re-selected caffeine and reset the filters inside the unrelated `ui:reset-view` step) | the recipe | `search()` in snapshot.mjs blurs the input inside the search step, so both apps reach the same state; goldens regenerated from the original with that recipe. |
-| Hover is cleared when a layout changes (D23) | none (the recipe never hovers across a layout) | lod.spec.mjs |
+| The search box no longer searches a second time when it loses focus (D21; the original re-ran the search on the pending `change` event, which in the recipe re-selected caffeine and reset the filters inside the unrelated `ui:reset-view` step) | the recipe | `search()` in snapshot.mjs blurs the input inside the search step, so both apps reach the same state; goldens regenerated from the original with that recipe. The duplicate is guarded in `tests/e2e/p7-fixes.spec.mjs` (selection events counted: Enter + blur = 1). |
+| Hover is cleared when a layout changes (D23) | none (the recipe never hovers across a layout) | `tests/e2e/p7-fixes.spec.mjs` (hover and tooltip gone after a layout); the filtered-out note is in `lod.spec.mjs` |
 
 ### Pixel comparison with the original (sphere LOD 18x12 -> 10x7)
 
