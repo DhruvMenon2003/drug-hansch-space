@@ -1,0 +1,17 @@
+{
+  "name": "Drug Hansch Space",
+  "short_name": "Hansch Space",
+  "description": "Drugs as spheres in a 3D descriptor space, with a guided tour of Hansch-type fits. Educational exploration, not medical advice.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "id": "./",
+  "display": "browser",
+  "background_color": "#eef2f1",
+  "theme_color": "#eef2f1",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
