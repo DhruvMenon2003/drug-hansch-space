@@ -16,9 +16,9 @@ Output:
     props.json   {meta, defs:[{key,label,long,dec,...}], cids:[...], cols:{key:[value per cid]}}
                  columns, not records: the file gzips to a fraction of a record-per-drug layout.
 """
-import argparse, datetime as dt, json, math, os, sys
+import argparse, json, math, os, sys
 
-from rdkit import Chem, RDLogger
+from rdkit import Chem, RDLogger, rdBase
 from rdkit.Chem import Crippen, QED, rdMolDescriptors
 
 RDLogger.DisableLog("rdApp.*")
@@ -83,7 +83,9 @@ def main(argv=None):
         cols["qlim"].append(min(QED_PROPS, key=lambda n: des[n]))
 
     meta = {
-        "generated_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "generated_by": "tools/build_props.py",
+        "deterministic": True,
+        "rdkit_version": rdBase.rdkitVersion,
         "n_drugs": len(cids),
         "from": "site/data/drugs.json (curated SMILES)",
         "rdkit_qed": "rdkit.Chem.QED, weights WEIGHT_MEAN; desirabilities from QED.ads with QED.adsParameters",
