@@ -1,6 +1,6 @@
 # A02BA h2-receptor antagonists: how this table was filled
 
-Built 2026-10-13T18:17:37+00:00 by `tools/build_cohort.py --atc4 A02BA`. 8 drugs, 9 rows, one per mode of administration.
+Built 2026-10-13T20:00:13+00:00 by `tools/build_cohort.py --atc4 A02BA`. 8 drugs, 9 rows, one per mode of administration.
 
 ## Formulas
 
@@ -20,12 +20,14 @@ Built 2026-10-13T18:17:37+00:00 by `tools/build_cohort.py --atc4 A02BA`. 8 drugs
 | Molecular Weight through Molecular Refractivity, QED | RDKit on the PubChem structure |
 | Mode of Administration | openFDA label route counts, DailyMed SPL routeCode as the fallback |
 | In Vitro Activity, In Vitro Toxicity | median ChEMBL pChEMBL at the primary target, and at the strongest other target |
-| Bioavailability, Half Life, In Vivo Toxicity, Primary Toxicity Endpoint | read out of the US label text, with the sentence kept in the row |
+| Bioavailability, Half Life, In Vivo Toxicity, Primary Toxicity Endpoint | read out of the US label text, with the sentence kept in the row, and where the text states nothing, from `tools/inputs/<group>_pk_tox.json`, which carries one cited sentence per cell |
 | In Vivo Activity | the WHO defined daily dose for that route, in mg/kg |
 | Therapeutic Index, In Vivo Free Drug Concentration, Dose-corrected bioavailability, Exposure flag | computed from the columns above by the formulas above |
 
 ## Assumptions and choices
 
+- the lethal doses in this group are not one kind of number: ranitidine's and nizatidine's are intravenous LD50s, famotidine's is an oral LD50 given as a lower bound, and cimetidine has no published LD50 at all, only a two-year no-effect dose. A therapeutic index is only comparable between values of the same kind and the same route, so each row carries both.
+- ranitidine: the lethal dose is the cited intravenous LD50 of 83 mg/kg, not the 77.0 mg/kg the label reader took from the label text, because only the cited value carries the route and species the figure belongs to.
 - ranitidine bismuth citrate: the PubChem record is a mixture of 3 fragments, so the largest one is taken as the drug, as the curation rules require.
 - cimetidine, combinations (A02BA51): PubChem has no single compound under this name (a combination or a salt-only entry), so the row is left out of the table.
 - famotidine, combinations (A02BA53): PubChem has no single compound under this name (a combination or a salt-only entry), so the row is left out of the table.
@@ -41,10 +43,10 @@ Built 2026-10-13T18:17:37+00:00 by `tools/build_cohort.py --atc4 A02BA`. 8 drugs
 
 ## Empty cells
 
-- **Bioavailability** is empty in 7 row(s): cimetidine / ORAL, ranitidine / ORAL, nizatidine / ORAL, niperotidine / NaN, roxatidine / ORAL, ranitidine bismuth citrate / ORAL, lafutidine / ORAL
+- **Bioavailability** is empty in 2 row(s): niperotidine / NaN, lafutidine / ORAL
 - **Dosage** is empty in 1 row(s): niperotidine / NaN
-- **Half Life** is empty in 4 row(s): niperotidine / NaN, roxatidine / ORAL, ranitidine bismuth citrate / ORAL, lafutidine / ORAL
+- **Half Life** is empty in 1 row(s): niperotidine / NaN
 - **In Vitro Activity** is empty in 5 row(s): nizatidine / ORAL, niperotidine / NaN, roxatidine / ORAL, ranitidine bismuth citrate / ORAL, lafutidine / ORAL
 - **In Vitro Toxicity** is empty in 3 row(s): niperotidine / NaN, roxatidine / ORAL, ranitidine bismuth citrate / ORAL
 - **In Vivo Activity** is empty in 1 row(s): niperotidine / NaN
-- **In Vivo Toxicity** is empty in 7 row(s): cimetidine / ORAL, famotidine / ORAL, famotidine / INTRAVENOUS, niperotidine / NaN, roxatidine / ORAL, ranitidine bismuth citrate / ORAL, lafutidine / ORAL
+- **In Vivo Toxicity** is empty in 4 row(s): niperotidine / NaN, roxatidine / ORAL, ranitidine bismuth citrate / ORAL, lafutidine / ORAL

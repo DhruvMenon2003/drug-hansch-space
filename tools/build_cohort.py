@@ -45,6 +45,7 @@ OPENFDA = "https://api.fda.gov/drug/label.json"
 DAILYMED = "https://dailymed.nlm.nih.gov/dailymed/services/v2"
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FDA_ROUTES = os.path.join(HERE, "tools", "inputs", "fda_route_of_administration.tsv")
+PK_TABLE = os.path.join(HERE, "tools", "inputs", "{}_pk_tox.json")   # optional, one cited value per cell
 
 IV = {"INTRAVENOUS", "INTRAVENOUS BOLUS", "INTRAVENOUS DRIP"}
 MAX_ROUTES = 2                   # rule 3: two routes per drug, intravenous excluded from the count
@@ -79,6 +80,8 @@ SHEET_COLS = [
 # Columns this build adds so every filled cell can be checked at a glance.
 AUDIT_COLS = [
     "Route rank", "Route evidence", "Route FDA code", "Route NCI concept id",
+    "In Vivo Toxicity kind", "In Vivo Toxicity route", "In Vivo Toxicity species",
+    "Reported in-vivo activity", "Reported in-vivo activity kind",
     "Therapeutic Index (classical, log LD50/ED50)", "Dose-corrected bioavailability (F per mg)", "Exposure flag",
     "InChIKey", "ChEMBL id", "QED limiting term", "In Vitro Toxicity target", "In Vitro Activity n",
     "Fsp3", "Heavy atoms", "PubChem XLogP3", "Bioavailability evidence", "Half Life evidence",
@@ -144,6 +147,30 @@ def cell(value, source, evidence=""):
 
 def num(c):
     return c["value"] if isinstance(c, dict) and isinstance(c.get("value"), (int, float)) else None
+
+
+def pk_table(g4):
+    """{drug name: {cell: {value, unit, source, ...}}} from tools/inputs/<group>_pk_tox.json, if it is there.
+
+    The table is for the cells no API publishes: a bioavailability or a lethal dose that only a label's prose
+    or a paper states. Every entry carries the document and the sentence it was read from, and a lethal dose
+    also carries its kind, its route and its species, because an intravenous LD50, an oral LD50 and a
+    two-year no-effect dose are not the same number and must not share a column silently."""
+    path = PK_TABLE.format(g4)
+    if not os.path.exists(path):
+        return {}, {}
+    js = json.load(open(path, encoding="utf-8"))
+    return {(d.get("name") or "").lower(): d for d in js.get("drugs", [])}, js.get("meta", {})
+
+
+def from_table(entry, key, fetched):
+    """The fetched value when there is one, otherwise the table's, so a reading always beats a transcription."""
+    if num(fetched) is not None:
+        return fetched
+    c = (entry or {}).get(key)
+    if isinstance(c, dict) and isinstance(c.get("value"), (int, float)):
+        return cell(c["value"], c.get("source", "cited table"), (c.get("source") or "")[:300])
+    return fetched
 
 
 # ---------------------------------------------------------------- WHO ATC and DDD
@@ -489,7 +516,10 @@ def main(argv=None):
     g4 = a.atc4.upper()
     http = Http(a.cache, offline=a.no_net)
     legend = fda_route_legend()
+    table, table_meta = pk_table(g4)
     assume = []
+    if table_meta.get("warning"):
+        assume.append(table_meta["warning"])
 
     members, who_url = atc_group(http, g4)
     if not members:
@@ -553,6 +583,34 @@ def main(argv=None):
         rec["t_half"] = read_half_life(text, src)
         rec["ld50"] = read_ld50(text, src)
         rec["endpoint"] = read_endpoint(http, name)
+        t = table.get(name)
+        rec["F"] = from_table(t, "F", rec["F"])
+        rec["t_half"] = from_table(t, "half_life_h", rec["t_half"])
+        tox = (t or {}).get("invivo_tox") or {}
+        if isinstance(tox.get("value"), (int, float)):
+            # the table wins here, unlike F and the half-life, because it is the only one of the two that
+            # says what kind of number this is: an oral LD50, an intravenous LD50 and a no-effect dose are
+            # not comparable, and the label reader returns a bare figure
+            read = num(rec["ld50"])
+            if read is not None and abs(read - tox["value"]) > 0.01:
+                assume.append(f"{name}: the lethal dose is the cited {tox.get('route', '')} "
+                              f"{tox.get('kind', 'value')} of {tox['value']} mg/kg, not the {read} mg/kg the "
+                              f"label reader took from the label text, because only the cited value carries "
+                              f"the route and species the figure belongs to.")
+            rec["ld50"] = cell(tox["value"], tox.get("source", "cited table"), (tox.get("source") or "")[:300])
+            rec["tox_kind"] = tox.get("bound", "") + tox.get("kind", "")
+            rec["tox_route"] = tox.get("route", "")
+            rec["tox_species"] = tox.get("species", "")
+            rec["tox_in_ti"] = bool(tox.get("use_in_therapeutic_index"))
+        else:
+            rec["tox_kind"] = "LD50 read from the label text" if num(rec["ld50"]) is not None else ""
+            rec["tox_route"], rec["tox_species"] = "", ""
+            rec["tox_in_ti"] = num(rec["ld50"]) is not None
+        ra = (t or {}).get("invivo_act") or {}
+        rec["rep_act"] = f"{ra['value']} {ra.get('unit', '')}".strip() if ra.get("value") is not None else ""
+        rec["rep_act_kind"] = ra.get("kind", "")
+        rec["note"] = (t or {}).get("note", "")
+        rec["conc_ok"] = (t or {}).get("free_concentration_valid", True)
         print(f"  {rec['atc']} {name:28s} cid={cid:<9} qed={rec['d']['qed']:.2f} "
               f"F={rec['F']['value']} t½={rec['t_half']['value']} LD50={rec['ld50']['value']} "
               f"routes={','.join(rec['routes']) or '-'}{' [' + rec['route_flag'] + ']' if rec['route_flag'] else ''}")
@@ -608,8 +666,17 @@ def main(argv=None):
                 else cell(None, "", "")
             if dose["value"] is None:
                 flags.append("the WHO index gives no DDD for this drug")
+            if num(rec["ld50"]) is not None and not rec.get("tox_in_ti"):
+                flags.append(f"no therapeutic index: the toxicity figure is a "
+                             f"{rec.get('tox_kind') or 'non-lethal-dose'} value, not a lethal dose")
+            if rec.get("tox_route") and route not in IV and rec["tox_route"] == "intravenous":
+                flags.append("the lethal dose is intravenous while this row is not, so the index compares "
+                             "only with the other intravenous lethal doses in the group")
             tau = cell(DDD_INTERVAL_H, "definition", "a defined daily dose is one day's maintenance dose")
-            conc = free_concentration(num(F), num(rec["t_half"]), num(dose), num(tau))
+            if rec.get("note"):
+                flags.append(rec["note"])
+            conc = free_concentration(num(F), num(rec["t_half"]), num(dose), num(tau)) \
+                if rec.get("conc_ok", True) else None
             act_dose = round(num(dose) / BODY_KG, 4) if num(dose) else None      # mg/kg for a 70 kg adult
             rows.append({
                 "cid": rec["cid"], "name": rec["name"], "atc": rec["atc"], "route": route,
@@ -627,7 +694,11 @@ def main(argv=None):
                 "offtox": offv[0] if offv else None, "offtox_target": offt,
                 "offtox_name": chembl_target_name(http, offt) if offt else "",
                 "invivo_tox": L, "invivo_act": cell(act_dose, dose["source"], dose["evidence"]),
-                "ti": therapeutic_index(num(L), act_dose), "ti_classical": ti_classical(num(L), act_dose),
+                "tox_kind": rec.get("tox_kind", ""), "tox_route": rec.get("tox_route", ""),
+                "tox_species": rec.get("tox_species", ""), "rep_act": rec.get("rep_act", ""),
+                "rep_act_kind": rec.get("rep_act_kind", ""),
+                "ti": therapeutic_index(num(L), act_dose) if rec.get("tox_in_ti") else None,
+                "ti_classical": ti_classical(num(L), act_dose) if rec.get("tox_in_ti") else None,
                 "F": F, "t_half": rec["t_half"], "dose": dose, "tau": tau, "free_conc": conc,
                 "F_per_mg": round(num(F) / num(dose), 5) if (num(F) and num(dose)) else None,
                 "flags": flags,
@@ -698,7 +769,7 @@ def main(argv=None):
             "dose_corrected_bioavailability": "F / dose(mg)",
             "in_vivo_activity": f"WHO defined daily dose for the route, in mg, / {BODY_KG:.0f} kg",
         },
-        "sources": {"pubchem": PUG, "who_atc": who_url, "chembl": CHEMBL, "openfda": OPENFDA,
+        "sources": {"cited_table": table_meta, "pubchem": PUG, "who_atc": who_url, "chembl": CHEMBL, "openfda": OPENFDA,
                     "dailymed": DAILYMED, "fda_route_legend": os.path.relpath(FDA_ROUTES, HERE),
                     "rdkit_qed": "rdkit.Chem.QED, Bickerton et al. 2012, mean weights"},
         "assumptions": assume,
@@ -722,6 +793,7 @@ def main(argv=None):
                 r["free_conc"] if r["free_conc"] is not None else "",
                 r["endpoint"]["value"] or "",
                 r["route_rank"] or "", r["route_evidence"], r["route_fda_code"], r["route_nci"],
+                r["tox_kind"], r["tox_route"], r["tox_species"], r["rep_act"], r["rep_act_kind"],
                 r["ti_classical"] if r["ti_classical"] is not None else "",
                 r["F_per_mg"] if r["F_per_mg"] is not None else "",
                 "; ".join(f for f in r["flags"] if "exposure" in f),
@@ -748,7 +820,8 @@ def main(argv=None):
             ("In Vitro Activity, In Vitro Toxicity",
              "median ChEMBL pChEMBL at the primary target, and at the strongest other target"),
             ("Bioavailability, Half Life, In Vivo Toxicity, Primary Toxicity Endpoint",
-             "read out of the US label text, with the sentence kept in the row"),
+             "read out of the US label text, with the sentence kept in the row, and where the text states "
+             "nothing, from `tools/inputs/<group>_pk_tox.json`, which carries one cited sentence per cell"),
             ("In Vivo Activity", "the WHO defined daily dose for that route, in mg/kg"),
             ("Therapeutic Index, In Vivo Free Drug Concentration, Dose-corrected bioavailability, Exposure flag",
              "computed from the columns above by the formulas above"),
