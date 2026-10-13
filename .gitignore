@@ -7,3 +7,5 @@ __pycache__/
 .pubchem_cache/
 .DS_Store
 tools/data/cache_*/
+.h2_cache/
+.pdb_cache/
