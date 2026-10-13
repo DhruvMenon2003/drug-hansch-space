@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 .pubchem_cache/
 .DS_Store
+.h2_cache/
+.pdb_cache/
