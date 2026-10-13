@@ -1,0 +1,301 @@
+{
+ "meta": {
+  "group": "A02BA",
+  "what": "bioavailability, half-life, a label dose, a lethal or no-effect dose and a reported in-vivo activity for the H2-receptor antagonists, each with the document and the sentence it was read from",
+  "gathered_utc": "2026-10-13",
+  "gathered_by": "a reading of openFDA labels, PubChem and the published literature for this project",
+  "warning": "the lethal doses in this group are not one kind of number: ranitidine's and nizatidine's are intravenous LD50s, famotidine's is an oral LD50 given as a lower bound, and cimetidine has no published LD50 at all, only a two-year no-effect dose. A therapeutic index is only comparable between values of the same kind and the same route, so each row carries both.",
+  "note": "PubChem's ChemIDplus-backed toxicity sections are empty for every drug in this class; the feed behind them is retired, and its sdq endpoint returns 404."
+ },
+ "drugs": [
+  {
+   "name": "cimetidine",
+   "atc": "A02BA01",
+   "cid": 2756,
+   "F": {
+    "value": 0.6,
+    "unit": "fraction",
+    "source": "https://pubchem.ncbi.nlm.nih.gov/compound/2756#section=Absorption-Distribution-and-Excretion ('absolute bioavailability of cimetidine is approximately 60%; however, the bioavailability can be as high as 70% in patients with peptic ulcer disease')"
+   },
+   "half_life_h": {
+    "value": 2.0,
+    "unit": "h",
+    "source": "openFDA drug/label.json set_id 01997826-7ca1-473e-bfc9-075b14b58a35 (cimetidine tablets, Rx) CLINICAL PHARMACOLOGY: 'The half-life of cimetidine tablets is approximately 2 hours.'"
+   },
+   "dose_mg": {
+    "value": 800,
+    "unit": "mg",
+    "source": "openFDA drug/label.json set_id 01997826-7ca1-473e-bfc9-075b14b58a35 (cimetidine tablets, Rx) DOSAGE AND ADMINISTRATION, active duodenal ulcer: '800 mg at bedtime is the dose of choice for most patients'"
+   },
+   "dose_interval_h": {
+    "value": 24,
+    "unit": "h",
+    "source": "openFDA drug/label.json set_id 01997826-7ca1-473e-bfc9-075b14b58a35 (cimetidine tablets, Rx) ('once-daily at bedtime dosage regimen'); alternatives 400 mg q12h, 300 mg q6h"
+   },
+   "invivo_act": {
+    "value": 300,
+    "unit": "mg oral (human)",
+    "kind": "clinical dose halving acid output",
+    "source": "openFDA drug/label.json set_id 01997826-7ca1-473e-bfc9-075b14b58a35 (cimetidine tablets, Rx) CLINICAL PHARMACOLOGY: 'During the first hour after a standard experimental meal, a 300 mg oral dose ... inhibited gastric acid secretion in duodenal ulcer patients by at least 50%.'"
+   },
+   "invivo_tox": {
+    "value": 150,
+    "unit": "mg/kg/day",
+    "species": "rat",
+    "route": "oral",
+    "kind": "NOAEL",
+    "source": "openFDA drug/label.json set_id 01997826-7ca1-473e-bfc9-075b14b58a35 (cimetidine tablets, Rx) PRECAUTIONS: 24-month rat study; benign Leydig cell tumour incidence raised at 378 and 950 mg/kg/day but 'no differences between the rats receiving 150 mg/kg/day and the untreated controls'",
+    "bound": "",
+    "use_in_therapeutic_index": false
+   }
+  },
+  {
+   "name": "ranitidine",
+   "atc": "A02BA02",
+   "cid": 3001055,
+   "F": {
+    "value": 0.5,
+    "unit": "fraction",
+    "source": "openFDA drug/label.json set_id 0fba6615-37c2-4ba6-b6e5-09599369a5bc (ranitidine tablets, Rx) Pharmacokinetics-Absorption: 'Ranitidine Tablets are 50% absorbed after oral administration, compared to an intravenous (IV) injection'"
+   },
+   "half_life_h": {
+    "value": 2.75,
+    "unit": "h",
+    "range": "2.5-3",
+    "source": "openFDA drug/label.json set_id 0fba6615-37c2-4ba6-b6e5-09599369a5bc (ranitidine tablets, Rx) Excretion: 'The elimination half-life is 2.5 to 3 hours.'"
+   },
+   "dose_mg": {
+    "value": 150,
+    "unit": "mg",
+    "source": "openFDA drug/label.json set_id 0fba6615-37c2-4ba6-b6e5-09599369a5bc (ranitidine tablets, Rx) DOSAGE AND ADMINISTRATION, active duodenal ulcer: '150 mg twice daily'"
+   },
+   "dose_interval_h": {
+    "value": 12,
+    "unit": "h",
+    "source": "openFDA drug/label.json set_id 0fba6615-37c2-4ba6-b6e5-09599369a5bc (ranitidine tablets, Rx) ('twice daily'); alternative 300 mg q24h"
+   },
+   "invivo_act": {
+    "value": 40,
+    "unit": "mg oral (human)",
+    "kind": "clinical dose halving acid output",
+    "source": "PMID 6269788 (Lebert PA et al, Clin Pharmacol Ther 1981;30:539-44), read via https://pubchem.ncbi.nlm.nih.gov/compound/3001055#section=Absorption-Distribution-and-Excretion : oral 20/40/80 mg reduced pentagastrin-stimulated hydrogen ion output by 29%, 50% and 70%; 50% inhibition corresponded to peak serum 165 ug/L"
+   },
+   "invivo_tox": {
+    "value": 83,
+    "unit": "mg/kg",
+    "species": "rat",
+    "route": "intravenous",
+    "kind": "LD50",
+    "source": "openFDA drug/label.json set_id 0fba6615-37c2-4ba6-b6e5-09599369a5bc (ranitidine tablets, Rx) OVERDOSAGE: 'Intravenous LD50 values in mice and rats were 77 and 83 mg/kg, respectively.' Same section: 'Single oral doses of 1,000 mg/kg in mice and rats were not lethal' (so oral LD50 >1000 mg/kg; no oral point estimate given)",
+    "bound": "",
+    "use_in_therapeutic_index": true
+   }
+  },
+  {
+   "name": "famotidine",
+   "atc": "A02BA03",
+   "cid": 5702160,
+   "F": {
+    "value": 0.425,
+    "unit": "fraction",
+    "range": "0.40-0.45",
+    "source": "openFDA drug/label.json set_id 002875d2-8c30-2d2e-e063-6294a90ae01e (famotidine tablets, PLR) 12.3: 'Famotidine is incompletely absorbed. The bioavailability of oral doses is 40 to 45%.'"
+   },
+   "half_life_h": {
+    "value": 3.0,
+    "unit": "h",
+    "range": "2.5-3.5",
+    "source": "openFDA drug/label.json set_id 002875d2-8c30-2d2e-e063-6294a90ae01e (famotidine tablets, PLR) 12.3 Excretion: 'Famotidine has an elimination half-life of 2.5 to 3.5 hours.'"
+   },
+   "dose_mg": {
+    "value": 40,
+    "unit": "mg",
+    "source": "openFDA drug/label.json set_id 002875d2-8c30-2d2e-e063-6294a90ae01e (famotidine tablets, PLR) Table 1, active duodenal ulcer: '40 mg once daily; or 20 mg twice daily'"
+   },
+   "dose_interval_h": {
+    "value": 24,
+    "unit": "h",
+    "source": "openFDA drug/label.json set_id 002875d2-8c30-2d2e-e063-6294a90ae01e (famotidine tablets, PLR) ('40 mg once daily'); alternative 20 mg q12h"
+   },
+   "invivo_act": {
+    "value": 26.5,
+    "unit": "ng/mL plasma",
+    "kind": "EC50 for inhibition of gastric acid secretion (healthy adults)",
+    "source": "openFDA drug/label.json set_id 002875d2-8c30-2d2e-e063-6294a90ae01e (famotidine tablets, PLR) 12.2 Pharmacodynamics table: healthy adult subjects EC50 26.5 +/- 10.3 ng/mL. Same section: evening 20 mg and 40 mg inhibited mean nocturnal gastric acid secretion by 86% and 94%"
+   },
+   "invivo_tox": {
+    "value": 3000,
+    "unit": "mg/kg",
+    "species": "rat and mouse",
+    "route": "oral",
+    "kind": "LD50",
+    "source": "openFDA drug/label.json set_id e3b13e23-122b-4bd4-95cf-b5a14b7afc05 (famotidine, OVERDOSAGE/animal tox) OVERDOSAGE: 'The oral LD50 of famotidine in male and female rats and mice was greater than 3000 mg/kg and the minimum lethal acute oral dose in dogs exceeded 2000 mg/kg.' Same section: IV LD50 mice and rats 254-563 mg/kg",
+    "bound": ">",
+    "use_in_therapeutic_index": true
+   }
+  },
+  {
+   "name": "nizatidine",
+   "atc": "A02BA04",
+   "cid": 4513,
+   "F": {
+    "value": 0.7,
+    "unit": "fraction",
+    "note": "exceeds 0.70",
+    "source": "openFDA drug/label.json set_id 367a1004-59c1-4474-a4f6-ce8bf5a1b043 (nizatidine capsules) CLINICAL PHARMACOLOGY: 'The absolute oral bioavailability of nizatidine exceeds 70%.'"
+   },
+   "half_life_h": {
+    "value": 1.5,
+    "unit": "h",
+    "range": "1-2",
+    "source": "openFDA drug/label.json set_id 367a1004-59c1-4474-a4f6-ce8bf5a1b043 (nizatidine capsules) CLINICAL PHARMACOLOGY: 'The elimination half-life is 1 to 2 hours'"
+   },
+   "dose_mg": {
+    "value": 300,
+    "unit": "mg",
+    "source": "openFDA drug/label.json set_id 367a1004-59c1-4474-a4f6-ce8bf5a1b043 (nizatidine capsules) DOSAGE AND ADMINISTRATION, active duodenal ulcer: '300 mg once daily at bedtime'"
+   },
+   "dose_interval_h": {
+    "value": 24,
+    "unit": "h",
+    "source": "openFDA drug/label.json set_id 367a1004-59c1-4474-a4f6-ce8bf5a1b043 (nizatidine capsules) ('once daily at bedtime'); alternative 150 mg q12h"
+   },
+   "invivo_act": {
+    "value": 0.18,
+    "unit": "mg/kg",
+    "species": "dog",
+    "kind": "ED50 for inhibition of gastric acid secretion",
+    "source": "PMID 8093722 (Ueki S et al, J Pharmacol Exp Ther 1993): 'The ED50 and ED90 values of nizatidine for inhibition of gastric acid secretion were 0.18 and 3.22 mg/kg in dogs, and 2.94 and 19.6 mg/kg in rats, respectively.' Route not stated in the abstract"
+   },
+   "invivo_tox": {
+    "value": 301,
+    "unit": "mg/kg",
+    "species": "rat",
+    "route": "intravenous",
+    "kind": "LD50",
+    "source": "openFDA drug/label.json set_id 367a1004-59c1-4474-a4f6-ce8bf5a1b043 (nizatidine capsules) OVERDOSAGE: 'Intravenous median lethal doses in the rat and mouse were 301 mg/kg and 232 mg/kg respectively.' Same section: 'Single oral doses of 800 mg/kg in dogs and of 1,200 mg/kg in monkeys were not lethal.' PRECAUTIONS: 2-year rat carcinogenicity NOEL 500 mg/kg/day; female mice at 2,000 mg/kg/day were above the MTD (30% weight decrement, transaminase elevations)",
+    "bound": "",
+    "use_in_therapeutic_index": true
+   }
+  },
+  {
+   "name": "niperotidine",
+   "atc": "A02BA05",
+   "cid": 66753191,
+   "dose_mg": {
+    "value": 460,
+    "unit": "mg",
+    "note": "single bedtime dose used in the only 24-h pH study found; not confirmed as the registered usual adult dose",
+    "source": "PMID 1983712 (Ital J Gastroenterol 1990): '460 mg were administered at 22.00'"
+   },
+   "dose_interval_h": {
+    "value": 24,
+    "unit": "h",
+    "note": "single bedtime dose in that study",
+    "source": "PMID 1983712"
+   },
+   "invivo_act": {
+    "value": 460,
+    "unit": "mg oral (human)",
+    "kind": "nocturnal acid suppression at the studied dose",
+    "source": "PMID 1983712: percentage of time above pH 4 overnight 28.4% (niperotidine) vs 7.4% (placebo); 'The duration of niperotidine action was 5 to 7 hours.'"
+   }
+  },
+  {
+   "name": "roxatidine",
+   "atc": "A02BA06",
+   "cid": 91276,
+   "F": {
+    "value": 0.95,
+    "unit": "fraction",
+    "note": "fraction absorbed of the prodrug roxatidine acetate; >95%",
+    "source": "PMID 2905248 (Drugs 1988;36 Suppl 3) 'Roxatidine acetate is almost completely (greater than 95%) absorbed after oral administration and is rapidly converted to roxatidine, its major active plasma and urinary metabolite.'"
+   },
+   "half_life_h": {
+    "value": 6.0,
+    "unit": "h",
+    "source": "PMID 2905248: 'The plasma terminal half-life of the granulated capsule averaged 6 hours'"
+   },
+   "dose_mg": {
+    "value": 150,
+    "unit": "mg",
+    "source": "PMID 2906456 (Scand J Gastroenterol Suppl 1988): '150 mg of roxatidine acetate were optimal in suppressing gastric acid secretion, and ... a single bedtime dose of 150 mg was more effective than a dose of 75 mg twice daily'"
+   },
+   "dose_interval_h": {
+    "value": 24,
+    "unit": "h",
+    "source": "PMID 2906456 (single bedtime dose); alternative 75 mg q12h"
+   },
+   "invivo_act": {
+    "value": 75,
+    "unit": "mg oral (human)",
+    "kind": "clinical antisecretory dose",
+    "source": "PMID 2888185 (Scand J Gastroenterol 1987): a 75 mg oral dose cut peptone-stimulated acid output by 86% at 4-6 h and nocturnal acid output by 88%. PMID 2908751 puts roxatidine at 1-2x the mg-for-mg potency of ranitidine"
+   }
+  },
+  {
+   "name": "ranitidine bismuth citrate",
+   "atc": "A02BA07",
+   "cid": 62984,
+   "F": {
+    "value": 0.005,
+    "unit": "fraction",
+    "note": "bismuth moiety only, <0.5% of the dose; the ranitidine moiety behaves as ranitidine alone (about 0.50)",
+    "source": "PMID 8864318 (Br J Clin Pharmacol 1996): 'Bismuth was only minimally absorbed (< 0.5% of the amount dosed)'; 'The pharmacokinetics of ranitidine after administration of ranitidine bismuth citrate were dose-proportional and consistent with previous observations for ranitidine administered alone.'"
+   },
+   "half_life_h": {
+    "value": 504,
+    "unit": "h",
+    "note": "bismuth terminal plasma half-life, about 21 days; the ranitidine moiety keeps ranitidine's 2.5-3 h",
+    "source": "PMID 8864319 (Br J Clin Pharmacol 1996): 'terminal half-lives averaging 21 days and 45 days' for plasma and urinary bismuth data respectively"
+   },
+   "dose_mg": {
+    "value": 400,
+    "unit": "mg",
+    "source": "PMID 8580269 (Aliment Pharmacol Ther 1995): GR122311X 400 mg b.d. healed 85% of duodenal ulcers at 4 weeks and beat ranitidine 150 mg b.d. on overall success"
+   },
+   "dose_interval_h": {
+    "value": 12,
+    "unit": "h",
+    "source": "PMID 8580269 ('400 mg b.d.'); 400 mg b.d. is also the dose used in H. pylori triple therapy, e.g. PMID 18465244"
+   },
+   "invivo_act": {
+    "value": 391,
+    "unit": "mg b.d. oral (human)",
+    "kind": "clinical antisecretory dose",
+    "source": "PMID 1686562 (Aliment Pharmacol Ther 1991): median 24-h integrated intragastric acidity was 38%, 26% and 18% of placebo at 196, 391 and 782 mg b.d.; 391 mg b.d. was not significantly different from ranitidine 150 mg b.d. (24%)"
+   },
+   "note": "the published figures belong to different components of the complex: the 0.5% bioavailability and the 21-day half-life are bismuth's, while the 400 mg dose is the whole salt and its ranitidine behaves like plain ranitidine, so multiplying them together would not describe either component",
+   "free_concentration_valid": false
+  },
+  {
+   "name": "lafutidine",
+   "atc": "A02BA08",
+   "cid": 5282136,
+   "half_life_h": {
+    "value": 1.92,
+    "unit": "h",
+    "note": "1.92 +/- 0.94",
+    "source": "PMID 24471787 (Drug Deliv 2015): 'Lafutidine a newly developed histamine H2-receptor antagonist having biological half-life of 1.92 +/- 0.94 h due to its selective absorption from upper part of gastrointestinal tract'"
+   },
+   "dose_mg": {
+    "value": 10,
+    "unit": "mg",
+    "source": "PMID 37731302 (Ann Palliat Med 2023) 'lafutidine 10 mg twice daily'; PMID 17473452 uses a 10 mg tablet as the clinical dose"
+   },
+   "dose_interval_h": {
+    "value": 12,
+    "unit": "h",
+    "source": "PMID 37731302 ('10 mg twice daily')"
+   },
+   "invivo_act": {
+    "value": 0.1,
+    "unit": "mg/kg",
+    "species": "dog",
+    "route": "intravenous",
+    "kind": "ED50 for inhibition of histamine-stimulated gastric acid secretion (Heidenhain pouch)",
+    "source": "PMID 8099553 (Eur J Pharmacol 1993), lafutidine as FRG-8813: 'in Heidenhain pouch dogs ... the i.v. ED50 values for histamine-, tetragastrin- and bethanechol-evoked responses were 0.1, 0.24 and 1.0 mg/kg, respectively.' Oral gastroprotective ED50 3.3-23.3 mg/kg in rats per PMID 7563973"
+   }
+  }
+ ]
+}
