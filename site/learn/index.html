@@ -60,7 +60,7 @@
 <main>
 <p class="back"><a href="../">← Back to the Drug Hansch Space explorer</a></p>
 <h1>Why the Greasiest Drug Isn't the Best One</h1>
-<p class="lede">Make a drug more oily and it often gets more potent. Keep going and the potency falls again. Three small simulations show why: a drug has to dissolve in oil to cross a cell membrane, and then it has to leave the oil again.</p>
+<p class="lede">Make a drug more oily and it often gets more potent. Keep going and the potency falls again. Three small simulations show why: a drug has to dissolve in oil to cross a cell membrane, and then it has to leave the oil again. Three more show what else the equation needs, how it does on this site's real drugs, and how to tell a real fit from a lucky one.</p>
 
 <h2>Oil or water?</h2>
 <p>Shake a drug with two liquids that don't mix, <span class="c3">octanol</span> (an oily alcohol) on top and <span class="c2">water</span> below, and let it settle. The <span class="c1">drug molecules</span> keep hopping across the boundary in both directions. They end up split between the layers in a fixed ratio, called the partition coefficient <i>P</i>. Chemists use its logarithm, <b>logP</b>. Octanol is the standard stand-in for the fatty inside of a cell membrane.</p>
@@ -113,13 +113,67 @@
 
 <p>Where the series sits decides what the chemist sees. A series of water-loving compounds gives a clean rising line, so "more greasy, more potent" looks like a rule. A series of greasy compounds gives a falling line. Only a series that spans the optimum shows the bend, and only a curved equation can describe it. In 1968 Hansch added a squared term, giving the parabola log(1/C) = −a·(logP)² + b·logP + c with its peak at logP₀ = b/2a. In 1977 Hugo Kubinyi showed that a "bilinear" shape, straight on both sides with a rounded top, fits real series better. That is the shape this membrane model produces.</p>
 
+<h2>Grease isn't the only thing that matters</h2>
+<p>Getting to the receptor is half the story. Once there, the drug has to bind, and binding cares about more than grease. Hansch's full equation describes a family of drugs that share one parent structure and differ by one small group, the substituent, swapped onto the same spot. Each substituent gets three numbers. <b>π</b> is how much it adds to logP. <b>σ</b>, from Louis Hammett's work in 1937, is how strongly it pulls electrons towards itself (positive) or pushes them away (negative). <b>MR</b>, molar refractivity, measures how bulky it is.</p>
+<p class="eq">log(1/C) = a·π + b·σ + c·MR + d</p>
+<p>Below are <span class="c1">17 analogues of one imaginary drug</span>, each with a different group on the para position of a benzene ring, using the real π, σ and MR of that group. Their potency comes from a hidden rule: grease helps, a bulky group doesn't fit the pocket, and electron pull matters as much as the slider says. You choose which terms the <span class="c4">fitted equation</span> may use. If the equation is right, every dot lands on the diagonal, where predicted equals observed.</p>
+
+<figure id="fig-sigma">
+  <canvas data-aspect="0.78" aria-label="Observed against predicted potency for 17 substituted analogues, with a diagonal line where they would agree"></canvas>
+  <div class="controls">
+    <label><span class="k">Electron effect</span><input type="range" min="-2" max="2" step="0.05" value="1.5"><output></output></label>
+  </div>
+  <div class="controls">
+    <span class="k" style="color:var(--muted)">Fit uses</span>
+    <span class="chips" data-role="terms"><button data-t="0" class="on">π (grease)</button><button data-t="1">σ (electrons)</button><button data-t="2">MR (size)</button></span>
+  </div>
+  <div class="readout"></div>
+  <figcaption>With only π, the dots scatter. Add σ, then MR, and they line up. Set the electron effect near 0 and σ stops helping, because then the target really doesn't care about electrons. The hidden rule is invented; the π, σ and MR values are real.</figcaption>
+</figure>
+
+<p>This is why Hansch analysis worked so well in the 1960s and 1970s: within one tight family of compounds, a handful of physical numbers explained most of the potency. It also shows what the method needs. The compounds must share a parent structure and bind the same way, so that the substituent is the only thing that changes.</p>
+
+<h2>Now try it on real drugs</h2>
+<p>This site's explorer has a potency value for 308 of its drugs: the median ChEMBL pChEMBL at each drug's main target, kept only when at least two independent assays agree. pChEMBL is −log of the molar IC50, Ki or similar, so it is a log(1/C) in Hansch's sense. Drugs that hit the same target form a group. The descriptors are the explorer's own: Crippen logP, MR and the polar surface area <b>TPSA</b>, all from RDKit.</p>
+<p>Real drugs that share a target are rarely one family. An SSRI and a tricyclic antidepressant both block the serotonin transporter with completely different skeletons. So expect weaker fits than in the figure above, and expect a new problem. With eight drugs and two terms, a line can fit well by luck. To check, we also report <b>q²</b>: leave one drug out, refit, predict the drug you left out, and repeat for every drug. q² is r² computed on those honest predictions. If q² is far below r², the equation is memorising, not predicting.</p>
+
+<figure id="fig-real">
+  <canvas data-aspect="0.78" aria-label="Observed against predicted pChEMBL for drugs that share a target"></canvas>
+  <div class="controls chips" data-role="groups"></div>
+  <div class="controls">
+    <span class="k" style="color:var(--muted)">Fit uses</span>
+    <span class="chips" data-role="terms"><button data-t="0" class="on">logP</button><button data-t="1">logP²</button><button data-t="2">MR</button><button data-t="3">TPSA</button></span>
+  </div>
+  <div class="readout"></div>
+  <figcaption>Each dot is one approved drug. Tap a dot for its name. Hollow rings show where the leave-one-out fit put each drug, so a long line from dot to ring means that drug was hard to predict. "All drugs" mixes unrelated targets.</figcaption>
+</figure>
+
+<p>A few groups give a usable fit, such as the mu opioid antagonists on logP or the beta-2 agonists on TPSA. Most do not, and adding terms rarely helps once q² is checked. That is not a flaw in Hansch's idea. It is a sign that these groups break its assumption of one family binding one way. The explorer's fits are labelled exploratory for the same reason.</p>
+
+<h2>More terms always fit better, which is the trap</h2>
+<p>Every extra term in a least-squares fit can only raise r², even a term that means nothing. In 1972 John Topliss and Robert Costello showed how easily this fools people: with enough candidate descriptors, random numbers alone produce impressive r² values. Below, twelve of the analogues from before are fitted with π and σ, which really do drive their potency, plus as many columns of <b>pure random numbers</b> as you like.</p>
+
+<figure id="fig-overfit">
+  <canvas data-aspect="0.6" aria-label="r squared and q squared against the number of terms in the equation"></canvas>
+  <div class="controls">
+    <label><span class="k">Random terms</span><input type="range" min="0" max="7" step="1" value="0"><output></output></label>
+    <button data-role="reroll">New random numbers</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption>Add random terms one at a time. The solid lines are the typical result over 200 sets of random numbers. <span class="c4">r²</span> climbs towards 1 every time. <b>q²</b>, the leave-one-out score, drops towards zero, and for many sets below it, which means the equation predicts new compounds worse than simply guessing the average. The rings show one set; draw new random numbers to see how much a single set can vary.</figcaption>
+</figure>
+
+<p>The usual rule of thumb is at least five compounds for every term in the equation, and a q² that stays close to r². The other check is y-randomisation: shuffle the potencies, refit, and make sure the real fit beats the shuffled ones. The explorer runs both checks on every group it fits, which is why most of its real-drug fits are labelled exploratory.</p>
+
 <footer>
   <p>An explorable explanation. The figures are live simulations running in your browser.</p>
   <ul>
     <li><b>Simplified and illustrative.</b> The beaker has equal volumes of the two liquids. The membrane model has two membranes, one hopping rate (k = 1 per time unit), a membrane that holds β = 0.01 of a water compartment's volume and a fixed measuring time (5 units). These numbers were chosen for illustration and are not fitted to any drug. The optimum at logP ≈ 2 comes from β (it sits at logP = −log β), so a different body or assay would move it. Potency in the third figure is relative, with an arbitrary offset.</li>
     <li><b>The membrane model.</b> Molecules step from water into fat at rate k·βP/(1 + βP) and from fat into water at k/(1 + βP), so the fat-to-water concentration ratio at equilibrium is P. The receptor compartment keeps any molecule that arrives. The share reaching it is computed by integrating the rate equations (RK4), and the moving dots are one random run of the same rates. This follows Penniston, Beckett, Bentley and Hansch (1969); its shape is Kubinyi's bilinear equation.</li>
     <li><b>Measured logP</b> for the drug buttons comes from PubChem's experimental values: caffeine −0.07 and atenolol 0.16 (Hansch, Leo and Hoekman 1995), paracetamol 0.46 and diazepam 2.82 (Sangster 1994), propranolol 3.48 (Avdeef 1997), haloperidol 4.30 (El Tayar et al. 1985). The "computed" value next to each one is the Crippen logP from RDKit that this site's explorer uses (<a href="../data/drugs.json">data/drugs.json</a>). The two methods differ by up to 1 here, and by more for big molecules (<a href="../data/validation.md">data/validation.md</a>).</li>
-    <li>Hansch &amp; Fujita, J. Am. Chem. Soc. 1964, 86, 1616 (doi:10.1021/ja01062a035). Hansch, Steward, Anderson &amp; Bentley, J. Med. Chem. 1968, 11, 1 (doi:10.1021/jm00307a001). Penniston, Beckett, Bentley &amp; Hansch, Mol. Pharmacol. 1969, 5, 333. Kubinyi, J. Med. Chem. 1977, 20, 625 (doi:10.1021/jm00215a002).</li>
+    <li><b>The substituent figures.</b> π, σ (para) and MR for each group are the tabulated values in Hansch, Leo &amp; Taft (1991). The parent drug and its potencies are invented: the hidden rule is log(1/C) = π + ρ·σ − 0.08·MR + 5, with ρ set by the slider, plus a fixed scatter of up to ±0.25 so that no fit is perfect. The overfitting figure uses the first twelve groups with ρ = 1 and a scatter of up to ±0.6. Its random columns are uniform noise, and its lines are the median over 200 sets of random columns.</li>
+    <li><b>The real-drug figure</b> uses the groups and potencies that this site's explorer fits (<a href="../data/hansch.json">data/hansch.json</a>): the median ChEMBL pChEMBL at each drug's mechanism-of-action target, for drugs up to 1000 Da, with RDKit descriptors from <a href="../data/drugs.json">data/drugs.json</a>. The fits are ordinary least squares computed in your browser and match the explorer's r² and q² for the same terms. Five target groups are shown, plus all 299 drugs together.</li>
+    <li>Hansch &amp; Fujita, J. Am. Chem. Soc. 1964, 86, 1616 (doi:10.1021/ja01062a035). Hansch, Steward, Anderson &amp; Bentley, J. Med. Chem. 1968, 11, 1 (doi:10.1021/jm00307a001). Penniston, Beckett, Bentley &amp; Hansch, Mol. Pharmacol. 1969, 5, 333. Kubinyi, J. Med. Chem. 1977, 20, 625 (doi:10.1021/jm00215a002). Hammett, J. Am. Chem. Soc. 1937, 59, 96 (doi:10.1021/ja01280a022). Fujita, Iwasa &amp; Hansch, J. Am. Chem. Soc. 1964, 86, 5175 (doi:10.1021/ja01077a028). Topliss &amp; Costello, J. Med. Chem. 1972, 15, 1066 (doi:10.1021/jm00280a017). Hansch, Leo &amp; Taft, Chem. Rev. 1991, 91, 165 (doi:10.1021/cr00002a004).</li>
   </ul>
 </footer>
 </main>
@@ -471,6 +525,249 @@
     }
     s.draw = draw;
     draw();
+  }
+
+  // ---------- shared: multiple linear regression ----------
+  // Least squares with an intercept: rows are descriptor vectors. Normal equations, Gaussian elimination with
+  // partial pivoting. Returns [intercept, b1, b2, ...] or null when the columns are degenerate.
+  function ols(rows, y) {
+    const m = rows[0].length + 1, A = Array.from({ length: m }, () => new Array(m + 1).fill(0));
+    rows.forEach((r, k) => {
+      const v = [1, ...r];
+      for (let i = 0; i < m; i++) { for (let j = 0; j < m; j++) A[i][j] += v[i] * v[j]; A[i][m] += v[i] * y[k]; }
+    });
+    for (let i = 0; i < m; i++) {
+      let p = i; for (let r = i + 1; r < m; r++) if (Math.abs(A[r][i]) > Math.abs(A[p][i])) p = r;
+      [A[i], A[p]] = [A[p], A[i]];
+      if (Math.abs(A[i][i]) < 1e-9 * (1 + Math.abs(A[i][m]))) return null;
+      for (let r = i + 1; r < m; r++) { const f = A[r][i] / A[i][i]; for (let c = i; c <= m; c++) A[r][c] -= f * A[i][c]; }
+    }
+    const c = new Array(m).fill(0);
+    for (let i = m - 1; i >= 0; i--) { let v = A[i][m]; for (let j = i + 1; j < m; j++) v -= A[i][j] * c[j]; c[i] = v / A[i][i]; }
+    return c;
+  }
+  const predict = (c, r) => c[0] + r.reduce((a, x, i) => a + c[i + 1] * x, 0);
+  // Fit, r², and leave-one-out predictions with q² = 1 − PRESS / SS.
+  function regress(rows, y) {
+    const n = y.length, mean = y.reduce((a, b) => a + b, 0) / n, sst = y.reduce((a, v) => a + (v - mean) ** 2, 0);
+    const c = rows[0].length ? ols(rows, y) : [mean];
+    if (!c) return null;
+    const fit = rows.map((r) => predict(c, r));
+    const loo = rows.map((_, i) => {
+      const ci = rows[0].length ? ols(rows.filter((_, k) => k !== i), y.filter((_, k) => k !== i)) : [(mean * n - y[i]) / (n - 1)];
+      return ci ? predict(ci, rows[i]) : NaN;
+    });
+    const r2 = 1 - fit.reduce((a, f, i) => a + (y[i] - f) ** 2, 0) / sst;
+    const q2 = loo.some((v) => !Number.isFinite(v)) ? NaN : 1 - loo.reduce((a, f, i) => a + (y[i] - f) ** 2, 0) / sst;
+    return { c, fit, loo, r2, q2 };
+  }
+  const score = (v, good = 0.6) => `<b style="color:var(${v >= good ? '--good' : '--bad'})">${fmt(v, 2)}</b>`;
+
+  // Observed-against-predicted frame with a shared range on both axes; returns the mapping.
+  function parity(s, lo, hi, xlab, ylab) {
+    const { ctx, w } = s, L = 58, Rt = w - 16, T = 16, B = s.h - 40 - fsz(s) * 1.2;
+    const span = hi - lo, step = span > 6 ? 2 : 1;
+    const px = (v) => L + (v - lo) / span * (Rt - L), py = (v) => B - (v - lo) / span * (B - T);
+    ctx.strokeStyle = css('--grid'); ctx.lineWidth = 1;
+    for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) {
+      ctx.beginPath(); ctx.moveTo(px(v), T); ctx.lineTo(px(v), B); ctx.moveTo(L, py(v)); ctx.lineTo(Rt, py(v)); ctx.stroke();
+      label(ctx, fmt(v), px(v), B + 4 + fsz(s) * 0.6, css('--muted'), 'center');
+      label(ctx, fmt(v), L - 8, py(v), css('--muted'), 'right');
+    }
+    polyline(ctx, [[px(lo), py(lo)], [px(hi), py(hi)]], css('--muted'), 1.2, [5, 5]);
+    label(ctx, xlab, (L + Rt) / 2, B + 8 + fsz(s) * 1.7, css('--muted'), 'center');
+    ctx.save(); ctx.translate(16, (T + B) / 2); ctx.rotate(-Math.PI / 2); label(ctx, ylab, 0, 0, css('--muted'), 'center'); ctx.restore();
+    return { px, py, L, Rt, T, B };
+  }
+  const range = (vals, pad) => [Math.floor(Math.min(...vals) - pad), Math.ceil(Math.max(...vals) + pad)];
+  function chipToggles(box, onChange) { // multi-select chips; returns the live set of selected indices
+    const on = new Set([...box.querySelectorAll('.on')].map((b) => +b.dataset.t));
+    box.querySelectorAll('button').forEach((b) => (b.onclick = () => {
+      const t = +b.dataset.t; on.has(t) ? on.delete(t) : on.add(t); b.classList.toggle('on', on.has(t)); onChange();
+    }));
+    return on;
+  }
+  const signed = (x, d = 2) => `${x < 0 ? '−' : '+'} ${fmt(Math.abs(x), d)}`;
+
+  // Para-substituent constants π, σp, MR (cm³/mol) from Hansch, Leo & Taft, Chem. Rev. 1991, 91, 165.
+  const SUBS = [
+    ['H', 0, 0, 1.03], ['F', 0.14, 0.06, 0.92], ['Cl', 0.71, 0.23, 6.03], ['Br', 0.86, 0.23, 8.88],
+    ['I', 1.12, 0.18, 13.94], ['CH₃', 0.56, -0.17, 5.65], ['C₂H₅', 1.02, -0.15, 10.30], ['OH', -0.67, -0.37, 2.85],
+    ['NO₂', -0.28, 0.78, 7.36], ['NH₂', -1.23, -0.66, 5.42], ['CF₃', 0.88, 0.54, 5.02], ['OCH₃', -0.02, -0.27, 7.87],
+    ['CN', -0.57, 0.66, 6.33], ['t-Bu', 1.98, -0.20, 19.62], ['N(CH₃)₂', 0.18, -0.83, 15.55], ['COCH₃', -0.55, 0.50, 11.18],
+    ['SO₂NH₂', -1.82, 0.60, 12.28],
+  ];
+  const TRUE_A = 1, TRUE_C = -0.08, TRUE_D = 5; // hidden rule: log(1/C) = π + ρ·σ − 0.08·MR + 5 (illustrative)
+
+  // ---------- figure 4: π, σ and MR ----------
+  {
+    const fig = document.getElementById('fig-sigma');
+    const s = surface(fig.querySelector('canvas'));
+    const slider = fig.querySelector('input'), out = fig.querySelector('output');
+    const readout = fig.querySelector('.readout');
+    const terms = chipToggles(fig.querySelector('[data-role=terms]'), () => draw());
+    slider.oninput = () => draw();
+    const R = rng(11), NOISE = SUBS.map(() => (R() - 0.5) * 0.5);
+    const NAMES = ['π', 'σ', 'MR'];
+
+    function draw() {
+      const { ctx, w, h } = s, rho = +slider.value;
+      out.textContent = fmt(rho, 2);
+      ctx.clearRect(0, 0, w, h);
+      const y = SUBS.map(([, p, sg, mr], i) => TRUE_A * p + rho * sg + TRUE_C * mr + TRUE_D + NOISE[i]);
+      const cols = [...terms].sort();
+      const rows = SUBS.map((sub) => cols.map((t) => sub[t + 1]));
+      const f = regress(rows, y);
+      const [lo, hi] = range([...y, ...f.fit], 0.3);
+      const { px, py } = parity(s, lo, hi, 'predicted by the fitted equation', 'observed potency, log(1/C)');
+      SUBS.forEach((_, i) => dot(ctx, px(f.fit[i]), py(y[i]), 5, css('--c1')));
+      // Labels: try right, left, above, below each dot and take the first spot that is free.
+      const taken = [], lh = fsz(s, 11);
+      ctx.font = `500 ${lh}px ${SANS}`;
+      SUBS.forEach(([name], i) => {
+        const x = px(f.fit[i]), yy = py(y[i]), tw = ctx.measureText(name).width;
+        const spots = [[x + 8, yy, 'left', x + 8], [x - 8, yy, 'right', x - 8 - tw], [x, yy - lh, 'center', x - tw / 2], [x, yy + lh, 'center', x - tw / 2]];
+        const ok = ([, sy, , bx]) => !taken.some(([ax, ay, aw]) => bx < ax + aw + 4 && ax < bx + tw + 4 && Math.abs(sy - ay) < lh);
+        const [lx, ly, al, bx] = spots.find(ok) || spots[0];
+        taken.push([bx, ly, tw]);
+        label(ctx, name, lx, ly, css('--muted'), al, 11);
+        ctx.font = `500 ${lh}px ${SANS}`;
+      });
+      const eq = cols.length ? cols.map((t, k) => `${k ? signed(f.c[k + 1]) : fmt(f.c[k + 1], 2)}·${NAMES[t]}`).join(' ') + ` ${signed(f.c[0])}` : fmt(f.c[0], 2);
+      const advice = !cols.length ? 'Pick at least one term.'
+        : f.r2 > 0.95 ? 'The equation has found the rule.'
+        : !terms.has(1) && Math.abs(rho) > 0.4 ? 'Something electronic is missing: try σ.'
+        : !terms.has(2) ? 'Bulky groups such as t-Bu and N(CH₃)₂ sit below the line: try MR.'
+        : !terms.has(0) ? 'Greasy groups are off the line: try π.' : '';
+      readout.innerHTML = `Fitted: log(1/C) = ${eq}. r² = ${score(f.r2, 0.9)}. ${advice}<br>Hidden rule: log(1/C) = ${fmt(TRUE_A, 2)}·π ${signed(rho)}·σ ${signed(TRUE_C)}·MR + ${fmt(TRUE_D, 0)}.`;
+    }
+    s.draw = draw;
+    draw();
+  }
+
+  // ---------- figure 5: this site's real drugs ----------
+  {
+    // [name, Crippen logP, MR, TPSA, pChEMBL] per drug, extracted from data/hansch.json + data/drugs.json (build 2026-10-09).
+    const GROUPS = [{"id":"CHEMBL228","label":"Serotonin transporter inhibitor","pts":[["Imipramine",3.88,90.5,6.5,8.3],["Clomipramine",4.53,95.5,6.5,9.23],["Fluoxetine",4.43,79.8,21.3,8.03],["Citalopram",3.81,90.9,36.3,8.18],["Paroxetine",3.33,88.2,39.7,9.56],["Sertraline",5.18,85.8,12.0,9.54],["Fluvoxamine",3.2,78.7,56.8,8.41],["Escitalopram",3.81,90.9,36.3,8.37],["Trazodone",2.36,104.2,45.8,6.99],["Nefazodone",3.55,132.5,55.5,6.6],["Venlafaxine",3.04,82.3,32.7,6.69],["Duloxetine",4.63,90.2,21.3,8.22],["Desvenlafaxine",2.73,77.4,43.7,7.28],["Vilazodone",4.03,129.3,102.3,9.37]]},{"id":"CHEMBL213","label":"Beta-1 adrenergic receptor antagonist","pts":[["Propafenone",3.24,100.2,58.6,6.69],["Pindolol",1.91,72.9,57.3,9.18],["Propranolol",2.58,78.6,41.5,8.7],["Timolol",0.5,82.2,79.7,8.73],["Sotalol",1.09,73.0,78.4,5.84],["Nadolol",0.64,85.1,82.0,7.46],["Metoprolol",1.61,76.7,50.7,6.99],["Atenolol",0.45,74.0,84.6,6.46],["Acebutolol",2.37,94.6,87.7,6.14],["Betaxolol",2.39,88.3,50.7,7.69],["Esmolol",1.53,81.4,67.8,6.39]]},{"id":"CHEMBL233","label":"Mu opioid receptor antagonist","pts":[["Methylnaltrexone",1.67,94.1,66.8,8.1],["Fentanyl",4.14,103.8,23.6,8.48],["Sufentanil",4.21,112.5,32.8,8.82],["Morphine",1.2,77.6,52.9,8.22],["Oxycodone",1.05,83.0,59.0,7.77],["Buprenorphine + naloxone",4.41,130.2,62.2,9.3],["Butorphanol",3.37,94.2,43.7,9.1],["Nalmefene",2.51,93.9,52.9,8.7]]},{"id":"CHEMBL210","label":"Beta-2 adrenergic receptor agonist","pts":[["Metaproterenol",1.13,57.9,72.7,5.81],["Salbutamol",1.31,66.7,72.7,6.29],["Terbutaline",1.52,62.5,72.7,5.55],["Salmeterol",4.11,120.5,82.0,9.36],["Arformoterol",2.22,96.9,90.8,9.3],["Indacaterol",3.15,115.6,85.3,7.69],["Olodaterol",2.38,106.0,100.0,10.16]]},{"id":"CHEMBL2034","label":"Glucocorticoid receptor agonist","pts":[["Triamcinolone",0.62,96.8,115.1,7.41],["Dexamethasone",1.9,99.9,94.8,8.52],["Cortisol",1.78,95.1,94.8,7.64],["Budesonide",2.72,112.9,93.1,8.7],["Mifepristone",5.41,129.4,40.5,8.96],["Flunisolide",2.27,108.5,93.1,8.27],["Fluticasone Furoate",4.93,128.6,93.8,9.3],["Ciclesonide",4.7,143.2,99.1,7.66]]},{"id":"ALL","label":"All drugs with an activity value (unrelated targets)","pts":[["4-(Dimethylamino)-1,5,10,11,12a-pentahydroxy-6-methyl-3,12-dioxo-3,4,4a,5,5a,6,12,12a-octahydrotetracene-2-carboximidic acid",-0.5,110.3,181.6,4.55],["Triamcinolone",0.62,96.8,115.1,7.41],["Dexamethasone",1.9,99.9,94.8,8.52],["Cortisol",1.78,95.1,94.8,7.64],["Cimetidine",0.6,69.6,88.9,6.31],["Famotidine",-0.77,83.1,175.8,7.39],["Omeprazole",2.9,93.0,77.1,6.3],["Dicyclomine",4.4,90.8,29.5,8.2],["Glycopyrronium",2.46,88.6,46.5,8.91],["Alosetron",2.41,84.7,53.9,9.3],["Ondansetron",3.13,86.0,39.8,8.47],["[(1S,5S)-8-methyl-8-azabicyclo[3.2.1]octan-3-yl] 1H-indole-3-carboxylate",2.95,81.3,45.3,8.28],["Palonosetron",2.66,86.1,23.6,9.08],["3-(1,1-Dimethylheptyl)-6,6a,7,8,10,10a-hexahydro-1-hydroxy-6,6-dimethyl-9H-dibenzo(b,d)pyran-9-one",6.26,109.7,46.5,8.4],[null,4.95,114.4,83.2,10.05],["Methylnaltrexone",1.67,94.1,66.8,8.1],["Prucalopride",2.09,98.5,76.8,8.2],["Budesonide",2.72,112.9,93.1,8.7],["Lorcaserin",2.59,56.4,12.0,8.05],["Orlistat",6.88,140.9,81.7,7.48],["Rosiglitazone",2.49,98.1,71.5,7.05],["Pioglitazone",3.16,97.9,68.3,6.22],["Sitagliptin",2.02,83.1,77.0,7.75],["Vildagliptin",1.17,80.7,76.4,7.47],["Linagliptin",1.15,135.5,116.9,9.0],["Dapagliflozin",1.84,104.6,99.4,8.85],["Canagliflozin",2.97,116.4,90.2,8.64],["Empagliflozin",1.61,113.3,108.6,8.51],["Calcitriol",5.71,124.0,60.7,8.91],["Miglustat",-1.45,55.4,84.2,4.66],["N-((1R,2R)-2-(2,3-Dihydro-1,4-benzodioxin-6-yl)-2-hydroxy-1-(1-pyrrolidinylmethyl)ethyl)octanamide",3.43,113.4,71.0,7.6],["Dipyridamole",-0.02,140.0,145.4,8.06],["5-[(2E,3aS,5R,6aS)-5-hydroxy-4-[(1E,3S)-3-hydroxy-4-methyloct-1-en-6-yn-1-yl]-octahydropentalen-2-ylidene]pentanoic acid",3.54,102.3,77.8,8.08],["Tirofiban",2.95,118.3,104.7,8.05],["Cilostazol",3.46,101.8,81.9,7.57],["Ticagrelor",2.01,127.8,138.4,6.96],["Vorapaxar",5.63,134.1,77.5,7.74],["Argatroban",0.7,133.4,180.2,7.72],["ethyl N-[(2-{[(4-{N'-[(hexyloxy)carbonyl]carbamimidoyl}phenyl)amino]methyl}-1-methyl-1H-benzimidazol-5-yl)carbonyl]-N-pyridin-2-yl-beta-alaninate",5.6,177.9,154.0,8.58],["Rivaroxaban",2.52,108.9,88.2,9.0],["Apixaban",2.7,126.7,110.8,10.1],["Semaxanib",3.12,73.2,44.9,6.4],[null,3.78,127.2,116.5,7.42],["Digoxin",2.22,192.6,203.1,6.57],["Propafenone",3.24,100.2,58.6,6.69],["Flecainide",3.44,87.5,59.6,5.36],["Amiodarone",6.94,143.4,42.7,5.5],["Dofetilide",1.98,116.5,104.8,7.85],["Ibutilide",4.16,110.0,69.6,7.91],["Ranolazine",2.31,121.9,74.3,5.17],["Regadenoson",-2.44,93.3,186.5,6.54],["Clonidine",2.36,60.4,36.4,7.68],["Prazosin",1.78,103.9,107.0,9.25],["Eplerenone",3.12,105.2,82.2,6.63],["Tolvaptan",5.68,127.6,69.6,8.77],["Conivaptan",6.51,150.4,78.1,8.88],["Diltiazem",3.37,114.5,59.1,6.23],["Pindolol",1.91,72.9,57.3,9.18],["Propranolol",2.58,78.6,41.5,8.7],["Timolol",0.5,82.2,79.7,8.73],["Sotalol",1.09,73.0,78.4,5.84],["Nadolol",0.64,85.1,82.0,7.46],["Metoprolol",1.61,76.7,50.7,6.99],["Atenolol",0.45,74.0,84.6,6.46],["Acebutolol",2.37,94.6,87.7,6.14],["Betaxolol",2.39,88.3,50.7,7.69],["Esmolol",1.53,81.4,67.8,6.39],["Nifedipine",2.18,88.4,107.8,7.52],["Enalapril",1.6,100.2,95.9,6.85],["Lisinopril",1.24,108.4,133.0,8.92],["Perindopril",1.94,96.6,95.9,8.63],["Ramipril",2.38,111.8,95.9,8.39],["Quinapril",2.57,119.9,95.9,8.08],["Losartan",4.27,115.9,92.5,7.98],["Eprosartan",4.74,117.0,92.4,8.34],["Valsartan",4.16,121.4,112.1,8.32],["Irbesartan",4.78,123.8,87.1,8.77],["Candesartan",4.03,122.0,118.8,8.46],["Telmisartan",7.26,156.1,72.9,9.0],["Aliskiren",3.29,154.5,146.1,9.22],["Simvastatin",4.59,115.5,72.8,7.68],["Lovastatin",4.2,110.8,72.8,7.53],["Pravastatin",2.44,111.4,124.3,7.52],["Atorvastatin",6.31,157.2,111.8,8.21],["Cerivastatin",4.88,126.4,99.9,9.04],["Rosuvastatin",2.4,122.7,140.9,8.3],["Gemfibrozil",3.57,72.1,46.5,4.23],["Fenofibrate",4.68,97.3,52.6,4.52],["Fluconazole",0.74,70.3,81.7,6.91],["Imiquimod",2.82,74.3,56.7,5.19],["Tacrolimus",4.64,212.6,178.4,8.77],["Finasteride",3.81,106.8,58.2,8.32],["Brimonidine",1.76,71.2,62.2,8.57],["Cabergoline",3.19,132.4,71.7,9.44],["Levonorgestrel",3.88,90.5,37.3,9.0],["Testosterone",3.88,82.7,37.3,8.5],["Estradiol",3.61,78.7,40.5,8.89],["Progesterone",4.72,90.9,34.1,8.54],["Mifepristone",5.41,129.4,40.5,8.96],["Raloxifene",6.08,136.3,70.0,8.38],["Lasofoxifene",5.73,125.1,32.7,9.32],["Oxybutynin",3.34,103.4,49.8,8.07],["(S)-Tolterodine",5.34,102.7,23.5,8.05],["Solifenacin",3.87,104.6,32.8,7.27],["Trosec",3.77,111.0,46.5,8.21],["Darifenacin",3.96,126.8,55.6,7.75],[null,1.61,126.0,113.4,8.44],["Tadalafil",2.21,104.7,74.9,8.4],[null,2.07,129.8,112.9,9.15],["Avanafil",2.43,128.0,125.4,7.76],["Tamsulosin",2.34,108.6,99.9,9.8],["Terazosin",1.06,104.8,103.0,7.6],["Silodosin",3.07,127.2,97.0,8.72],["Cinacalcet",6.14,100.1,12.0,7.1],["Trimethoprim",1.26,79.8,105.5,5.63],["Fosfomycin",-0.09,26.4,70.1,5.98],["Voriconazole",2.18,80.7,76.7,6.49],["Rimantadine",2.55,54.3,26.0,5.06],["Saquinavir",3.09,188.2,166.8,9.4],["Indinavir",2.87,174.1,118.0,8.97],["Ritonavir",5.91,196.9,145.8,9.23],["Nelfinavir",4.75,160.6,101.9,8.7],["Amprenavir",2.4,133.2,131.2,9.22],["Atazanavir",4.21,193.9,171.2,9.62],["Tipranavir",7.33,152.3,105.6,7.52],["Darunavir",2.38,141.6,140.4,9.25],["Zidovudine",-0.2,64.6,133.1,8.0],["Stavudine",-0.71,56.2,84.3,6.35],["[(1R)-4-[2-amino-6-(cyclopropylamino)purin-9-yl]-1-cyclopent-2-enyl]methanol",1.09,79.8,101.9,5.28],["Nevirapine",2.65,76.3,58.1,5.95],["Delavirdine",2.72,127.9,110.4,5.96],["Efavirenz",4.07,69.8,38.3,7.45],["Etravirine",4.72,109.3,120.6,7.77],["Rilpivirine",4.99,110.3,97.4,7.66],["Zanamivir",-3.79,76.9,200.7,8.4],["Oseltamivir",1.28,84.2,90.7,7.11],["Simeprevir",5.25,198.6,156.9,9.37],["Sofosbuvir",1.66,125.2,158.2,7.19],["Abacavir",1.09,79.8,101.9,5.28],["Raltegravir",0.91,108.2,152.2,7.76],["Elvitegravir",4.28,116.9,88.8,8.14],["Dolutegravir",1.35,99.9,100.9,8.57],["Methotrexate",0.27,118.3,210.5,8.05],[null,1.98,119.3,152.7,6.42],[null,0.67,110.7,191.3,5.21],["Alocrest",4.75,214.1,133.9,6.16],["Etoposide",1.34,138.3,160.8,6.09],["3'-epi-Taxol",3.74,217.7,221.3,6.71],["Doxorubicin",0.0,131.8,206.1,6.0],["Imatinib",4.59,146.9,86.3,6.66],["Gefitinib",4.28,118.2,68.7,7.81],["Erlotinib",3.4,111.9,74.7,7.63],["Sunitinib",3.33,113.3,77.2,7.72],["Sorafenib",5.55,113.2,92.3,7.43],["Dasatinib",3.31,132.0,106.5,8.79],["Lapatinib",6.14,154.1,106.3,7.99],["Nilotinib",6.36,141.0,97.6,7.55],["Pazopanib",3.14,121.4,119.0,6.85],["Vandetanib",5.0,119.2,59.5,6.89],["Afatinib",4.39,130.4,88.6,8.48],["Bosutinib",5.19,143.4,82.9,8.47],["Vemurafenib",5.54,124.0,91.9,7.47],["Crizotinib",5.04,116.5,78.0,7.57],["Ruxolitinib",3.47,86.3,83.2,8.41],["Regorafenib",5.69,113.2,92.3,7.55],["Dabrafenib",5.37,128.8,110.9,8.85],["Ponatinib",4.46,142.3,65.8,8.92],["Trametinib",3.94,148.8,107.1,8.43],["Cabozantinib",5.54,136.7,98.8,8.53],["Ibrutinib",4.22,126.7,99.2,8.94],["Amsacrine",4.51,114.0,80.3,6.14],["Pentostatin",-0.99,65.8,112.1,10.24],["Topotecan",1.85,113.6,104.9,5.97],["Bortezomib",0.36,105.0,124.4,8.15],["Celecoxib",3.51,90.1,78.0,7.14],[null,2.12,62.9,44.7,7.18],["Romidepsin",1.43,140.5,142.7,7.82],["Vismodegib",4.71,107.2,76.1,7.91],["Belinostat",2.01,82.7,95.5,7.57],["Tamoxifen",6.0,119.6,12.5,6.83],["Fulvestrant",8.68,152.7,57.5,8.67],["Flutamide",3.21,61.6,72.2,5.95],["Nilutamide",2.45,68.2,92.5,7.1],["Bicalutamide",2.88,93.9,107.3,6.76],["Enzalutamide",3.99,112.6,76.4,6.47],["Anastrozole",2.93,82.8,78.3,8.1],["Letrozole",2.66,79.6,78.3,8.4],["Exemestane",4.03,86.1,34.1,7.47],["Abiraterone",5.4,105.3,33.1,7.14],["Plerixafor",0.42,152.7,78.7,6.5],["Sirolimus",6.18,245.1,195.4,8.96],["Leflunomide",3.25,60.6,55.1,5.0],["Tofacitinib",1.54,86.7,88.9,5.0],["Teriflunomide",3.0,61.0,73.1,6.45],["Apremilast",2.43,117.9,119.1,7.13],["Meloxicam",1.95,86.4,99.6,6.16],["Rofecoxib",2.56,83.8,60.4,6.5],["Valdecoxib",2.96,83.5,86.2,7.4],["Capsaicin",3.79,89.0,58.6,7.47],["Baclofen",1.86,55.5,63.3,6.54],[null,-0.4,33.6,74.4,5.54],["Febuxostat",3.72,84.3,83.2,8.1],["Colchicine",2.87,109.2,83.1,5.58],["Pamidronic Acid",-1.66,42.7,161.3,6.46],["Alendronic Acid",-1.27,47.3,161.3,6.41],["Ibandronate",0.5,70.7,138.5,7.34],["Risedronate",-0.37,57.0,148.2,7.96],["Zoledronic Acid",-1.11,51.3,153.1,7.04],["Fentanyl",4.14,103.8,23.6,8.48],["Sufentanil",4.21,112.5,32.8,8.82],["Morphine",1.2,77.6,52.9,8.22],["Oxycodone",1.05,83.0,59.0,7.77],["Buprenorphine + naloxone",4.41,130.2,62.2,9.3],["Butorphanol",3.37,94.2,43.7,9.1],["Sumatriptan",1.32,82.2,65.2,8.0],["Naratriptan",2.07,94.3,65.2,8.8],["Zolmitriptan",1.92,82.5,57.4,8.82],["Rizatriptan",1.91,79.7,49.7,8.0],["Frovatriptan",1.34,71.7,70.9,8.36],["Tiagabine",5.04,106.6,40.5,7.16],["Topiramate",-0.4,71.6,115.5,8.0],["Amantadine",1.91,45.1,26.0,5.32],["Selegiline",2.18,61.1,3.2,7.7],["Rasagiline",1.9,54.3,12.0,7.44],["Entacapone",1.78,77.9,127.7,6.81],["Haloperidol",4.43,101.0,40.5,6.92],["Ziprasidone",3.81,115.8,48.5,8.83],["Lurasidone",4.26,138.3,56.8,8.22],["Loxapine",3.77,93.2,28.1,8.07],[null,1.75,92.0,30.9,8.3],["Quetiapine",2.86,109.1,48.3,6.66],["Asenapine",4.26,80.9,12.5,9.04],["Risperidone",3.59,112.3,64.2,8.42],["Aripiprazole",4.86,123.2,44.8,8.06],["Paliperidone",3.08,113.5,84.4,8.54],["Iloperidone",4.83,115.5,64.8,7.92],["Diazepam",3.15,81.8,32.7,7.96],["Buspirone",2.09,106.8,69.6,7.7],["Imipramine",3.88,90.5,6.5,8.3],["Clomipramine",4.53,95.5,6.5,9.23],["Doxepin",3.96,87.5,12.5,9.0],["Maprotiline",4.21,87.9,12.0,7.52],["Fluoxetine",4.43,79.8,21.3,8.03],["Citalopram",3.81,90.9,36.3,8.18],["Paroxetine",3.33,88.2,39.7,9.56],["Sertraline",5.18,85.8,12.0,9.54],["Fluvoxamine",3.2,78.7,56.8,8.41],["Escitalopram",3.81,90.9,36.3,8.37],["Trazodone",2.36,104.2,45.8,6.99],["Nefazodone",3.55,132.5,55.5,6.6],["Mirtazapine",2.48,81.1,19.4,7.29],["Bupropion",3.3,68.1,29.1,5.92],["Venlafaxine",3.04,82.3,32.7,6.69],["Esreboxetine",3.19,90.0,39.7,8.7],["Duloxetine",4.63,90.2,21.3,8.22],["Agomelatine",2.53,72.9,38.3,6.15],["Desvenlafaxine",2.73,77.4,43.7,7.28],["Vilazodone",4.03,129.3,102.3,9.37],["Vortioxetine",3.86,91.6,15.3,8.02],["Methylphenidate",2.08,66.8,38.3,7.1],["Modafinil",2.01,76.9,60.2,5.61],["Atomoxetine",3.73,79.5,21.3,8.3],["Dexmethylphenidate",2.08,66.8,38.3,7.33],["Armodafinil",2.01,76.9,60.2,5.69],["Donepezil",4.36,110.1,38.8,7.7],["(-)-Galantamine",1.85,79.8,41.9,5.93],["Memantine",2.69,54.3,26.0,6.27],["Pyridostigmine",0.57,47.3,33.4,6.44],["Pilocarpine",1.16,55.1,44.1,5.82],["Nicotine",1.85,48.8,16.1,6.54],["5,8,14-Triazatetracyclo[10.3.1.02,11.04,9]hexadeca-2,4,6,8,10-pentaene",1.8,62.5,37.8,7.03],["Naltrexone",1.52,89.8,70.0,8.42],["Nalmefene",2.51,93.9,52.9,8.7],["Trimetrexate",2.74,106.5,117.5,7.38],["Azelastine",4.3,110.6,38.1,8.96],["Flunisolide",2.27,108.5,93.1,8.27],["Fluticasone Furoate",4.93,128.6,93.8,9.3],["Ciclesonide",4.7,143.2,99.1,7.66],["Metaproterenol",1.13,57.9,72.7,5.81],["Salbutamol",1.31,66.7,72.7,6.29],["Terbutaline",1.52,62.5,72.7,5.55],["Salmeterol",4.11,120.5,82.0,9.36],["Arformoterol",2.22,96.9,90.8,9.3],["Indacaterol",3.15,115.6,85.3,7.69],["Olodaterol",2.38,106.0,100.0,10.16],["7-{[Hydroxydi(thiophen-2-yl)acetyl]oxy}-9,9-dimethyl-3-oxa-9-azatricyclo[3.3.1.0~2,4~]nonan-9-ium",2.35,99.1,59.1,10.47],["[1-(3-Phenoxypropyl)-1-azoniabicyclo[2.2.2]octan-3-yl] 2-hydroxy-2,2-dithiophen-2-ylacetate",4.67,130.5,55.8,9.25],["Theophylline",-1.04,46.6,72.7,4.25],["Zafirlukast",5.7,156.9,115.7,8.75],["Montelukast",8.95,171.2,70.4,8.64],["Roflumilast",5.03,93.5,60.5,9.1],["Levocetirizine",3.15,106.2,53.0,8.1],["Loratadine",4.89,106.9,42.4,6.63],["Fexofenadine",5.51,146.3,81.0,7.11],["Desloratadine",4.02,91.2,24.9,8.73],["Ivacaftor",5.08,118.0,82.2,7.31],["Apraclonidine",1.95,64.8,62.4,8.56],["Brinzolamide",0.09,87.4,118.8,8.52],["Metyrapone",2.64,65.8,42.9,7.82]]}];
+    const SHORT = { CHEMBL228: 'Serotonin transporter', CHEMBL213: 'Beta-1 blockers', CHEMBL233: 'Mu opioid antagonists', CHEMBL210: 'Beta-2 agonists', CHEMBL2034: 'Glucocorticoids', ALL: 'All drugs' };
+    const fig = document.getElementById('fig-real');
+    const s = surface(fig.querySelector('canvas'));
+    const readout = fig.querySelector('.readout');
+    const box = fig.querySelector('[data-role=groups]');
+    let g = GROUPS[0], picked = -1, shown = [];
+    GROUPS.forEach((gr) => {
+      const b = document.createElement('button'); b.textContent = `${SHORT[gr.id] || gr.label} (${gr.pts.length})`;
+      b.onclick = () => { g = gr; picked = -1; box.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); draw(); };
+      box.appendChild(b);
+    });
+    box.firstChild.classList.add('on');
+    const terms = chipToggles(fig.querySelector('[data-role=terms]'), () => { picked = -1; draw(); });
+    const NAMES = ['logP', 'logP²', 'MR', 'TPSA'];
+    const col = (p, t) => (t === 0 ? p[1] : t === 1 ? p[1] ** 2 : t === 2 ? p[2] : p[3]);
+    s.canvas.addEventListener('pointerdown', (e) => {
+      const r = s.canvas.getBoundingClientRect(), x = (e.clientX - r.left) / s.k, y = (e.clientY - r.top) / s.k;
+      let best = -1, bd = 24 ** 2;
+      shown.forEach(([sx, sy], i) => { const d = (sx - x) ** 2 + (sy - y) ** 2; if (d < bd) { bd = d; best = i; } });
+      picked = best; draw();
+    });
+
+    function draw() {
+      const { ctx, w, h } = s, n = g.pts.length;
+      ctx.clearRect(0, 0, w, h);
+      const cols = [...terms].sort(), y = g.pts.map((p) => p[4]);
+      const f = cols.length < n - 1 ? regress(g.pts.map((p) => cols.map((t) => col(p, t))), y) : null;
+      if (!f) { readout.textContent = 'Too many terms for this many drugs: the fit has no unique answer.'; shown = []; return; }
+      const loo = f.loo.map((v) => clamp(v, Math.min(...y) - 3, Math.max(...y) + 3));
+      const [lo, hi] = range([...y, ...f.fit, ...loo], 0.3);
+      const { px, py } = parity(s, lo, hi, 'predicted pChEMBL', 'observed pChEMBL');
+      const big = n > 30;
+      shown = g.pts.map((_, i) => [px(f.fit[i]), py(y[i])]);
+      g.pts.forEach((_, i) => {
+        if (!big) {
+          ctx.strokeStyle = tint(css('--muted'), 0.5); ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(px(f.fit[i]), py(y[i])); ctx.lineTo(px(loo[i]), py(y[i])); ctx.stroke();
+          ctx.beginPath(); ctx.arc(px(loo[i]), py(y[i]), 4.5, 0, Math.PI * 2); ctx.strokeStyle = css('--c4'); ctx.lineWidth = 1.5; ctx.stroke();
+        }
+        dot(ctx, px(f.fit[i]), py(y[i]), big ? 3 : 5, tint(css('--c1'), big ? 0.6 : 1));
+      });
+      if (picked >= 0) {
+        const p = g.pts[picked];
+        ctx.beginPath(); ctx.arc(px(f.fit[picked]), py(y[picked]), 9, 0, Math.PI * 2); ctx.strokeStyle = css('--fg'); ctx.lineWidth = 1.5; ctx.stroke();
+        label(ctx, p[0], clamp(px(f.fit[picked]), 90, w - 90), py(y[picked]) - 16, css('--fg'), 'center', 12, 600);
+      }
+      const eq = cols.length ? cols.map((t, k) => `${k ? signed(f.c[k + 1], 3) : fmt(f.c[k + 1], 3)}·${NAMES[t]}`).join(' ') + ` ${signed(f.c[0])}` : `${fmt(f.c[0], 2)} (the average)`;
+      const perTerm = cols.length ? n / cols.length : Infinity;
+      const note = !cols.length ? 'With no terms the best guess is the average, so r² and q² are 0 or below.'
+        : perTerm < 5 ? `Only ${fmt(perTerm, 1)} drugs per term, under the rule of thumb of five.`
+        : f.q2 < 0 ? 'q² is below zero: this fit predicts left-out drugs worse than the average does.'
+        : f.r2 < 0.3 ? 'These descriptors explain little of the potency.'
+        : f.q2 < f.r2 - 0.3 ? 'q² is far below r²: the fit does not hold up for drugs it has not seen.'
+        : f.q2 >= 0.4 ? 'Usable: the fit mostly holds up when drugs are left out.'
+        : 'Weak: some of the fit survives leaving drugs out, but not much.';
+      let who = '';
+      if (picked >= 0) { const p = g.pts[picked]; who = `<br><b>${p[0]}</b>: pChEMBL ${fmt(p[4], 2)}, predicted ${fmt(f.fit[picked], 2)}, left-out prediction ${fmt(f.loo[picked], 2)}; logP ${fmt(p[1], 2)}, MR ${fmt(p[2], 0)}, TPSA ${fmt(p[3], 0)}.`; }
+      readout.innerHTML = `${g.label}, n = ${n}. pChEMBL = ${eq}. r² = ${score(f.r2)}, q² = ${score(f.q2)}. ${note}${who}`;
+    }
+    s.draw = draw;
+    draw();
+  }
+
+  // ---------- figure 6: overfitting ----------
+  {
+    const fig = document.getElementById('fig-overfit');
+    const s = surface(fig.querySelector('canvas'));
+    const slider = fig.querySelector('input'), out = fig.querySelector('output');
+    const readout = fig.querySelector('.readout');
+    const SET = SUBS.slice(0, 12), NSET = SET.length, MAXR = 7, R0 = rng(5);
+    const y = SET.map(([, p, sg, mr]) => TRUE_A * p + 1 * sg + TRUE_C * mr + TRUE_D + (R0() - 0.5) * 1.2);
+    // r² and q² for π, σ and k random columns, k = 0..MAXR, for one set of random columns.
+    const scores = (R) => {
+      const junk = SET.map(() => Array.from({ length: MAXR }, () => R()));
+      return Array.from({ length: MAXR + 1 }, (_, k) => {
+        const f = regress(SET.map((sub, i) => [sub[1], sub[2], ...junk[i].slice(0, k)]), y);
+        return f ? [f.r2, f.q2] : [NaN, NaN];
+      });
+    };
+    const median = (a) => { const b = a.filter(Number.isFinite).sort((p, q) => p - q); return b[Math.floor(b.length / 2)]; };
+    const RM = rng(2024), DRAWS = Array.from({ length: 200 }, () => scores(RM));
+    const curve = Array.from({ length: MAXR + 1 }, (_, k) => [median(DRAWS.map((d) => d[k][0])), median(DRAWS.map((d) => d[k][1]))]);
+    let seed = 1, one = [];
+    function reroll() { one = scores(rng(seed++ * 7919)); draw(); }
+    slider.oninput = () => draw();
+    fig.querySelector('[data-role=reroll]').onclick = reroll;
+
+    function draw() {
+      const { ctx, w, h } = s, k = +slider.value;
+      out.textContent = String(k);
+      ctx.clearRect(0, 0, w, h);
+      const L = 58, Rt = w - 90, T = 16, B = h - 40 - fsz(s) * 1.2, Y0 = -1, Y1 = 1;
+      const px = (j) => L + j / MAXR * (Rt - L), py = (v) => B - (clamp(v, Y0, Y1) - Y0) / (Y1 - Y0) * (B - T);
+      ctx.strokeStyle = css('--grid'); ctx.lineWidth = 1;
+      for (let v = Y0; v <= Y1 + 1e-9; v += 0.5) { ctx.beginPath(); ctx.moveTo(L, py(v)); ctx.lineTo(Rt, py(v)); ctx.stroke(); label(ctx, fmt(v, 1), L - 8, py(v), css('--muted'), 'right'); }
+      for (let j = 0; j <= MAXR; j++) label(ctx, String(j + 2), px(j), B + 4 + fsz(s) * 0.6, css('--muted'), 'center');
+      polyline(ctx, [[L, py(0)], [Rt, py(0)]], css('--muted'), 1.2);
+      label(ctx, 'terms in the equation (π, σ and the random ones), for 12 compounds', (L + Rt) / 2, B + 8 + fsz(s) * 1.7, css('--muted'), 'center');
+      ctx.save(); ctx.translate(16, (T + B) / 2); ctx.rotate(-Math.PI / 2); label(ctx, 'score', 0, 0, css('--muted'), 'center'); ctx.restore();
+      roundRect(ctx, px(k) - 14, T, 28, B - T, 6, tint(css('--c4'), 0.1));
+      const seen = curve.slice(0, k + 1);
+      polyline(ctx, seen.map(([r2], j) => [px(j), py(r2)]), css('--c4'), 2.5);
+      polyline(ctx, seen.map(([, q2], j) => [px(j), py(q2)]), css('--fg'), 2.5);
+      seen.forEach(([r2, q2], j) => {
+        dot(ctx, px(j), py(r2), 5, css('--c4'));
+        dot(ctx, px(j), py(q2), 5, css('--fg'));
+        const [r1, q1] = one[j];                                  // the single draw, as faint rings
+        for (const [v, c] of [[r1, '--c4'], [q1, '--fg']]) {
+          ctx.beginPath(); ctx.arc(px(j) + 9, py(v), 3.5, 0, Math.PI * 2); ctx.strokeStyle = tint(css(c), 0.6); ctx.lineWidth = 1.2; ctx.stroke();
+        }
+      });
+      const [r2, q2] = curve[k];
+      label(ctx, `r² ${fmt(r2, 2)}`, Rt + 12, py(r2), css('--c4'), 'left', 13, 600);
+      label(ctx, `q² ${q2 < Y0 ? 'below −1' : fmt(q2, 2)}`, Rt + 12, py(q2) + (Math.abs(py(q2) - py(r2)) < 16 ? 16 : 0), css('--fg'), 'left', 13, 600);
+      const per = NSET / (k + 2), [r1, q1] = one[k], q = (v) => (v < -1 ? 'below −1' : fmt(v, 2));
+      readout.innerHTML = `π, σ and ${k} random term${k === 1 ? '' : 's'}, typical of 200 draws: r² = ${score(r2, 0.6)}, q² = ${q2 < -1 ? '<b style="color:var(--bad)">below −1</b>' : score(q2, 0.6)}. The rings are one draw: r² ${fmt(r1, 2)}, q² ${q(q1)}. That is ${fmt(per, 1)} compounds per term${per < 5 ? ', under the rule of thumb of five' : ''}. ${k === 0 ? 'Only the real terms.' : q2 < 0 ? 'q² is below zero: guessing the average would predict better.' : 'r² went up even though the new terms are noise, and q² went down.'}`;
+    }
+    s.draw = draw;
+    reroll();
   }
 })();
 </script>
