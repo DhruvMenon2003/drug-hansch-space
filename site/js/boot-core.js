@@ -11,6 +11,7 @@ import { initDetail } from './detail.js';
 import { initControls, syncControls } from './controls.js';
 import { initTable } from './table.js';
 import { initExtras } from './extras.js';
+import { initBench } from './bench.js';
 import { fillMethod, fillTourText, initHansch } from './hansch.js';
 import { goStep, initTour, refreshTourBand, tourBand } from './tour.js';
 import { initLayout, layoutState } from './layout.js';
@@ -66,6 +67,7 @@ export async function bootCore(caps) {
   initHud();
   initTable();
   initDetail();
+  initBench();
   initSheet();
   initAnnounce();
   initControls();
