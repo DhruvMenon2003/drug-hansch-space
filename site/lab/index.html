@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Drug Bench</title>
+<meta name="description" content="Fill in the pharmacokinetic numbers a paper gave you and watch the drug rise out of the floor of a 3D map of 1,231 drug routes.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../vendor/fonts/fonts.css">
+<link rel="stylesheet" href="lab.css">
+<link rel="modulepreload" href="../vendor/babylon/babylon.lab.min.js">
+</head>
+<body>
+<header class="top">
+  <a class="home" href="../">Hansch Space</a>
+  <a class="home" href="../learn/">Why the greasiest drug isn't the best one</a>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>The drug bench</h1>
+    <p>Most of the drugs in this dataset are missing something. A label gives the dose but not the half-life; a rat study gives a lethal dose but nobody wrote down the oral bioavailability. Each sphere below is one drug given one way. The ones lying on the floor are the ones we can't yet place, because their steady-state concentration can't be computed without all four numbers.</p>
+    <p>If you have the missing value from a paper, type it in. The drug lifts off the floor to where it belongs.</p>
+  </section>
+
+  <section class="bench">
+    <div class="stage">
+      <canvas id="scene" aria-label="3D map of drugs: lipophilicity across, steady-state concentration up, drug-likeness in depth"></canvas>
+      <div class="axes" aria-hidden="true">
+        <span class="ax x">greasier →</span>
+        <span class="ax y">↑ more drug in the blood</span>
+        <span class="ax z">more drug-like ↗</span>
+      </div>
+      <div id="tip" class="tip" hidden></div>
+      <div class="legend" id="legend"></div>
+      <p class="hint">Drag to turn · scroll to zoom · click a sphere to open it on the bench</p>
+    </div>
+
+    <aside class="panel">
+      <label class="find">
+        <span>Find a drug</span>
+        <input id="q" type="search" placeholder="e.g. famotidine" autocomplete="off" list="names">
+        <datalist id="names"></datalist>
+      </label>
+      <div id="routes" class="routes"></div>
+
+      <form id="card" class="card" hidden>
+        <h2 id="cardName"></h2>
+        <p class="sub" id="cardSub"></p>
+        <div class="grid">
+          <label>F <small>oral fraction absorbed, 0–1</small><input name="F" inputmode="decimal"></label>
+          <label>t½ <small>hours</small><input name="t12" inputmode="decimal"></label>
+          <label>Dose <small>mg</small><input name="dose" inputmode="decimal"></label>
+          <label>Every <small>hours</small><input name="tau" inputmode="decimal"></label>
+          <label>Lethal dose <small>mg/kg, animal</small><input name="tox" inputmode="decimal"></label>
+          <label>Active dose <small>mg/day</small><input name="act" inputmode="decimal"></label>
+        </div>
+        <label class="wide">Where the numbers came from <small>DOI, PMID or citation</small><input name="src" placeholder="doi:10.…"></label>
+        <output class="readout">
+          <div><span>Steady-state level</span><b id="oFc">–</b><i>1.44 · F · t½ · dose / τ</i></div>
+          <div><span>Therapeutic index</span><b id="oTi">–</b><i>log₁₀ (lethal · active)</i></div>
+        </output>
+        <p class="warn" id="warn" hidden></p>
+        <div class="row">
+          <button type="button" id="revert" class="ghost">Back to the curated values</button>
+        </div>
+      </form>
+
+      <details class="add">
+        <summary>Add a drug that isn't here</summary>
+        <form id="addForm">
+          <label>Name<input name="nm" required></label>
+          <div class="grid">
+            <label>logP <small>octanol/water</small><input name="lgp" inputmode="decimal" required></label>
+            <label>QED <small>0–1, optional</small><input name="qed" inputmode="decimal"></label>
+            <label>Route<input name="md" value="ORAL"></label>
+            <label>ATC code <small>optional</small><input name="atc"></label>
+          </div>
+          <button>Put it on the bench</button>
+        </form>
+      </details>
+
+      <div class="mine">
+        <h3>Your changes <span id="nMine">0</span></h3>
+        <ul id="mineList"></ul>
+        <div class="row">
+          <button type="button" id="export">Download as CSV</button>
+          <button type="button" id="clear" class="ghost">Forget all</button>
+        </div>
+        <p class="small">Kept in this browser only. The download carries every edited or added row with your source column, ready to send back for curation.</p>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<footer class="refs">
+  <details>
+    <summary>How the numbers are made</summary>
+    <dl>
+      <dt>Placement</dt><dd>Across: Crippen logP (RDKit). Up: log₁₀ of the steady-state level. Depth: QED. Colour: first ATC letter.</dd>
+      <dt>Formulas</dt><dd>The same ones the curated table uses, so your edit and a rebuild agree.</dd>
+      <dt>Curated values</dt><dd><a href="../data/clean_drugs.json">clean_drugs.json</a> · <a href="../data/provenance.csv">provenance</a> · <a href="../data/validation.md">validation</a></dd>
+    </dl>
+  </details>
+  <p class="chips">
+    <a href="https://doi.org/10.1038/nchem.1243">QED · Bickerton 2012</a>
+    <a href="https://doi.org/10.1021/ci990307l">logP · Wildman &amp; Crippen 1999</a>
+    <a href="https://www.whocc.no/atc_ddd_index/">WHO ATC/DDD</a>
+    <a href="../vendor/babylon/LICENSE">Babylon.js · Apache-2.0</a>
+  </p>
+</footer>
+
+<script type="module" src="lab.js"></script>
+</body>
+</html>

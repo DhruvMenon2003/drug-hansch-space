@@ -55,6 +55,8 @@ CAPS_KB = {
     "index.html": 20, "404.html": 4, "js/*.js": 25, "js/gl/*.js": 25, "*.css": 25,
     "data/drugs.json": 160, "data/hansch.json": 20, "data/mol/*.json": 40, "data/mol/index.json": 4,
     "vendor/three/three.module.min.js": 190, "vendor/three/addons/*": 15, "vendor/gsap/*": 40, "vendor/smiles-drawer/*.js": 80,
+    # lab/ only: a tree-shaken Babylon.js (tools/babylon_lab_entry.js), never loaded by the explorer
+    "vendor/babylon/babylon.lab.min.js": 340,
     "vendor/fonts/*.woff2": 140, "assets/*.png": 120, "assets/*.svg": 10,
 }
 DEFAULT_CAP_KB = 100
