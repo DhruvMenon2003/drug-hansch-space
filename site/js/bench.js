@@ -1,8 +1,7 @@
 // Layer 2. The bench: fill in the pharmacokinetic numbers a paper gives for the selected drug, per administration mode.
 // The curated values come from data/clean_drugs.json, fetched on the first selection. Edits stay in this browser
 // (localStorage, the same key the lab page used) and download as CSV with their source, ready to send back for curation.
-import { app, bus, $, cap, esc, fx } from './kernel.js';
-import { getSide } from './extras.js';
+import { app, bus, $, cap, esc, fx, getSide } from './kernel.js';
 import { selectDrug } from './view.js';
 
 const KEY = 'hansch-lab-v1';
