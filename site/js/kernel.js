@@ -92,3 +92,11 @@ export const isDark = () => {
   const th = document.documentElement.getAttribute('data-theme');
   return th ? th === 'dark' : darkQuery.matches;
 };
+
+const json = new Map();                 // url -> Promise of the parsed file, one request per file per page
+
+/** Fetch and parse `url` once; the same promise is handed to every later caller. Rejects like fetch does. */
+export function getSide(url) {
+  if (!json.has(url)) json.set(url, fetch(url, { cache: 'no-cache' }).then(r => (r.ok ? r.json() : Promise.reject(new Error(`${url}: HTTP ${r.status}`)))));
+  return json.get(url);
+}
