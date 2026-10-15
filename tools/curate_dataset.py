@@ -45,9 +45,16 @@ PubChem is therefore never asked for a structure. The order is:
     curated     the parent SMILES already in data/drugs.json for that CID (ChEMBL/dataset-derived)
     chembl      the ChEMBL web API, by name
 
-Every structure is then parsed with ``Chem.MolFromSmiles(s, sanitize=True)``; when that fails the SMILES
-is re-parsed unsanitized and run through ``Chem.DetectChemistryProblems`` and ``Chem.SanitizeMol`` so the
-actual error text lands in ``smiles_error``. ``smiles_ok`` says whether RDKit accepted it.
+Every candidate is parsed with ``Chem.MolFromSmiles(s, sanitize=True)`` BEFORE it is accepted, and a
+candidate RDKit rejects falls through to the next source in that same order, with the rejection written
+into ``smiles_source``. When a candidate fails it is re-parsed unsanitized and run through
+``Chem.DetectChemistryProblems`` and ``Chem.SanitizeMol`` so the actual error text lands in
+``smiles_error``. Only when every permitted source is rejected does the row keep the first candidate and
+its diagnosis. ``smiles_ok`` says whether RDKit accepted the structure the row ended up with.
+
+Drug names are matched onto each source by ``NameIndex``, which also crosses the INN/USAN spelling split
+(aciclovir/acyclovir) and the base-vs-salt split (morphine/morphine sulfate); both are nomenclature
+steps over one substance, and each one is named in the evidence string it returns.
 
 OTHER RULES THIS SCRIPT KEEPS
 -----------------------------
@@ -66,9 +73,9 @@ OTHER RULES THIS SCRIPT KEEPS
 
 OUTPUTS
 -------
-    site/data/clean_drugs.csv         the verbose long table, one row per (drug, ATC code, mode)
+    data/clean_drugs.csv              the verbose long table, one row per (drug, ATC code, mode)
     site/data/clean_drugs.json        the same table compacted for the web explorer
-    site/data/clean_provenance.csv    one row per sourced value: compound, field, value, url, quote, status
+    data/clean_provenance.csv         one row per sourced value: compound, field, value, url, quote, status
 """
 import argparse
 import csv
@@ -479,7 +486,13 @@ def build_drugbank_smiles(cache_dir, rebuild=False, verbose=True):
 
 
 def local_label_results(name_norm, index):
-    """The openFDA label results stored locally for one normalised name, read on demand."""
+    """The openFDA label results stored locally for one normalised name, read on demand.
+
+    Ranked, because a combination product matches too: an ibuprofen-and-famotidine label carries
+    'famotidine' in openfda.substance_name, and reading a boxed warning out of it would attribute
+    ibuprofen's cardiovascular warning to famotidine. So a record whose openfda.generic_name is this
+    drug and nothing else comes first, then a single-ingredient record, then anything else. Callers
+    read the prose in this order, so a single-ingredient label is always preferred."""
     e = (index.get("names") or {}).get(name_norm)
     if not e:
         return []
@@ -492,13 +505,25 @@ def local_label_results(name_norm, index):
             continue
         for r in (d.get("results") or []):
             o = r.get("openfda") or {}
-            names = set()
-            for key in ("generic_name", "substance_name", "brand_name"):
-                for v in (o.get(key) or []):
-                    names.add(norm_name(v))
-            if name_norm in names:
-                out.append((base, r))
-    return out
+            gen = [norm_name(v) for v in (o.get("generic_name") or [])]
+            subs = [norm_name(v) for v in (o.get("substance_name") or [])]
+            brands = [norm_name(v) for v in (o.get("brand_name") or [])]
+            if name_norm not in set(gen) | set(subs) | set(brands):
+                continue
+            if gen and all(g == name_norm for g in gen):
+                rank = 0                      # this drug and only this drug
+            elif len(subs) <= 1 and name_norm in gen:
+                rank = 1                      # single active ingredient, named in generic_name
+            elif name_norm in gen:
+                rank = 2                      # named in generic_name beside others: a combination
+            else:
+                rank = 3                      # matched only through a substance or brand name
+            out.append((rank, base, r))
+    if not out:
+        return []
+    out.sort(key=lambda t: (t[0], t[1]))
+    best = out[0][0]                          # keep only the best tier, so a combination product's
+    return [(base, r) for rank, base, r in out if rank == best]   # prose never speaks for this drug
 
 
 def label_prose(results):
@@ -514,13 +539,81 @@ def label_prose(results):
 
 
 # --------------------------------------------------------------------------- name resolution
+# Counter-ion, ester and hydrate words. A US label is filed under the salt actually in the product
+# ("morphine sulfate", "metformin hydrochloride"), while the workbook and the WHO ATC index name the
+# base substance. A salt of a substance is that substance for the purposes this table uses a label for
+# -- route of administration, half-life, bioavailability -- so matching across a trailing run of these
+# words is a nomenclature step, not a guess at a different drug. The matched name is always carried into
+# the evidence string so a reader can see which salt the sentence came from; note that a dose read off a
+# salt-form label is a dose of the salt, which is why the quote keeps the label's own wording.
+SALT_WORDS = frozenset("""
+sulfate sulphate hydrochloride hydrobromide hydroiodide chloride bromide iodide fluoride
+sodium potassium calcium magnesium aluminum aluminium zinc lithium meglumine
+acetate propionate butyrate valerate caproate caprylate decanoate undecylenate palmitate stearate
+laurate enantate enanthate cypionate dipropionate furoate pivalate phosphate diphosphate pyrophosphate
+nitrate dinitrate mononitrate tetranitrate sulfite carbonate bicarbonate borate
+citrate tartrate bitartrate hemitartrate malate maleate fumarate succinate oxalate adipate
+lactate gluconate glucuronate glycolate benzoate salicylate pamoate embonate
+mesylate mesilate besylate besilate tosylate esylate napadisylate xinafoate edisylate isetionate
+camsylate camsilate oleate linoleate aspartate glutamate orotate ascorbate
+dihydrate monohydrate trihydrate hemihydrate sesquihydrate anhydrous hydrate hydrated
+hcl hbr base free acid salt sesquihydrate
+""".split())
+
+# INN and USAN spell a number of substances differently. These pairs are spelling variants of one and
+# the same substance, not substitutions of one drug for another, which is why the table is restricted to
+# names whose identity is a matter of nomenclature. Every use is written into the evidence string as a
+# spelling substitution, so a reader can check it; an alias that no source carries simply never fires.
+INN_USAN = {
+    "aciclovir": "acyclovir",
+    "ciclosporin": "cyclosporine",
+    "indometacin": "indomethacin",
+    "beclometasone": "beclomethasone",
+    "cromoglicic acid": "cromolyn",
+    "rifampicin": "rifampin",
+    "lignocaine": "lidocaine",
+    "frusemide": "furosemide",
+    "glibenclamide": "glyburide",
+    "amoxycillin": "amoxicillin",
+    "paracetamol": "acetaminophen",
+    "salbutamol": "albuterol",
+    "oestradiol": "estradiol",
+    "noradrenaline": "norepinephrine",
+    "adrenaline": "epinephrine",
+    "dothiepin": "dosulepin",
+    "sulphasalazine": "sulfasalazine",
+    "tioguanine": "thioguanine",
+    "trimeprazine": "alimemazine",
+}
+# The pairs are spelling variants of one substance, so the substitution is good in either direction:
+# the workbook carries INN spellings, DrugBank and ChEMBL mix the two, and US labels carry USAN.
+INN_USAN = dict(INN_USAN, **{v: k for k, v in INN_USAN.items()})
+
+
+def openfda_query_names(name):
+    """The spellings a live openFDA query is tried under: the drug's own name, then its USAN spelling.
+
+    The workbook carries INN spellings and a US label is filed under the USAN one, so an openFDA search
+    for 'aciclovir' returns nothing while 'acyclovir' returns the drug. Only the spelling changes -- the
+    substance is the same -- and the spelling actually used is written into the evidence string."""
+    n = name.replace(".", " ")
+    out = [(n, "")]
+    alias = INN_USAN.get(norm_name(name))
+    if alias and norm_name(alias) != norm_name(name):
+        out.append((alias, f" (searched under the USAN spelling '{alias}' for INN '{n}')"))
+    return out
+
+
 class NameIndex:
     """Match a workbook drug name onto a source's names without ever guessing a different drug.
 
-    Exact normalised match first. Then, only for a multi-word name, its first word -- which turns
-    'glycopyrronium bromide' into 'glycopyrronium' and 'calcium folinate' into 'calcium', so the first
-    word is accepted only when it is unique in the source and at least five characters long. Anything
-    looser is refused and the row stays empty with a reason."""
+    Exact normalised match first; then the same name under its INN/USAN spelling variant; then, only for
+    a multi-word name, its first word -- which turns 'glycopyrronium bromide' into 'glycopyrronium' and
+    'calcium folinate' into 'calcium', so the first word is accepted only when it is unique in the source
+    and at least five characters long; then the salt, ester or hydrate forms of the name, where every word
+    the source adds is a counter-ion or hydrate word from SALT_WORDS. Anything looser is refused and the
+    row stays empty with a reason. Every non-exact match names, in the string it returns, the source name
+    it actually landed on, so the substitution travels with the value into the provenance table."""
 
     def __init__(self, names):
         self.exact = set()
@@ -532,20 +625,50 @@ class NameIndex:
             self.exact.add(n)
             self.first[n.split()[0]].add(n)
 
+    def _salt_forms(self, n):
+        """Source names that are `n` plus a trailing run of counter-ion / hydrate words only."""
+        out = []
+        for cand in self.first.get(n.split()[0]) or set():
+            if cand == n or not cand.startswith(n + " "):
+                continue
+            tail = cand[len(n) + 1:].split()
+            if tail and all(w in SALT_WORDS for w in tail):
+                out.append(cand)
+        return sorted(out, key=lambda c: (len(c), c))
+
+    def _direct(self, n, note):
+        """Exact, base-word and salt-form lookup for one spelling of the name."""
+        if n in self.exact:
+            return n, "exact name match" + note
+        head = n.split()[0]
+        if len(n.split()) > 1 and len(head) >= 5:
+            if head in self.exact:
+                return head, f"matched on the base name '{head}' of '{n}'" + note
+            cands = self.first.get(head) or set()
+            if len(cands) == 1:
+                only = next(iter(cands))
+                return only, (f"matched '{n}' to the single source name sharing its base word: "
+                              f"'{only}'") + note
+        salts = self._salt_forms(n)
+        if salts:
+            pick = salts[0]
+            extra = f"; the source also files it as {', '.join(salts[1:3])}" if len(salts) > 1 else ""
+            return pick, (f"matched '{n}' to the salt/ester form the source files it under: "
+                          f"'{pick}'" + extra) + note
+        return None, ""
+
     def resolve(self, name):
         n = norm_name(name)
         if not n:
             return None, ""
-        if n in self.exact:
-            return n, "exact name match"
-        head = n.split()[0]
-        if len(n.split()) > 1 and len(head) >= 5:
-            cands = self.first.get(head) or set()
-            if head in self.exact:
-                return head, f"matched on the base name '{head}' of '{n}'"
-            if len(cands) == 1:
-                only = next(iter(cands))
-                return only, f"matched '{n}' to the single source name sharing its base word: '{only}'"
+        hit, why = self._direct(n, "")
+        if hit:
+            return hit, why
+        alias = INN_USAN.get(n)
+        if alias and alias != n:
+            hit, why = self._direct(alias, f" (INN '{n}' spelled '{alias}' by this source)")
+            if hit:
+                return hit, why
         return None, f"no name in this source matches '{n}'"
 
 
@@ -601,6 +724,109 @@ def who_levels(http, code):
         if code.startswith(c):
             out[c] = html.unescape(re.sub(r"<[^>]+>", "", m.group(3))).strip()
     return out
+
+
+# --------------------------------------------------------------------------- PK-DB
+def pkdb_doses(http, name, legend, page_size=200):
+    """Literature dosing per route for one substance from PK-DB, as {legend route NAME: {...}}.
+
+    Only part of this open API is usable without credentials, which was measured rather than assumed:
+
+      *  /api/v1/filter/?concise=true&interventions__substance=<name> works and returns a uuid plus
+         per-table counts. interventions__substance is the criterion that actually filters; the other
+         substance criteria silently return zero or the unfiltered totals, so they are not used.
+      *  /api/v1/interventions/?uuid=<uuid> works, and gives per study the route, the form, the
+         application (single / multiple dose), the measurement type, the value and the unit. That is
+         real literature dosing per route, which is what dose_mg and dose_interval_h want.
+      *  /api/v1/outputs/, /api/v1/pkdata/outputs/ and /api/v1/subsets/ return "Not found." or count 0
+         even when the filter reports hundreds of outputs: the PK parameters (half-life, AUC,
+         bioavailability, clearance) need authentication, and this project has no credentials. So
+         half-life and bioavailability do not come from here -- they come from the label prose and from
+         the user's own curated table.
+
+    A zero count is a real absence: the caller falls through to the next source. The uuid is short-lived,
+    so the interventions call follows the filter call immediately."""
+    sub = norm_name(name).replace(" ", "+")
+    if not sub:
+        return {}, "", 0
+    furl = f"{PKDB}/filter/?format=json&concise=true&interventions__substance={sub}"
+    js = http.json(furl)
+    if not isinstance(js, dict):
+        return {}, furl, 0
+    uuid = js.get("uuid")
+    n_int = int(js.get("interventions") or 0)
+    if not uuid or n_int <= 0:
+        return {}, furl, 0
+    iurl = f"{PKDB}/interventions/?format=json&uuid={uuid}&page_size={page_size}"
+    ij = http.json(iurl)
+    data = ij if isinstance(ij, list) else ((ij or {}).get("data") or ij or {})
+    if isinstance(data, dict):
+        data = data.get("data") or []
+    out = {}
+    for it in (data or []):
+        if not isinstance(it, dict):
+            continue
+        mt = str(it.get("measurement_type") or "").lower()
+        if "dose" not in mt or mt == "qualitative-dosing":
+            continue
+        route = it.get("route")
+        rname = ""
+        if isinstance(route, dict):
+            rname = str(route.get("label") or route.get("name") or route.get("sid") or "")
+        elif route:
+            rname = str(route)
+        e = legend.lookup(rname.upper()) or legend.lookup(
+            {"IV": "INTRAVENOUS", "PO": "ORAL", "IM": "INTRAMUSCULAR",
+             "SC": "SUBCUTANEOUS"}.get(rname.upper(), ""))
+        if e is None:
+            continue                                  # an unmapped route is skipped, never reassigned
+        v = None
+        for k in ("value", "median", "mean"):
+            v = numeric(it.get(k))
+            if v is not None:
+                break
+        unit = str(it.get("unit") or "").strip()
+        mult = UNIT_MG.get(unit)
+        if v is None or mult is None:
+            continue
+        study = (it.get("study") or {}) if isinstance(it.get("study"), dict) else {}
+        sid = study.get("sid") or study.get("name") or ""
+        app = str(it.get("application") or "").lower()
+        tau = None
+        if "multiple" in app:
+            te, t = numeric(it.get("time_end")), numeric(it.get("time"))
+            tu = str(it.get("time_unit") or "").lower()
+            if te is not None and t is not None and te > t and tu in ("h", "hr", "hour", "hours"):
+                tau = te - t
+        slot = out.setdefault(e["name"], {"doses": [], "taus": [], "studies": set(), "form": ""})
+        slot["doses"].append(v * mult)
+        if tau:
+            slot["taus"].append(tau)
+        if sid:
+            slot["studies"].add(str(sid))
+        if not slot["form"] and it.get("form"):
+            slot["form"] = str(it.get("form"))
+    built = {}
+    for rname, s in out.items():
+        if not s["doses"]:
+            continue
+        doses = sorted(s["doses"])
+        med = doses[len(doses) // 2] if len(doses) % 2 else (doses[len(doses) // 2 - 1]
+                                                             + doses[len(doses) // 2]) / 2.0
+        studies = ", ".join(sorted(s["studies"])[:4])
+        q = (f"PK-DB median of {len(doses)} reported {rname.lower()} dosing intervention(s) "
+             f"= {round(med, 4)} mg"
+             + (f", form {s['form']}" if s["form"] else "")
+             + (f"; studies {studies}" if studies else ""))
+        built[rname] = {
+            "dose": cell(round(med, 4), f"PK-DB interventions ({iurl})", q, unit="mg"),
+            "tau": (cell(round(sorted(s["taus"])[len(s["taus"]) // 2], 3),
+                         f"PK-DB interventions ({iurl})",
+                         f"PK-DB multiple-dose interval for {rname.lower()}"
+                         f" across {len(s['taus'])} intervention(s)", unit="h")
+                    if s["taus"] else EMPTY),
+        }
+    return built, iurl, n_int
 
 
 # --------------------------------------------------------------------------- label prose readers
@@ -959,16 +1185,18 @@ def resolve_modes(drug, atc, legend, label_index, label_names, http, prov, offli
         if out:
             return out
     if not offline:
-        q = urllib.parse.quote(f'openfda.generic_name:"{name.replace(".", " ")}"')
-        url = f"{OPENFDA}?search={q}&count=openfda.route.exact&limit=50"
-        js = http.json(url)
-        rows = [(str(r["term"]).upper(), int(r["count"]))
-                for r in ((js or {}).get("results") or []) if r.get("term")]
-        rows.sort(key=lambda r: (-r[1], r[0]))
-        for rt, n in rows:
-            push(rt, "openfda_route", f"openFDA route count {n} for '{name}' ({url})", rt)
-        if out:
-            return out
+        for spelling, note in openfda_query_names(name):
+            q = urllib.parse.quote(f'openfda.generic_name:"{spelling}"')
+            url = f"{OPENFDA}?search={q}&count=openfda.route.exact&limit=50"
+            js = http.json(url)
+            rows = [(str(r["term"]).upper(), int(r["count"]))
+                    for r in ((js or {}).get("results") or []) if r.get("term")]
+            rows.sort(key=lambda r: (-r[1], r[0]))
+            for rt, n in rows:
+                push(rt, "openfda_route",
+                     f"openFDA route count {n} for '{name}'{note} ({url})", rt)
+            if out:
+                return out
 
     # ---- branch C: a dosage form on a DailyMed SPL listing title. An inference, labelled as one.
     if key:
@@ -1061,6 +1289,9 @@ NUM_FIELDS = {"qed", "mw", "alogp", "psa", "molmr", "fsp3", "bioavailability_F",
               "dose_mg", "dose_interval_h", "free_conc", "therapeutic_index",
               "therapeutic_index_classical", "dose_corrected_bioavailability", "in_vivo_toxicity",
               "in_vivo_activity", "who_ddd_mg"}
+# F / dose_mg is a small ratio: three decimals would round 0.00075 to 0.001 and throw the value away,
+# so the ratio columns keep more places. Everything else rounds to three.
+WIDE_FIELDS = {"dose_corrected_bioavailability": 6, "bioavailability_F": 4}
 
 
 # --------------------------------------------------------------------------- build
@@ -1068,10 +1299,14 @@ def main(argv=None):
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--src", default=SRC_DEFAULT, help="the source workbook (xlsx)")
-    ap.add_argument("--out", default=os.path.join(HERE, "site", "data", "clean_drugs.csv"),
-                    help="the long table (CSV); the compact JSON is written beside it")
-    ap.add_argument("--json-out", default=None, help="override the compact JSON path")
-    ap.add_argument("--prov", default=os.path.join(HERE, "site", "data", "clean_provenance.csv"),
+    # The two CSVs are the full record and are megabytes wide, so they live in
+    # data/ beside the other source tables. Only the compact JSON goes under
+    # site/, which the page serves and tools/check_site.py holds to a size cap.
+    ap.add_argument("--out", default=os.path.join(HERE, "data", "clean_drugs.csv"),
+                    help="the long table (CSV)")
+    ap.add_argument("--json-out", default=os.path.join(HERE, "site", "data", "clean_drugs.json"),
+                    help="the same table compacted for the web explorer")
+    ap.add_argument("--prov", default=os.path.join(HERE, "data", "clean_provenance.csv"),
                     help="the provenance table: one row per sourced value")
     ap.add_argument("--cache", default=CACHE_DEFAULT, help="request and index cache directory")
     ap.add_argument("--limit", type=int, default=0, metavar="N",
@@ -1174,10 +1409,17 @@ def main(argv=None):
     if not a.offline:
         st, _ = http.get(f"{PKDB}/")
         reach["pk_db_api_root"] = f"HTTP {st}"
-        js = http.json(f"{PKDB}/outputs/?search=cimetidine&format=json&page_size=3")
-        n = (((js or {}).get("data") or {}).get("count"))
-        reach["pk_db_outputs"] = (f"reachable, but the anonymous /outputs/ query returns count={n}; "
-                                  "no PK value can be read from it without credentials")
+        fj = http.json(f"{PKDB}/filter/?format=json&concise=true&interventions__substance=cimetidine")
+        reach["pk_db_filter"] = (
+            f"HTTP 200, cimetidine -> {fj.get('studies')} studies / {fj.get('interventions')} "
+            f"interventions / {fj.get('outputs')} outputs" if isinstance(fj, dict)
+            else "filter/ query failed")
+        oj = http.json(f"{PKDB}/outputs/?format=json&page_size=1")
+        reach["pk_db_outputs"] = (
+            "reachable but unusable anonymously: /outputs/ returns count="
+            f"{(((oj or {}).get('data') or {}) or {}).get('count')} even when the filter reports "
+            "hundreds, so half-life and bioavailability need credentials this project does not have; "
+            "dose and dose interval are taken from /interventions/ instead")
         st, _ = http.get(f"{CHEMBL}/status?format=json")
         reach["chembl"] = f"HTTP {st}"
         st, _ = http.get(WHO.format("A02BA"))
@@ -1258,31 +1500,58 @@ def main(argv=None):
         pr = prior.get(nn) or {}
 
         # ---- SMILES: sheet, DrugBank, the curated parent, ChEMBL. PubChem is never asked.
+        # The sources are tried in that order and each candidate is handed to RDKit before it is
+        # accepted, so a structure RDKit rejects falls through to the next permitted source instead of
+        # ending the drug with an unusable string: temoporfin's DrugBank record, for one, does not parse
+        # while data/drugs.json holds a structure that does. Only if every candidate is rejected does the
+        # row keep the first one, with that candidate's own RDKit diagnosis, so nothing is silently lost.
         if nn not in smiles_cache:
-            smi, src = None, ""
+            cands = []
             sheet_smi = nz(first_row.get(C["smiles"])) if C["smiles"] else None
             if sheet_smi:
-                smi, src = str(sheet_smi).strip(), "sheet: the workbook's own SMILES cell"
-            if not smi and db.get("available"):
+                cands.append((str(sheet_smi).strip(), "sheet: the workbook's own SMILES cell"))
+            if db.get("available"):
                 k, why = db_names.resolve(name)
-                if k:
-                    smi = (db["map"] or {}).get(k)
-                    src = (f"drugbank: moldb_smiles for '{k}' in drugbank_drugs_info.csv ({why})"
-                           if smi else "")
-            if not smi and cid is not None and curated_smiles.get(cid):
-                smi = curated_smiles[cid]
-                src = ("curated: the parent SMILES for CID "
-                       f"{cid} in data/drugs.json (ChEMBL/dataset-derived, not PubChem-normalised)")
-            if not smi and not a.offline:
+                if k and (db["map"] or {}).get(k):
+                    cands.append(((db["map"] or {})[k],
+                                  f"drugbank: moldb_smiles for '{k}' in drugbank_drugs_info.csv ({why})"))
+            if cid is not None and curated_smiles.get(cid):
+                cands.append((curated_smiles[cid],
+                              "curated: the parent SMILES for CID "
+                              f"{cid} in data/drugs.json (ChEMBL/dataset-derived, not PubChem-normalised)"))
+
+            def chembl_candidate():
+                if a.offline:
+                    return None
                 q = urllib.parse.quote(name.replace(".", " "))
                 js = http.json(f"{CHEMBL}/molecule/search?q={q}&format=json&limit=1")
-                for mol in ((js or {}).get("molecules") or []):
-                    s = ((mol.get("molecule_structures") or {}) or {}).get("canonical_smiles")
-                    if s:
-                        smi, src = s, (f"chembl: canonical_smiles for {mol.get('molecule_chembl_id')} "
-                                       f"({CHEMBL}/molecule/search?q={q})")
+                for m in ((js or {}).get("molecules") or []):
+                    cs = ((m.get("molecule_structures") or {}) or {}).get("canonical_smiles")
+                    if cs:
+                        return (cs, f"chembl: canonical_smiles for {m.get('molecule_chembl_id')} "
+                                    f"({CHEMBL}/molecule/search?q={q})")
+                return None
+
+            chosen, mol, ok, err = None, None, False, ""
+            tried = []
+            for i in range(len(cands) + 1):
+                if i == len(cands):                      # ChEMBL is asked only if nothing else parsed
+                    extra = chembl_candidate()
+                    if extra is None:
                         break
-            mol, ok, err = smiles_check(smi)
+                    cands.append(extra)
+                cand_smi, cand_src = cands[i]
+                cmol, cok, cerr = smiles_check(cand_smi)
+                if cok:
+                    note = ("" if not tried else
+                            "; taken after RDKit rejected " +
+                            ", ".join(f"the {t.split(':')[0]} structure ({e})" for t, e in tried))
+                    chosen, mol, ok, err = (cand_smi, cand_src + note), cmol, True, ""
+                    break
+                tried.append((cand_src, cerr))
+                if chosen is None:
+                    chosen, err = (cand_smi, cand_src), cerr   # keep the first candidate and its error
+            smi, src = chosen if chosen else ("", "")
             smiles_cache[nn] = {"smiles": smi or "", "source": src, "ok": ok, "error": err}
             feat_cache[nn] = rdkit_features(mol) if mol is not None else {}
         sm = smiles_cache[nn]
@@ -1297,12 +1566,20 @@ def main(argv=None):
         lsrc = (f"local openFDA drug/label.json cache for '{lkey}' ({lwhy}); files "
                 f"{', '.join(sorted({b for b, _ in results})[:3])}") if results else ""
         if not prose and not a.offline:
-            q = urllib.parse.quote(f'openfda.generic_name:"{name.replace(".", " ")}"')
-            url = f"{OPENFDA}?search={q}&limit=25"
-            js = http.json(url)
-            live = [("live", r) for r in ((js or {}).get("results") or [])]
-            if live:
-                results, prose, lsrc = live, label_prose(live), f"openFDA drug/label.json ({url})"
+            for spelling, note in openfda_query_names(name):
+                q = urllib.parse.quote(f'openfda.generic_name:"{spelling}"')
+                url = f"{OPENFDA}?search={q}&limit=25"
+                js = http.json(url)
+                live = [("live", r) for r in ((js or {}).get("results") or [])]
+                if live:
+                    results, prose = live, label_prose(live)
+                    lsrc = f"openFDA drug/label.json{note} ({url})"
+                    break
+            counts["label_live" if prose else "label_none"] += 1
+        elif prose:
+            counts["label_local"] += 1
+        else:
+            counts["label_none"] += 1
 
         # ---- the PK/tox cells that do not depend on the route
         F = from_table(pk, "F", "fraction")
@@ -1320,17 +1597,34 @@ def main(argv=None):
                         c.update({"value": v,
                                   "source": f"earlier run of this group: {os.path.basename(PRIOR_FEATURES)}",
                                   "quote": f"{k} = {pr.get(k)} (reused, not re-derived)"})
+        dose_prose, tau_prose = EMPTY, EMPTY
+        # ---- PK-DB: literature dosing per route. Dose and interval only; the PK parameter tables
+        # (half-life, bioavailability) are not public, so those still come from the label prose.
+        pkdb = {}
+        if not a.offline and not (has(dose) and has(tau)):
+            try:
+                pkdb, _iurl, n_int = pkdb_doses(http, name, legend)
+            except Exception as exc:                       # noqa: BLE001 - one lookup never kills a run
+                pkdb, n_int = {}, -1
+                counts["pkdb_error"] += 1
+                prov.note(name, "", "", "pkdb", f"PK-DB lookup raised {type(exc).__name__}: {exc}",
+                          retrieved)
+            counts["pkdb_hit" if pkdb else ("pkdb_error" if n_int < 0 else "pkdb_absent")] += 1
+            if not pkdb and n_int == 0:
+                prov.note(name, "", "", "pkdb",
+                          "PK-DB has no intervention for this substance "
+                          "(filter/?interventions__substance returns 0); treated as a real absence",
+                          retrieved)
+
         if prose:
             if not has(F):
                 F = read_bioavailability(prose, lsrc) or F
             if not has(t12):
                 t12 = read_half_life(prose, lsrc) or t12
             if not has(dose) or not has(tau):
-                d2, t2 = read_dose(prose, lsrc)
-                if not has(dose) and has(d2):
-                    dose = d2
-                if not has(tau) and has(t2):
-                    tau = t2
+                # kept separate, not merged into dose/tau: the per-row order is PK-DB, then the WHO
+                # DDD for this row's route, and only then a sentence out of the label.
+                dose_prose, tau_prose = read_dose(prose, lsrc)
             if not has(tox):
                 tox = read_lethal_dose(prose, lsrc) or tox
         endpoint = EMPTY
@@ -1374,14 +1668,25 @@ def main(argv=None):
                     notes.append("no in-vivo activity dose: the WHO index prints no DDD for this ATC "
                                  "code and route, and no curated or label value was found")
 
-                row_tau = tau
-                if not has(row_tau) and dd:
-                    row_tau = cell(DDD_INTERVAL_H, f"WHO ATC/DDD index ({dd['url']})",
-                                   "a defined daily dose is one day's maintenance dose", unit="h")
-                row_dose = dose
+                # dose and interval, in the brief's source order: the user's curated table and the
+                # earlier runs of this group, then PK-DB for this route, then the WHO DDD for this
+                # route, then a sentence out of the label.
+                pk_route = pkdb.get(e["name"]) or {}
+                row_dose, row_tau = dose, tau
+                if not has(row_dose) and has(pk_route.get("dose")):
+                    row_dose = pk_route["dose"]
+                if not has(row_tau) and has(pk_route.get("tau")):
+                    row_tau = pk_route["tau"]
                 if not has(row_dose) and dd:
                     row_dose = cell(dd["mg"], f"WHO ATC/DDD index defined daily dose ({dd['url']})",
                                     f"DDD for {atc} printed as '{dd['printed']}'{sub}", unit="mg")
+                if not has(row_tau) and dd:
+                    row_tau = cell(DDD_INTERVAL_H, f"WHO ATC/DDD index ({dd['url']})",
+                                   "a defined daily dose is one day's maintenance dose", unit="h")
+                if not has(row_dose) and has(dose_prose):
+                    row_dose = dose_prose
+                if not has(row_tau) and has(tau_prose):
+                    row_tau = tau_prose
 
                 Fv, t12v = F.get("value"), t12.get("value")
                 dv, tv = row_dose.get("value"), row_tau.get("value")
@@ -1600,7 +1905,7 @@ def main(argv=None):
             if v == "" or v is None:
                 out.append(None)
             elif src in NUM_FIELDS:
-                out.append(r3(numeric(v)))
+                out.append(r3(numeric(v), WIDE_FIELDS.get(src, FLOAT3)))
             elif src == "has_multiple_modes":
                 out.append(v == "true")
             elif src == "smiles_ok":
@@ -1634,7 +1939,9 @@ def main(argv=None):
                           "legend's NOT APPLICABLE entry. Every mode is mapped to the FDA route legend, "
                           "and no route is ever re-mapped onto a different legend route."),
             "smiles_rule": ("sheet, then drugbank_drugs_info.csv moldb_smiles, then the curated parent "
-                            "in data/drugs.json, then ChEMBL. PubChem is never used for SMILES because "
+                            "in data/drugs.json, then ChEMBL, each validated with RDKit before it is "
+                            "accepted and falling through to the next source when RDKit rejects it. "
+                            "PubChem is never used for SMILES because "
                             "its SMILES cannot distinguish tautomers or isomers."),
             "formulas": {
                 "free_conc": "1.44 * F * half_life_h * dose_mg / dose_interval_h",
@@ -1653,8 +1960,8 @@ def main(argv=None):
             "reachability": reach,
             "pk_table_files": [os.path.basename(p) for p in pk_files],
             "pk_table_warnings": [m.get("warning") for m in pk_metas if m.get("warning")],
-            "full_table": "site/data/clean_drugs.csv",
-            "provenance": "site/data/clean_provenance.csv",
+            "full_table": "data/clean_drugs.csv",
+            "provenance": "data/clean_provenance.csv",
         },
         "cols": [s for s, _ in JSON_COLS],
         "rows": jrows,
@@ -1686,6 +1993,10 @@ def main(argv=None):
     for k, v in sorted(counts.items()):
         if k.startswith("smiles_src_"):
             print(f"  source {k[11:]:<22} {v}")
+    print("\nUS label coverage (one count per drug):")
+    print(f"  from the local openFDA/DailyMed cache   {counts['label_local']}")
+    print(f"  from a live openFDA query               {counts['label_live']}")
+    print(f"  no US label found at all                {counts['label_none']}")
     print("\nfill rate per column (non-empty rows):")
     for c in ("mode_of_administration", "mode_nci_concept_id", "smiles", "qed", "mw", "alogp",
               "molmr", "alerts", "bioavailability_F", "half_life_h", "dose_mg", "dose_interval_h",
