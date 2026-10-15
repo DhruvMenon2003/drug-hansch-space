@@ -1,7 +1,7 @@
 {
  "meta": {
-  "generated_utc": "2026-10-15T07:34:33+00:00",
-  "runtime_seconds": 494.1,
+  "generated_utc": "2026-10-15T07:44:15+00:00",
+  "runtime_seconds": 1974.0,
   "script": "tools/ml_ladder.py",
   "seed": 20261014,
   "quick_mode": false,
@@ -75,7 +75,7 @@
     },
     "join": "PubChem CID only; existing non-empty cells in the primary file are kept"
    },
-   "rows_read": 1214,
+   "rows_read": 1231,
    "columns_matched": {
     "cid": "cid",
     "name": "generic_name",
@@ -94,9 +94,9 @@
     "offtox": "in_vitro_toxicity",
     "l4": "sheet_level4_chemical_group"
    },
-   "rows_modellable": 1213,
-   "compounds": 758,
-   "smiles_that_rdkit_could_not_parse": 1,
+   "rows_modellable": 1231,
+   "compounds": 759,
+   "smiles_that_rdkit_could_not_parse": 0,
    "descriptors_recomputed_by": "rdkit.Chem.QED (mean weights), rdkit.Chem.Crippen, rdkit.Chem.Descriptors, rdkit.Chem.rdMolDescriptors"
   },
   "cohort_source": {
@@ -180,7 +180,7 @@
     "Chi1v",
     "Kappa2"
    ],
-   "n_rows": 1213,
+   "n_rows": 1231,
    "condition_columns": [
     "Mode of administration"
    ],
@@ -250,16 +250,16 @@
    "approach": "normal",
    "response": "QED",
    "class_rule": "class 1 when QED >= the median, else 0",
-   "n_rows": 1213,
-   "n_compounds": 758,
+   "n_rows": 1231,
+   "n_compounds": 759,
    "caveats": [
     "QED is a deterministic function of its own eight component properties, so a ladder that is handed those eight back cannot do anything but reproduce them. The descriptor block here deliberately excludes all eight (MW, ALOGP, HBA, HBD, PSA, ROTB, AROM, ALERTS) and their desirabilities, so this is a real generalisation question: how far do descriptors QED does not use predict the QED class.",
     "QED-derived labels are a property of the molecule, not a measured biological response: this regime tests the pipeline and the descriptors, not pharmacology"
    ],
-   "class_threshold": 0.5987,
+   "class_threshold": 0.5874,
    "class_balance": {
-    "positives": 607,
-    "negatives": 606
+    "positives": 616,
+    "negatives": 615
    },
    "data_pretreatment_dpt1": {
     "constant_removed": [],
@@ -273,10 +273,10 @@
    },
    "dataset_division": {
     "method": "stratified random",
-    "reason": "758 compounds is above the manual's ~500 threshold where random division is suitable and much faster than rational division (p. 9-10)",
+    "reason": "759 compounds is above the manual's ~500 threshold where random division is suitable and much faster than rational division (p. 9-10)",
     "train_fraction": 0.7,
     "n_train": 531,
-    "n_external": 227,
+    "n_external": 228,
     "split_unit": "compound (PubChem CID), so no molecule is in both sets"
    },
    "data_pretreatment_dpt2": {
@@ -308,14 +308,14 @@
    "less_discriminating_descriptors": {
     "threshold": 0.05,
     "abs_mean_difference": {
-     "MolMR": 0.0384,
-     "FractionCSP3": 0.0241,
-     "RingCount": 0.0046,
-     "NumAliphaticRings": 0.0058,
-     "NumSaturatedRings": 0.0028,
-     "NumHeteroatoms": 0.0404,
-     "BertzCT": 0.0291,
-     "Kappa2": 0.0413
+     "MolMR": 0.0358,
+     "FractionCSP3": 0.0438,
+     "RingCount": 0.0028,
+     "NumAliphaticRings": 0.0064,
+     "NumSaturatedRings": 0.0048,
+     "NumHeteroatoms": 0.038,
+     "BertzCT": 0.0269,
+     "Kappa2": 0.0387
     },
     "would_remove": [
      "BertzCT",
@@ -350,67 +350,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 351,
-       "FN": 85,
-       "TN": 217,
-       "FP": 218
+       "TP": 348,
+       "FN": 97,
+       "TN": 258,
+       "FP": 195
       },
-      "n": 871,
-      "accuracy": 0.6521,
-      "sensitivity": 0.805,
-      "specificity": 0.4989,
-      "precision": 0.6169,
-      "f_measure": 0.6985,
-      "mcc": 0.3193,
-      "auc": 0.717
+      "n": 898,
+      "accuracy": 0.6748,
+      "sensitivity": 0.782,
+      "specificity": 0.5695,
+      "precision": 0.6409,
+      "f_measure": 0.7045,
+      "mcc": 0.3595,
+      "auc": 0.6943
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 318,
-       "FN": 118,
-       "TN": 218,
-       "FP": 217
+       "TP": 292,
+       "FN": 153,
+       "TN": 248,
+       "FP": 205
       },
-      "n": 871,
-      "accuracy": 0.6154,
-      "sensitivity": 0.7294,
-      "specificity": 0.5011,
-      "precision": 0.5944,
-      "f_measure": 0.655,
-      "mcc": 0.2368,
-      "auc": 0.6669
+      "n": 898,
+      "accuracy": 0.6013,
+      "sensitivity": 0.6562,
+      "specificity": 0.5475,
+      "precision": 0.5875,
+      "f_measure": 0.62,
+      "mcc": 0.2048,
+      "auc": 0.6515
      },
      "external": {
       "confusion_matrix": {
-       "TP": 134,
-       "FN": 37,
-       "TN": 103,
+       "TP": 124,
+       "FN": 47,
+       "TN": 94,
        "FP": 68
       },
-      "n": 342,
-      "accuracy": 0.693,
-      "sensitivity": 0.7836,
-      "specificity": 0.6023,
-      "precision": 0.6634,
-      "f_measure": 0.7185,
-      "mcc": 0.3925,
-      "auc": 0.7763,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.6547,
+      "sensitivity": 0.7251,
+      "specificity": 0.5802,
+      "precision": 0.6458,
+      "f_measure": 0.6832,
+      "mcc": 0.3089,
+      "auc": 0.7167,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5257,
-      "permuted_fit_max": 0.5568,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.6521,
-      "real_cv": 0.6154,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5182,
+      "permuted_fit_max": 0.5423,
+      "permuted_cv_mean": 0.4986,
+      "permuted_cv_max": 0.5423,
+      "real_fit": 0.6748,
+      "real_cv": 0.6013,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 9
+     "rank_by_external": 10
     },
     {
      "rung": 2,
@@ -423,91 +425,93 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 361,
-       "FN": 75,
-       "TN": 250,
-       "FP": 185
+       "TP": 364,
+       "FN": 81,
+       "TN": 269,
+       "FP": 184
       },
-      "n": 871,
-      "accuracy": 0.7015,
-      "sensitivity": 0.828,
-      "specificity": 0.5747,
-      "precision": 0.6612,
-      "f_measure": 0.7352,
-      "mcc": 0.4163,
-      "auc": 0.748
+      "n": 898,
+      "accuracy": 0.7049,
+      "sensitivity": 0.818,
+      "specificity": 0.5938,
+      "precision": 0.6642,
+      "f_measure": 0.7331,
+      "mcc": 0.4222,
+      "auc": 0.7425
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 353,
-       "FN": 83,
-       "TN": 247,
-       "FP": 188
+       "TP": 351,
+       "FN": 94,
+       "TN": 259,
+       "FP": 194
       },
-      "n": 871,
-      "accuracy": 0.6889,
-      "sensitivity": 0.8096,
-      "specificity": 0.5678,
-      "precision": 0.6525,
-      "f_measure": 0.7226,
-      "mcc": 0.389,
-      "auc": 0.7121
+      "n": 898,
+      "accuracy": 0.6793,
+      "sensitivity": 0.7888,
+      "specificity": 0.5717,
+      "precision": 0.644,
+      "f_measure": 0.7091,
+      "mcc": 0.369,
+      "auc": 0.7055
      },
      "external": {
       "confusion_matrix": {
-       "TP": 139,
-       "FN": 32,
-       "TN": 93,
-       "FP": 78
+       "TP": 135,
+       "FN": 36,
+       "TN": 103,
+       "FP": 59
       },
-      "n": 342,
-      "accuracy": 0.6784,
-      "sensitivity": 0.8129,
-      "specificity": 0.5439,
-      "precision": 0.6406,
-      "f_measure": 0.7165,
-      "mcc": 0.3704,
-      "auc": 0.7243,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7147,
+      "sensitivity": 0.7895,
+      "specificity": 0.6358,
+      "precision": 0.6959,
+      "f_measure": 0.7397,
+      "mcc": 0.431,
+      "auc": 0.7521,
+      "n_compounds": 228
      },
      "wilks_lambda": {
-      "train": 0.8465,
-      "external": 0.8743,
+      "train": 0.8537,
+      "external": 0.8404,
       "definition": "within-group SS / total SS of the discriminant score (manual p. 13)"
      },
      "applicability_domain_confidence_estimation": {
       "threshold": 0.5,
-      "fraction_of_training_rows_reliable": 0.0999,
+      "fraction_of_training_rows_reliable": 0.0835,
       "manual_reference": "p. 17, Step 9(ii)"
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5326,
-      "permuted_fit_max": 0.5637,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.7015,
-      "real_cv": 0.6889,
-      "permuted_wilks_lambda_mean": 0.9902,
-      "permuted_wilks_lambda_min": 0.9779,
+      "permuted_fit_mean": 0.5281,
+      "permuted_fit_max": 0.5601,
+      "permuted_cv_mean": 0.4982,
+      "permuted_cv_max": 0.5457,
+      "real_fit": 0.7049,
+      "real_cv": 0.6793,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "permuted_wilks_lambda_mean": 0.9924,
+      "permuted_wilks_lambda_min": 0.9807,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
-      "MolMR": -3.3735,
-      "FractionCSP3": 0.0317,
-      "RingCount": -0.8368,
-      "NumAliphaticRings": 0.5817,
-      "NumSaturatedRings": 0.0265,
-      "NumHeteroatoms": -4.0318,
-      "BertzCT": 5.9512,
-      "Kappa2": 1.2123
+      "MolMR": -2.5715,
+      "FractionCSP3": -0.1165,
+      "RingCount": -0.7213,
+      "NumAliphaticRings": 0.7515,
+      "NumSaturatedRings": -0.1478,
+      "NumHeteroatoms": -3.3745,
+      "BertzCT": 4.8341,
+      "Kappa2": 0.8408
      },
-     "intercept": 0.0027,
+     "intercept": -0.0209,
      "status": "ok",
-     "rank_by_external": 10
+     "rank_by_external": 9
     },
     {
      "rung": 3,
@@ -520,77 +524,79 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 426,
-       "FN": 10,
-       "TN": 271,
-       "FP": 164
+       "TP": 438,
+       "FN": 7,
+       "TN": 281,
+       "FP": 172
       },
-      "n": 871,
-      "accuracy": 0.8002,
-      "sensitivity": 0.9771,
-      "specificity": 0.623,
-      "precision": 0.722,
-      "f_measure": 0.8304,
-      "mcc": 0.6418,
-      "auc": 0.9105
+      "n": 898,
+      "accuracy": 0.8007,
+      "sensitivity": 0.9843,
+      "specificity": 0.6203,
+      "precision": 0.718,
+      "f_measure": 0.8303,
+      "mcc": 0.6476,
+      "auc": 0.9158
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 419,
-       "FN": 17,
-       "TN": 271,
-       "FP": 164
+       "TP": 426,
+       "FN": 19,
+       "TN": 280,
+       "FP": 173
       },
-      "n": 871,
-      "accuracy": 0.7922,
-      "sensitivity": 0.961,
-      "specificity": 0.623,
-      "precision": 0.7187,
-      "f_measure": 0.8224,
-      "mcc": 0.6207,
-      "auc": 0.8936
+      "n": 898,
+      "accuracy": 0.7862,
+      "sensitivity": 0.9573,
+      "specificity": 0.6181,
+      "precision": 0.7112,
+      "f_measure": 0.8161,
+      "mcc": 0.6105,
+      "auc": 0.8944
      },
      "external": {
       "confusion_matrix": {
-       "TP": 165,
-       "FN": 6,
-       "TN": 104,
-       "FP": 67
+       "TP": 160,
+       "FN": 11,
+       "TN": 102,
+       "FP": 60
       },
-      "n": 342,
-      "accuracy": 0.7865,
-      "sensitivity": 0.9649,
-      "specificity": 0.6082,
-      "precision": 0.7112,
-      "f_measure": 0.8189,
-      "mcc": 0.6135,
-      "auc": 0.9113,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7868,
+      "sensitivity": 0.9357,
+      "specificity": 0.6296,
+      "precision": 0.7273,
+      "f_measure": 0.8184,
+      "mcc": 0.5967,
+      "auc": 0.9112,
+      "n_compounds": 228
      },
      "wilks_lambda": {
-      "train": 0.9863,
-      "external": 0.9801,
+      "train": 0.9877,
+      "external": 0.9756,
       "definition": "within-group SS / total SS of the discriminant score (manual p. 13)"
      },
      "applicability_domain_confidence_estimation": {
       "threshold": 0.5,
-      "fraction_of_training_rows_reliable": 0.9392,
+      "fraction_of_training_rows_reliable": 0.9421,
       "manual_reference": "p. 17, Step 9(ii)"
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5252,
-      "permuted_fit_max": 0.5683,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.8002,
-      "real_cv": 0.7922,
+      "permuted_fit_mean": 0.5255,
+      "permuted_fit_max": 0.5624,
+      "permuted_cv_mean": 0.5002,
+      "permuted_cv_max": 0.5412,
+      "real_fit": 0.8007,
+      "real_cv": 0.7862,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.9975,
-      "permuted_wilks_lambda_min": 0.9944,
+      "permuted_wilks_lambda_min": 0.9924,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 5
@@ -606,80 +612,82 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 402,
-       "FN": 34,
-       "TN": 323,
-       "FP": 112
+       "TP": 405,
+       "FN": 40,
+       "TN": 345,
+       "FP": 108
       },
-      "n": 871,
-      "accuracy": 0.8324,
-      "sensitivity": 0.922,
-      "specificity": 0.7425,
-      "precision": 0.7821,
-      "f_measure": 0.8463,
-      "mcc": 0.6756,
-      "auc": 0.9221
+      "n": 898,
+      "accuracy": 0.8352,
+      "sensitivity": 0.9101,
+      "specificity": 0.7616,
+      "precision": 0.7895,
+      "f_measure": 0.8455,
+      "mcc": 0.6786,
+      "auc": 0.9241
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 368,
-       "FN": 68,
-       "TN": 291,
-       "FP": 144
+       "TP": 399,
+       "FN": 46,
+       "TN": 331,
+       "FP": 122
       },
-      "n": 871,
-      "accuracy": 0.7566,
-      "sensitivity": 0.844,
-      "specificity": 0.669,
-      "precision": 0.7188,
-      "f_measure": 0.7764,
-      "mcc": 0.5211,
-      "auc": 0.8366
+      "n": 898,
+      "accuracy": 0.8129,
+      "sensitivity": 0.8966,
+      "specificity": 0.7307,
+      "precision": 0.7658,
+      "f_measure": 0.8261,
+      "mcc": 0.6355,
+      "auc": 0.8639
      },
      "external": {
       "confusion_matrix": {
-       "TP": 149,
-       "FN": 22,
-       "TN": 110,
-       "FP": 61
+       "TP": 144,
+       "FN": 27,
+       "TN": 118,
+       "FP": 44
       },
-      "n": 342,
-      "accuracy": 0.7573,
-      "sensitivity": 0.8713,
-      "specificity": 0.6433,
-      "precision": 0.7095,
-      "f_measure": 0.7822,
-      "mcc": 0.5285,
-      "auc": 0.8622,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7868,
+      "sensitivity": 0.8421,
+      "specificity": 0.7284,
+      "precision": 0.766,
+      "f_measure": 0.8022,
+      "mcc": 0.5751,
+      "auc": 0.8607,
+      "n_compounds": 228
      },
      "wilks_lambda": {
-      "train": 0.5655,
-      "external": 0.7708,
+      "train": 0.5648,
+      "external": 0.7461,
       "definition": "within-group SS / total SS of the discriminant score (manual p. 13)"
      },
      "applicability_domain_confidence_estimation": {
       "threshold": 0.5,
-      "fraction_of_training_rows_reliable": 0.6234,
+      "fraction_of_training_rows_reliable": 0.6403,
       "manual_reference": "p. 17, Step 9(ii)"
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.578,
-      "permuted_fit_max": 0.6131,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.8324,
-      "real_cv": 0.7566,
-      "permuted_wilks_lambda_mean": 0.9482,
-      "permuted_wilks_lambda_min": 0.9276,
+      "permuted_fit_mean": 0.5744,
+      "permuted_fit_max": 0.608,
+      "permuted_cv_mean": 0.5018,
+      "permuted_cv_max": 0.5468,
+      "real_fit": 0.8352,
+      "real_cv": 0.8129,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "permuted_wilks_lambda_mean": 0.9516,
+      "permuted_wilks_lambda_min": 0.9344,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 7
+     "rank_by_external": 6
     },
     {
      "rung": 5,
@@ -692,78 +700,80 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 350,
-       "FN": 86,
-       "TN": 333,
-       "FP": 102
+       "TP": 365,
+       "FN": 80,
+       "TN": 315,
+       "FP": 138
       },
-      "n": 871,
-      "accuracy": 0.7842,
-      "sensitivity": 0.8028,
-      "specificity": 0.7655,
-      "precision": 0.7743,
-      "f_measure": 0.7883,
-      "mcc": 0.5687,
-      "auc": 0.8671
+      "n": 898,
+      "accuracy": 0.7572,
+      "sensitivity": 0.8202,
+      "specificity": 0.6954,
+      "precision": 0.7256,
+      "f_measure": 0.77,
+      "mcc": 0.5193,
+      "auc": 0.8624
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 353,
-       "FN": 83,
-       "TN": 325,
-       "FP": 110
+       "TP": 364,
+       "FN": 81,
+       "TN": 308,
+       "FP": 145
       },
-      "n": 871,
-      "accuracy": 0.7784,
-      "sensitivity": 0.8096,
-      "specificity": 0.7471,
-      "precision": 0.7624,
-      "f_measure": 0.7853,
-      "mcc": 0.5579,
-      "auc": 0.8449
+      "n": 898,
+      "accuracy": 0.7483,
+      "sensitivity": 0.818,
+      "specificity": 0.6799,
+      "precision": 0.7151,
+      "f_measure": 0.7631,
+      "mcc": 0.5024,
+      "auc": 0.8408
      },
      "external": {
       "confusion_matrix": {
-       "TP": 139,
-       "FN": 32,
-       "TN": 115,
-       "FP": 56
+       "TP": 134,
+       "FN": 37,
+       "TN": 128,
+       "FP": 34
       },
-      "n": 342,
-      "accuracy": 0.7427,
-      "sensitivity": 0.8129,
-      "specificity": 0.6725,
-      "precision": 0.7128,
-      "f_measure": 0.7596,
-      "mcc": 0.4902,
-      "auc": 0.8278,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7868,
+      "sensitivity": 0.7836,
+      "specificity": 0.7901,
+      "precision": 0.7976,
+      "f_measure": 0.7906,
+      "mcc": 0.5736,
+      "auc": 0.8583,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5325,
-      "permuted_fit_max": 0.5718,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.7842,
-      "real_cv": 0.7784,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.525,
+      "permuted_fit_max": 0.559,
+      "permuted_cv_mean": 0.4999,
+      "permuted_cv_max": 0.5434,
+      "real_fit": 0.7572,
+      "real_cv": 0.7483,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
-      "MolMR": -0.608,
-      "FractionCSP3": 0.2297,
-      "RingCount": 2.4088,
-      "NumAliphaticRings": -0.4122,
-      "NumSaturatedRings": -0.2968,
-      "NumHeteroatoms": -4.7398,
-      "BertzCT": -2.4495,
-      "Kappa2": -2.8747
+      "MolMR": -0.1681,
+      "FractionCSP3": 0.1089,
+      "RingCount": 2.3825,
+      "NumAliphaticRings": -0.124,
+      "NumSaturatedRings": -0.6017,
+      "NumHeteroatoms": -4.5309,
+      "BertzCT": -2.5265,
+      "Kappa2": -2.7023
      },
-     "intercept": -1.5852,
+     "intercept": -1.4884,
      "status": "ok",
-     "rank_by_external": 8
+     "rank_by_external": 7
     },
     {
      "rung": 6,
@@ -776,12 +786,12 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 436,
+       "TP": 445,
        "FN": 0,
-       "TN": 435,
+       "TN": 453,
        "FP": 0
       },
-      "n": 871,
+      "n": 898,
       "accuracy": 1.0,
       "sensitivity": 1.0,
       "specificity": 1.0,
@@ -792,48 +802,50 @@
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 385,
-       "FN": 51,
-       "TN": 363,
-       "FP": 72
+       "TP": 382,
+       "FN": 63,
+       "TN": 377,
+       "FP": 76
       },
-      "n": 871,
-      "accuracy": 0.8588,
-      "sensitivity": 0.883,
-      "specificity": 0.8345,
-      "precision": 0.8425,
-      "f_measure": 0.8623,
-      "mcc": 0.7184,
-      "auc": 0.9417
+      "n": 898,
+      "accuracy": 0.8452,
+      "sensitivity": 0.8584,
+      "specificity": 0.8322,
+      "precision": 0.8341,
+      "f_measure": 0.8461,
+      "mcc": 0.6908,
+      "auc": 0.9495
      },
      "external": {
       "confusion_matrix": {
-       "TP": 132,
-       "FN": 39,
-       "TN": 160,
-       "FP": 11
+       "TP": 129,
+       "FN": 42,
+       "TN": 147,
+       "FP": 15
       },
-      "n": 342,
-      "accuracy": 0.8538,
-      "sensitivity": 0.7719,
-      "specificity": 0.9357,
-      "precision": 0.9231,
-      "f_measure": 0.8408,
-      "mcc": 0.7173,
-      "auc": 0.9471,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8288,
+      "sensitivity": 0.7544,
+      "specificity": 0.9074,
+      "precision": 0.8958,
+      "f_measure": 0.819,
+      "mcc": 0.6677,
+      "auc": 0.9335,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.8279,
-      "permuted_fit_max": 0.8473,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_fit_mean": 0.8193,
+      "permuted_fit_max": 0.8363,
+      "permuted_cv_mean": 0.5029,
+      "permuted_cv_max": 0.5345,
       "real_fit": 1.0,
-      "real_cv": 0.8588,
-      "real_cv_beaten_by_chance": null
+      "real_cv": 0.8452,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 2
@@ -849,64 +861,66 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 421,
-       "FN": 15,
-       "TN": 409,
-       "FP": 26
+       "TP": 437,
+       "FN": 8,
+       "TN": 437,
+       "FP": 16
       },
-      "n": 871,
-      "accuracy": 0.9529,
-      "sensitivity": 0.9656,
-      "specificity": 0.9402,
-      "precision": 0.9418,
-      "f_measure": 0.9536,
-      "mcc": 0.9061,
-      "auc": 0.9932
+      "n": 898,
+      "accuracy": 0.9733,
+      "sensitivity": 0.982,
+      "specificity": 0.9647,
+      "precision": 0.9647,
+      "f_measure": 0.9733,
+      "mcc": 0.9467,
+      "auc": 0.9946
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 394,
-       "FN": 42,
-       "TN": 373,
-       "FP": 62
+       "TP": 391,
+       "FN": 54,
+       "TN": 389,
+       "FP": 64
       },
-      "n": 871,
-      "accuracy": 0.8806,
-      "sensitivity": 0.9037,
-      "specificity": 0.8575,
-      "precision": 0.864,
-      "f_measure": 0.8834,
-      "mcc": 0.762,
-      "auc": 0.9348
+      "n": 898,
+      "accuracy": 0.8686,
+      "sensitivity": 0.8787,
+      "specificity": 0.8587,
+      "precision": 0.8593,
+      "f_measure": 0.8689,
+      "mcc": 0.7374,
+      "auc": 0.9443
      },
      "external": {
       "confusion_matrix": {
-       "TP": 142,
-       "FN": 29,
-       "TN": 161,
-       "FP": 10
+       "TP": 138,
+       "FN": 33,
+       "TN": 145,
+       "FP": 17
       },
-      "n": 342,
-      "accuracy": 0.886,
-      "sensitivity": 0.8304,
-      "specificity": 0.9415,
-      "precision": 0.9342,
-      "f_measure": 0.8793,
-      "mcc": 0.7767,
-      "auc": 0.9477,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8498,
+      "sensitivity": 0.807,
+      "specificity": 0.8951,
+      "precision": 0.8903,
+      "f_measure": 0.8466,
+      "mcc": 0.7035,
+      "auc": 0.9335,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.7338,
-      "permuted_fit_max": 0.7555,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9529,
-      "real_cv": 0.8806,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.73,
+      "permuted_fit_max": 0.7539,
+      "permuted_cv_mean": 0.5006,
+      "permuted_cv_max": 0.5334,
+      "real_fit": 0.9733,
+      "real_cv": 0.8686,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -922,67 +936,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 422,
-       "FN": 14,
-       "TN": 415,
-       "FP": 20
+       "TP": 437,
+       "FN": 8,
+       "TN": 437,
+       "FP": 16
       },
-      "n": 871,
-      "accuracy": 0.961,
-      "sensitivity": 0.9679,
-      "specificity": 0.954,
-      "precision": 0.9548,
-      "f_measure": 0.9613,
-      "mcc": 0.922,
-      "auc": 0.995
+      "n": 898,
+      "accuracy": 0.9733,
+      "sensitivity": 0.982,
+      "specificity": 0.9647,
+      "precision": 0.9647,
+      "f_measure": 0.9733,
+      "mcc": 0.9467,
+      "auc": 0.9968
      },
      "internal_cv": {
       "confusion_matrix": {
        "TP": 397,
-       "FN": 39,
-       "TN": 370,
-       "FP": 65
+       "FN": 48,
+       "TN": 382,
+       "FP": 71
       },
-      "n": 871,
-      "accuracy": 0.8806,
-      "sensitivity": 0.9106,
-      "specificity": 0.8506,
-      "precision": 0.8593,
-      "f_measure": 0.8842,
-      "mcc": 0.7625,
-      "auc": 0.9349
+      "n": 898,
+      "accuracy": 0.8675,
+      "sensitivity": 0.8921,
+      "specificity": 0.8433,
+      "precision": 0.8483,
+      "f_measure": 0.8697,
+      "mcc": 0.736,
+      "auc": 0.9445
      },
      "external": {
       "confusion_matrix": {
-       "TP": 140,
-       "FN": 31,
-       "TN": 151,
-       "FP": 20
+       "TP": 136,
+       "FN": 35,
+       "TN": 141,
+       "FP": 21
       },
-      "n": 342,
-      "accuracy": 0.8509,
-      "sensitivity": 0.8187,
-      "specificity": 0.883,
-      "precision": 0.875,
-      "f_measure": 0.8459,
-      "mcc": 0.7032,
-      "auc": 0.933,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8318,
+      "sensitivity": 0.7953,
+      "specificity": 0.8704,
+      "precision": 0.8662,
+      "f_measure": 0.8293,
+      "mcc": 0.6665,
+      "auc": 0.9387,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.7475,
-      "permuted_fit_max": 0.7727,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.961,
-      "real_cv": 0.8806,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.7426,
+      "permuted_fit_max": 0.7684,
+      "permuted_cv_mean": 0.501,
+      "permuted_cv_max": 0.5323,
+      "real_fit": 0.9733,
+      "real_cv": 0.8675,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 4
+     "rank_by_external": 3
     },
     {
      "rung": 9,
@@ -995,67 +1011,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 396,
-       "FN": 40,
-       "TN": 323,
-       "FP": 112
+       "TP": 415,
+       "FN": 30,
+       "TN": 329,
+       "FP": 124
       },
-      "n": 871,
-      "accuracy": 0.8255,
-      "sensitivity": 0.9083,
-      "specificity": 0.7425,
-      "precision": 0.7795,
-      "f_measure": 0.839,
-      "mcc": 0.66,
-      "auc": 0.9245
+      "n": 898,
+      "accuracy": 0.8285,
+      "sensitivity": 0.9326,
+      "specificity": 0.7263,
+      "precision": 0.7699,
+      "f_measure": 0.8435,
+      "mcc": 0.6725,
+      "auc": 0.927
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 389,
-       "FN": 47,
-       "TN": 308,
-       "FP": 127
+       "TP": 410,
+       "FN": 35,
+       "TN": 322,
+       "FP": 131
       },
-      "n": 871,
-      "accuracy": 0.8002,
-      "sensitivity": 0.8922,
-      "specificity": 0.708,
-      "precision": 0.7539,
-      "f_measure": 0.8172,
-      "mcc": 0.6108,
-      "auc": 0.8951
+      "n": 898,
+      "accuracy": 0.8151,
+      "sensitivity": 0.9213,
+      "specificity": 0.7108,
+      "precision": 0.7579,
+      "f_measure": 0.8316,
+      "mcc": 0.6458,
+      "auc": 0.9019
      },
      "external": {
       "confusion_matrix": {
-       "TP": 147,
-       "FN": 24,
-       "TN": 128,
-       "FP": 43
+       "TP": 132,
+       "FN": 39,
+       "TN": 121,
+       "FP": 41
       },
-      "n": 342,
-      "accuracy": 0.8041,
-      "sensitivity": 0.8596,
-      "specificity": 0.7485,
-      "precision": 0.7737,
-      "f_measure": 0.8144,
-      "mcc": 0.612,
-      "auc": 0.8605,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7598,
+      "sensitivity": 0.7719,
+      "specificity": 0.7469,
+      "precision": 0.763,
+      "f_measure": 0.7674,
+      "mcc": 0.519,
+      "auc": 0.8653,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5561,
-      "permuted_fit_max": 0.589,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.8255,
-      "real_cv": 0.8002,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5565,
+      "permuted_fit_max": 0.5835,
+      "permuted_cv_mean": 0.5,
+      "permuted_cv_max": 0.5468,
+      "real_fit": 0.8285,
+      "real_cv": 0.8151,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 6
+     "rank_by_external": 8
     },
     {
      "rung": 10,
@@ -1068,67 +1086,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 409,
-       "FN": 27,
-       "TN": 393,
-       "FP": 42
+       "TP": 414,
+       "FN": 31,
+       "TN": 418,
+       "FP": 35
       },
-      "n": 871,
-      "accuracy": 0.9208,
-      "sensitivity": 0.9381,
-      "specificity": 0.9034,
-      "precision": 0.9069,
-      "f_measure": 0.9222,
-      "mcc": 0.8421,
-      "auc": 0.9782
+      "n": 898,
+      "accuracy": 0.9265,
+      "sensitivity": 0.9303,
+      "specificity": 0.9227,
+      "precision": 0.922,
+      "f_measure": 0.9262,
+      "mcc": 0.853,
+      "auc": 0.9778
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 393,
-       "FN": 43,
-       "TN": 370,
-       "FP": 65
+       "TP": 396,
+       "FN": 49,
+       "TN": 389,
+       "FP": 64
       },
-      "n": 871,
-      "accuracy": 0.876,
-      "sensitivity": 0.9014,
-      "specificity": 0.8506,
-      "precision": 0.8581,
-      "f_measure": 0.8792,
-      "mcc": 0.753,
-      "auc": 0.9431
+      "n": 898,
+      "accuracy": 0.8742,
+      "sensitivity": 0.8899,
+      "specificity": 0.8587,
+      "precision": 0.8609,
+      "f_measure": 0.8751,
+      "mcc": 0.7488,
+      "auc": 0.946
      },
      "external": {
       "confusion_matrix": {
-       "TP": 142,
-       "FN": 29,
-       "TN": 151,
-       "FP": 20
+       "TP": 132,
+       "FN": 39,
+       "TN": 141,
+       "FP": 21
       },
-      "n": 342,
-      "accuracy": 0.8567,
-      "sensitivity": 0.8304,
-      "specificity": 0.883,
-      "precision": 0.8765,
-      "f_measure": 0.8529,
-      "mcc": 0.7144,
-      "auc": 0.9343,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8198,
+      "sensitivity": 0.7719,
+      "specificity": 0.8704,
+      "precision": 0.8627,
+      "f_measure": 0.8148,
+      "mcc": 0.6442,
+      "auc": 0.9331,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5478,
-      "permuted_fit_max": 0.5809,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9208,
-      "real_cv": 0.876,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5441,
+      "permuted_fit_max": 0.5713,
+      "permuted_cv_mean": 0.4958,
+      "permuted_cv_max": 0.5334,
+      "real_fit": 0.9265,
+      "real_cv": 0.8742,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 3
+     "rank_by_external": 4
     }
    ],
    "winner": {
@@ -1136,36 +1156,36 @@
     "model": "XGBoost",
     "external": {
      "confusion_matrix": {
-      "TP": 142,
-      "FN": 29,
-      "TN": 161,
-      "FP": 10
+      "TP": 138,
+      "FN": 33,
+      "TN": 145,
+      "FP": 17
      },
-     "n": 342,
-     "accuracy": 0.886,
-     "sensitivity": 0.8304,
-     "specificity": 0.9415,
-     "precision": 0.9342,
-     "f_measure": 0.8793,
-     "mcc": 0.7767,
-     "auc": 0.9477,
-     "n_compounds": 227
+     "n": 333,
+     "accuracy": 0.8498,
+     "sensitivity": 0.807,
+     "specificity": 0.8951,
+     "precision": 0.8903,
+     "f_measure": 0.8466,
+     "mcc": 0.7035,
+     "auc": 0.9335,
+     "n_compounds": 228
     },
     "internal_cv": {
      "confusion_matrix": {
-      "TP": 394,
-      "FN": 42,
-      "TN": 373,
-      "FP": 62
+      "TP": 391,
+      "FN": 54,
+      "TN": 389,
+      "FP": 64
      },
-     "n": 871,
-     "accuracy": 0.8806,
-     "sensitivity": 0.9037,
-     "specificity": 0.8575,
-     "precision": 0.864,
-     "f_measure": 0.8834,
-     "mcc": 0.762,
-     "auc": 0.9348
+     "n": 898,
+     "accuracy": 0.8686,
+     "sensitivity": 0.8787,
+     "specificity": 0.8587,
+     "precision": 0.8593,
+     "f_measure": 0.8689,
+     "mcc": 0.7374,
+     "auc": 0.9443
     }
    },
    "ga_lda": {
@@ -1184,8 +1204,8 @@
      "NumHeteroatoms",
      "BertzCT"
     ],
-    "fitness_score": -0.7442,
-    "wilks_lambda_train": 0.8721
+    "fitness_score": -0.7432,
+    "wilks_lambda_train": 0.8716
    },
    "shap": {
     "model": "XGBoost",
@@ -1193,38 +1213,38 @@
     "n_rows_explained": 150,
     "explainer": "shap.TreeExplainer",
     "mean_abs_shap": {
-     "MolMR": 1.2523,
-     "FractionCSP3": 0.2477,
-     "RingCount": 0.3162,
-     "NumAliphaticRings": 0.0033,
-     "NumSaturatedRings": 0.3196,
-     "NumHeteroatoms": 1.1904,
-     "BertzCT": 0.3097,
-     "Kappa2": 1.2243
+     "MolMR": 0.9104,
+     "FractionCSP3": 0.4036,
+     "RingCount": 0.5276,
+     "NumAliphaticRings": 0.0411,
+     "NumSaturatedRings": 0.1795,
+     "NumHeteroatoms": 1.1866,
+     "BertzCT": 0.4472,
+     "Kappa2": 1.294
     },
     "ranking": [
-     "MolMR",
      "Kappa2",
      "NumHeteroatoms",
-     "NumSaturatedRings",
+     "MolMR",
      "RingCount",
      "BertzCT",
      "FractionCSP3",
+     "NumSaturatedRings",
      "NumAliphaticRings"
     ],
     "status": "ok",
     "agreement_with_linear_model": {
      "compared_with": "Linear discriminant analysis",
-     "spearman_rho_of_importance_ranks": 0.3571,
-     "p_value": 0.3851,
+     "spearman_rho_of_importance_ranks": 0.5,
+     "p_value": 0.207,
      "shap_order": [
-      "MolMR",
       "Kappa2",
       "NumHeteroatoms",
-      "NumSaturatedRings",
+      "MolMR",
       "RingCount",
       "BertzCT",
       "FractionCSP3",
+      "NumSaturatedRings",
       "NumAliphaticRings"
      ],
      "absolute_standardised_coefficient_order": [
@@ -1232,10 +1252,10 @@
       "NumHeteroatoms",
       "MolMR",
       "Kappa2",
-      "RingCount",
       "NumAliphaticRings",
-      "FractionCSP3",
-      "NumSaturatedRings"
+      "RingCount",
+      "NumSaturatedRings",
+      "FractionCSP3"
      ],
      "same_top_descriptor": false,
      "reading": "a positive rho means the black box leans on the same descriptors as the linear model, in roughly the same order; a rho near zero or negative means the two disagree about what matters"
@@ -1250,16 +1270,16 @@
    "approach": "box_jenkins",
    "response": "QED",
    "class_rule": "class 1 when QED >= the median, else 0",
-   "n_rows": 1213,
-   "n_compounds": 758,
+   "n_rows": 1231,
+   "n_compounds": 759,
    "caveats": [
     "QED is a deterministic function of its own eight component properties, so a ladder that is handed those eight back cannot do anything but reproduce them. The descriptor block here deliberately excludes all eight (MW, ALOGP, HBA, HBD, PSA, ROTB, AROM, ALERTS) and their desirabilities, so this is a real generalisation question: how far do descriptors QED does not use predict the QED class.",
     "QED-derived labels are a property of the molecule, not a measured biological response: this regime tests the pipeline and the descriptors, not pharmacology"
    ],
-   "class_threshold": 0.5987,
+   "class_threshold": 0.5874,
    "class_balance": {
-    "positives": 607,
-    "negatives": 606
+    "positives": 616,
+    "negatives": 615
    },
    "data_pretreatment_dpt1": {
     "constant_removed": [],
@@ -1274,7 +1294,7 @@
    "box_jenkins": {
     "operator": "D_i(c) = D_i - mean(D over the compounds sharing condition c)",
     "why_this_form": "the manual states that the conditions drive a Box-Jenkins moving-average transformation and that per-condition averages are written out (p. 7, p. 22) but does not print the operator, so the published deviation-from-condition-mean form is used",
-    "n_conditions": 37,
+    "n_conditions": 38,
     "condition_means": {
      "BUCCAL": {
       "MolMR": 102.681,
@@ -1297,14 +1317,14 @@
       "Kappa2": 3.9686
      },
      "CUTAN": {
-      "MolMR": 86.2923,
-      "FractionCSP3": 0.3032,
-      "RingCount": 2.2,
-      "NumAliphaticRings": 0.2,
+      "MolMR": 77.5228,
+      "FractionCSP3": 0.3237,
+      "RingCount": 2.1429,
+      "NumAliphaticRings": 0.1429,
       "NumSaturatedRings": 0.0,
-      "NumHeteroatoms": 5.4,
-      "BertzCT": 657.9805,
-      "Kappa2": 7.5464
+      "NumHeteroatoms": 6.1429,
+      "BertzCT": 626.0111,
+      "Kappa2": 6.6157
      },
      "DENTAL": {
       "MolMR": 96.7872,
@@ -1345,6 +1365,16 @@
       "NumHeteroatoms": 11.0,
       "BertzCT": 828.6081,
       "Kappa2": 10.3945
+     },
+     "I-BRONCHI": {
+      "MolMR": 115.8834,
+      "FractionCSP3": 0.1304,
+      "RingCount": 4.0,
+      "NumAliphaticRings": 0.0,
+      "NumSaturatedRings": 0.0,
+      "NumHeteroatoms": 11.0,
+      "BertzCT": 1414.7605,
+      "Kappa2": 9.0775
      },
      "I-CAVIT": {
       "MolMR": 48.1719,
@@ -1477,44 +1507,44 @@
       "Kappa2": 10.9155
      },
      "IV": {
-      "MolMR": 133.1153,
-      "FractionCSP3": 0.528,
-      "RingCount": 3.9348,
-      "NumAliphaticRings": 2.2609,
-      "NumSaturatedRings": 1.3261,
-      "NumHeteroatoms": 10.6304,
-      "BertzCT": 1169.9012,
-      "Kappa2": 11.5072
+      "MolMR": 134.5501,
+      "FractionCSP3": 0.5179,
+      "RingCount": 3.82,
+      "NumAliphaticRings": 2.1,
+      "NumSaturatedRings": 1.24,
+      "NumHeteroatoms": 10.84,
+      "BertzCT": 1185.6186,
+      "Kappa2": 11.7604
      },
      "NASAL": {
-      "MolMR": 123.3217,
-      "FractionCSP3": 0.5054,
-      "RingCount": 3.931,
-      "NumAliphaticRings": 2.5517,
-      "NumSaturatedRings": 2.0,
-      "NumHeteroatoms": 8.8621,
-      "BertzCT": 1064.701,
-      "Kappa2": 9.8969
+      "MolMR": 123.7557,
+      "FractionCSP3": 0.4808,
+      "RingCount": 3.9355,
+      "NumAliphaticRings": 2.3871,
+      "NumSaturatedRings": 1.871,
+      "NumHeteroatoms": 9.0645,
+      "BertzCT": 1095.1484,
+      "Kappa2": 9.9434
      },
      "OPHTHALM": {
-      "MolMR": 93.2303,
-      "FractionCSP3": 0.5441,
-      "RingCount": 3.0556,
-      "NumAliphaticRings": 1.8889,
-      "NumSaturatedRings": 1.3611,
-      "NumHeteroatoms": 6.3611,
-      "BertzCT": 715.1636,
-      "Kappa2": 7.1124
+      "MolMR": 100.4231,
+      "FractionCSP3": 0.5292,
+      "RingCount": 3.0513,
+      "NumAliphaticRings": 1.7692,
+      "NumSaturatedRings": 1.2821,
+      "NumHeteroatoms": 7.0256,
+      "BertzCT": 792.3201,
+      "Kappa2": 7.925
      },
      "ORAL": {
-      "MolMR": 98.5708,
-      "FractionCSP3": 0.4354,
-      "RingCount": 2.9573,
-      "NumAliphaticRings": 1.2547,
-      "NumSaturatedRings": 0.8291,
-      "NumHeteroatoms": 7.0376,
-      "BertzCT": 812.2193,
-      "Kappa2": 7.9303
+      "MolMR": 98.9812,
+      "FractionCSP3": 0.4342,
+      "RingCount": 2.9543,
+      "NumAliphaticRings": 1.2437,
+      "NumSaturatedRings": 0.8223,
+      "NumHeteroatoms": 7.0914,
+      "BertzCT": 817.4148,
+      "Kappa2": 7.9771
      },
      "ORO": {
       "MolMR": 96.3805,
@@ -1537,34 +1567,34 @@
       "Kappa2": 5.8512
      },
      "PAREN": {
-      "MolMR": 197.8997,
-      "FractionCSP3": 0.5004,
+      "MolMR": 198.185,
+      "FractionCSP3": 0.5,
       "RingCount": 3.6164,
       "NumAliphaticRings": 1.6293,
       "NumSaturatedRings": 1.181,
-      "NumHeteroatoms": 18.4138,
-      "BertzCT": 1891.9282,
-      "Kappa2": 20.3511
+      "NumHeteroatoms": 18.4353,
+      "BertzCT": 1894.4047,
+      "Kappa2": 20.3814
      },
      "RECTAL": {
-      "MolMR": 76.646,
-      "FractionCSP3": 0.3853,
-      "RingCount": 2.7333,
-      "NumAliphaticRings": 1.1667,
-      "NumSaturatedRings": 0.6667,
-      "NumHeteroatoms": 5.0,
-      "BertzCT": 646.588,
-      "Kappa2": 5.1208
+      "MolMR": 77.2622,
+      "FractionCSP3": 0.3779,
+      "RingCount": 2.7419,
+      "NumAliphaticRings": 1.129,
+      "NumSaturatedRings": 0.6452,
+      "NumHeteroatoms": 5.0323,
+      "BertzCT": 657.1254,
+      "Kappa2": 5.1687
      },
      "RESPIR": {
-      "MolMR": 87.436,
-      "FractionCSP3": 0.5895,
-      "RingCount": 2.7568,
-      "NumAliphaticRings": 1.8108,
-      "NumSaturatedRings": 1.4595,
-      "NumHeteroatoms": 6.2703,
-      "BertzCT": 636.2285,
-      "Kappa2": 6.8772
+      "MolMR": 90.1265,
+      "FractionCSP3": 0.5921,
+      "RingCount": 2.7895,
+      "NumAliphaticRings": 1.8684,
+      "NumSaturatedRings": 1.5,
+      "NumHeteroatoms": 6.4211,
+      "BertzCT": 659.9066,
+      "Kappa2": 7.0976
      },
      "RETRO": {
       "MolMR": 72.3337,
@@ -1607,24 +1637,24 @@
       "Kappa2": 6.7926
      },
      "TOPIC": {
-      "MolMR": 97.7209,
-      "FractionCSP3": 0.5664,
-      "RingCount": 2.9365,
-      "NumAliphaticRings": 2.127,
-      "NumSaturatedRings": 1.6032,
-      "NumHeteroatoms": 5.746,
-      "BertzCT": 716.006,
-      "Kappa2": 7.5872
+      "MolMR": 99.9403,
+      "FractionCSP3": 0.564,
+      "RingCount": 2.8788,
+      "NumAliphaticRings": 2.0455,
+      "NumSaturatedRings": 1.5455,
+      "NumHeteroatoms": 6.0758,
+      "BertzCT": 735.2368,
+      "Kappa2": 7.9007
      },
      "UNSPECIFIED": {
-      "MolMR": 115.1959,
-      "FractionCSP3": 0.4677,
-      "RingCount": 3.2121,
-      "NumAliphaticRings": 1.5455,
-      "NumSaturatedRings": 1.1212,
-      "NumHeteroatoms": 8.5758,
-      "BertzCT": 980.622,
-      "Kappa2": 9.2376
+      "MolMR": 116.1244,
+      "FractionCSP3": 0.4738,
+      "RingCount": 3.5185,
+      "NumAliphaticRings": 1.7778,
+      "NumSaturatedRings": 1.2222,
+      "NumHeteroatoms": 8.0741,
+      "BertzCT": 996.6924,
+      "Kappa2": 8.9997
      },
      "URETH": {
       "MolMR": 52.9585,
@@ -1650,10 +1680,10 @@
    },
    "dataset_division": {
     "method": "stratified random",
-    "reason": "758 compounds is above the manual's ~500 threshold where random division is suitable and much faster than rational division (p. 9-10)",
+    "reason": "759 compounds is above the manual's ~500 threshold where random division is suitable and much faster than rational division (p. 9-10)",
     "train_fraction": 0.7,
     "n_train": 531,
-    "n_external": 227,
+    "n_external": 228,
     "split_unit": "compound (PubChem CID), so no molecule is in both sets"
    },
    "data_pretreatment_dpt2": {
@@ -1685,14 +1715,14 @@
    "less_discriminating_descriptors": {
     "threshold": 0.05,
     "abs_mean_difference": {
-     "MolMR": 0.0283,
-     "FractionCSP3": 0.0104,
-     "RingCount": 0.003,
-     "NumAliphaticRings": 0.0072,
-     "NumSaturatedRings": 0.0007,
-     "NumHeteroatoms": 0.0309,
-     "BertzCT": 0.0238,
-     "Kappa2": 0.0291
+     "MolMR": 0.025,
+     "FractionCSP3": 0.0287,
+     "RingCount": 0.0002,
+     "NumAliphaticRings": 0.0095,
+     "NumSaturatedRings": 0.0017,
+     "NumHeteroatoms": 0.0273,
+     "BertzCT": 0.0206,
+     "Kappa2": 0.0262
     },
     "would_remove": [
      "BertzCT",
@@ -1727,67 +1757,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 325,
-       "FN": 111,
-       "TN": 231,
-       "FP": 204
+       "TP": 307,
+       "FN": 138,
+       "TN": 257,
+       "FP": 196
       },
-      "n": 871,
-      "accuracy": 0.6383,
-      "sensitivity": 0.7454,
-      "specificity": 0.531,
-      "precision": 0.6144,
-      "f_measure": 0.6736,
-      "mcc": 0.283,
-      "auc": 0.6842
+      "n": 898,
+      "accuracy": 0.6281,
+      "sensitivity": 0.6899,
+      "specificity": 0.5673,
+      "precision": 0.6103,
+      "f_measure": 0.6477,
+      "mcc": 0.2591,
+      "auc": 0.6612
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 293,
-       "FN": 143,
-       "TN": 237,
-       "FP": 198
+       "TP": 270,
+       "FN": 175,
+       "TN": 259,
+       "FP": 194
       },
-      "n": 871,
-      "accuracy": 0.6085,
-      "sensitivity": 0.672,
-      "specificity": 0.5448,
-      "precision": 0.5967,
-      "f_measure": 0.6321,
-      "mcc": 0.2186,
-      "auc": 0.6485
+      "n": 898,
+      "accuracy": 0.5891,
+      "sensitivity": 0.6067,
+      "specificity": 0.5717,
+      "precision": 0.5819,
+      "f_measure": 0.5941,
+      "mcc": 0.1786,
+      "auc": 0.6298
      },
      "external": {
       "confusion_matrix": {
-       "TP": 122,
-       "FN": 49,
-       "TN": 109,
-       "FP": 62
+       "TP": 116,
+       "FN": 55,
+       "TN": 98,
+       "FP": 64
       },
-      "n": 342,
-      "accuracy": 0.6754,
-      "sensitivity": 0.7135,
-      "specificity": 0.6374,
-      "precision": 0.663,
-      "f_measure": 0.6873,
-      "mcc": 0.3519,
-      "auc": 0.7215,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.6426,
+      "sensitivity": 0.6784,
+      "specificity": 0.6049,
+      "precision": 0.6444,
+      "f_measure": 0.661,
+      "mcc": 0.2841,
+      "auc": 0.6846,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5239,
-      "permuted_fit_max": 0.5591,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.6383,
-      "real_cv": 0.6085,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5206,
+      "permuted_fit_max": 0.5445,
+      "permuted_cv_mean": 0.4988,
+      "permuted_cv_max": 0.5379,
+      "real_fit": 0.6281,
+      "real_cv": 0.5891,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 8
+     "rank_by_external": 10
     },
     {
      "rung": 2,
@@ -1800,91 +1832,93 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 317,
-       "FN": 119,
-       "TN": 262,
+       "TP": 312,
+       "FN": 133,
+       "TN": 280,
        "FP": 173
       },
-      "n": 871,
-      "accuracy": 0.6648,
-      "sensitivity": 0.7271,
-      "specificity": 0.6023,
-      "precision": 0.6469,
-      "f_measure": 0.6847,
-      "mcc": 0.332,
-      "auc": 0.7165
+      "n": 898,
+      "accuracy": 0.6592,
+      "sensitivity": 0.7011,
+      "specificity": 0.6181,
+      "precision": 0.6433,
+      "f_measure": 0.671,
+      "mcc": 0.3202,
+      "auc": 0.7068
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 312,
-       "FN": 124,
-       "TN": 248,
-       "FP": 187
+       "TP": 314,
+       "FN": 131,
+       "TN": 273,
+       "FP": 180
       },
-      "n": 871,
-      "accuracy": 0.6429,
-      "sensitivity": 0.7156,
-      "specificity": 0.5701,
-      "precision": 0.6253,
-      "f_measure": 0.6674,
-      "mcc": 0.2888,
-      "auc": 0.6866
+      "n": 898,
+      "accuracy": 0.6537,
+      "sensitivity": 0.7056,
+      "specificity": 0.6026,
+      "precision": 0.6356,
+      "f_measure": 0.6688,
+      "mcc": 0.3098,
+      "auc": 0.6788
      },
      "external": {
       "confusion_matrix": {
-       "TP": 115,
-       "FN": 56,
-       "TN": 94,
-       "FP": 77
+       "TP": 109,
+       "FN": 62,
+       "TN": 109,
+       "FP": 53
       },
-      "n": 342,
-      "accuracy": 0.6111,
-      "sensitivity": 0.6725,
-      "specificity": 0.5497,
-      "precision": 0.599,
-      "f_measure": 0.6336,
-      "mcc": 0.2239,
-      "auc": 0.6773,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.6547,
+      "sensitivity": 0.6374,
+      "specificity": 0.6728,
+      "precision": 0.6728,
+      "f_measure": 0.6547,
+      "mcc": 0.3103,
+      "auc": 0.7381,
+      "n_compounds": 228
      },
      "wilks_lambda": {
-      "train": 0.869,
-      "external": 0.9109,
+      "train": 0.8842,
+      "external": 0.8466,
       "definition": "within-group SS / total SS of the discriminant score (manual p. 13)"
      },
      "applicability_domain_confidence_estimation": {
       "threshold": 0.5,
-      "fraction_of_training_rows_reliable": 0.1022,
+      "fraction_of_training_rows_reliable": 0.088,
       "manual_reference": "p. 17, Step 9(ii)"
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5324,
-      "permuted_fit_max": 0.5568,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.6648,
-      "real_cv": 0.6429,
-      "permuted_wilks_lambda_mean": 0.9905,
-      "permuted_wilks_lambda_min": 0.9796,
+      "permuted_fit_mean": 0.5302,
+      "permuted_fit_max": 0.5724,
+      "permuted_cv_mean": 0.4996,
+      "permuted_cv_max": 0.5412,
+      "real_fit": 0.6592,
+      "real_cv": 0.6537,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "permuted_wilks_lambda_mean": 0.9921,
+      "permuted_wilks_lambda_min": 0.9787,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
-      "MolMR": -3.5784,
-      "FractionCSP3": 0.0702,
-      "RingCount": -0.7558,
-      "NumAliphaticRings": 0.5851,
-      "NumSaturatedRings": -0.0023,
-      "NumHeteroatoms": -3.7164,
-      "BertzCT": 5.5552,
-      "Kappa2": 1.5286
+      "MolMR": -2.7986,
+      "FractionCSP3": -0.0829,
+      "RingCount": -0.5779,
+      "NumAliphaticRings": 0.7485,
+      "NumSaturatedRings": -0.1969,
+      "NumHeteroatoms": -2.9821,
+      "BertzCT": 4.3644,
+      "Kappa2": 1.188
      },
-     "intercept": 0.0026,
+     "intercept": -0.0202,
      "status": "ok",
-     "rank_by_external": 10
+     "rank_by_external": 8
     },
     {
      "rung": 3,
@@ -1897,80 +1931,82 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 422,
+       "TP": 431,
        "FN": 14,
-       "TN": 234,
-       "FP": 201
+       "TN": 245,
+       "FP": 208
       },
-      "n": 871,
-      "accuracy": 0.7532,
-      "sensitivity": 0.9679,
-      "specificity": 0.5379,
-      "precision": 0.6774,
-      "f_measure": 0.797,
-      "mcc": 0.5604,
-      "auc": 0.8597
+      "n": 898,
+      "accuracy": 0.7528,
+      "sensitivity": 0.9685,
+      "specificity": 0.5408,
+      "precision": 0.6745,
+      "f_measure": 0.7952,
+      "mcc": 0.5622,
+      "auc": 0.8731
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 414,
-       "FN": 22,
-       "TN": 235,
-       "FP": 200
+       "TP": 422,
+       "FN": 23,
+       "TN": 250,
+       "FP": 203
       },
-      "n": 871,
-      "accuracy": 0.7451,
-      "sensitivity": 0.9495,
-      "specificity": 0.5402,
-      "precision": 0.6743,
-      "f_measure": 0.7886,
-      "mcc": 0.5369,
-      "auc": 0.8358
+      "n": 898,
+      "accuracy": 0.7483,
+      "sensitivity": 0.9483,
+      "specificity": 0.5519,
+      "precision": 0.6752,
+      "f_measure": 0.7888,
+      "mcc": 0.5437,
+      "auc": 0.8433
      },
      "external": {
       "confusion_matrix": {
-       "TP": 158,
-       "FN": 13,
-       "TN": 86,
-       "FP": 85
+       "TP": 151,
+       "FN": 20,
+       "TN": 94,
+       "FP": 68
       },
-      "n": 342,
-      "accuracy": 0.7135,
-      "sensitivity": 0.924,
-      "specificity": 0.5029,
-      "precision": 0.6502,
-      "f_measure": 0.7633,
-      "mcc": 0.4707,
-      "auc": 0.8746,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7357,
+      "sensitivity": 0.883,
+      "specificity": 0.5802,
+      "precision": 0.6895,
+      "f_measure": 0.7744,
+      "mcc": 0.488,
+      "auc": 0.8386,
+      "n_compounds": 228
      },
      "wilks_lambda": {
-      "train": 0.9793,
-      "external": 0.9629,
+      "train": 0.9778,
+      "external": 0.9619,
       "definition": "within-group SS / total SS of the discriminant score (manual p. 13)"
      },
      "applicability_domain_confidence_estimation": {
       "threshold": 0.5,
-      "fraction_of_training_rows_reliable": 0.9001,
+      "fraction_of_training_rows_reliable": 0.9076,
       "manual_reference": "p. 17, Step 9(ii)"
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5291,
-      "permuted_fit_max": 0.5626,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.7532,
-      "real_cv": 0.7451,
-      "permuted_wilks_lambda_mean": 0.997,
-      "permuted_wilks_lambda_min": 0.9927,
+      "permuted_fit_mean": 0.5269,
+      "permuted_fit_max": 0.5657,
+      "permuted_cv_mean": 0.4991,
+      "permuted_cv_max": 0.539,
+      "real_fit": 0.7528,
+      "real_cv": 0.7483,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "permuted_wilks_lambda_mean": 0.9971,
+      "permuted_wilks_lambda_min": 0.9914,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 7
+     "rank_by_external": 5
     },
     {
      "rung": 4,
@@ -1983,80 +2019,82 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 389,
-       "FN": 47,
-       "TN": 297,
-       "FP": 138
+       "TP": 395,
+       "FN": 50,
+       "TN": 316,
+       "FP": 137
       },
-      "n": 871,
-      "accuracy": 0.7876,
-      "sensitivity": 0.8922,
-      "specificity": 0.6828,
-      "precision": 0.7381,
-      "f_measure": 0.8079,
-      "mcc": 0.5881,
-      "auc": 0.8597
+      "n": 898,
+      "accuracy": 0.7918,
+      "sensitivity": 0.8876,
+      "specificity": 0.6976,
+      "precision": 0.7425,
+      "f_measure": 0.8086,
+      "mcc": 0.5955,
+      "auc": 0.8691
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 367,
-       "FN": 69,
-       "TN": 282,
-       "FP": 153
+       "TP": 383,
+       "FN": 62,
+       "TN": 301,
+       "FP": 152
       },
-      "n": 871,
-      "accuracy": 0.7451,
-      "sensitivity": 0.8417,
-      "specificity": 0.6483,
-      "precision": 0.7058,
-      "f_measure": 0.7678,
-      "mcc": 0.4995,
-      "auc": 0.7941
+      "n": 898,
+      "accuracy": 0.7617,
+      "sensitivity": 0.8607,
+      "specificity": 0.6645,
+      "precision": 0.7159,
+      "f_measure": 0.7816,
+      "mcc": 0.535,
+      "auc": 0.817
      },
      "external": {
       "confusion_matrix": {
-       "TP": 145,
-       "FN": 26,
-       "TN": 110,
-       "FP": 61
+       "TP": 137,
+       "FN": 34,
+       "TN": 98,
+       "FP": 64
       },
-      "n": 342,
-      "accuracy": 0.7456,
-      "sensitivity": 0.848,
-      "specificity": 0.6433,
-      "precision": 0.7039,
-      "f_measure": 0.7692,
-      "mcc": 0.5019,
-      "auc": 0.8187,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7057,
+      "sensitivity": 0.8012,
+      "specificity": 0.6049,
+      "precision": 0.6816,
+      "f_measure": 0.7366,
+      "mcc": 0.415,
+      "auc": 0.79,
+      "n_compounds": 228
      },
      "wilks_lambda": {
-      "train": 0.6591,
-      "external": 0.7943,
+      "train": 0.6517,
+      "external": 0.7805,
       "definition": "within-group SS / total SS of the discriminant score (manual p. 13)"
      },
      "applicability_domain_confidence_estimation": {
       "threshold": 0.5,
-      "fraction_of_training_rows_reliable": 0.4719,
+      "fraction_of_training_rows_reliable": 0.4811,
       "manual_reference": "p. 17, Step 9(ii)"
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5754,
-      "permuted_fit_max": 0.6119,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.7876,
-      "real_cv": 0.7451,
-      "permuted_wilks_lambda_mean": 0.9483,
-      "permuted_wilks_lambda_min": 0.9252,
+      "permuted_fit_mean": 0.5748,
+      "permuted_fit_max": 0.6013,
+      "permuted_cv_mean": 0.501,
+      "permuted_cv_max": 0.5345,
+      "real_fit": 0.7918,
+      "real_cv": 0.7617,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "permuted_wilks_lambda_mean": 0.952,
+      "permuted_wilks_lambda_min": 0.9337,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 6
+     "rank_by_external": 7
     },
     {
      "rung": 5,
@@ -2070,75 +2108,77 @@
      "train": {
       "confusion_matrix": {
        "TP": 289,
-       "FN": 147,
-       "TN": 293,
-       "FP": 142
+       "FN": 156,
+       "TN": 296,
+       "FP": 157
       },
-      "n": 871,
-      "accuracy": 0.6682,
-      "sensitivity": 0.6628,
-      "specificity": 0.6736,
-      "precision": 0.6705,
-      "f_measure": 0.6667,
-      "mcc": 0.3364,
-      "auc": 0.7371
+      "n": 898,
+      "accuracy": 0.6514,
+      "sensitivity": 0.6494,
+      "specificity": 0.6534,
+      "precision": 0.648,
+      "f_measure": 0.6487,
+      "mcc": 0.3029,
+      "auc": 0.7237
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 265,
-       "FN": 171,
-       "TN": 279,
+       "TP": 287,
+       "FN": 158,
+       "TN": 297,
        "FP": 156
       },
-      "n": 871,
-      "accuracy": 0.6246,
-      "sensitivity": 0.6078,
-      "specificity": 0.6414,
-      "precision": 0.6295,
-      "f_measure": 0.6184,
-      "mcc": 0.2493,
-      "auc": 0.7055
+      "n": 898,
+      "accuracy": 0.6503,
+      "sensitivity": 0.6449,
+      "specificity": 0.6556,
+      "precision": 0.6479,
+      "f_measure": 0.6464,
+      "mcc": 0.3006,
+      "auc": 0.6932
      },
      "external": {
       "confusion_matrix": {
-       "TP": 107,
-       "FN": 64,
-       "TN": 113,
-       "FP": 58
+       "TP": 105,
+       "FN": 66,
+       "TN": 109,
+       "FP": 53
       },
-      "n": 342,
-      "accuracy": 0.6433,
-      "sensitivity": 0.6257,
-      "specificity": 0.6608,
-      "precision": 0.6485,
-      "f_measure": 0.6369,
-      "mcc": 0.2867,
-      "auc": 0.6992,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.6426,
+      "sensitivity": 0.614,
+      "specificity": 0.6728,
+      "precision": 0.6646,
+      "f_measure": 0.6383,
+      "mcc": 0.2871,
+      "auc": 0.7315,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5306,
-      "permuted_fit_max": 0.558,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.6682,
-      "real_cv": 0.6246,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5301,
+      "permuted_fit_max": 0.5612,
+      "permuted_cv_mean": 0.5008,
+      "permuted_cv_max": 0.5434,
+      "real_fit": 0.6514,
+      "real_cv": 0.6503,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
-      "MolMR": -0.7824,
-      "FractionCSP3": 0.053,
-      "RingCount": 0.0722,
-      "NumAliphaticRings": 0.1965,
-      "NumSaturatedRings": -0.0553,
-      "NumHeteroatoms": -2.614,
-      "BertzCT": 2.0828,
-      "Kappa2": -0.2238
+      "MolMR": -0.6508,
+      "FractionCSP3": -0.0795,
+      "RingCount": 0.0735,
+      "NumAliphaticRings": 0.3956,
+      "NumSaturatedRings": -0.2075,
+      "NumHeteroatoms": -2.2161,
+      "BertzCT": 1.7895,
+      "Kappa2": -0.1521
      },
-     "intercept": -0.123,
+     "intercept": -0.1125,
      "status": "ok",
      "rank_by_external": 9
     },
@@ -2153,64 +2193,66 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 435,
-       "FN": 1,
-       "TN": 435,
+       "TP": 442,
+       "FN": 3,
+       "TN": 453,
        "FP": 0
       },
-      "n": 871,
-      "accuracy": 0.9989,
-      "sensitivity": 0.9977,
+      "n": 898,
+      "accuracy": 0.9967,
+      "sensitivity": 0.9933,
       "specificity": 1.0,
       "precision": 1.0,
-      "f_measure": 0.9989,
-      "mcc": 0.9977,
+      "f_measure": 0.9966,
+      "mcc": 0.9933,
       "auc": 0.9996
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 361,
-       "FN": 75,
-       "TN": 346,
-       "FP": 89
+       "TP": 364,
+       "FN": 81,
+       "TN": 384,
+       "FP": 69
       },
-      "n": 871,
-      "accuracy": 0.8117,
-      "sensitivity": 0.828,
-      "specificity": 0.7954,
-      "precision": 0.8022,
-      "f_measure": 0.8149,
-      "mcc": 0.6237,
-      "auc": 0.8897
+      "n": 898,
+      "accuracy": 0.833,
+      "sensitivity": 0.818,
+      "specificity": 0.8477,
+      "precision": 0.8406,
+      "f_measure": 0.8292,
+      "mcc": 0.6661,
+      "auc": 0.8999
      },
      "external": {
       "confusion_matrix": {
-       "TP": 136,
-       "FN": 35,
-       "TN": 154,
-       "FP": 17
+       "TP": 143,
+       "FN": 28,
+       "TN": 141,
+       "FP": 21
       },
-      "n": 342,
-      "accuracy": 0.848,
-      "sensitivity": 0.7953,
-      "specificity": 0.9006,
-      "precision": 0.8889,
-      "f_measure": 0.8395,
-      "mcc": 0.6998,
-      "auc": 0.9315,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8529,
+      "sensitivity": 0.8363,
+      "specificity": 0.8704,
+      "precision": 0.872,
+      "f_measure": 0.8537,
+      "mcc": 0.7064,
+      "auc": 0.9193,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.9456,
-      "permuted_fit_max": 0.9575,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9989,
-      "real_cv": 0.8117,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.934,
+      "permuted_fit_max": 0.9465,
+      "permuted_cv_mean": 0.5036,
+      "permuted_cv_max": 0.5579,
+      "real_fit": 0.9967,
+      "real_cv": 0.833,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -2226,67 +2268,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 414,
-       "FN": 22,
-       "TN": 381,
-       "FP": 54
+       "TP": 421,
+       "FN": 24,
+       "TN": 413,
+       "FP": 40
       },
-      "n": 871,
-      "accuracy": 0.9127,
-      "sensitivity": 0.9495,
-      "specificity": 0.8759,
-      "precision": 0.8846,
-      "f_measure": 0.9159,
-      "mcc": 0.8277,
-      "auc": 0.9756
+      "n": 898,
+      "accuracy": 0.9287,
+      "sensitivity": 0.9461,
+      "specificity": 0.9117,
+      "precision": 0.9132,
+      "f_measure": 0.9294,
+      "mcc": 0.858,
+      "auc": 0.9807
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 371,
-       "FN": 65,
-       "TN": 327,
-       "FP": 108
+       "TP": 379,
+       "FN": 66,
+       "TN": 366,
+       "FP": 87
       },
-      "n": 871,
-      "accuracy": 0.8014,
-      "sensitivity": 0.8509,
-      "specificity": 0.7517,
-      "precision": 0.7745,
-      "f_measure": 0.8109,
-      "mcc": 0.6057,
-      "auc": 0.8762
+      "n": 898,
+      "accuracy": 0.8296,
+      "sensitivity": 0.8517,
+      "specificity": 0.8079,
+      "precision": 0.8133,
+      "f_measure": 0.8321,
+      "mcc": 0.6601,
+      "auc": 0.9077
      },
      "external": {
       "confusion_matrix": {
-       "TP": 131,
-       "FN": 40,
-       "TN": 151,
-       "FP": 20
+       "TP": 136,
+       "FN": 35,
+       "TN": 138,
+       "FP": 24
       },
-      "n": 342,
-      "accuracy": 0.8246,
-      "sensitivity": 0.7661,
-      "specificity": 0.883,
-      "precision": 0.8675,
-      "f_measure": 0.8137,
-      "mcc": 0.6536,
-      "auc": 0.9133,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8228,
+      "sensitivity": 0.7953,
+      "specificity": 0.8519,
+      "precision": 0.85,
+      "f_measure": 0.8218,
+      "mcc": 0.6474,
+      "auc": 0.9063,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.7801,
-      "permuted_fit_max": 0.8163,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9127,
-      "real_cv": 0.8014,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.776,
+      "permuted_fit_max": 0.804,
+      "permuted_cv_mean": 0.5003,
+      "permuted_cv_max": 0.5401,
+      "real_fit": 0.9287,
+      "real_cv": 0.8296,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 4
+     "rank_by_external": 3
     },
     {
      "rung": 8,
@@ -2299,67 +2343,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 421,
-       "FN": 15,
-       "TN": 386,
-       "FP": 49
+       "TP": 428,
+       "FN": 17,
+       "TN": 420,
+       "FP": 33
       },
-      "n": 871,
-      "accuracy": 0.9265,
-      "sensitivity": 0.9656,
-      "specificity": 0.8874,
-      "precision": 0.8957,
-      "f_measure": 0.9294,
-      "mcc": 0.8556,
-      "auc": 0.9807
+      "n": 898,
+      "accuracy": 0.9443,
+      "sensitivity": 0.9618,
+      "specificity": 0.9272,
+      "precision": 0.9284,
+      "f_measure": 0.9448,
+      "mcc": 0.8892,
+      "auc": 0.987
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 374,
-       "FN": 62,
-       "TN": 332,
-       "FP": 103
+       "TP": 377,
+       "FN": 68,
+       "TN": 369,
+       "FP": 84
       },
-      "n": 871,
-      "accuracy": 0.8106,
-      "sensitivity": 0.8578,
-      "specificity": 0.7632,
-      "precision": 0.7841,
-      "f_measure": 0.8193,
-      "mcc": 0.6239,
-      "auc": 0.8747
+      "n": 898,
+      "accuracy": 0.8307,
+      "sensitivity": 0.8472,
+      "specificity": 0.8146,
+      "precision": 0.8178,
+      "f_measure": 0.8322,
+      "mcc": 0.662,
+      "auc": 0.9031
      },
      "external": {
       "confusion_matrix": {
-       "TP": 129,
-       "FN": 42,
-       "TN": 153,
-       "FP": 18
+       "TP": 136,
+       "FN": 35,
+       "TN": 135,
+       "FP": 27
       },
-      "n": 342,
-      "accuracy": 0.8246,
-      "sensitivity": 0.7544,
-      "specificity": 0.8947,
-      "precision": 0.8776,
-      "f_measure": 0.8113,
-      "mcc": 0.6556,
-      "auc": 0.9102,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8138,
+      "sensitivity": 0.7953,
+      "specificity": 0.8333,
+      "precision": 0.8344,
+      "f_measure": 0.8144,
+      "mcc": 0.6286,
+      "auc": 0.9031,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.7995,
-      "permuted_fit_max": 0.8278,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9265,
-      "real_cv": 0.8106,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.7939,
+      "permuted_fit_max": 0.8196,
+      "permuted_cv_mean": 0.5055,
+      "permuted_cv_max": 0.5412,
+      "real_fit": 0.9443,
+      "real_cv": 0.8307,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 3
+     "rank_by_external": 4
     },
     {
      "rung": 9,
@@ -2372,67 +2418,69 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 389,
-       "FN": 47,
-       "TN": 290,
-       "FP": 145
+       "TP": 407,
+       "FN": 38,
+       "TN": 310,
+       "FP": 143
       },
-      "n": 871,
-      "accuracy": 0.7796,
-      "sensitivity": 0.8922,
-      "specificity": 0.6667,
-      "precision": 0.7285,
-      "f_measure": 0.8021,
-      "mcc": 0.5737,
-      "auc": 0.8492
+      "n": 898,
+      "accuracy": 0.7984,
+      "sensitivity": 0.9146,
+      "specificity": 0.6843,
+      "precision": 0.74,
+      "f_measure": 0.8181,
+      "mcc": 0.6147,
+      "auc": 0.8616
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 384,
-       "FN": 52,
-       "TN": 281,
+       "TP": 399,
+       "FN": 46,
+       "TN": 299,
        "FP": 154
       },
-      "n": 871,
-      "accuracy": 0.7635,
-      "sensitivity": 0.8807,
-      "specificity": 0.646,
-      "precision": 0.7138,
-      "f_measure": 0.7885,
-      "mcc": 0.5419,
-      "auc": 0.8143
+      "n": 898,
+      "accuracy": 0.7773,
+      "sensitivity": 0.8966,
+      "specificity": 0.66,
+      "precision": 0.7215,
+      "f_measure": 0.7996,
+      "mcc": 0.5722,
+      "auc": 0.8358
      },
      "external": {
       "confusion_matrix": {
-       "TP": 142,
-       "FN": 29,
-       "TN": 115,
-       "FP": 56
+       "TP": 136,
+       "FN": 35,
+       "TN": 108,
+       "FP": 54
       },
-      "n": 342,
-      "accuracy": 0.7515,
-      "sensitivity": 0.8304,
-      "specificity": 0.6725,
-      "precision": 0.7172,
-      "f_measure": 0.7696,
-      "mcc": 0.5093,
-      "auc": 0.8422,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.7327,
+      "sensitivity": 0.7953,
+      "specificity": 0.6667,
+      "precision": 0.7158,
+      "f_measure": 0.7535,
+      "mcc": 0.4665,
+      "auc": 0.8088,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5667,
-      "permuted_fit_max": 0.5867,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.7796,
-      "real_cv": 0.7635,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5654,
+      "permuted_fit_max": 0.5857,
+      "permuted_cv_mean": 0.4977,
+      "permuted_cv_max": 0.5379,
+      "real_fit": 0.7984,
+      "real_cv": 0.7773,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
-     "rank_by_external": 5
+     "rank_by_external": 6
     },
     {
      "rung": 10,
@@ -2445,64 +2493,66 @@
      "breaks_five_per_term_rule": false,
      "train": {
       "confusion_matrix": {
-       "TP": 396,
-       "FN": 40,
-       "TN": 356,
-       "FP": 79
+       "TP": 404,
+       "FN": 41,
+       "TN": 376,
+       "FP": 77
       },
-      "n": 871,
-      "accuracy": 0.8634,
-      "sensitivity": 0.9083,
-      "specificity": 0.8184,
-      "precision": 0.8337,
-      "f_measure": 0.8694,
-      "mcc": 0.7297,
-      "auc": 0.9302
+      "n": 898,
+      "accuracy": 0.8686,
+      "sensitivity": 0.9079,
+      "specificity": 0.83,
+      "precision": 0.8399,
+      "f_measure": 0.8726,
+      "mcc": 0.7397,
+      "auc": 0.9307
      },
      "internal_cv": {
       "confusion_matrix": {
-       "TP": 362,
-       "FN": 74,
-       "TN": 332,
-       "FP": 103
+       "TP": 383,
+       "FN": 62,
+       "TN": 354,
+       "FP": 99
       },
-      "n": 871,
-      "accuracy": 0.7968,
-      "sensitivity": 0.8303,
-      "specificity": 0.7632,
-      "precision": 0.7785,
-      "f_measure": 0.8036,
-      "mcc": 0.5949,
-      "auc": 0.8681
+      "n": 898,
+      "accuracy": 0.8207,
+      "sensitivity": 0.8607,
+      "specificity": 0.7815,
+      "precision": 0.7946,
+      "f_measure": 0.8263,
+      "mcc": 0.6438,
+      "auc": 0.8808
      },
      "external": {
       "confusion_matrix": {
-       "TP": 147,
-       "FN": 24,
-       "TN": 143,
-       "FP": 28
+       "TP": 146,
+       "FN": 25,
+       "TN": 132,
+       "FP": 30
       },
-      "n": 342,
-      "accuracy": 0.848,
-      "sensitivity": 0.8596,
-      "specificity": 0.8363,
-      "precision": 0.84,
-      "f_measure": 0.8497,
-      "mcc": 0.6961,
-      "auc": 0.9275,
-      "n_compounds": 227
+      "n": 333,
+      "accuracy": 0.8348,
+      "sensitivity": 0.8538,
+      "specificity": 0.8148,
+      "precision": 0.8295,
+      "f_measure": 0.8415,
+      "mcc": 0.6695,
+      "auc": 0.8959,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "accuracy",
-      "permuted_fit_mean": 0.5543,
-      "permuted_fit_max": 0.6165,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.8634,
-      "real_cv": 0.7968,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5547,
+      "permuted_fit_max": 0.6047,
+      "permuted_cv_mean": 0.4993,
+      "permuted_cv_max": 0.529,
+      "real_fit": 0.8686,
+      "real_cv": 0.8207,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 2
@@ -2513,36 +2563,36 @@
     "model": "Random forest",
     "external": {
      "confusion_matrix": {
-      "TP": 136,
-      "FN": 35,
-      "TN": 154,
-      "FP": 17
+      "TP": 143,
+      "FN": 28,
+      "TN": 141,
+      "FP": 21
      },
-     "n": 342,
-     "accuracy": 0.848,
-     "sensitivity": 0.7953,
-     "specificity": 0.9006,
-     "precision": 0.8889,
-     "f_measure": 0.8395,
-     "mcc": 0.6998,
-     "auc": 0.9315,
-     "n_compounds": 227
+     "n": 333,
+     "accuracy": 0.8529,
+     "sensitivity": 0.8363,
+     "specificity": 0.8704,
+     "precision": 0.872,
+     "f_measure": 0.8537,
+     "mcc": 0.7064,
+     "auc": 0.9193,
+     "n_compounds": 228
     },
     "internal_cv": {
      "confusion_matrix": {
-      "TP": 361,
-      "FN": 75,
-      "TN": 346,
-      "FP": 89
+      "TP": 364,
+      "FN": 81,
+      "TN": 384,
+      "FP": 69
      },
-     "n": 871,
-     "accuracy": 0.8117,
-     "sensitivity": 0.828,
-     "specificity": 0.7954,
-     "precision": 0.8022,
-     "f_measure": 0.8149,
-     "mcc": 0.6237,
-     "auc": 0.8897
+     "n": 898,
+     "accuracy": 0.833,
+     "sensitivity": 0.818,
+     "specificity": 0.8477,
+     "precision": 0.8406,
+     "f_measure": 0.8292,
+     "mcc": 0.6661,
+     "auc": 0.8999
     }
    },
    "ga_lda": {
@@ -2561,8 +2611,8 @@
      "NumHeteroatoms",
      "BertzCT"
     ],
-    "fitness_score": -0.7934,
-    "wilks_lambda_train": 0.8967
+    "fitness_score": -0.8058,
+    "wilks_lambda_train": 0.9029
    },
    "shap": {
     "model": "Random forest",
@@ -2570,14 +2620,14 @@
     "n_rows_explained": 150,
     "explainer": "shap.TreeExplainer",
     "mean_abs_shap": {
-     "MolMR": 0.0868,
-     "FractionCSP3": 0.019,
-     "RingCount": 0.0587,
-     "NumAliphaticRings": 0.0183,
-     "NumSaturatedRings": 0.0184,
-     "NumHeteroatoms": 0.0953,
-     "BertzCT": 0.0408,
-     "Kappa2": 0.1181
+     "MolMR": 0.0919,
+     "FractionCSP3": 0.0188,
+     "RingCount": 0.0761,
+     "NumAliphaticRings": 0.0209,
+     "NumSaturatedRings": 0.0155,
+     "NumHeteroatoms": 0.0944,
+     "BertzCT": 0.0474,
+     "Kappa2": 0.1199
     },
     "ranking": [
      "Kappa2",
@@ -2585,9 +2635,9 @@
      "MolMR",
      "RingCount",
      "BertzCT",
+     "NumAliphaticRings",
      "FractionCSP3",
-     "NumSaturatedRings",
-     "NumAliphaticRings"
+     "NumSaturatedRings"
     ],
     "status": "ok",
     "agreement_with_linear_model": {
@@ -2600,19 +2650,19 @@
       "MolMR",
       "RingCount",
       "BertzCT",
+      "NumAliphaticRings",
       "FractionCSP3",
-      "NumSaturatedRings",
-      "NumAliphaticRings"
+      "NumSaturatedRings"
      ],
      "absolute_standardised_coefficient_order": [
       "BertzCT",
       "NumHeteroatoms",
       "MolMR",
       "Kappa2",
-      "RingCount",
       "NumAliphaticRings",
-      "FractionCSP3",
-      "NumSaturatedRings"
+      "RingCount",
+      "NumSaturatedRings",
+      "FractionCSP3"
      ],
      "same_top_descriptor": false,
      "reading": "a positive rho means the black box leans on the same descriptors as the linear model, in roughly the same order; a rho near zero or negative means the two disagree about what matters"
@@ -2627,8 +2677,8 @@
    "approach": "normal",
    "response": "QED",
    "class_rule": null,
-   "n_rows": 1213,
-   "n_compounds": 758,
+   "n_rows": 1231,
+   "n_compounds": 759,
    "caveats": [
     "QED is a deterministic function of its own eight component properties, so a ladder that is handed those eight back cannot do anything but reproduce them. The descriptor block here deliberately excludes all eight (MW, ALOGP, HBA, HBD, PSA, ROTB, AROM, ALERTS) and their desirabilities, so this is a real generalisation question: how far do descriptors QED does not use predict the QED class."
    ],
@@ -2644,10 +2694,10 @@
    },
    "dataset_division": {
     "method": "random",
-    "reason": "758 compounds is above the manual's ~500 threshold where random division is suitable and much faster than rational division (p. 9-10)",
+    "reason": "759 compounds is above the manual's ~500 threshold where random division is suitable and much faster than rational division (p. 9-10)",
     "train_fraction": 0.7,
     "n_train": 531,
-    "n_external": 227,
+    "n_external": 228,
     "split_unit": "compound (PubChem CID), so no molecule is in both sets"
    },
    "data_pretreatment_dpt2": {
@@ -2695,50 +2745,52 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.4095,
-      "rmse": 0.1829,
+      "n": 870,
+      "r2": 0.4046,
+      "rmse": 0.183,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.3823,
-      "rmse": 0.1871,
+      "n": 870,
+      "r2": 0.3623,
+      "rmse": 0.1894,
       "baseline": "own mean",
-      "q2_cv": 0.3823,
+      "q2_cv": 0.3623,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.3804,
-      "rmse": 0.2093,
+      "n": 361,
+      "r2": 0.3714,
+      "rmse": 0.2101,
       "baseline": "training-set mean",
-      "r2_pred": 0.3804,
-      "n_compounds": 227
+      "r2_pred": 0.3714,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": 0.01,
-      "permuted_fit_max": 0.0205,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.4095,
-      "real_cv": 0.3823,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.0101,
+      "permuted_fit_max": 0.0187,
+      "permuted_cv_mean": -0.0227,
+      "permuted_cv_max": -0.0018,
+      "real_fit": 0.4046,
+      "real_cv": 0.3623,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
-      "MolMR": -0.6057,
-      "FractionCSP3": -0.0584,
-      "RingCount": -0.2447,
-      "NumAliphaticRings": 0.0934,
-      "NumSaturatedRings": 0.0674,
-      "NumHeteroatoms": -0.5393,
-      "BertzCT": 1.0433,
-      "Kappa2": 0.0967
+      "MolMR": -0.6288,
+      "FractionCSP3": -0.0594,
+      "RingCount": -0.2388,
+      "NumAliphaticRings": 0.0876,
+      "NumSaturatedRings": 0.0701,
+      "NumHeteroatoms": -0.5338,
+      "BertzCT": 1.0245,
+      "Kappa2": 0.1317
      },
-     "intercept": 0.5508,
+     "intercept": 0.5447,
      "status": "ok",
      "rank_by_external": 6
     },
@@ -2752,38 +2804,40 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.256,
-      "rmse": 0.2053,
+      "n": 870,
+      "r2": 0.2532,
+      "rmse": 0.2049,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.2279,
-      "rmse": 0.2092,
+      "n": 870,
+      "r2": 0.2159,
+      "rmse": 0.21,
       "baseline": "own mean",
-      "q2_cv": 0.2279,
+      "q2_cv": 0.2159,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.2592,
-      "rmse": 0.2288,
+      "n": 361,
+      "r2": 0.2675,
+      "rmse": 0.2268,
       "baseline": "training-set mean",
-      "r2_pred": 0.2592,
-      "n_compounds": 227
+      "r2_pred": 0.2675,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": 0.0059,
-      "permuted_fit_max": 0.0121,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.256,
-      "real_cv": 0.2279,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.0057,
+      "permuted_fit_max": 0.0144,
+      "permuted_cv_mean": -0.0124,
+      "permuted_cv_max": 0.0022,
+      "real_fit": 0.2532,
+      "real_cv": 0.2159,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 7
@@ -2798,38 +2852,40 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.9874,
-      "rmse": 0.0267,
+      "n": 870,
+      "r2": 0.9865,
+      "rmse": 0.0275,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.8009,
-      "rmse": 0.1062,
+      "n": 870,
+      "r2": 0.8066,
+      "rmse": 0.1043,
       "baseline": "own mean",
-      "q2_cv": 0.8009,
+      "q2_cv": 0.8066,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.8553,
-      "rmse": 0.1011,
+      "n": 361,
+      "r2": 0.8683,
+      "rmse": 0.0962,
       "baseline": "training-set mean",
-      "r2_pred": 0.8553,
-      "n_compounds": 227
+      "r2_pred": 0.8683,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": 0.5354,
-      "permuted_fit_max": 0.5885,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9874,
-      "real_cv": 0.8009,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.5394,
+      "permuted_fit_max": 0.5788,
+      "permuted_cv_mean": -0.1238,
+      "permuted_cv_max": -0.0524,
+      "real_fit": 0.9865,
+      "real_cv": 0.8066,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -2844,38 +2900,40 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.9286,
-      "rmse": 0.0636,
+      "n": 870,
+      "r2": 0.923,
+      "rmse": 0.0658,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.7927,
-      "rmse": 0.1084,
+      "n": 870,
+      "r2": 0.7829,
+      "rmse": 0.1105,
       "baseline": "own mean",
-      "q2_cv": 0.7927,
+      "q2_cv": 0.7829,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.8298,
-      "rmse": 0.1097,
+      "n": 361,
+      "r2": 0.8498,
+      "rmse": 0.1027,
       "baseline": "training-set mean",
-      "r2_pred": 0.8298,
-      "n_compounds": 227
+      "r2_pred": 0.8498,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": 0.2655,
-      "permuted_fit_max": 0.3057,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9286,
-      "real_cv": 0.7927,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.2653,
+      "permuted_fit_max": 0.3029,
+      "permuted_cv_mean": -0.1149,
+      "permuted_cv_max": -0.0427,
+      "real_fit": 0.923,
+      "real_cv": 0.7829,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 2
@@ -2890,38 +2948,40 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.9274,
-      "rmse": 0.0642,
+      "n": 870,
+      "r2": 0.9247,
+      "rmse": 0.0651,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.8004,
-      "rmse": 0.1063,
+      "n": 870,
+      "r2": 0.7772,
+      "rmse": 0.1119,
       "baseline": "own mean",
-      "q2_cv": 0.8004,
+      "q2_cv": 0.7772,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.8278,
-      "rmse": 0.1103,
+      "n": 361,
+      "r2": 0.8414,
+      "rmse": 0.1055,
       "baseline": "training-set mean",
-      "r2_pred": 0.8278,
-      "n_compounds": 227
+      "r2_pred": 0.8414,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": 0.2648,
-      "permuted_fit_max": 0.3129,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.9274,
-      "real_cv": 0.8004,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.2649,
+      "permuted_fit_max": 0.2947,
+      "permuted_cv_mean": -0.1202,
+      "permuted_cv_max": -0.0472,
+      "real_fit": 0.9247,
+      "real_cv": 0.7772,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 3
@@ -2936,38 +2996,40 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.7811,
-      "rmse": 0.1114,
+      "n": 870,
+      "r2": 0.7777,
+      "rmse": 0.1118,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.7237,
-      "rmse": 0.1251,
+      "n": 870,
+      "r2": 0.6867,
+      "rmse": 0.1327,
       "baseline": "own mean",
-      "q2_cv": 0.7237,
+      "q2_cv": 0.6867,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.7895,
-      "rmse": 0.122,
+      "n": 361,
+      "r2": 0.7915,
+      "rmse": 0.121,
       "baseline": "training-set mean",
-      "r2_pred": 0.7895,
-      "n_compounds": 227
+      "r2_pred": 0.7915,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": 0.0451,
-      "permuted_fit_max": 0.0727,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.7811,
-      "real_cv": 0.7237,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": 0.0515,
+      "permuted_fit_max": 0.0746,
+      "permuted_cv_mean": -0.0723,
+      "permuted_cv_max": -0.0258,
+      "real_fit": 0.7777,
+      "real_cv": 0.6867,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 4
@@ -2982,38 +3044,40 @@
      "compounds_per_descriptor": 66.38,
      "breaks_five_per_term_rule": false,
      "train": {
-      "n": 863,
-      "r2": 0.5532,
-      "rmse": 0.1591,
+      "n": 870,
+      "r2": 0.545,
+      "rmse": 0.16,
       "baseline": "own mean"
      },
      "internal_cv": {
-      "n": 863,
-      "r2": 0.4248,
-      "rmse": 0.1805,
+      "n": 870,
+      "r2": 0.4349,
+      "rmse": 0.1783,
       "baseline": "own mean",
-      "q2_cv": 0.4248,
+      "q2_cv": 0.4349,
       "q2_loo_press": null
      },
      "external": {
-      "n": 350,
-      "r2": 0.5925,
-      "rmse": 0.1697,
+      "n": 361,
+      "r2": 0.6121,
+      "rmse": 0.1651,
       "baseline": "training-set mean",
-      "r2_pred": 0.5925,
-      "n_compounds": 227
+      "r2_pred": 0.6121,
+      "n_compounds": 228
      },
      "y_randomisation": {
       "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, default 50 shuffles",
       "n_permutations": 50,
       "metric": "r2",
-      "permuted_fit_mean": -0.0904,
-      "permuted_fit_max": -0.0448,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
-      "real_fit": 0.5532,
-      "real_cv": 0.4248,
-      "real_cv_beaten_by_chance": null
+      "permuted_fit_mean": -0.0873,
+      "permuted_fit_max": -0.0395,
+      "permuted_cv_mean": -0.2794,
+      "permuted_cv_max": -0.2187,
+      "real_fit": 0.545,
+      "real_cv": 0.4349,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 5
@@ -3023,19 +3087,19 @@
     "key": "rf",
     "model": "Random forest",
     "external": {
-     "n": 350,
-     "r2": 0.8553,
-     "rmse": 0.1011,
+     "n": 361,
+     "r2": 0.8683,
+     "rmse": 0.0962,
      "baseline": "training-set mean",
-     "r2_pred": 0.8553,
-     "n_compounds": 227
+     "r2_pred": 0.8683,
+     "n_compounds": 228
     },
     "internal_cv": {
-     "n": 863,
-     "r2": 0.8009,
-     "rmse": 0.1062,
+     "n": 870,
+     "r2": 0.8066,
+     "rmse": 0.1043,
      "baseline": "own mean",
-     "q2_cv": 0.8009,
+     "q2_cv": 0.8066,
      "q2_loo_press": null
     }
    },
@@ -3045,24 +3109,24 @@
     "n_rows_explained": 150,
     "explainer": "shap.TreeExplainer",
     "mean_abs_shap": {
-     "MolMR": 0.0529,
-     "FractionCSP3": 0.0088,
-     "RingCount": 0.0102,
-     "NumAliphaticRings": 0.0033,
-     "NumSaturatedRings": 0.0026,
-     "NumHeteroatoms": 0.0604,
-     "BertzCT": 0.0188,
-     "Kappa2": 0.0869
+     "MolMR": 0.0603,
+     "FractionCSP3": 0.0102,
+     "RingCount": 0.0104,
+     "NumAliphaticRings": 0.0031,
+     "NumSaturatedRings": 0.0035,
+     "NumHeteroatoms": 0.053,
+     "BertzCT": 0.0184,
+     "Kappa2": 0.0861
     },
     "ranking": [
      "Kappa2",
-     "NumHeteroatoms",
      "MolMR",
+     "NumHeteroatoms",
      "BertzCT",
      "RingCount",
      "FractionCSP3",
-     "NumAliphaticRings",
-     "NumSaturatedRings"
+     "NumSaturatedRings",
+     "NumAliphaticRings"
     ],
     "status": "ok",
     "agreement_with_linear_model": {
@@ -3071,13 +3135,13 @@
      "p_value": 0.1195,
      "shap_order": [
       "Kappa2",
-      "NumHeteroatoms",
       "MolMR",
+      "NumHeteroatoms",
       "BertzCT",
       "RingCount",
       "FractionCSP3",
-      "NumAliphaticRings",
-      "NumSaturatedRings"
+      "NumSaturatedRings",
+      "NumAliphaticRings"
      ],
      "absolute_standardised_coefficient_order": [
       "BertzCT",
@@ -3256,11 +3320,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5677,
       "permuted_fit_max": 0.6031,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5367,
+      "permuted_cv_max": 0.5877,
       "real_fit": 0.6985,
       "real_cv": 0.6708,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 7
@@ -3339,14 +3405,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5796,
       "permuted_fit_max": 0.6215,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.529,
+      "permuted_cv_max": 0.5908,
       "real_fit": 0.7169,
       "real_cv": 0.6862,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.9729,
       "permuted_wilks_lambda_min": 0.9358,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
       "logP": 0.254,
@@ -3437,14 +3505,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.578,
       "permuted_fit_max": 0.6492,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5095,
+      "permuted_cv_max": 0.5723,
       "real_fit": 0.6154,
       "real_cv": 0.5815,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.9893,
       "permuted_wilks_lambda_min": 0.9796,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 10
@@ -3523,14 +3593,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.6613,
       "permuted_fit_max": 0.7015,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5063,
+      "permuted_cv_max": 0.5692,
       "real_fit": 0.8523,
       "real_cv": 0.68,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.8392,
       "permuted_wilks_lambda_min": 0.7547,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 9
@@ -3599,11 +3671,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5769,
       "permuted_fit_max": 0.6369,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5339,
+      "permuted_cv_max": 0.5815,
       "real_fit": 0.7015,
       "real_cv": 0.6708,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
       "logP": 0.4565,
@@ -3684,11 +3758,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8516,
       "permuted_fit_max": 0.88,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5198,
+      "permuted_cv_max": 0.5908,
       "real_fit": 1.0,
       "real_cv": 0.5969,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -3757,11 +3833,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8145,
       "permuted_fit_max": 0.84,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5158,
+      "permuted_cv_max": 0.5692,
       "real_fit": 0.92,
       "real_cv": 0.6031,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 2
@@ -3830,11 +3908,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8252,
       "permuted_fit_max": 0.8523,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5173,
+      "permuted_cv_max": 0.5692,
       "real_fit": 0.9569,
       "real_cv": 0.5631,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 3
@@ -3903,11 +3983,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5818,
       "permuted_fit_max": 0.6215,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.544,
+      "permuted_cv_max": 0.5815,
       "real_fit": 0.72,
       "real_cv": 0.6954,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 8
@@ -3976,11 +4058,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.613,
       "permuted_fit_max": 0.6985,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.531,
+      "permuted_cv_max": 0.5846,
       "real_fit": 0.8062,
       "real_cv": 0.6554,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 4
@@ -4512,11 +4596,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5447,
       "permuted_fit_max": 0.5872,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5007,
+      "permuted_cv_max": 0.5581,
       "real_fit": 0.6744,
       "real_cv": 0.689,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 7
@@ -4595,14 +4681,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.559,
       "permuted_fit_max": 0.6163,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5054,
+      "permuted_cv_max": 0.5669,
       "real_fit": 0.7238,
       "real_cv": 0.6715,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.9734,
       "permuted_wilks_lambda_min": 0.9369,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
       "logP": 0.3568,
@@ -4693,14 +4781,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.573,
       "permuted_fit_max": 0.6424,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5074,
+      "permuted_cv_max": 0.561,
       "real_fit": 0.6279,
       "real_cv": 0.564,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.9901,
       "permuted_wilks_lambda_min": 0.9811,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 10
@@ -4779,14 +4869,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.6567,
       "permuted_fit_max": 0.6948,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.4963,
+      "permuted_cv_max": 0.564,
       "real_fit": 0.7965,
       "real_cv": 0.6541,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.8406,
       "permuted_wilks_lambda_min": 0.7822,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 6
@@ -4855,11 +4947,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5567,
       "permuted_fit_max": 0.5988,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5047,
+      "permuted_cv_max": 0.564,
       "real_fit": 0.7413,
       "real_cv": 0.6977,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
       "logP": 0.5028,
@@ -4940,11 +5034,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.9572,
       "permuted_fit_max": 0.9738,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5097,
+      "permuted_cv_max": 0.5988,
       "real_fit": 0.9971,
       "real_cv": 0.6192,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 4
@@ -5013,11 +5109,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8992,
       "permuted_fit_max": 0.9273,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5091,
+      "permuted_cv_max": 0.5843,
       "real_fit": 0.9477,
       "real_cv": 0.6221,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 3
@@ -5086,11 +5184,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.9147,
       "permuted_fit_max": 0.9419,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5116,
+      "permuted_cv_max": 0.5988,
       "real_fit": 0.968,
       "real_cv": 0.5988,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 2
@@ -5159,11 +5259,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5965,
       "permuted_fit_max": 0.6395,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5038,
+      "permuted_cv_max": 0.561,
       "real_fit": 0.7151,
       "real_cv": 0.657,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -5232,11 +5334,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.6091,
       "permuted_fit_max": 0.689,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.5047,
+      "permuted_cv_max": 0.5785,
       "real_fit": 0.8081,
       "real_cv": 0.6628,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 9
@@ -5304,15 +5408,15 @@
     "n_rows_explained": 40,
     "explainer": "shap.KernelExplainer (background sample of the training set)",
     "mean_abs_shap": {
-     "logP": 0.1588,
-     "logP2": 0.0516,
-     "MolMR": 0.1104,
-     "TPSA": 0.0139,
-     "HBD": 0.0341,
-     "HBA": 0.0783,
-     "ROTB": 0.036,
-     "AROM": 0.1245,
-     "FractionCSP3": 0.2588
+     "logP": 0.1629,
+     "logP2": 0.0473,
+     "MolMR": 0.1116,
+     "TPSA": 0.0143,
+     "HBD": 0.031,
+     "HBA": 0.0815,
+     "ROTB": 0.0409,
+     "AROM": 0.1256,
+     "FractionCSP3": 0.258
     },
     "ranking": [
      "FractionCSP3",
@@ -5461,11 +5565,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.027,
       "permuted_fit_max": 0.0527,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.0522,
+      "permuted_cv_max": -0.0058,
       "real_fit": 0.2908,
       "real_cv": 0.1735,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "standardised_coefficients": {
       "logP": 0.41,
@@ -5519,11 +5625,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.0174,
       "permuted_fit_max": 0.0411,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.0322,
+      "permuted_cv_max": -0.0044,
       "real_fit": 0.2795,
       "real_cv": 0.2097,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 7
@@ -5565,11 +5673,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.5834,
       "permuted_fit_max": 0.6469,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.1102,
+      "permuted_cv_max": -0.0128,
       "real_fit": 0.9413,
       "real_cv": 0.1363,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 3
@@ -5611,11 +5721,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.4708,
       "permuted_fit_max": 0.5424,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.1888,
+      "permuted_cv_max": -0.0883,
       "real_fit": 0.871,
       "real_cv": 0.1404,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -5657,11 +5769,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.4604,
       "permuted_fit_max": 0.5047,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.2111,
+      "permuted_cv_max": -0.1038,
       "real_fit": 0.85,
       "real_cv": 0.1032,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 2
@@ -5703,11 +5817,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.0541,
       "permuted_fit_max": 0.095,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.0563,
+      "permuted_cv_max": 0.0101,
       "real_fit": 0.3734,
       "real_cv": 0.1623,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 4
@@ -5749,11 +5865,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.0678,
       "permuted_fit_max": 0.1244,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.1904,
+      "permuted_cv_max": -0.0645,
       "real_fit": 0.3996,
       "real_cv": -0.0291,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 5
@@ -5962,11 +6080,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.7511,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.4622,
+      "permuted_cv_max": 1.0,
       "real_fit": 0.8889,
       "real_cv": 0.5556,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 5
@@ -6032,14 +6152,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.7511,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.4622,
+      "permuted_cv_max": 1.0,
       "real_fit": 0.8889,
       "real_cv": 0.5556,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.6259,
       "permuted_wilks_lambda_min": 0.0303,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": true
      },
      "standardised_coefficients": {
       "logP": -14.1271,
@@ -6124,14 +6246,16 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8667,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.4689,
+      "permuted_cv_max": 0.7778,
       "real_fit": 1.0,
       "real_cv": 1.0,
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
       "permuted_wilks_lambda_mean": 0.2807,
       "permuted_wilks_lambda_min": 0.0225,
       "wilks_lambda_expectation": "near 1 for the random models, clearly lower for the real one (manual p. 16)",
-      "real_cv_beaten_by_chance": null
+      "real_cv_beaten_by_chance": false
      },
      "status": "ok",
      "rank_by_external": 1
@@ -6187,11 +6311,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.6911,
       "permuted_fit_max": 0.8889,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.4067,
+      "permuted_cv_max": 0.8889,
       "real_fit": 0.7778,
       "real_cv": 0.7778,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "standardised_coefficients": {
       "logP": 0.3544,
@@ -6253,11 +6379,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8733,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.3911,
+      "permuted_cv_max": 0.8889,
       "real_fit": 1.0,
       "real_cv": 0.7778,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 3
@@ -6313,11 +6441,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5556,
       "permuted_fit_max": 0.5556,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.2133,
+      "permuted_cv_max": 0.5556,
       "real_fit": 0.5556,
       "real_cv": 0.5556,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 9
@@ -6373,11 +6503,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.5556,
       "permuted_fit_max": 0.5556,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.0622,
+      "permuted_cv_max": 0.1111,
       "real_fit": 0.5556,
       "real_cv": 0.0,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 8
@@ -6433,11 +6565,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.6956,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.3311,
+      "permuted_cv_max": 0.8889,
       "real_fit": 0.8889,
       "real_cv": 0.4444,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 7
@@ -6493,11 +6627,13 @@
       "metric": "accuracy",
       "permuted_fit_mean": 0.8733,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": 0.4467,
+      "permuted_cv_max": 0.8889,
       "real_fit": 1.0,
       "real_cv": 0.6667,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 4
@@ -6672,11 +6808,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.625,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -55.9085,
+      "permuted_cv_max": -10.6156,
       "real_fit": 1.0,
       "real_cv": -76.7795,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "standardised_coefficients": {
       "logP": -0.0516,
@@ -6720,11 +6858,13 @@
       "metric": "r2",
       "permuted_fit_mean": -76.3811,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -42.125,
+      "permuted_cv_max": -10.4045,
       "real_fit": 1.0,
       "real_cv": -76.7795,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 26,
+      "first_permutation_failure": "ValueError: slice 0 has a NaN entry",
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 6
@@ -6762,11 +6902,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.5187,
       "permuted_fit_max": 0.8909,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.9501,
+      "permuted_cv_max": -0.196,
       "real_fit": 0.8909,
       "real_cv": -2.0486,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 3
@@ -6804,11 +6946,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.625,
       "permuted_fit_max": 1.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -1.4582,
+      "permuted_cv_max": -0.0546,
       "real_fit": 1.0,
       "real_cv": -4.1813,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 4
@@ -6846,11 +6990,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.0,
       "permuted_fit_max": -0.0,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.818,
+      "permuted_cv_max": -0.3902,
       "real_fit": -0.0,
       "real_cv": -1.4978,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 2
@@ -6888,11 +7034,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.4251,
       "permuted_fit_max": 0.9489,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -0.8056,
+      "permuted_cv_max": -0.3243,
       "real_fit": 0.9489,
       "real_cv": -1.4337,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 1
@@ -6930,11 +7078,13 @@
       "metric": "r2",
       "permuted_fit_mean": 0.5986,
       "permuted_fit_max": 0.9755,
-      "permuted_cv_mean": null,
-      "permuted_cv_max": null,
+      "permuted_cv_mean": -10791.4296,
+      "permuted_cv_max": -9083.1094,
       "real_fit": 0.9742,
       "real_cv": -9083.1094,
-      "real_cv_beaten_by_chance": null
+      "n_permutations_with_a_cv_score": 50,
+      "first_permutation_failure": null,
+      "real_cv_beaten_by_chance": true
      },
      "status": "ok",
      "rank_by_external": 7
@@ -7029,7 +7179,7 @@
   "shap_summary": {
    "status": "written",
    "path": "models/shap_summary.png",
-   "bytes": 404003,
+   "bytes": 296844,
    "panels": [
     "wide-qed-class [normal]",
     "wide-qed-class [box_jenkins]",
@@ -7044,7 +7194,7 @@
   "ladder_summary": {
    "status": "written",
    "path": "models/ladder_summary.png",
-   "bytes": 181454
+   "bytes": 137115
   }
  }
 }
