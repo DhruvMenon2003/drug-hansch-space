@@ -16,6 +16,7 @@ import { announce } from '../announce.js';
 import { createScheduler } from '../scheduler.js';
 import { disposeGroup, watchContext, watchDpr } from './scene.js';
 import { CPK } from './molviewer.js';
+import { loadMolecule } from '../data.js';
 
 const INDEX = 'data/binding/index.json';
 /** How long the ligand takes to come in, and the share of that time after which the contacts appear. */
@@ -146,11 +147,29 @@ function ballStick(mol, scale = 1, carbon = null) {
 function pocket(sc) {
   const T = app.tokens, g = new THREE.Group();
   const hue = { polar: T.s1 || '#2a78d6', apolar: T.point || '#7a8a85', charged: T.s2 || '#eb6834' };
+  // the chain as a ChimeraX-style cartoon: a thick ribbon coloured blue at the N terminus to red at the C terminus
+  const nTot = sc.trace.xyz.length / 3;
   for (const [a, b] of sc.trace.seg) {
     const pts = [];
     for (let i = a; i <= b; i++) pts.push(new THREE.Vector3(sc.trace.xyz[3 * i], sc.trace.xyz[3 * i + 1], sc.trace.xyz[3 * i + 2]));
-    // a smooth backbone tube, ChimeraX-style, instead of a jagged CA polyline
-    if (pts.length > 1) g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), pts.length * 6, 0.22, 8), new THREE.MeshStandardMaterial({ color: new THREE.Color('#b9c3c9'), roughness: 0.85, transparent: true, opacity: 0.26, depthWrite: false })));
+    if (pts.length < 2) continue;
+    const tub = pts.length * 6, rad = 10;
+    const geo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), tub, 0.62, rad);
+    // flatten the tube into a ribbon: squash it along its binormal
+    const pos = geo.attributes.position, col = new Float32Array(pos.count * 3), path = geo.parameters.path, fr = path.computeFrenetFrames(tub, false);
+    for (let k = 0; k <= tub; k++) {
+      const c = path.getPointAt(k / tub), B = fr.binormals[k];
+      _c.setHSL(0.66 * (1 - (a + (b - a) * k / tub) / Math.max(1, nTot - 1)), 0.62, 0.58);
+      for (let r = 0; r <= rad; r++) {
+        const v = k * (rad + 1) + r, x = pos.getX(v) - c.x, y = pos.getY(v) - c.y, z = pos.getZ(v) - c.z;
+        const along = x * B.x + y * B.y + z * B.z;
+        pos.setXYZ(v, pos.getX(v) - B.x * along * 0.6, pos.getY(v) - B.y * along * 0.6, pos.getZ(v) - B.z * along * 0.6);
+        col.set([_c.r, _c.g, _c.b], 3 * v);
+      }
+    }
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    geo.computeVertexNormals();
+    g.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.55, transparent: true, opacity: 0.72, depthWrite: false })));
   }
   // the residues the ligand touches are drawn as sticks (ChimeraX's "show contacts" look); the rest of the 7.5 A shell as
   // faint dots that give the pocket its shape without hiding the ligand
@@ -166,7 +185,14 @@ function pocket(sc) {
     balls.setColorAt(j, _c.set(hue[sc.res[sc.atoms.r[i]]?.k] || hue.apolar));
   });
   balls.count = near.length;
-  g.add(balls);
+  // an artistic fold draws its helices as cylinders (ChimeraX's "cartoon style tube" look)
+  (sc.rods || []).forEach(([base, u, len], k) => {
+    const m = new THREE.Mesh(new THREE.CapsuleGeometry(1.8, len, 6, 18), new THREE.MeshStandardMaterial({ color: _c.setHSL(0.66 * (1 - k / Math.max(1, sc.rods.length - 1)), 0.55, 0.6).clone(), roughness: 0.5, transparent: true, opacity: 0.42, depthWrite: false }));
+    m.position.copy(base).addScaledVector(u, len / 2);
+    m.quaternion.setFromUnitVectors(UP, u);
+    g.add(m);
+  });
+  // cartoon style: no atom cloud; the ribbon carries the fold and the contact residues carry the chemistry
   if (hot.length) {
     // bonds inferred from distance within each residue: the scene files carry atoms, not residue topology
     const xyz = new Float32Array(hot.length * 3), e = [], b = [];
@@ -264,6 +290,13 @@ function approachTrail(dir, start) {
 /** The caption: what crystal this is, which pose is shown, and the residues the ligand touches. */
 function caption(sc, pose, d) {
   const p = sc.pdb;
+  if (sc.art) {
+    $('#bind-h').textContent = `${cap(d.name)}: an artistic view`;
+    $('#bind-what').textContent = `There is no annotated co-crystal for ${cap(d.name)} in this site's data, so this is an illustration: ${sc.target} drawn as a cartoon fold, with ${cap(d.name)}'s own 3D conformer settling into it. The fold, the pocket and the pose are not measured, and no contacts are claimed. For a real pose, dock the conformer with a program such as AutoDock Vina.`;
+    $('#bind-contacts').innerHTML = '<li>Illustration: no measured contacts</li>';
+    $('#bind-cite').textContent = `Ligand geometry: the drug's 3D conformer (${d.conf || 'PubChem / RDKit'}). Receptor: illustrative only.`;
+    return;
+  }
   $('#bind-h').textContent = `${cap(d.name)} in ${sc.target}`;
   $('#bind-what').textContent = `${pose.xtal ? 'The crystallographic ligand itself' : `${cap(d.name)} placed on the crystallographic ligand by its ${pose.mcs}-atom shared substructure`}, in the pocket of PDB ${p.id} (${p.method}${p.resolution ? `, ${fx(p.resolution, 2)} Å` : ''}). ${sc.res.length} pocket residues were measured; the residues the ligand touches are drawn as sticks, the rest of the ${NEAR_A} Å shell as faint dots and the chain as a ribbon. ${pose.xtal ? '' : 'The crystallographic ligand is left in place as a ghost. '}The contacts listed, and the dashed lines drawn, are the ones that ligand makes in this structure. The dotted path in is the least obstructed straight line out of this crystal's pocket, and the tumble on the way in is decoration: this is not a docking or a simulation. Scores and poses belong to a docking program such as AutoDock Vina.`;
   const seen = new Map();
@@ -280,17 +313,83 @@ function caption(sc, pose, d) {
   $('#bind-cite').textContent = `Pocket, ligand and contact distances from PDB ${p.id}: ${p.title}. Deposited ${p.deposited}. Contacts within ${index.hbond_a} Å (polar) and ${index.hydrophobic_a} Å (apolar) of a pocket atom.`;
 }
 
+/**
+ * An ARTISTIC receptor for a drug with no annotated co-crystal: a cartoon fold drawn from simple helices (a seven-helix
+ * bundle for receptors, a globular helix cluster otherwise) with the drug's own 3D conformer settling into a cleft at the
+ * centre. Nothing here is measured: no residues, no contacts, no pose. It is an illustration, and the caption says so.
+ */
+function artScene(d, m) {
+  const xyz = [], seg = [];
+  const rods = [];
+  const helix = (base, axis, len) => {
+    rods.push([base.clone(), axis.clone().normalize(), len * 1.5]);
+    const start = xyz.length / 3, u = axis.clone().normalize(), w = new THREE.Vector3().crossVectors(u, Math.abs(u.y) < 0.9 ? UP : new THREE.Vector3(1, 0, 0)).normalize(), v = new THREE.Vector3().crossVectors(u, w);
+    for (let i = 0; i < len; i++) {
+      const t = i * 1.745, p = base.clone().addScaledVector(u, i * 1.5).addScaledVector(w, 2.3 * Math.cos(t)).addScaledVector(v, 2.3 * Math.sin(t));
+      xyz.push(p.x, p.y, p.z);
+    }
+    return [start, xyz.length / 3 - 1];
+  };
+  const names = app.meta.atc_names || {}, code = d.atc?.[0]?.code || '';
+  const what = names[code.slice(0, 5)] || names[code.slice(0, 4)] || names[code.slice(0, 3)] || 'target';
+  const gpcr = /receptor|antagon|agonist|blocker|antihistamin/i.test(what);
+  let prev = null;
+  const link = (s0, s1) => { if (prev != null) seg.push([prev, s0]); prev = s1; };
+  if (gpcr) {
+    // seven transmembrane helices around a central pocket open to the top (+y), up and down alternately
+    for (let h = 0; h < 7; h++) {
+      const ang = 2 * Math.PI * h / 7, r = 8.5, up = h % 2 === 0;
+      const base = new THREE.Vector3(r * Math.cos(ang), up ? -24 : 6, r * Math.sin(ang));
+      const [s0, s1] = helix(base, new THREE.Vector3(0.12 * Math.sin(ang), up ? 1 : -1, -0.12 * Math.cos(ang)), 20);
+      seg.push([s0, s1]); link(s0, s1);
+    }
+  } else {
+    // a globular cluster of helices on a sphere, leaving a cleft facing +y
+    for (let h = 0; h < 9; h++) {
+      const phi = Math.acos(-0.95 + 1.5 * h / 8), th = h * 2.4, r = 12;
+      const c = new THREE.Vector3(r * Math.sin(phi) * Math.cos(th), -r * Math.cos(phi) - 2, r * Math.sin(phi) * Math.sin(th));
+      const ax = new THREE.Vector3(-Math.sin(th), 0.4, Math.cos(th));
+      const [s0, s1] = helix(c.clone().addScaledVector(ax.clone().normalize(), -9), ax, 13);
+      seg.push([s0, s1]); link(s0, s1);
+    }
+  }
+  // the loops between helices, as their own trace segments, bowed outward so they read as loops
+  const loops = [];
+  for (let k = 0; k + 1 < rods.length; k++) {
+    const A = rods[k][0].clone().addScaledVector(rods[k][1], rods[k][2]), B = rods[k + 1][0].clone();
+    const mid = A.clone().add(B).multiplyScalar(0.5), out = mid.clone().setY(0).normalize().multiplyScalar(3).add(new THREE.Vector3(0, Math.sign(mid.y || 1) * 3, 0));
+    const s0 = xyz.length / 3;
+    for (let i = 0; i <= 6; i++) { const t = i / 6, p = A.clone().lerp(B, t).addScaledVector(out, Math.sin(Math.PI * t)); xyz.push(p.x, p.y, p.z); }
+    loops.push([s0, xyz.length / 3 - 1]);
+  }
+  // the conformer, centred on the cleft
+  const n = m.z.length, c = [0, 0, 0];
+  for (let i = 0; i < n; i++) for (let k = 0; k < 3; k++) c[k] += m.xyz[3 * i + k] / n;
+  const lx = m.xyz.map((v, i) => v - c[i % 3]);
+  const keep = [], map = new Map();
+  for (let i = 0; i < n; i++) if (m.z[i] !== 1) { map.set(i, keep.length); keep.push(i); }
+  const lig = { e: keep.map(i => m.z[i]), xyz: keep.flatMap(i => lx.slice(3 * i, 3 * i + 3)), b: [] };
+  for (let k = 0; k < (m.b?.length || 0); k += 3) if (map.has(m.b[k]) && map.has(m.b[k + 1])) lig.b.push(map.get(m.b[k]), map.get(m.b[k + 1]), m.b[k + 2]);
+  return { art: true, rods, gpcr, what, approach: [0.25, 1, 0.2], radius: 34, trace: { xyz, seg: loops }, res: [], atoms: { e: [], xyz: [], r: [] }, contacts: [], bound: lig, poses: [], target: `an illustrative ${gpcr ? 'seven-helix receptor' : 'protein'} (${what})` };
+}
+
 /** Build the scene for drug `d` and play the approach. */
 async function show(d) {
   const id = sceneIdFor(d) || (await allPoses()).get(d.cid);
-  if (!id) return false;
-  let sc;
-  try { sc = await loadScene(id); } catch { scenes.delete(id); return false; }
-  const pose = sc.poses.find(p => p.cid === d.cid) || { ...sc.bound, cid: d.cid, name: d.name, mcs: 0, xtal: true };
+  let sc = null;
+  if (id) try { sc = await loadScene(id); } catch { scenes.delete(id); }
+  if (!sc) {
+    // no annotated pocket: draw an artistic receptor around the drug's own conformer instead of giving up
+    let m;
+    try { m = await loadMolecule(d.cid); } catch { return false; }
+    if (!m) return false;
+    sc = artScene(d, m);
+  }
+  const pose = sc.art ? { ...sc.bound, cid: d.cid, xtal: true } : sc.poses.find(p => p.cid === d.cid) || { ...sc.bound, cid: d.cid, name: d.name, mcs: 0, xtal: true };
   if (!bv.renderer) initViewer();
   disposeGroup(bv.group);
   bv.group = new THREE.Group();
-  bv.id = id;
+  bv.id = id || `art-${d.cid}`;
   const pk = pocket(sc);
   bv.group.add(pk);
   const lig = ballStick(pose, 1, '#5cb85c');
@@ -316,9 +415,9 @@ async function show(d) {
   // frame the ligand with a little of the pocket around it, the way the conformer viewer frames a conformer
   let R = 1;
   for (let i = 0; i < pose.e.length; i++) R = Math.max(R, Math.hypot(pose.xyz[3 * i], pose.xyz[3 * i + 1], pose.xyz[3 * i + 2]));
-  R += 4;
+  R += sc.art ? 10 : 4;
   const dist = R / Math.sin(THREE.MathUtils.degToRad(bv.camera.fov / 2)) * (bv.camera.aspect < 1 ? 1 / bv.camera.aspect : 1);
-  bv.camera.position.set(0.45, 0.25, 0.86).multiplyScalar(dist);
+  bv.camera.position.set(...(sc.art ? [0.35, 0.8, 0.5] : [0.45, 0.25, 0.86])).normalize().multiplyScalar(dist);
   bv.dist = dist;
   bv.controls.target.set(0, 0, 0);
   bv.controls.update();
@@ -347,7 +446,7 @@ function setT(t) {
   const s = $('#bind-scrub');
   if (s) s.value = String(Math.round(t * 1000));
   const stage = $('#bind-stage');
-  if (stage) stage.textContent = t < 0.05 ? 'Outside the pocket' : t < CONTACT_AT ? 'Approaching' : t < 1 ? 'Settling' : 'Bound: crystal pose';
+  if (stage) stage.textContent = t < 0.05 ? 'Outside the pocket' : t < CONTACT_AT ? 'Approaching' : t < 1 ? 'Settling' : bv.sc?.art ? 'Seated (illustration)' : 'Bound: crystal pose';
 }
 
 /** Advance the animation by one frame; called from the render loop while playing. */
@@ -388,7 +487,7 @@ export async function toggleOverlay() {
   const btn = $('#d-bind');
   try { await loadIndex(); } catch { note('The binding data could not be loaded.'); return; }
   const ok = await show(d);
-  if (!ok) { note(`There is no annotated receptor pocket for ${cap(d.name)}.`); return; }
+  if (!ok) { note(`There is no 3D conformer for ${cap(d.name)} to show binding.`); return; }
   note('');
   bv.open = true;
   $('#bind').hidden = false;
