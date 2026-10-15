@@ -25,7 +25,7 @@ const NEAR_A = 7.5;
 const _m = new THREE.Matrix4(), _c = new THREE.Color(), UP = new THREE.Vector3(0, 1, 0);
 
 /** The overlay singleton. Mutate it, never reassign it. */
-const bv = { renderer: null, scene: null, camera: null, controls: null, group: null, lig: null, contacts: null, loop: null, open: false, id: null, sc: null, tween: null, fit: null, dispose: null };
+const bv = { renderer: null, scene: null, camera: null, controls: null, group: null, lig: null, contacts: null, loop: null, open: false, id: null, sc: null, anim: null, labels: null, trail: null, q0: null, dist: 0, fit: null, dispose: null };
 const wake = () => bv.loop?.invalidate();
 let index = null, scenes = new Map(), started = false;
 
@@ -91,10 +91,12 @@ function initViewer() {
     if (!bv.open || !bv.group) return false;
     const moved = bv.controls.update();
     bv.renderer.render(bv.scene, bv.camera);
-    return moved === true || !!bv.tween?.isActive?.();
+    const run = bv.anim?.playing;
+    if (run) step();
+    return moved === true || !!run;
   });
   bv.dispose = () => {
-    ac.abort(); ro.disconnect(); bv.tween?.kill(); bv.loop.dispose(); bv.controls.dispose();
+    ac.abort(); ro.disconnect(); bv.loop.dispose(); bv.controls.dispose();
     disposeGroup(bv.group); bv.group = null;
     bv.renderer.dispose();
     Object.assign(bv, { renderer: null, scene: null, camera: null, controls: null, loop: null, group: null, lig: null, contacts: null, sc: null, fit: null, dispose: null });
@@ -103,7 +105,7 @@ function initViewer() {
 }
 
 /** Ball and stick for one molecule {e, xyz, b}, drawn exactly as the conformer viewer draws a conformer. */
-function ballStick(mol, scale = 1) {
+function ballStick(mol, scale = 1, carbon = null) {
   const g = new THREE.Group(), n = mol.e.length;
   const P = i => new THREE.Vector3(mol.xyz[3 * i], mol.xyz[3 * i + 1], mol.xyz[3 * i + 2]);
   const rad = z => (z === 1 ? 0.17 : z <= 10 ? 0.3 : z <= 18 ? 0.36 : 0.42) * scale;
@@ -111,7 +113,7 @@ function ballStick(mol, scale = 1) {
   for (let i = 0; i < n; i++) {
     const r = rad(mol.e[i]);
     atoms.setMatrixAt(i, _m.makeScale(r, r, r).setPosition(P(i)));
-    atoms.setColorAt(i, _c.set(CPK[mol.e[i]] || '#ff1493'));
+    atoms.setColorAt(i, _c.set((carbon && mol.e[i] === 6 ? carbon : CPK[mol.e[i]]) || '#ff1493'));
   }
   g.add(atoms);
   outline(atoms, 0.14);
@@ -132,7 +134,7 @@ function ballStick(mol, scale = 1) {
     q.setFromUnitVectors(UP, dir.normalize());
     _m.compose(a.clone().add(b).multiplyScalar(0.5), q, new THREE.Vector3(r, len, r));
     bonds.setMatrixAt(k, _m);
-    bonds.setColorAt(k, _c.set(CPK[z] || '#ff1493'));
+    bonds.setColorAt(k, _c.set((carbon && z === 6 ? carbon : CPK[z]) || '#ff1493'));
   });
   bonds.count = halves.length;
   g.add(bonds);
@@ -148,52 +150,122 @@ function pocket(sc) {
     const pts = [];
     for (let i = a; i <= b; i++) pts.push(new THREE.Vector3(sc.trace.xyz[3 * i], sc.trace.xyz[3 * i + 1], sc.trace.xyz[3 * i + 2]));
     // a smooth backbone tube, ChimeraX-style, instead of a jagged CA polyline
-    if (pts.length > 1) g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), pts.length * 6, 0.22, 8), new THREE.MeshStandardMaterial({ color: new THREE.Color('#b9c3c9'), roughness: 0.85, transparent: true, opacity: 0.38, depthWrite: false })));
+    if (pts.length > 1) g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), pts.length * 6, 0.22, 8), new THREE.MeshStandardMaterial({ color: new THREE.Color('#b9c3c9'), roughness: 0.85, transparent: true, opacity: 0.26, depthWrite: false })));
   }
-  // only the residues that line the site are drawn as atoms: the whole 10 Å shell is a cloud the ligand disappears into
-  const near = [];
-  for (let i = 0; i < sc.atoms.e.length; i++) if ((sc.res[sc.atoms.r[i]]?.d ?? 99) <= NEAR_A) near.push(i);
-  const balls = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), new THREE.MeshStandardMaterial({ roughness: 0.85, transparent: true, opacity: 0.55 }), Math.max(1, near.length));
+  // the residues the ligand touches are drawn as sticks (ChimeraX's "show contacts" look); the rest of the 7.5 A shell as
+  // faint dots that give the pocket its shape without hiding the ligand
+  const touch = new Set(sc.contacts.filter(c => c.a < sc.bound.e.length).map(c => sc.atoms.r[c.p]));
+  const near = [], hot = [];
+  for (let i = 0; i < sc.atoms.e.length; i++) {
+    const r = sc.atoms.r[i];
+    if (touch.has(r)) hot.push(i); else if ((sc.res[r]?.d ?? 99) <= NEAR_A) near.push(i);
+  }
+  const balls = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), new THREE.MeshStandardMaterial({ roughness: 0.9, transparent: true, opacity: 0.32, depthWrite: false }), Math.max(1, near.length));
   near.forEach((i, j) => {
-    const r = sc.atoms.e[i] === 6 ? 0.24 : 0.28;
-    balls.setMatrixAt(j, _m.makeScale(r, r, r).setPosition(new THREE.Vector3(sc.atoms.xyz[3 * i], sc.atoms.xyz[3 * i + 1], sc.atoms.xyz[3 * i + 2])));
+    balls.setMatrixAt(j, _m.makeScale(0.2, 0.2, 0.2).setPosition(new THREE.Vector3(sc.atoms.xyz[3 * i], sc.atoms.xyz[3 * i + 1], sc.atoms.xyz[3 * i + 2])));
     balls.setColorAt(j, _c.set(hue[sc.res[sc.atoms.r[i]]?.k] || hue.apolar));
   });
   balls.count = near.length;
   g.add(balls);
-  g.userData.nearRes = new Set(near.map(i => sc.atoms.r[i])).size;
+  if (hot.length) {
+    // bonds inferred from distance within each residue: the scene files carry atoms, not residue topology
+    const xyz = new Float32Array(hot.length * 3), e = [], b = [];
+    hot.forEach((i, k) => { xyz.set(sc.atoms.xyz.slice(3 * i, 3 * i + 3), 3 * k); e.push(sc.atoms.e[i]); });
+    for (let x = 0; x < hot.length; x++) for (let y = x + 1; y < hot.length; y++) {
+      if (sc.atoms.r[hot[x]] !== sc.atoms.r[hot[y]]) continue;
+      const d = Math.hypot(xyz[3 * x] - xyz[3 * y], xyz[3 * x + 1] - xyz[3 * y + 1], xyz[3 * x + 2] - xyz[3 * y + 2]);
+      if (d < (e[x] === 16 || e[y] === 16 ? 1.95 : 1.7)) b.push(x, y, 1);
+    }
+    g.add(ballStick({ e, xyz, b }, 0.62, '#b7bfc7'));
+  }
+  g.userData.touch = touch;
   return g;
 }
 
 /**
- * The measured contacts as thin sticks, hidden until the ligand is nearly seated. They are drawn from the crystallographic
- * ligand's atoms, because that is the molecule they were measured on: a drug laid onto it by its shared substructure has
- * its own atom numbering, so drawing them from the drug's atoms would name the wrong atom.
+ * The measured contacts as dashed lines, the way ChimeraX and PLIP draw them: blue for hydrogen bonds, amber for apolar
+ * contacts. They are drawn from the crystallographic ligand's atoms, because that is the molecule they were measured on: a
+ * drug laid onto it by its shared substructure has its own atom numbering, so drawing them from the drug's atoms would name
+ * the wrong atom. Hidden until the ligand is nearly seated.
  */
 function contactSticks(sc) {
   const T = app.tokens, mol = sc.bound, g = new THREE.Group(), q = new THREE.Quaternion();
   const list = sc.contacts.filter(c => c.a < mol.e.length);
-  const mesh = new THREE.InstancedMesh(new THREE.CylinderGeometry(1, 1, 1, 6, 1), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 }), Math.max(1, list.length));
-  list.forEach((c, k) => {
+  const dashes = [];
+  for (const c of list) {
     const a = new THREE.Vector3(mol.xyz[3 * c.a], mol.xyz[3 * c.a + 1], mol.xyz[3 * c.a + 2]);
     const b = new THREE.Vector3(sc.atoms.xyz[3 * c.p], sc.atoms.xyz[3 * c.p + 1], sc.atoms.xyz[3 * c.p + 2]);
-    const dir = b.clone().sub(a), len = dir.length();
-    q.setFromUnitVectors(UP, dir.clone().normalize());
-    _m.compose(a.clone().add(b).multiplyScalar(0.5), q, new THREE.Vector3(0.035, len, 0.035));
+    const dir = b.clone().sub(a), len = dir.length(), n = Math.max(2, Math.round(len / 0.36));
+    dir.normalize();
+    for (let k = 0; k < n; k += 2) dashes.push([a.clone().addScaledVector(dir, (k + 0.5) * len / n), dir, len / n, c.t]);
+  }
+  const mesh = new THREE.InstancedMesh(new THREE.CylinderGeometry(1, 1, 1, 6, 1), new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }), Math.max(1, dashes.length));
+  dashes.forEach(([p, dir, l, t], k) => {
+    q.setFromUnitVectors(UP, dir);
+    const w = t === 'hb' ? 0.055 : 0.04;
+    _m.compose(p, q, new THREE.Vector3(w, l, w));
     mesh.setMatrixAt(k, _m);
-    mesh.setColorAt(k, _c.set((c.t === 'hb' ? T.s1 : T.s2) || '#2a78d6'));
+    mesh.setColorAt(k, _c.set(t === 'hb' ? '#2f8fe8' : (T.s2 || '#e0902f')));
   });
-  mesh.count = list.length;
+  mesh.count = dashes.length;
   g.add(mesh);
   g.userData.material = mesh.material;
   return { group: g, list };
+}
+
+/** A text label that stays the same size on screen and is never hidden behind atoms. */
+function label(text, color) {
+  const dpr = 2, fs = 26, c = document.createElement('canvas'), x = c.getContext('2d');
+  x.font = `600 ${fs}px system-ui, sans-serif`;
+  const w = Math.ceil(x.measureText(text).width) + 20, h = fs + 14;
+  c.width = w * dpr; c.height = h * dpr;
+  x.scale(dpr, dpr);
+  x.font = `600 ${fs}px system-ui, sans-serif`;
+  x.fillStyle = 'rgba(20,22,26,0.78)';
+  x.beginPath(); x.roundRect(0, 0, w, h, h / 2); x.fill();
+  x.fillStyle = color; x.textBaseline = 'middle'; x.fillText(text, 10, h / 2 + 1);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0, depthTest: false, sizeAttenuation: false }));
+  sp.scale.set(0.00105 * w, 0.00105 * h, 1);
+  sp.renderOrder = 10;
+  return sp;
+}
+
+/** One label per touched residue, at the residue's centre, pushed a little outward so it does not sit on the ligand. */
+function residueLabels(sc, touch) {
+  const g = new THREE.Group(), kinds = new Map();
+  for (const c of sc.contacts) if (c.a < sc.bound.e.length) { const r = sc.atoms.r[c.p]; if (kinds.get(r) !== 'hb') kinds.set(r, c.t); }
+  for (const r of touch) {
+    const res = sc.res[r];
+    if (!res) continue;
+    const p = new THREE.Vector3();
+    let n = 0;
+    for (let i = 0; i < sc.atoms.e.length; i++) if (sc.atoms.r[i] === r) { p.x += sc.atoms.xyz[3 * i]; p.y += sc.atoms.xyz[3 * i + 1]; p.z += sc.atoms.xyz[3 * i + 2]; n++; }
+    if (!n) continue;
+    p.divideScalar(n);
+    p.addScaledVector(p.clone().normalize(), 1.2);
+    const sp = label(`${cap(res.n.toLowerCase())}${res.i}`, kinds.get(r) === 'hb' ? '#8cc6ff' : '#ffc979');
+    sp.position.copy(p);
+    g.add(sp);
+  }
+  return g;
+}
+
+/** The approach path: a dotted line from where the ligand starts to the pocket, fading once the ligand is seated. */
+function approachTrail(dir, start) {
+  const pts = [];
+  for (let k = 0; k <= 60; k++) pts.push(dir.clone().multiplyScalar(start * k / 60));
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const line = new THREE.Points(geo, new THREE.PointsMaterial({ color: '#8fa3b5', size: 3, sizeAttenuation: false, transparent: true, opacity: 0, depthWrite: false }));
+  return line;
 }
 
 /** The caption: what crystal this is, which pose is shown, and the residues the ligand touches. */
 function caption(sc, pose, d) {
   const p = sc.pdb;
   $('#bind-h').textContent = `${cap(d.name)} in ${sc.target}`;
-  $('#bind-what').textContent = `${pose.xtal ? 'The crystallographic ligand itself' : `${cap(d.name)} placed on the crystallographic ligand by its ${pose.mcs}-atom shared substructure`}, in the pocket of PDB ${p.id} (${p.method}${p.resolution ? `, ${fx(p.resolution, 2)} Å` : ''}). ${sc.res.length} pocket residues were measured; the ${NEAR_A} Å shell around the ligand is drawn as atoms and the rest as the backbone trace. ${pose.xtal ? '' : 'The crystallographic ligand is left in place as a ghost. '}The contacts listed, and the sticks drawn, are the ones that ligand makes in this structure. The path in is the least obstructed straight line out of this crystal's pocket, not a docking or a simulation.`;
+  $('#bind-what').textContent = `${pose.xtal ? 'The crystallographic ligand itself' : `${cap(d.name)} placed on the crystallographic ligand by its ${pose.mcs}-atom shared substructure`}, in the pocket of PDB ${p.id} (${p.method}${p.resolution ? `, ${fx(p.resolution, 2)} Å` : ''}). ${sc.res.length} pocket residues were measured; the residues the ligand touches are drawn as sticks, the rest of the ${NEAR_A} Å shell as faint dots and the chain as a ribbon. ${pose.xtal ? '' : 'The crystallographic ligand is left in place as a ghost. '}The contacts listed, and the dashed lines drawn, are the ones that ligand makes in this structure. The dotted path in is the least obstructed straight line out of this crystal's pocket, and the tumble on the way in is decoration: this is not a docking or a simulation. Scores and poses belong to a docking program such as AutoDock Vina.`;
   const seen = new Map();
   for (const c of sc.contacts.filter(c => c.a < sc.bound.e.length)) {
     const r = sc.res[sc.atoms.r[c.p]];
@@ -219,8 +291,9 @@ async function show(d) {
   disposeGroup(bv.group);
   bv.group = new THREE.Group();
   bv.id = id;
-  bv.group.add(pocket(sc));
-  const lig = ballStick(pose);
+  const pk = pocket(sc);
+  bv.group.add(pk);
+  const lig = ballStick(pose, 1, '#5cb85c');
   const { group: cg } = contactSticks(sc);
   bv.group.add(lig, cg);
   if (!pose.xtal) {
@@ -231,6 +304,13 @@ async function show(d) {
   }
   bv.lig = lig;
   bv.contacts = cg;
+  bv.labels = residueLabels(sc, pk.userData.touch);
+  bv.group.add(bv.labels);
+  const dir = new THREE.Vector3(...sc.approach).normalize();
+  bv.trail = approachTrail(dir, Math.max(9, sc.radius * 0.55));
+  bv.group.add(bv.trail);
+  // the ligand comes in tumbling and settles into the crystal orientation: a picture of docking, not a computed pathway
+  bv.q0 = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.3, -0.9, 0.7));
   bv.scene.add(bv.group);
   caption(sc, pose, d);
   // frame the ligand with a little of the pocket around it, the way the conformer viewer frames a conformer
@@ -239,35 +319,64 @@ async function show(d) {
   R += 4;
   const dist = R / Math.sin(THREE.MathUtils.degToRad(bv.camera.fov / 2)) * (bv.camera.aspect < 1 ? 1 / bv.camera.aspect : 1);
   bv.camera.position.set(0.45, 0.25, 0.86).multiplyScalar(dist);
+  bv.dist = dist;
   bv.controls.target.set(0, 0, 0);
   bv.controls.update();
   bv.sc = sc;
   return true;                                   // the approach is played once the overlay is on screen, not before
 }
 
-/** The approach: in along the approach vector, fast then slowing into the pocket, then the contacts fade up. */
-function play(sc) {
-  const dir = new THREE.Vector3(...sc.approach).normalize(), start = Math.max(9, sc.radius * 0.55);
+const ease = t => 1 - Math.pow(1 - t, 3);
+const ramp = (t, a, b) => Math.min(1, Math.max(0, (t - a) / (b - a)));
+
+/** Put the scene at progress t (0 = ligand outside the pocket, 1 = seated with contacts shown). Used by play and by the scrubber. */
+function setT(t) {
+  const sc = bv.sc;
+  if (!sc || !bv.lig) return;
+  const dir = new THREE.Vector3(...sc.approach).normalize(), start = Math.max(9, sc.radius * 0.55), e = ease(t);
+  bv.lig.position.copy(dir).multiplyScalar(start * (1 - e));
+  // rotate about the ligand's own centre (the pose is centred on the origin), then move it out along the path
+  bv.lig.quaternion.slerpQuaternions(bv.q0, new THREE.Quaternion(), ease(Math.min(1, t * 1.15)));
+  const show = ramp(t, CONTACT_AT, 1);
   const mat = bv.contacts?.userData.material;
-  bv.tween?.kill();
-  if (reduceMotion.matches || !window.gsap) {
-    bv.lig.position.set(0, 0, 0);
-    if (mat) mat.opacity = 0.9;
-    wake();
-    return;
-  }
-  const state = { t: 0 };
-  bv.lig.position.copy(dir).multiplyScalar(start);
-  if (mat) mat.opacity = 0;
-  bv.tween = window.gsap.to(state, {
-    t: 1, duration: FLY_MS / 1000, ease: 'power2.out',
-    onUpdate() {
-      bv.lig.position.copy(dir).multiplyScalar(start * (1 - state.t));
-      if (mat) mat.opacity = state.t < CONTACT_AT ? 0 : ((state.t - CONTACT_AT) / (1 - CONTACT_AT)) * 0.9;
-      wake();
-    },
-    onComplete: wake,
-  });
+  if (mat) mat.opacity = show * 0.95;
+  bv.labels?.children.forEach(sp => { sp.material.opacity = show; });
+  if (bv.trail) bv.trail.material.opacity = 0.55 * (1 - ramp(t, 0.6, 0.95));
+  // the camera eases in with the ligand, keeping whatever direction the reader has orbited to
+  if (bv.anim?.playing && bv.dist) bv.camera.position.sub(bv.controls.target).setLength(bv.dist * (1 + 0.45 * (1 - e))).add(bv.controls.target);
+  const s = $('#bind-scrub');
+  if (s) s.value = String(Math.round(t * 1000));
+  const stage = $('#bind-stage');
+  if (stage) stage.textContent = t < 0.05 ? 'Outside the pocket' : t < CONTACT_AT ? 'Approaching' : t < 1 ? 'Settling' : 'Bound: crystal pose';
+}
+
+/** Advance the animation by one frame; called from the render loop while playing. */
+function step() {
+  const a = bv.anim, now = performance.now();
+  a.t = Math.min(1, a.t + (now - a.last) / FLY_MS);
+  a.last = now;
+  setT(a.t);
+  if (a.t >= 1) pause();
+}
+
+function syncButton() {
+  const b = $('#bind-replay');
+  if (b) b.textContent = bv.anim?.playing ? 'Pause' : (bv.anim?.t ?? 1) >= 1 ? 'Replay' : 'Play';
+}
+
+/** Play from progress t (default: from the start). With reduced motion, jump straight to the bound pose. */
+function play(sc, t = 0) {
+  if (!sc) return;
+  bv.anim = { t, last: performance.now(), playing: !reduceMotion.matches };
+  if (!bv.anim.playing) bv.anim.t = 1;
+  setT(bv.anim.t);
+  syncButton();
+  wake();
+}
+
+function pause() {
+  if (bv.anim) bv.anim.playing = false;
+  syncButton();
   wake();
 }
 
@@ -296,7 +405,7 @@ export async function toggleOverlay() {
 export function close() {
   if (!bv.open) return;
   bv.open = false;
-  bv.tween?.kill();
+  if (bv.anim) bv.anim.playing = false;
   $('#bind').hidden = true;
   bv.loop?.pause();
   $('#d-bind')?.setAttribute('aria-expanded', 'false');
@@ -310,7 +419,12 @@ export function initBinding() {
   if (started) return;
   started = true;
   $('#bind-close').addEventListener('click', close);
-  $('#bind-replay').addEventListener('click', () => { if (bv.sc) play(bv.sc); });
+  $('#bind-replay').addEventListener('click', () => {
+    if (!bv.sc) return;
+    if (bv.anim?.playing) pause();
+    else play(bv.sc, (bv.anim?.t ?? 1) >= 1 ? 0 : bv.anim.t);
+  });
+  $('#bind-scrub')?.addEventListener('input', e => { const t = +e.target.value / 1000; bv.anim = { t, last: 0, playing: false }; setT(t); syncButton(); wake(); });
   $('#bind').addEventListener('click', e => { if (e.target === $('#bind')) close(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && bv.open && !e.defaultPrevented) { e.preventDefault(); close(); } });
   // a new drug closes the overlay rather than showing the old pocket under a new name

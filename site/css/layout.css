@@ -265,7 +265,9 @@ select { text-overflow: ellipsis; }
 .bench-modes [aria-pressed="true"] { font-weight: 600; border-color: currentColor; }
 .bench-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .bench label { display: flex; flex-direction: column; gap: 2px; font-size: 13px; }
-.bench input { font: inherit; padding: 5px 7px; border: 1px solid var(--rule, #ccc); border-radius: 6px; background: transparent; color: inherit; }
+.bench input { font: inherit; min-height: 44px; padding: 8px 10px; border: 1px solid var(--rule, #ccc); border-radius: 6px; background: transparent; color: inherit; }
 .bench input.changed { border-color: var(--accent, #e0662f); }
 .bench-src { margin-top: 8px; }
 .bench-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+#d-bench-open { min-height: 44px; }
+.bench button { min-height: 44px; }

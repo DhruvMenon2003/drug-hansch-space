@@ -1,6 +1,7 @@
 // Layer 4. Everything that does not need WebGL: data, theme tokens, HUD, controls, table, detail, Hansch panel, copy and
 // the tour. Loaded first by main.js; boot-gl.js attaches the 3D scene afterwards, and startTour() then picks the first
 // step (so the scene is listening when the first layout is emitted).
+const BENCH_MOD = 'bench.js';                       // a variable specifier: loaded on demand, never preloaded
 import { app, anim, bus, STEPS, $ } from './kernel.js';
 import { announce, initAnnounce } from './announce.js';
 import { loadData } from './data.js';
@@ -11,7 +12,6 @@ import { initDetail } from './detail.js';
 import { initControls, syncControls } from './controls.js';
 import { initTable } from './table.js';
 import { initExtras } from './extras.js';
-import { initBench } from './bench.js';
 import { fillMethod, fillTourText, initHansch } from './hansch.js';
 import { goStep, initTour, refreshTourBand, tourBand } from './tour.js';
 import { initLayout, layoutState } from './layout.js';
@@ -67,7 +67,10 @@ export async function bootCore(caps) {
   initHud();
   initTable();
   initDetail();
-  initBench();
+  // the PK bench and the CSV upload load their module and data only when asked for: nothing on first load or first pick
+  const bench = () => import(`./${BENCH_MOD}`).then(m => (m.initBench(), m));
+  $('#d-bench-open')?.addEventListener('click', () => bench());
+  $('#upload')?.addEventListener('change', e => { const f = e.target.files[0]; if (f) bench().then(m => m.importTable(f)); });
   initSheet();
   initAnnounce();
   initControls();

@@ -68,14 +68,18 @@ function csv() {
   a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
+let started = false;
+/** Called on the first press of "Edit PK values" (or the first upload); from then on every pick shows its card. */
 export function initBench() {
-  initUpload();
-  bus.on('selection', async ({ index }) => {
-    const d = app.drugs[index]; cur = d.cid;
+  const show = async index => {
+    const d = app.drugs[index]; if (!d) return;
+    cur = d.cid;
     $('#d-bench').innerHTML = '';
     const list = await curated(d.cid).catch(() => []);
     if (cur === d.cid && list.length) card(list, 0);
-  });
+  };
+  if (!started) { started = true; bus.on('selection', ({ index }) => show(index)); }
+  if (app.selected != null) show(app.selected);
 }
 
 // Upload: a reader's own CSV or TSV (for example the curation sheet saved as CSV). Rows are matched to drugs by PubChem CID or
@@ -99,7 +103,7 @@ function parse(text) {
   return out;
 }
 
-async function importTable(file) {
+export async function importTable(file) {
   const out = $('#upload-out');
   const grid = parse(await file.text());
   const hi = grid.findIndex(r => r.some(c => HEAD.slice(0, 2).some(([re]) => re.test(c.trim().toLowerCase()))));
@@ -126,4 +130,3 @@ async function importTable(file) {
   if (cur != null) bus.emit('selection', { index: app.drugs.findIndex(d => d.cid === cur) });
 }
 
-export function initUpload() { $('#upload')?.addEventListener('change', e => e.target.files[0] && importTable(e.target.files[0])); }
