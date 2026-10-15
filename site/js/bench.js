@@ -3,6 +3,7 @@
 // (localStorage, the same key the lab page used) and download as CSV with their source, ready to send back for curation.
 import { app, bus, $, cap, esc, fx } from './kernel.js';
 import { getSide } from './extras.js';
+import { selectDrug } from './view.js';
 
 const KEY = 'hansch-lab-v1';
 const F = [['F', 'F', 'fraction absorbed, 0–1'], ['t12', 't½', 'h'], ['dose', 'Dose', 'mg'], ['tau', 'Every', 'h'], ['tox', 'Lethal dose', 'mg/kg'], ['act', 'Active dose', 'mg/day']];
@@ -68,6 +69,7 @@ function csv() {
 }
 
 export function initBench() {
+  initUpload();
   bus.on('selection', async ({ index }) => {
     const d = app.drugs[index]; cur = d.cid;
     $('#d-bench').innerHTML = '';
@@ -75,3 +77,53 @@ export function initBench() {
     if (cur === d.cid && list.length) card(list, 0);
   });
 }
+
+// Upload: a reader's own CSV or TSV (for example the curation sheet saved as CSV). Rows are matched to drugs by PubChem CID or
+// generic name, and to a mode by the route column; the numbers land in the same edit store as typed values.
+const HEAD = [[/^(compound identifier|cid|pubchem)/, 'cid'], [/^(generic name|name|drug)/, 'nm'], [/^(mode of administration|route|admr)/, 'md'],
+  [/^(bioavailability|f$|fraction)/, 'F'], [/^(half.?life|t1\/2|t12)/, 't12'], [/^(dosage|dose$|dose \(mg\)|dose_mg)/, 'dose'],
+  [/^(dose interval|interval|tau)/, 'tau'], [/^(in vivo toxicity|toxicity|ld50|tox)/, 'tox'], [/^(in vivo activity|activity|act)/, 'act'], [/^(source|doi|pmid|reference)/, 'src']];
+
+function parse(text) {
+  const sep = (text.split('\n')[0].match(/\t/g) || []).length > (text.split('\n')[0].match(/,/g) || []).length ? '\t' : ',';
+  const out = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; } else if (c === '"') q = false; else cell += c; }
+    else if (c === '"') q = true;
+    else if (c === sep) { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cell); out.push(row); row = []; cell = ''; }
+    else cell += c;
+  }
+  if (cell || row.length) { row.push(cell); out.push(row); }
+  return out;
+}
+
+async function importTable(file) {
+  const out = $('#upload-out');
+  const grid = parse(await file.text());
+  const hi = grid.findIndex(r => r.some(c => HEAD.slice(0, 2).some(([re]) => re.test(c.trim().toLowerCase()))));
+  if (hi < 0) { out.textContent = 'No drug name or CID column found. Name a column "Generic Name" or "Compound Identifier".'; return; }
+  const map = grid[hi].map(h => HEAD.find(([re]) => re.test(h.trim().toLowerCase()))?.[1]);
+  await curated(-1);
+  const byName = new Map([...rows.values()].map(l => [String(l[0].nm).toLowerCase(), l]));
+  let n = 0; const hit = new Set(), miss = new Set();
+  for (const r of grid.slice(hi + 1)) {
+    const o = {}; map.forEach((k, i) => { if (k && r[i] != null && String(r[i]).trim() !== '') o[k] = String(r[i]).trim(); });
+    if (!o.cid && !o.nm) continue;
+    const list = rows.get(Number(o.cid)) || byName.get(String(o.nm || '').toLowerCase());
+    if (!list) { miss.add(o.nm || o.cid); continue; }
+    const md = (o.md || '').toUpperCase(), tgt = list.filter(x => !md || x.md === md);
+    const vals = {}; for (const [k] of F) { const v = Number(o[k]); if (o[k] != null && Number.isFinite(v) && v >= 0 && !(k === 'F' && v > 1)) vals[k] = v; }
+    if (!Object.keys(vals).length) continue;
+    for (const x of tgt.length ? tgt : [list[0]]) { edits[x.rid] = { ...(edits[x.rid] || { nm: x.nm, md: x.md }), ...vals, src: o.src || `upload: ${file.name}` }; n++; }
+    hit.add(list[0].cid);
+  }
+  save();
+  out.innerHTML = `Filled ${n} drug routes for ${hit.size} drugs.` + (miss.size ? ` ${miss.size} names not in this dataset.` : '') +
+    (hit.size ? `<br>${[...hit].slice(0, 30).map(c => `<button type="button" class="ghost" data-cid="${c}">${esc(cap(rows.get(c)[0].nm))}</button>`).join(' ')}` : '');
+  out.querySelectorAll('[data-cid]').forEach(b => b.onclick = () => selectDrug(+b.dataset.cid));
+  if (cur != null) bus.emit('selection', { index: app.drugs.findIndex(d => d.cid === cur) });
+}
+
+export function initUpload() { $('#upload')?.addEventListener('change', e => e.target.files[0] && importTable(e.target.files[0])); }
