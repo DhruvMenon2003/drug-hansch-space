@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-14T21:39:37+00:00",
+ "generated_utc": "2026-10-15T02:36:23+00:00",
  "pocket_radius_a": 10.0,
  "hbond_a": 3.5,
  "hydrophobic_a": 4.2,
@@ -131,6 +131,20 @@
    "n_poses": 7,
    "radius": 16.1,
    "kb": 22.7
+  },
+  {
+   "id": "CHEMBL1941",
+   "target": "Histamine H2 receptor",
+   "pdb": "7UL3",
+   "lig": "FO9",
+   "lig_name": "famotidine",
+   "uniprot": "P25021",
+   "resolution": 3.0,
+   "method": "Electron Microscopy",
+   "n_res": 72,
+   "n_poses": 7,
+   "radius": 18.2,
+   "kb": 24.5
   },
   {
    "id": "CHEMBL227",
@@ -271,20 +285,6 @@
    "n_poses": 5,
    "radius": 16.2,
    "kb": 24.2
-  },
-  {
-   "id": "CHEMBL1941",
-   "target": "Histamine H2 receptor",
-   "pdb": "7UL3",
-   "lig": "FO9",
-   "lig_name": "famotidine",
-   "uniprot": "P25021",
-   "resolution": 3.0,
-   "method": "Electron Microscopy",
-   "n_res": 72,
-   "n_poses": 3,
-   "radius": 18.2,
-   "kb": 21.5
   }
  ],
  "notes": [
@@ -354,6 +354,7 @@
   "CHEMBL1941: 9IXJ: no bound molecule with at least 12 heavy atoms outside the cofactor list",
   "CHEMBL1941: 8YUT: no PDB-format coordinate file (too large or cif-only)",
   "CHEMBL1941: 8YN3: no bound molecule with at least 12 heavy atoms outside the cofactor list",
-  "CHEMBL1941: 8YN4: no bound molecule with at least 12 heavy atoms outside the cofactor list"
+  "CHEMBL1941: 8YN4: no bound molecule with at least 12 heavy atoms outside the cofactor list",
+  "CHEMBL1941: roxatidine shares too little with FO9 to be placed"
  ]
 }

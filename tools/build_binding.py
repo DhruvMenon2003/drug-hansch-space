@@ -517,10 +517,14 @@ def main(argv=None):
         ms = []
         if a.cohort and os.path.exists(a.cohort):
             cj = json.load(open(a.cohort, encoding="utf-8"))
-            for d in cj.get("drugs", []):
-                if d.get("smiles"):
-                    ms.append({"cid": d.get("cid"), "name": d["name"], "smiles": d["smiles"], "ik": d.get("ik"),
-                               "act": (d.get("activity") or {}).get("pchembl")})
+            seen = set()
+            for d in cj.get("rows", []):           # one row per drug and route, so a drug can repeat
+                key = d.get("ik") or d.get("cid") or d.get("name")
+                if not d.get("smiles") or key in seen:
+                    continue
+                seen.add(key)
+                ms.append({"cid": d.get("cid"), "name": d["name"], "smiles": d["smiles"], "ik": d.get("ik"),
+                           "act": d.get("act")})
         if not ms:
             ms = [{"cid": d["cid"], "name": d["name"], "smiles": d.get("smiles"), "ik": d.get("ik"),
                    "act": (d.get("act") or {}).get("p")} for d in drugs
