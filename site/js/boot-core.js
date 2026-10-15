@@ -10,6 +10,7 @@ import { initHud } from './hud.js';
 import { initDetail } from './detail.js';
 import { initControls, syncControls } from './controls.js';
 import { initTable } from './table.js';
+import { initExtras } from './extras.js';
 import { fillMethod, fillTourText, initHansch } from './hansch.js';
 import { goStep, initTour, refreshTourBand, tourBand } from './tour.js';
 import { initLayout, layoutState } from './layout.js';
@@ -69,6 +70,7 @@ export async function bootCore(caps) {
   initAnnounce();
   initControls();
   initHansch();
+  initExtras({ gl: !!caps?.webgl });                 // the QED panel and the binding overlay: both arrive on first use
   fillTourText();
   fillMethod();
   syncControls();

@@ -72,6 +72,7 @@
 <link rel="modulepreload" href="js/detail.js">
 <link rel="modulepreload" href="js/controls.js">
 <link rel="modulepreload" href="js/table.js">
+<link rel="modulepreload" href="js/extras.js">
 <link rel="modulepreload" href="js/hansch.js">
 <link rel="modulepreload" href="js/tour.js">
 <link rel="modulepreload" href="js/layout.js">
@@ -311,6 +312,8 @@
           <h4>ATC codes and routes</h4>
           <ul class="atc-list" id="d-atc"></ul>
           <p class="flags" id="d-flags"></p>
+          <!-- The binding overlay (js/gl/binding.js) and its data arrive on the first press of this button or of the B key. -->
+          <p class="bind-cue"><button type="button" id="d-bind" class="ghost" aria-expanded="false" aria-controls="bind">Show it binding <kbd>B</kbd></button><span class="small" id="d-bind-note"></span></p>
         </div>
         </div>
       </section>
@@ -328,10 +331,30 @@
         <details class="cands"><summary>All models tried</summary><div id="h-cands"></div></details>
       </section>
 
+      <section class="panel" id="qed" aria-labelledby="qed-h">
+        <details id="qed-details">
+          <summary><h2 id="qed-h">QED distributions</h2></summary>
+          <p class="lede">The composite QED and its eight terms over the drugs in the current view. Click a bar to highlight those drugs in 3D; click it again to clear.</p>
+          <div class="controls">
+            <div class="field"><label for="qed-atc">ATC group</label><select id="qed-atc"><option value="">All groups</option></select></div>
+            <div class="field"><span class="label">Highlight</span><button type="button" id="qed-clear" class="ghost" disabled>Clear the highlight</button></div>
+          </div>
+          <div class="qed-grid" id="qed-grid"></div>
+          <p class="count" id="qed-note"></p>
+          <p class="fig" id="qed-cite"></p>
+        </details>
+      </section>
+
       <section class="panel" aria-labelledby="table-h">
         <details id="table-details" tabindex="-1">
           <summary><h2 id="table-h">Data table</h2></summary>
-          <p class="lede">The drugs in the current view with the three axis values. Click a row to select the drug.</p>
+          <p class="lede">The drugs in the current view with the three axis values. Click a row to select the drug, or a column heading to sort by it.</p>
+          <div class="controls">
+            <div class="field wide"><span class="label">Extra columns</span><label class="check" for="t-extra"><input type="checkbox" id="t-extra"> QED, therapeutic index and free concentration</label></div>
+            <div class="field"><label for="t-mode">Mode of administration</label><select id="t-mode"><option value="">All modes</option></select></div>
+            <div class="field wide"><span class="label">Rows</span><label class="check" for="t-permode"><input type="checkbox" id="t-permode"> One row per mode, so the modes of one drug can be compared</label></div>
+          </div>
+          <p class="small" id="t-note"></p>
           <div class="table-wrap"><table id="table"><thead></thead><tbody></tbody></table></div>
         </details>
       </section>
@@ -351,6 +374,24 @@
         <p class="small">Rebuild the data with <code>python tools/build_data.py</code>. Every PubChem and WHO request it makes is listed in <a href="data/provenance.csv">data/provenance.csv</a>, and the cross-checks are in <a href="data/validation.md">data/validation.md</a>. The sources, their terms and the changes made to them are listed under <a href="#sources">Data sources and licences</a>.</p>
       </section>
     </main>
+  </div>
+</div>
+
+<!-- The ligand-binding overlay. Empty until js/gl/binding.js is loaded on first use; the geometry is read from the PDB
+     co-crystal in data/binding/<target>.json, never computed here. -->
+<div class="bind" id="bind" hidden role="dialog" aria-modal="true" aria-labelledby="bind-h">
+  <div class="bind-box">
+    <div class="bind-head">
+      <h2 id="bind-h">Binding</h2>
+      <button type="button" id="bind-replay" class="ghost">Replay</button>
+      <button type="button" id="bind-close" class="ghost" aria-label="Close the binding overlay">Close</button>
+    </div>
+    <canvas id="bind-canvas" role="img" aria-label="The ligand settling into its receptor pocket"></canvas>
+    <div class="bind-foot">
+      <p class="bind-what" id="bind-what"></p>
+      <ul class="bind-contacts" id="bind-contacts"></ul>
+      <p class="fig" id="bind-cite"></p>
+    </div>
   </div>
 </div>
 
