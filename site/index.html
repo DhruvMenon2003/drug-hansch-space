@@ -244,6 +244,10 @@
           <input id="search" type="search" list="drug-names" placeholder="e.g. dexamethasone" autocomplete="off" inputmode="search" enterkeyhint="search">
           <datalist id="drug-names"></datalist>
         </div>
+        <div class="field wide"><label for="upload">Load your own table <small>CSV with drug name or PubChem CID, plus any of route, F, half-life, dose, interval, toxicity, activity</small></label>
+          <input id="upload" type="file" accept=".csv,.tsv,.txt,text/csv">
+          <div id="upload-out" class="small" role="status"></div>
+        </div>
         <details class="group" id="g-axes" open>
           <summary>Axes and colour</summary>
           <div class="controls">
