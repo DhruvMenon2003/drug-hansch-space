@@ -9,7 +9,8 @@ import { createScheduler } from '../scheduler.js';
 import { disposeGroup, watchContext, watchDpr } from './scene.js';
 
 const _m = new THREE.Matrix4(), _c = new THREE.Color();
-const CPK = { 1: '#e8e8e8', 3: '#cc80ff', 5: '#ffb5b5', 6: '#909090', 7: '#3050f8', 8: '#ff0d0d', 9: '#90e050', 11: '#ab5cf2', 12: '#8aff00',
+/** CPK element colours; also used by the binding overlay (js/gl/binding.js), so the two draw molecules alike. */
+export const CPK = { 1: '#e8e8e8', 3: '#cc80ff', 5: '#ffb5b5', 6: '#909090', 7: '#3050f8', 8: '#ff0d0d', 9: '#90e050', 11: '#ab5cf2', 12: '#8aff00',
   13: '#bfa6a6', 14: '#f0c8a0', 15: '#ff8000', 16: '#e6c629', 17: '#1ff01f', 19: '#8f40d4', 20: '#3dff00', 26: '#e06633', 27: '#f090a0',
   29: '#c88033', 30: '#7d80b0', 31: '#c28f8f', 33: '#bd80e3', 34: '#ffa100', 35: '#a62929', 43: '#3b9e9e', 47: '#c0c0c0', 51: '#9e63b5',
   53: '#940094', 57: '#70d4ff', 64: '#45ffc7', 78: '#d0d0e0', 79: '#ffd123', 80: '#b8b8d0', 83: '#9e4fb5' };

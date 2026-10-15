@@ -17,6 +17,7 @@
     "js/version.js": 0,
     "js/announce.js": 1,
     "js/data.js": 1,
+    "js/extras.js": 1,
     "js/gl/quality.js": 1,
     "js/model.js": 1,
     "js/theme.js": 1,
@@ -25,17 +26,19 @@
     "js/gl/scene.js": 2,
     "js/hud.js": 2,
     "js/layout.js": 2,
-    "js/sheet.js": 3,
     "js/view.js": 2,
     "js/controls.js": 3,
     "js/gl/molviewer.js": 3,
     "js/gl/render.js": 3,
     "js/gl/scenery.js": 3,
     "js/hansch.js": 3,
+    "js/qed.js": 3,
+    "js/sheet.js": 3,
     "js/table.js": 3,
     "js/tour.js": 3,
     "js/boot-core.js": 4,
     "js/boot-gl.js": 4,
+    "js/gl/binding.js": 4,
     "js/main.js": 5
   }
 }

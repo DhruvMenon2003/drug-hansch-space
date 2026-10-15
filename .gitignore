@@ -9,3 +9,6 @@ __pycache__/
 tools/data/cache_*/
 .h2_cache/
 .pdb_cache/
+
+# marimo scratch session cache
+tools/__marimo__/

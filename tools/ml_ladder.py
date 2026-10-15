@@ -80,6 +80,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 
 SEED = 20261014
 REPO = Path(__file__).resolve().parent.parent
@@ -113,6 +114,12 @@ HANSCH_DESCRIPTORS = [
 ]
 # The classic Hansch triad, for the cohort that is far too small for anything wider.
 H2_DESCRIPTORS = ["logP", "MolMR", "TPSA"]
+
+
+def _rel(path: Path) -> str:
+    """Path relative to the repository when it is inside it, absolute when --out points elsewhere."""
+    path = Path(path)
+    return str(path.relative_to(REPO)) if path.is_relative_to(REPO) else str(path)
 
 
 # --------------------------------------------------------------------------------------------------
@@ -197,6 +204,51 @@ def _clean_route(value) -> str:
     return text.upper()
 
 
+def _merge_curated_activity(frame: pd.DataFrame) -> dict:
+    """Fill the measured potency from site/data/drugs.json, keyed on PubChem CID.
+
+    clean_drugs.csv carries an 'in_vitro_activity' column, but in the version read here only four
+    rows of it are populated, while the curated drugs.json holds a ChEMBL pChEMBL value and its
+    provenance for 308 of the 759 drugs. Without this merge the only regime with a *measured*
+    biological response would be the three-compound cohort, and the ladder would have nothing but a
+    computed property to select models on. The merge is by CID alone, never by name, and it only
+    fills cells that are empty, so a value present in the primary file always wins.
+    """
+    path = REPO / "site" / "data" / "drugs.json"
+    if not path.exists():
+        path = REPO / "data" / "drugs.json"
+    if not path.exists():
+        return {"status": "no drugs.json found; measured activity left as the primary file has it"}
+    blob = json.loads(path.read_text())
+    lookup = {}
+    for drug in blob.get("drugs", []):
+        act = drug.get("act") or {}
+        if act.get("p") is not None:
+            lookup[str(drug["cid"])] = act
+    if not lookup:
+        return {"status": "drugs.json carries no bioactivity values"}
+    keys = frame["cid"].astype(str)
+    filled = {}
+    for column, field in [("act", "p"), ("act_ndoc", "ndoc"), ("act_target", "target"),
+                          ("act_target_name", "tname"), ("act_types", "types")]:
+        incoming = keys.map(lambda key: lookup.get(key, {}).get(field))
+        if column in frame.columns:
+            before = frame[column].notna().sum()
+            frame[column] = frame[column].where(frame[column].notna(), incoming)
+        else:
+            before = 0
+            frame[column] = incoming
+        filled[column] = {"present_before": int(before),
+                          "present_after": int(frame[column].notna().sum())}
+    return {
+        "status": "measured pChEMBL potency merged from the curated drugs.json by PubChem CID",
+        "source": _rel(path),
+        "drugs_with_a_potency_value_in_drugs_json": len(lookup),
+        "columns": filled,
+        "join": "PubChem CID only; existing non-empty cells in the primary file are kept",
+    }
+
+
 def load_primary(src: Path) -> tuple[pd.DataFrame, dict]:
     """site/data/clean_drugs.csv - one row per (drug, ATC code, mode of administration)."""
     raw = pd.read_csv(src)
@@ -231,9 +283,11 @@ def load_primary(src: Path) -> tuple[pd.DataFrame, dict]:
         if found is not None:
             carry[label] = found
             frame[label] = raw[found]
+    activity_merge = _merge_curated_activity(frame)
     provenance = {
-        "source": str(src.relative_to(REPO)) if src.is_relative_to(REPO) else str(src),
+        "source": _rel(src),
         "kind": "primary (clean_drugs.csv)",
+        "measured_activity_merge": activity_merge,
         "rows_read": int(len(raw)),
         "columns_matched": {"cid": cid, "name": name, "atc_code": atc, "route": route,
                             "smiles": smiles, **carry},
@@ -275,7 +329,7 @@ def load_fallback() -> tuple[pd.DataFrame, dict]:
                 })
     frame = pd.DataFrame(rows)
     provenance = {
-        "source": str(path.relative_to(REPO)),
+        "source": _rel(path),
         "kind": "fallback (drugs.json exploded by ATC code and mode of administration)",
         "rows_read": int(len(frame)),
         "note": ("site/data/clean_drugs.csv was not present when this ran, so the table was built from "
@@ -334,7 +388,7 @@ def load_cohort(atc4: str) -> tuple[pd.DataFrame | None, dict]:
         rows.append(flat)
     frame = pd.DataFrame(rows)
     meta = {
-        "source": str(path.relative_to(REPO)),
+        "source": _rel(path),
         "atc4": blob["meta"].get("atc4"),
         "atc4_name": blob["meta"].get("atc4_name"),
         "n_drugs": blob["meta"].get("n_drugs"),
@@ -371,7 +425,7 @@ def write_qsar_co_input(path: Path, frame: pd.DataFrame, id_col: str, condition_
     path.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(path, index=False)
     return {
-        "path": str(path.relative_to(REPO)) if path.is_relative_to(REPO) else str(path),
+        "path": _rel(path),
         "manual_reference": "QSAR-Co manual p. 20-21, 'HOW TO PREPARE THE INPUT FILE', Snapshot 5",
         "column_order": list(out.columns),
         "n_rows": int(len(out)),
@@ -579,7 +633,34 @@ def _round(value, digits=4):
 # --------------------------------------------------------------------------------------------------
 # the model ladder, lowest complexity first
 # --------------------------------------------------------------------------------------------------
-class PLSDA:
+def _pls_components(requested: int, X) -> int:
+    """PLS bounds its latent components by both the descriptor count and the sample count.
+
+    Clamped at fit time, not at construction, because a cross-validation fold or a tiny cohort can be
+    smaller than the full training set and PLSRegression raises rather than reducing the number itself.
+    """
+    return max(1, min(int(requested), int(X.shape[1]), int(X.shape[0]) - 1))
+
+
+class PLSRegressorSafe(BaseEstimator, RegressorMixin):
+    """PLS regression that clamps its latent components to what the data in hand can support."""
+
+    def __init__(self, n_components=3):
+        self.n_components = n_components
+
+    def fit(self, X, y):
+        from sklearn.cross_decomposition import PLSRegression
+        X = np.asarray(X, dtype=float)
+        self.n_components_ = _pls_components(self.n_components, X)
+        self.model_ = PLSRegression(n_components=self.n_components_, scale=False)
+        self.model_.fit(X, np.asarray(y, dtype=float))
+        return self
+
+    def predict(self, X):
+        return np.asarray(self.model_.predict(np.asarray(X, dtype=float))).ravel()
+
+
+class PLSDA(BaseEstimator, ClassifierMixin):
     """PLS regression on a +/-1 response, thresholded at zero: the usual PLS-DA."""
 
     def __init__(self, n_components=2):
@@ -587,13 +668,15 @@ class PLSDA:
 
     def fit(self, X, y):
         from sklearn.cross_decomposition import PLSRegression
-        self.n_components_ = max(1, min(self.n_components, X.shape[1], X.shape[0] - 1))
+        X = np.asarray(X, dtype=float)
+        self.classes_ = np.unique(np.asarray(y))
+        self.n_components_ = _pls_components(self.n_components, X)
         self.model_ = PLSRegression(n_components=self.n_components_, scale=False)
         self.model_.fit(X, np.where(np.asarray(y) == 1, 1.0, -1.0))
         return self
 
     def decision_function(self, X):
-        return self.model_.predict(X).ravel()
+        return np.asarray(self.model_.predict(np.asarray(X, dtype=float))).ravel()
 
     def predict(self, X):
         return (self.decision_function(X) > 0).astype(int)
@@ -605,7 +688,6 @@ def ladder(task: str, n_descriptors: int, quick: bool) -> list[dict]:
     Every model that has both a regressor and a classifier form is run in both, so the ladder is
     complete in both halves rather than mixing the two.
     """
-    from sklearn.cross_decomposition import PLSRegression
     from sklearn.discriminant_analysis import (LinearDiscriminantAnalysis,
                                                QuadraticDiscriminantAnalysis)
     from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
@@ -630,8 +712,8 @@ def ladder(task: str, n_descriptors: int, quick: bool) -> list[dict]:
             lambda: LinearRegression(),
             note="ordinary least squares on the descriptor block, the Hansch form")
         add("pls", "PLS regression", "latent variable",
-            lambda: PLSRegression(n_components=pls_components, scale=False),
-            note=f"{pls_components} latent components")
+            lambda: PLSRegressorSafe(n_components=pls_components),
+            note=f"up to {pls_components} latent components, clamped to what the fold can support")
         add("rf", "Random forest", "ensemble",
             lambda: RandomForestRegressor(n_estimators=trees, random_state=SEED, n_jobs=1,
                                           max_features=max_features),
@@ -735,8 +817,11 @@ def ga_lda(X: pd.DataFrame, y: np.ndarray, groups: np.ndarray, iters=GA_ITERS, e
            mutation=GA_MUT_P, n_eq=GA_N_EQ, top=GA_TOP) -> dict:
     """Genetic-algorithm variable selection for LDA, with the manual's defaults.
 
-    Fitness is derived from Wilks lambda (manual p. 10-11): lambda runs 0 (perfect discrimination) to 1
-    (none), so the fitness maximised here is 1 - lambda of the training LDA on the chosen descriptors.
+    Fitness is the manual's own function of Wilks lambda (p. 10-11), which the PDF prints as an
+    equation image rather than as text: FitnessScore_i = (0.5 - Wilks lambda_i) / 0.5. It is monotone
+    decreasing in lambda, so it ranks descriptor subsets exactly as 1 - lambda would; only the reported
+    number differs. Lambda runs 0 (perfect discrimination) to 1 (none), so a subset scoring above 0 has
+    lambda below 0.5.
     """
     from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
@@ -745,15 +830,24 @@ def ga_lda(X: pd.DataFrame, y: np.ndarray, groups: np.ndarray, iters=GA_ITERS, e
     rng = np.random.default_rng(SEED)
     values = X.astype(float).to_numpy()
 
+    cache: dict[tuple, tuple] = {}
+
     def fitness(subset):
+        # generations repeat subsets heavily, so memoise: the same descriptor set always scores the same
+        key = tuple(sorted(subset))
+        if key in cache:
+            return cache[key]
         try:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                model = LinearDiscriminantAnalysis().fit(values[:, subset], y)
-                lam = wilks_lambda(model.decision_function(values[:, subset]), y)
+                model = LinearDiscriminantAnalysis().fit(values[:, list(key)], y)
+                lam = wilks_lambda(model.decision_function(values[:, list(key)]), y)
+            # the manual's fitness function: (0.5 - lambda) / 0.5
+            result = ((0.5 - lam) / 0.5 if lam is not None else -9.0), lam
         except Exception:
-            return -1.0, None
-        return (1.0 - lam if lam is not None else -1.0), lam
+            result = (-1.0, None)
+        cache[key] = result
+        return result
 
     population = {tuple(sorted(rng.choice(len(columns), size=eq_len, replace=False).tolist()))
                   for _ in range(n_eq)}
@@ -763,8 +857,13 @@ def ga_lda(X: pd.DataFrame, y: np.ndarray, groups: np.ndarray, iters=GA_ITERS, e
         survivors = [s for _, s in scored[:top]]
         if scored and (best is None or scored[0][0] > best[0]):
             best = (scored[0][0], scored[0][1])
-        children = set()
-        while len(children) < n_eq and survivors:
+        children: set[tuple] = set()
+        # There are only C(len(columns), eq_len) distinct equations, which can be fewer than n_eq - with
+        # three descriptors and an equation length of three there is exactly one. Bounding the attempts
+        # stops the loop spinning forever trying to fill a population that cannot be filled.
+        attempts, max_attempts = 0, max(20, n_eq * 20)
+        while len(children) < n_eq and survivors and attempts < max_attempts:
+            attempts += 1
             a = survivors[int(rng.integers(len(survivors)))]
             b = survivors[int(rng.integers(len(survivors)))]
             pool = sorted(set(a) | set(b))
@@ -775,7 +874,7 @@ def ga_lda(X: pd.DataFrame, y: np.ndarray, groups: np.ndarray, iters=GA_ITERS, e
             if len(child) == eq_len:
                 children.add(child)
         population = set(survivors) | children
-    if best is None:
+    if best is None or best[0] <= -9.0:
         return {"status": "failed", "why": "no LDA model could be fitted on any descriptor subset"}
     score, subset = best
     _, lam = fitness(list(subset))
@@ -784,7 +883,8 @@ def ga_lda(X: pd.DataFrame, y: np.ndarray, groups: np.ndarray, iters=GA_ITERS, e
         "manual_reference": "QSAR-Co manual p. 10-11, Step 6 (Genetic Algorithm) with the stated defaults",
         "parameters": {"iterations": iters, "equation_length": eq_len, "mutation_probability": mutation,
                        "initial_equations": n_eq, "top_equations_per_generation": top,
-                       "fitness": "1 - Wilks lambda of the training LDA"},
+                       "fitness": "(0.5 - Wilks lambda) / 0.5 of the training LDA, the manual's "
+                                  "own fitness function (p. 10-11)"},
         "selected_descriptors": [columns[i] for i in subset],
         "fitness_score": _round(score),
         "wilks_lambda_train": lam,
@@ -899,9 +999,20 @@ def run_regime(label: str, description: str, frame: pd.DataFrame, descriptor_col
     else:
         cv = GroupKFold(n_splits=n_splits)
         cv_label = f"{n_splits}-fold, grouped by compound"
+    # The Y-randomisation loop refits the whole cross-validation once per shuffle, so on a large
+    # training set it uses a coarser grouped split. The manual's own Y-randomisation compares training
+    # fits (p. 16); the permuted cross-validation here is an addition, and 3 folds is enough to show
+    # where chance lands.
+    if n_train_compounds > 300 and n_train_compounds > 15:
+        perm_cv = (StratifiedGroupKFold(n_splits=3) if task == "classification"
+                   else GroupKFold(n_splits=3))
+        perm_cv_label = "3-fold, grouped by compound (coarser than the headline CV, for cost)"
+    else:
+        perm_cv, perm_cv_label = cv, cv_label
     result["internal_validation"] = {
         "scheme": cv_label,
         "scaling": "StandardScaler fitted inside each training fold only (sklearn Pipeline)",
+        "y_randomisation_cv_scheme": perm_cv_label,
     }
     loo_possible = n_train_compounds <= 120
     result["q2_loo_note"] = (
@@ -933,6 +1044,8 @@ def run_regime(label: str, description: str, frame: pd.DataFrame, descriptor_col
         return predictions
 
     specs = ladder(task, len(descriptors), quick)
+    print(f"  [{label}] {len(work)} rows / {work['cid'].nunique()} compounds, "
+          f"{len(descriptors)} descriptors, {len(specs)} models, {n_yrand} shuffles", flush=True)
     models: list[dict] = []
     rng = np.random.default_rng(SEED)
     permutations = [rng.permutation(len(y_train)) for _ in range(max(1, n_yrand))]
@@ -989,7 +1102,11 @@ def run_regime(label: str, description: str, frame: pd.DataFrame, descriptor_col
                         pass
 
             # --- Y-randomisation (manual p. 16) ---
-            perm_fit, perm_cv, perm_lambda = [], [], []
+            # perm_cv_scores, never perm_cv: perm_cv is the splitter above, and a list bound to that
+            # name shadows it, so every permutation's cross-validation raises AttributeError into the
+            # except below and the permuted-CV numbers come out empty while the fit numbers look fine.
+            perm_fit, perm_cv_scores, perm_lambda = [], [], []
+            perm_failure = None
             for order in permutations:
                 y_shuffled = y_train[order]
                 if task == "classification" and len(set(y_shuffled.tolist())) < 2:
@@ -1004,21 +1121,24 @@ def run_regime(label: str, description: str, frame: pd.DataFrame, descriptor_col
                     if spec["discriminant"]:
                         perm_lambda.append(wilks_lambda(_scores(perm_pipe, X_train), y_shuffled))
                     out_of_fold = np.zeros(len(y_shuffled), dtype=float)
-                    for fit_idx, hold_idx in cv.split(X_train, y_shuffled, groups_train):
+                    for fit_idx, hold_idx in perm_cv.split(X_train, y_shuffled, groups_train):
                         if task == "classification" and len(set(y_shuffled[fit_idx].tolist())) < 2:
                             out_of_fold[hold_idx] = y_shuffled[fit_idx][0]
                             continue
                         _, pred, _ = _fit_predict(spec, X_train.iloc[fit_idx], y_shuffled[fit_idx],
                                                   X_train.iloc[hold_idx], task)
                         out_of_fold[hold_idx] = pred
-                    perm_cv.append(classification_metrics(y_shuffled, out_of_fold.astype(int))["accuracy"]
-                                   if task == "classification"
-                                   else regression_metrics(y_shuffled, out_of_fold)["r2"])
-                except Exception:
+                    perm_cv_scores.append(
+                        classification_metrics(y_shuffled, out_of_fold.astype(int))["accuracy"]
+                        if task == "classification"
+                        else regression_metrics(y_shuffled, out_of_fold)["r2"])
+                except Exception as error:  # recorded, so a silent swallow cannot hide a bug again
+                    if perm_failure is None:
+                        perm_failure = f"{type(error).__name__}: {error}"
                     continue
             metric_name = "accuracy" if task == "classification" else "r2"
             clean_fit = [v for v in perm_fit if v is not None]
-            clean_cv = [v for v in perm_cv if v is not None]
+            clean_cv = [v for v in perm_cv_scores if v is not None]
             entry["y_randomisation"] = {
                 "manual_reference": "p. 16: shuffle the training response, descriptors unchanged, "
                                     f"default {N_YRAND} shuffles",
@@ -1032,6 +1152,8 @@ def run_regime(label: str, description: str, frame: pd.DataFrame, descriptor_col
                             else entry["train"].get("r2"),
                 "real_cv": entry["internal_cv"].get(metric_name) if task == "classification"
                            else entry["internal_cv"].get("r2"),
+                "n_permutations_with_a_cv_score": len(clean_cv),
+                "first_permutation_failure": perm_failure,
             }
             if perm_lambda:
                 lambdas = [v for v in perm_lambda if v is not None]
@@ -1059,6 +1181,7 @@ def run_regime(label: str, description: str, frame: pd.DataFrame, descriptor_col
         except Exception as error:  # a model that cannot be fitted is recorded, not hidden
             entry["status"] = "failed"
             entry["why"] = f"{type(error).__name__}: {error}"
+        print(f"    {spec['key']:<10} {entry['status']}", flush=True)
         models.append(entry)
 
     # --- ranking: the external set decides (fall back to internal CV when there is none) ---
@@ -1217,9 +1340,9 @@ def shap_figure(regimes: list[dict], path: Path) -> dict:
     fig.suptitle("SHAP for the winning black-box model of each regime", fontsize=11)
     fig.tight_layout(rect=(0, 0, 1, 0.97))
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=105)
+    fig.savefig(path, dpi=70)
     plt.close(fig)
-    return {"status": "written", "path": str(path.relative_to(REPO)),
+    return {"status": "written", "path": _rel(path),
             "bytes": path.stat().st_size,
             "panels": [r["label"] for r in panels]}
 
@@ -1256,9 +1379,9 @@ def ladder_figure(regimes: list[dict], path: Path) -> dict:
                  fontsize=11)
     fig.tight_layout(rect=(0, 0, 1, 0.95))
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=105)
+    fig.savefig(path, dpi=85)
     plt.close(fig)
-    return {"status": "written", "path": str(path.relative_to(REPO)), "bytes": path.stat().st_size}
+    return {"status": "written", "path": _rel(path), "bytes": path.stat().st_size}
 
 
 # --------------------------------------------------------------------------------------------------
@@ -1343,7 +1466,7 @@ def h2_features(cohort: pd.DataFrame | None, cohort_meta: dict, wide: pd.DataFra
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(out_path, index=False)
     return {
-        "path": str(out_path.relative_to(REPO)),
+        "path": _rel(out_path),
         "source": source,
         "atc4": atc4,
         "atc4_name": cohort_meta.get("atc4_name"),
@@ -1458,7 +1581,12 @@ def main(argv=None) -> int:
           f"from {provenance['source']} ({provenance['kind']})")
 
     # ---- the response columns ----
-    wide["qed_class"] = (wide["QED"] >= 0.5).astype(int)
+    # The class rule has to be the one the ladder actually models, or the input file written for
+    # QSAR-Co would describe a different problem from the one validated below. Both cut at the median
+    # of the rows in hand, which also keeps the two classes balanced - the manual warns that accuracy
+    # alone is misleading on an imbalanced set (p. 14). The conventional QED >= 0.5 drug-likeness cut
+    # would put 439 of 759 drugs in the positive class instead of half.
+    wide["qed_class"] = (wide["QED"] >= float(np.median(wide["QED"].astype(float)))).astype(int)
     activity = wide[wide["act"].notna()].copy() if "act" in wide else wide.iloc[[]].copy()
 
     inputs: list[dict] = []
@@ -1466,15 +1594,14 @@ def main(argv=None) -> int:
 
     # ---------- regime 1: the widest table, QED as the response ----------
     qed_descriptors = [c for c in NON_QED_DESCRIPTORS if c in wide.columns]
-    inputs.append(write_qsar_co_input(
-        out_dir / "qsar_co_input.csv", wide, "cid", ["Mode of administration"], "qed_class", None,
-        qed_descriptors) | {"note": "the headline input file: the widest table"})
-    # the condition column has to exist under the name written into the file
+    # the condition column must exist under the header name written into the file
     wide["Mode of administration"] = wide["condition"]
-    inputs[-1] = write_qsar_co_input(
+    headline = write_qsar_co_input(
         out_dir / "qsar_co_input.csv", wide, "cid", ["Mode of administration"], "qed_class", None,
         qed_descriptors)
-    inputs[-1]["note"] = "the headline input file: the widest table available"
+    headline["note"] = ("the headline input file: the widest table available, one row per drug and "
+                        "mode of administration")
+    inputs.append(headline)
 
     leak_caveat = (
         "QED is a deterministic function of its own eight component properties, so a ladder that is "
@@ -1504,17 +1631,15 @@ def main(argv=None) -> int:
     if len(activity) >= 20:
         hansch = [c for c in HANSCH_DESCRIPTORS if c in activity.columns]
         activity["Mode of administration"] = activity["condition"]
-        inputs.append(write_qsar_co_input(
-            out_dir / "qsar_co_input_activity.csv", activity, "cid", ["Mode of administration"],
-            "act_class", "act_ndoc", hansch) if "act_class" in activity else None)
         activity["act_class"] = (activity["act"].astype(float)
                                  >= float(np.median(activity["act"].astype(float)))).astype(int)
-        inputs[-1] = write_qsar_co_input(
+        activity_input = write_qsar_co_input(
             out_dir / "qsar_co_input_activity.csv", activity, "cid", ["Mode of administration"],
             "act_class", "act_ndoc", hansch)
-        inputs[-1]["note"] = ("measured ChEMBL potency as the response; the confidence variable is the "
-                              "number of ChEMBL documents behind each value, which is what the manual's "
-                              "optional confidence column is for (p. 7, p. 21)")
+        activity_input["note"] = ("measured ChEMBL potency as the response; the confidence variable is "
+                                  "the number of ChEMBL documents behind each value, which is what the "
+                                  "manual's optional confidence column is for (p. 7, p. 21)")
+        inputs.append(activity_input)
         activity_caveats = [
             "the drugs in this regime do not share a target, so this is not a congeneric series and no "
             "Hansch regression over it should be read as a structure-activity relationship; it is a "
@@ -1603,11 +1728,31 @@ def main(argv=None) -> int:
 
     print_ranking(regimes)
 
+    # The measured-activity verdict is read off what actually ran, not asserted: if the table of
+    # drugs with a potency value was too small for a split, the ladder must say so rather than
+    # describe a regime that was skipped.
+    activity_regimes = [r for r in regimes if r["label"].startswith("activity-")]
+    n_activity_compounds = int(activity["cid"].nunique()) if len(activity) else 0
+    if activity_regimes:
+        activity_verdict = (f"yes for model selection ({n_activity_compounds} compounds with a "
+                            "measured potency), with a weak signal expected")
+        activity_reason = ("The measured-activity table is the only regime with a real biological "
+                           "response and enough compounds to validate on. Its drugs share no target, "
+                           "so a weak result there is the expected result, not a failure of the "
+                           "ladder.")
+    else:
+        activity_verdict = (f"no - only {n_activity_compounds} compounds in this run carry a measured "
+                            "potency value, below the 20 needed to attempt a split")
+        activity_reason = (f"The measured-activity regimes were skipped: only {n_activity_compounds} "
+                           "compounds in the table as loaded carry a potency value, so there is no "
+                           "measured-response regime in this run and the only responses modelled are "
+                           "computed ones. That is a property of the data in hand, not of the ladder.")
+
     honest_verdict = {
         "can_this_data_support_model_selection": {
             f"{args.atc4} cohort": "no",
             "wide table (QED-derived labels)": "yes, for the question it actually asks",
-            "measured-activity table": "yes for model selection, with a weak signal",
+            "measured-activity table": activity_verdict,
         },
         "why": [
             (f"The {args.atc4} cohort is a handful of compounds. Model selection needs an external set "
@@ -1616,9 +1761,7 @@ def main(argv=None) -> int:
             ("The widest table has enough compounds for a genuine external set and a compounds-per-"
              "descriptor ratio far above the five-per-term rule, so model selection there is "
              "meaningful - but the response is QED, a computed property, not a measured biological one."),
-            ("The measured-activity table is the only regime with a real biological response and enough "
-             "compounds to validate on. Its drugs share no target, so a weak result there is the "
-             "expected result, not a failure of the ladder."),
+            activity_reason,
         ],
         "qsar_co_is_classification_only": (
             "QSAR-Co develops and validates two-class models only (manual p. 11-12: two-class LDA and "
@@ -1644,6 +1787,21 @@ def main(argv=None) -> int:
                              "Source Software for Developing Robust Multitasking or Multitarget "
                              "Classification-Based QSAR Models. J Chem Inf Model. 2019;59(6):2538-2544. "
                              "doi:10.1021/acs.jcim.9b00295"),
+                "pagination": (
+                    "Page numbers here are pages of the PDF as pdftotext paginates it: 30 pages, page 1 "
+                    "the cover and page 6 blank (it carries only the Snapshot 2 figure). An earlier "
+                    "reading of the same document in this project paginated it as 29 pages, having "
+                    "dropped that blank page, so its citations run one lower than these from p. 7 "
+                    "onward. The section titles quoted alongside each number identify the passage "
+                    "either way."),
+                "the_manual_never_defines": (
+                    "r2, q2 (leave-one-out or external), RMSE or MAE appear nowhere in the manual, "
+                    "because QSAR-Co is classification-only. Its validation vocabulary is Wilks lambda, "
+                    "the confusion-matrix metrics, MCC, ROC/AUC, Y-randomisation and the applicability "
+                    "domain. No claim of the form 'QSAR-Co requires q2 above x' could be sourced to it, "
+                    "and none is made here: the continuous statistics in the regression regimes below "
+                    "are the ordinary QSAR ones, used because this repository's Hansch work is "
+                    "regression, and they are labelled as coming from outside the manual."),
                 "pages_used": {
                     "input file format and column order": "p. 20-21",
                     "conditions and the Box-Jenkins approach": "p. 7 (Step 2), p. 22",
@@ -1702,7 +1860,7 @@ def main(argv=None) -> int:
     print()
     print("written:")
     for path in sorted(out_dir.iterdir()):
-        print(f"  {path.relative_to(REPO)}  ({path.stat().st_size:,} bytes)")
+        print(f"  {_rel(path)}  ({path.stat().st_size:,} bytes)")
     return 0
 
 
