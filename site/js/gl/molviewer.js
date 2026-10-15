@@ -1,5 +1,6 @@
 // GL layer. The ball-and-stick conformer viewer in the drug panel: its own small renderer, created on the first selection.
 import * as THREE from 'three';
+import { matte, outline, softLights } from './chimera.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { $, ORDER, app, bus, reduceMotion } from '../kernel.js';
 import { loadMolecule } from '../data.js';
@@ -27,11 +28,8 @@ function initMolViewer() {
   molv.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   molv.loop = createScheduler();
   molv.scene = new THREE.Scene();
-  molv.scene.add(new THREE.HemisphereLight(0xffffff, 0x666f6d, 2.2));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.6);
-  sun.position.set(5, 8, 10);
   molv.camera = new THREE.PerspectiveCamera(35, 1, 0.1, 500);
-  molv.camera.add(sun);
+  softLights(molv.scene, molv.camera);
   molv.scene.add(molv.camera);
   molv.controls = new OrbitControls(molv.camera, canvas);
   molv.controls.enableDamping = true;
@@ -98,13 +96,14 @@ export async function showMolecule(d) {
   const P = i => new THREE.Vector3(m.xyz[3 * i], m.xyz[3 * i + 1], m.xyz[3 * i + 2]);
   const g = new THREE.Group();
   const rad = z => (z === 1 ? 0.17 : z <= 10 ? 0.3 : z <= 18 ? 0.36 : 0.42);
-  const atoms = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 20, 14), new THREE.MeshStandardMaterial({ roughness: 0.45 }), keep.length);
+  const atoms = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 20, 14), matte(), keep.length);
   keep.forEach((i, j) => {
     const r = rad(m.z[i]);
     atoms.setMatrixAt(j, _m.makeScale(r, r, r).setPosition(P(i)));
     atoms.setColorAt(j, _c.set(CPK[m.z[i]] || '#ff1493'));
   });
   g.add(atoms);
+  outline(atoms, 0.14);
   // bonds: each half takes its atom's colour; double, triple and aromatic bonds as parallel sticks
   const halves = [], up = new THREE.Vector3(0, 1, 0), q = new THREE.Quaternion();
   for (let k = 0; k < m.b.length; k += 3) {
@@ -118,7 +117,7 @@ export async function showMolecule(d) {
       halves.push([a2, mid, r, m.z[i]], [mid, b2, r, m.z[j]]);
     }
   }
-  const bonds = new THREE.InstancedMesh(new THREE.CylinderGeometry(1, 1, 1, 10, 1), new THREE.MeshStandardMaterial({ roughness: 0.5 }), Math.max(1, halves.length));
+  const bonds = new THREE.InstancedMesh(new THREE.CylinderGeometry(1, 1, 1, 10, 1), matte(), Math.max(1, halves.length));
   halves.forEach(([a, b, r, z], k) => {
     const dir = b.clone().sub(a), len = dir.length();
     q.setFromUnitVectors(up, dir.normalize());
@@ -128,6 +127,7 @@ export async function showMolecule(d) {
   });
   bonds.count = halves.length;
   g.add(bonds);
+  outline(bonds, 0.45);
   molv.scene.add(g);
   molv.group = g;
   let R = 1;

@@ -9,6 +9,7 @@
 // found by sampling directions; it is a way of showing the pocket's mouth, not a simulated binding trajectory or a
 // kinetic pathway. The animation says nothing about affinity, residence time or mechanism.
 import * as THREE from 'three';
+import { matte, outline, softLights } from './chimera.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { $, app, bus, esc, cap, fx, reduceMotion } from '../kernel.js';
 import { announce } from '../announce.js';
@@ -63,11 +64,8 @@ function initViewer() {
   bv.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   bv.loop = createScheduler();
   bv.scene = new THREE.Scene();
-  bv.scene.add(new THREE.HemisphereLight(0xffffff, 0x666f6d, 2.0));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.5);
-  sun.position.set(6, 9, 11);
   bv.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 2000);
-  bv.camera.add(sun);
+  softLights(bv.scene, bv.camera);
   bv.scene.add(bv.camera);
   bv.controls = new OrbitControls(bv.camera, canvas);
   bv.controls.enableDamping = true;
@@ -109,13 +107,14 @@ function ballStick(mol, scale = 1) {
   const g = new THREE.Group(), n = mol.e.length;
   const P = i => new THREE.Vector3(mol.xyz[3 * i], mol.xyz[3 * i + 1], mol.xyz[3 * i + 2]);
   const rad = z => (z === 1 ? 0.17 : z <= 10 ? 0.3 : z <= 18 ? 0.36 : 0.42) * scale;
-  const atoms = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 16, 12), new THREE.MeshStandardMaterial({ roughness: 0.45 }), n);
+  const atoms = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 16, 12), matte(), n);
   for (let i = 0; i < n; i++) {
     const r = rad(mol.e[i]);
     atoms.setMatrixAt(i, _m.makeScale(r, r, r).setPosition(P(i)));
     atoms.setColorAt(i, _c.set(CPK[mol.e[i]] || '#ff1493'));
   }
   g.add(atoms);
+  outline(atoms, 0.14);
   const halves = [], q = new THREE.Quaternion();
   for (let k = 0; k < (mol.b?.length || 0); k += 3) {
     const [i, j, o] = [mol.b[k], mol.b[k + 1], mol.b[k + 2]];
@@ -127,7 +126,7 @@ function ballStick(mol, scale = 1) {
       halves.push([a2, mid, r * scale, mol.e[i]], [mid, b2, r * scale, mol.e[j]]);
     }
   }
-  const bonds = new THREE.InstancedMesh(new THREE.CylinderGeometry(1, 1, 1, 8, 1), new THREE.MeshStandardMaterial({ roughness: 0.5 }), Math.max(1, halves.length));
+  const bonds = new THREE.InstancedMesh(new THREE.CylinderGeometry(1, 1, 1, 8, 1), matte(), Math.max(1, halves.length));
   halves.forEach(([a, b, r, z], k) => {
     const dir = b.clone().sub(a), len = dir.length();
     q.setFromUnitVectors(UP, dir.normalize());
@@ -137,6 +136,7 @@ function ballStick(mol, scale = 1) {
   });
   bonds.count = halves.length;
   g.add(bonds);
+  outline(bonds, 0.45);
   return g;
 }
 
@@ -147,14 +147,15 @@ function pocket(sc) {
   for (const [a, b] of sc.trace.seg) {
     const pts = [];
     for (let i = a; i <= b; i++) pts.push(new THREE.Vector3(sc.trace.xyz[3 * i], sc.trace.xyz[3 * i + 1], sc.trace.xyz[3 * i + 2]));
-    if (pts.length > 1) g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: new THREE.Color(T.line || '#d2dbd8'), transparent: true, opacity: 0.9 })));
+    // a smooth backbone tube, ChimeraX-style, instead of a jagged CA polyline
+    if (pts.length > 1) g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), pts.length * 6, 0.22, 8), new THREE.MeshStandardMaterial({ color: new THREE.Color('#b9c3c9'), roughness: 0.85, transparent: true, opacity: 0.38, depthWrite: false })));
   }
   // only the residues that line the site are drawn as atoms: the whole 10 Å shell is a cloud the ligand disappears into
   const near = [];
   for (let i = 0; i < sc.atoms.e.length; i++) if ((sc.res[sc.atoms.r[i]]?.d ?? 99) <= NEAR_A) near.push(i);
-  const balls = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), new THREE.MeshStandardMaterial({ roughness: 0.75, transparent: true, opacity: 0.34 }), Math.max(1, near.length));
+  const balls = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), new THREE.MeshStandardMaterial({ roughness: 0.85, transparent: true, opacity: 0.55 }), Math.max(1, near.length));
   near.forEach((i, j) => {
-    const r = sc.atoms.e[i] === 6 ? 0.17 : 0.21;
+    const r = sc.atoms.e[i] === 6 ? 0.24 : 0.28;
     balls.setMatrixAt(j, _m.makeScale(r, r, r).setPosition(new THREE.Vector3(sc.atoms.xyz[3 * i], sc.atoms.xyz[3 * i + 1], sc.atoms.xyz[3 * i + 2])));
     balls.setColorAt(j, _c.set(hue[sc.res[sc.atoms.r[i]]?.k] || hue.apolar));
   });
