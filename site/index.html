@@ -72,7 +72,6 @@
 <link rel="modulepreload" href="js/detail.js">
 <link rel="modulepreload" href="js/controls.js">
 <link rel="modulepreload" href="js/table.js">
-<link rel="modulepreload" href="js/bench.js">
 <link rel="modulepreload" href="js/hansch.js">
 <link rel="modulepreload" href="js/tour.js">
 <link rel="modulepreload" href="js/layout.js">
@@ -314,7 +313,7 @@
           <div class="depict" id="d-2d" role="group" aria-label="2D structure"></div>
           <dl class="kv" id="d-desc"></dl>
           <div id="d-act"></div>
-          <div id="d-bench"></div>
+          <div id="d-bench"><button type="button" id="d-bench-open" class="ghost">Edit PK values</button></div>
           <h4>ATC codes and routes</h4>
           <ul class="atc-list" id="d-atc"></ul>
           <p class="flags" id="d-flags"></p>
@@ -389,12 +388,19 @@
   <div class="bind-box">
     <div class="bind-head">
       <h2 id="bind-h">Binding</h2>
-      <button type="button" id="bind-replay" class="ghost">Replay</button>
       <button type="button" id="bind-close" class="ghost" aria-label="Close the binding overlay">Close</button>
     </div>
-    <canvas id="bind-canvas" role="img" aria-label="The ligand settling into its receptor pocket"></canvas>
+    <div class="bind-stage-wrap">
+      <canvas id="bind-canvas" role="img" aria-label="The ligand settling into its receptor pocket"></canvas>
+      <p class="bind-legend" aria-hidden="true"><span class="lg-lig">Ligand</span><span class="lg-res">Contact residue</span><span class="lg-hb">H-bond</span><span class="lg-hp">Apolar contact</span></p>
+      <p class="bind-stage" id="bind-stage" aria-live="off"></p>
+    </div>
+    <div class="bind-ctl">
+      <button type="button" id="bind-replay" class="ghost">Replay</button>
+      <input type="range" id="bind-scrub" min="0" max="1000" value="1000" aria-label="Animation position, from outside the pocket to bound">
+    </div>
     <div class="bind-foot">
-      <p class="bind-what" id="bind-what"></p>
+      <details class="bind-about"><summary>What this shows</summary><p class="bind-what" id="bind-what"></p></details>
       <ul class="bind-contacts" id="bind-contacts"></ul>
       <p class="fig" id="bind-cite"></p>
     </div>
