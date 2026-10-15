@@ -3,3 +3,4 @@ test-results/
 tools/__pycache__/
 tools/data/cache_binding/
 tools/data/cache_curate/
+tools/__marimo__/
