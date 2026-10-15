@@ -1,12 +1,11 @@
 // Layer 3. The QED distributions panel: the composite QED and its eight terms over the drugs in view, each as a small
-// histogram with the term's own desirability read off the same drugs. Loaded on first open (js/extras.js), so neither this
+// histogram with the term's own desirability read off the same drugs. Loaded on first open (js/table.js), so neither this
 // module nor data/props.json is in the first load. Clicking a bar narrows the view through the ordinary filter path
 // (app.view.qbin -> passes() -> setView), so the 3D scatter, the HUD and the table all follow it as they do any filter.
-import { app, bus, ORDER, $, cap, esc, fx, fin, niceStep, quant } from './kernel.js';
+import { app, bus, ORDER, $, cap, esc, fx, fin, niceStep, quant, getSide } from './kernel.js';
 import { announce } from './announce.js';
 import { AX, passes } from './model.js';
 import { setView } from './view.js';
-import { getSide } from './extras.js';
 
 const BINS = 12;
 /** The composite and the eight QED terms. `col` reads a column of data/props.json, `raw` a descriptor the app already has. */

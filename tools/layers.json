@@ -17,7 +17,6 @@
     "js/version.js": 0,
     "js/announce.js": 1,
     "js/data.js": 1,
-    "js/extras.js": 1,
     "js/gl/quality.js": 1,
     "js/model.js": 1,
     "js/theme.js": 1,

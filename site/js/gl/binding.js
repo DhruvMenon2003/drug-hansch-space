@@ -305,7 +305,7 @@ export function close() {
 
 const note = text => { const el = $('#d-bind-note'); if (el) { el.textContent = text; if (text) announce(text); } };
 
-/** Bind the overlay's own controls. Called once, by js/extras.js, on the first press of the button or the B key. */
+/** Bind the overlay's own controls. Called once, by js/table.js, on the first press of the button or the B key. */
 export function initBinding() {
   if (started) return;
   started = true;

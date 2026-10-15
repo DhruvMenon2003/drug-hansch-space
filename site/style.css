@@ -244,6 +244,7 @@ details > summary h2 { display: inline; }
 #table th, #table td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 #table th:first-child, #table td:first-child { text-align: left; }
 #table thead th { position: sticky; top: 0; background: var(--panel); font-family: var(--font-display); color: var(--muted); font-weight: 500; }
+#table thead th[data-sort] { height: var(--target); min-width: var(--target); cursor: pointer; }   /* a sortable heading is a control */
 #table tbody tr { cursor: pointer; height: var(--target); }   /* rows are click and Enter targets */
 #table tbody tr:hover { background: var(--grid); }
 #table tbody tr[aria-selected="true"], #table tbody tr[aria-current="true"] { background: color-mix(in oklab, var(--accent) 16%, transparent); }
