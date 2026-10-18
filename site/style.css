@@ -318,6 +318,12 @@ details > summary h2 { display: inline; }
 .bind-legend .lg-hb::before, .bind-legend .lg-hp::before { width: 16px; height: 0; border-radius: 0; border-top: 3px dashed #2f8fe8; vertical-align: 3px; }
 .bind-legend .lg-hp::before { border-top-color: var(--s2, #e0902f); }
 .bind-stage { position: absolute; right: 10px; top: 8px; margin: 0; padding: 3px 10px; border-radius: 999px; background: rgb(20 22 26 / 0.7); color: #e8ecef; font-size: 0.76rem; pointer-events: none; }
+.bind-art { position: absolute; left: 10px; top: 8px; display: flex; flex-direction: column; width: 132px; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 2px 12px rgb(0 0 0 / 0.4); color: #1d2228; text-decoration: none; font-size: 0.7rem; line-height: 1.25; transition: width 0.2s; }
+.bind-art[hidden] { display: none; }
+.bind-art img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: #fff; }
+.bind-art span { padding: 4px 7px 5px; border-top: 1px solid #e3e6ea; }
+.bind-art:hover, .bind-art:focus-visible { width: 220px; }
+@media (max-width: 560px) { .bind-art { width: 92px; font-size: 0.64rem; } .bind-art:hover, .bind-art:focus-visible { width: 160px; } }
 .bind-ctl { display: flex; align-items: center; gap: 12px; }
 .bind-ctl button { min-width: 84px; min-height: 44px; }
 #bind-scrub { flex: 1; min-height: 44px; accent-color: #5cb85c; }

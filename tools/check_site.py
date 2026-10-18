@@ -502,7 +502,7 @@ def check_links(cx):
 
 # Hosts the page links TO (hyperlinks built in JS keep the URL in a constant, so the checker cannot see the <a href> around it).
 # Loading from them is impossible (CSP connect-src / img-src 'self') and is also caught by the fetch/import scan below.
-LINK_OUT_HOSTS = ("pubchem.ncbi.nlm.nih.gov", "www.ebi.ac.uk", "github.com", "atcddd.fhi.no", "gsap.com", "openfontlicense.org",
+LINK_OUT_HOSTS = ("pubchem.ncbi.nlm.nih.gov", "www.rcsb.org", "www.ebi.ac.uk", "github.com", "atcddd.fhi.no", "gsap.com", "openfontlicense.org",
                   "www.who.int", "www.drugbank.com", "go.drugbank.com", "dailymed.nlm.nih.gov", "open.fda.gov", "creativecommons.org")
 LOAD_CALLS = re.compile(r"""\b(?:fetch|import|Worker|SharedWorker|EventSource|WebSocket)\s*\(\s*[`'"](?:https?:)?//|navigator\.sendBeacon\s*\(\s*[`'"](?:https?:)?//|\.open\(\s*['"][A-Z]+['"]\s*,\s*[`'"](?:https?:)?//|\.src\s*=\s*[`'"](?:https?:)?//""")
 

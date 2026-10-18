@@ -287,6 +287,26 @@ function approachTrail(dir, start) {
   return line;
 }
 
+/** Target artwork: the RCSB PDB image of the receptor structure (tools/build_art.py), shown as a linked, credited inset. */
+let artIndex = null;
+async function artCard(sc, d) {
+  const a = $('#bind-art'), token = bv.id;
+  a.hidden = true;
+  try { artIndex ||= await getJson('data/art.json'); } catch { return; }
+  const hit = artIndex.drugs[d.cid];
+  const id = (sc.art ? hit?.pdb : sc.pdb?.id)?.toLowerCase();
+  if (!id || !artIndex.pdbs.includes(id)) return;
+  const who = sc.art ? hit.target : sc.target;
+  a.href = `https://www.rcsb.org/structure/${id.toUpperCase()}`;
+  a.querySelector('img').src = `art/${id}.webp`;
+  a.querySelector('img').alt = `${who}, PDB structure ${id.toUpperCase()}`;
+  a.querySelector('span').textContent = `${who} · PDB ${id.toUpperCase()} · image RCSB PDB`;
+  a.title = `Open PDB ${id.toUpperCase()} on rcsb.org`;
+  if (bv.id !== token) return;                    // another drug was opened while the index loaded
+  if (sc.art) $('#bind-what').textContent += ` The inset is a real structure of ${who}, the target ChEMBL lists for ${cap(d.name)} (${hit.moa ? hit.moa.toLowerCase() : 'mechanism of action'}), as rendered by the RCSB PDB.`;
+  a.hidden = false;
+}
+
 /** The caption: what crystal this is, which pose is shown, and the residues the ligand touches. */
 function caption(sc, pose, d) {
   const p = sc.pdb;
@@ -412,6 +432,7 @@ async function show(d) {
   bv.q0 = new THREE.Quaternion().setFromEuler(new THREE.Euler(1.3, -0.9, 0.7));
   bv.scene.add(bv.group);
   caption(sc, pose, d);
+  artCard(sc, d);
   // frame the ligand with a little of the pocket around it, the way the conformer viewer frames a conformer
   let R = 1;
   for (let i = 0; i < pose.e.length; i++) R = Math.max(R, Math.hypot(pose.xyz[3 * i], pose.xyz[3 * i + 1], pose.xyz[3 * i + 2]));
