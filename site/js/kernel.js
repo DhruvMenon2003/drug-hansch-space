@@ -45,6 +45,7 @@ export const app = {
   drugs: [], byCid: new Map(), meta: null, hansch: null, groups: new Map(), mols: null, molsPromise: null,
   view: { x: 'pc1', y: 'pc2', z: 'pc3', color: 'atc', atc: [null, null, null], l1: '', l2: '', l3: '', route: '', small: false, group: null, veber: false },
   scales: null, visible: [], selected: -1, hover: -1, tokens: {}, step: null, seriesId: null,
+  qsarByCid: new Map(), qsarHighlight: false,
 };
 /** Float32 buffers [x, y, z, scale] per drug: tween start, tween end, current. Allocated by initView(). */
 export const anim = { from: null, to: null, t: 1, tween: null };

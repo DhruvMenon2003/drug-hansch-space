@@ -179,6 +179,8 @@ export function bindPointer(canvas, host) {
       const rows = ['x', 'y', 'z'].filter(a => !AX[v[a]].pseudo)
         .map(a => `<div class="t-row">${esc(AX[v[a]].label)} ${fx(AX[v[a]].get(d), AX[v[a]].dec)}${AX[v[a]].unit ? ' ' + AX[v[a]].unit : ''}</div>`).join('');
       tip.innerHTML = `<div class="t-name">${esc(cap(d.name))}</div>${rows}<div class="t-row">ATC ${esc(d.atc.map(a => a.code).slice(0, 3).join(', '))}${d.atc.length > 3 ? '…' : ''}</div>`;
+      const qp = app.qsarByCid.get(d.cid);
+      if (qp) tip.innerHTML += `<div class="t-row">DRD2 QSAR: ${qp.outside_domain ? 'outside' : 'within'} domain · ${esc(qp.split)}</div>`;
       tip.hidden = false;
       const x = ev.clientX - hr.left, y = ev.clientY - hr.top, w = tip.offsetWidth, h = tip.offsetHeight;
       tip.style.left = Math.min(x + 14, hr.width - w - 8) + 'px';

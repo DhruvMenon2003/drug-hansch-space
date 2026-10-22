@@ -313,6 +313,7 @@
           <div class="depict" id="d-2d" role="group" aria-label="2D structure"></div>
           <dl class="kv" id="d-desc"></dl>
           <div id="d-act"></div>
+          <p class="small" id="d-qsar" hidden></p>
           <div id="d-bench"><button type="button" id="d-bench-open" class="ghost">Edit PK values</button></div>
           <h4>ATC codes and routes</h4>
           <ul class="atc-list" id="d-atc"></ul>
@@ -325,6 +326,11 @@
 
       <section id="hansch" class="panel" aria-labelledby="hansch-h">
         <h2 id="hansch-h">Hansch fits</h2>
+        <div class="qsar-cue">
+          <button type="button" id="qsar-open" class="ghost" aria-haspopup="dialog" aria-controls="qsar-dialog">DRD2 QSAR · validation</button>
+          <button type="button" id="qsar-clear" class="ghost" hidden>Clear domain colours</button>
+          <p class="small">One human target, binding assays and Ki only. Explore the reproducible model, scaffold holdout and applicability domain.</p>
+        </div>
         <p class="lede">Drugs are grouped by their first ChEMBL mechanism target. Drugs up to 1000 Da are fitted. A group with at least five drugs gets the regression with the best leave-one-out q², allowing one descriptor per five drugs.</p>
         <div class="field wide"><label for="h-group">Target group</label><select id="h-group"></select></div>
         <button type="button" id="h-show" class="primary">Show this fit in 3D</button>
@@ -407,6 +413,34 @@
     </div>
   </div>
 </div>
+
+<dialog id="qsar-dialog" class="qsar-dialog" aria-labelledby="qsar-title">
+  <div class="qsar-head">
+    <div><p class="eyebrow">Single-target Hansch QSAR</p><h2 id="qsar-title">DRD2 · validation</h2></div>
+    <form method="dialog"><button type="submit" class="ghost" autofocus>Close</button></form>
+  </div>
+  <p id="qsar-status" role="status">Open the panel to load the exported results.</p>
+  <button type="button" id="qsar-retry" class="ghost" hidden>Retry loading results</button>
+  <div id="qsar-body" hidden>
+    <p id="qsar-summary" class="lede"></p>
+    <p id="qsar-verdict" class="verdict"></p>
+    <div class="qsar-actions">
+      <label class="check"><input type="checkbox" id="qsar-highlight"> Colour matched explorer drugs by domain</label>
+      <a href="data/qsar_drd2.json" download>Download results JSON</a>
+    </div>
+    <p id="qsar-join" class="small"></p>
+    <div class="qsar-grid">
+      <figure><h3>Conditional fit surface</h3><svg id="qsar-surface" role="img" aria-labelledby="qsar-surface-caption"></svg><figcaption id="qsar-surface-caption"></figcaption></figure>
+      <figure><h3>Observed and predicted</h3><svg id="qsar-prediction" role="img" aria-labelledby="qsar-prediction-caption"></svg><figcaption id="qsar-prediction-caption">Predictions use only the scaffold training set. Filled circles: training; hollow circles: held-out test. Crosses flag points outside the applicability domain. Dashed line: perfect prediction.</figcaption></figure>
+      <figure><h3>Y-scrambling</h3><svg id="qsar-scrambling" role="img" aria-labelledby="qsar-scrambling-caption"></svg><figcaption id="qsar-scrambling-caption"></figcaption></figure>
+      <figure><h3>Applicability domain</h3><svg id="qsar-williams" role="img" aria-labelledby="qsar-williams-caption"></svg><figcaption id="qsar-williams-caption"></figcaption></figure>
+    </div>
+    <details open><summary>Validation metrics</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Validation metrics"><table class="stats"><thead><tr><th scope="col">Metric</th><th scope="col">Value</th></tr></thead><tbody id="qsar-metrics"></tbody></table></div></details>
+    <details id="qsar-training-table"><summary>Coefficients · training fit used in plots</summary><p class="small">This equation is fit only to the scaffold training set. It supplies the predictions, conditional surface and applicability domain above.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Training model coefficients"><table class="stats"><thead><tr><th scope="col">Descriptor</th><th scope="col">Coefficient</th><th scope="col">SE</th><th scope="col">p</th><th scope="col">VIF</th></tr></thead><tbody id="qsar-training-coefficients"></tbody></table></div></details>
+    <details><summary>Coefficients · full-data descriptive fit</summary><p class="small">The final descriptive fit uses all retained compounds after descriptor selection. The plots and domain diagnostics above use the separate training-only fit. Coefficient p-values are descriptive post-selection values.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Descriptive model coefficients"><table class="stats"><thead><tr><th scope="col">Descriptor</th><th scope="col">Coefficient</th><th scope="col">SE</th><th scope="col">p</th><th scope="col">VIF</th></tr></thead><tbody id="qsar-coefficients"></tbody></table></div></details>
+    <details><summary id="qsar-compound-summary">Compounds and domain flags</summary><p class="small">All activity and prediction values are pChEMBL (−log₁₀ M). Select a linked compound to open it in the home explorer.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Compound predictions and domain flags"><table class="stats"><thead><tr><th scope="col">InChIKey / explorer drug</th><th scope="col">Split</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">Leverage</th><th scope="col">Standardized residual</th><th scope="col">Domain</th></tr></thead><tbody id="qsar-compounds"></tbody></table></div></details>
+  </div>
+</dialog>
 
 <footer id="sources" class="site-foot" aria-labelledby="sources-h">
   <div class="foot-inner">
