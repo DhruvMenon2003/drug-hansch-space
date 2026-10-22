@@ -66,6 +66,10 @@ export function l1sOf(d) { return [...new Set(d.atc.map(a => a.code[0]))]; }
 /** Token colour of drug `d` under the current colour mode. */
 export function colorOf(d) {
   const v = app.view, T = app.tokens;
+  if (app.qsarHighlight) {
+    const point = app.qsarByCid.get(d.cid);
+    return point ? (point.outside_domain ? T.mark : T.s1) : T.point;
+  }
   switch (v.color) {
     case 'atc': {
       const mine = l1sOf(d), slot = v.atc.findIndex(c => c && mine.includes(c));

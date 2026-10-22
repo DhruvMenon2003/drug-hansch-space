@@ -1,0 +1,46 @@
+{
+  "timestamp_utc": "2026-10-22T16:10:30.214158+00:00",
+  "site_hashes": {
+    "site/index.html": "62f91b515b2fb3b053ae89f6cdf6f5b40f49bcec14492de55f2e3290ed99dbc0",
+    "site/style.css": "89efda49704b41156da850df12a849e90024622d6702a2c82788727ff8521b16",
+    "site/js/qsar.js": "6cbf3ad6190f2b86c96584dfe70d23a68e62ca4bb3df214e213adac4f63782f4",
+    "site/js/boot-core.js": "c44925caf5a023d0453d262558a436294a67e9a5f7d9b859bd06ada721b10dc3",
+    "site/js/gl/render.js": "c139e8de99db022d920386befd35238e8aacce5c8c6afe43efb1def46b641497",
+    "site/js/hud.js": "07fa04aed71500499357d68be0d42c867b523f5e06f29311da6b3c20a366ffb2",
+    "site/js/kernel.js": "3efaa5a91f837dfc009eb6b4aec5ec106d0baef0890473e73f1056cb3bfba050",
+    "site/js/model.js": "f2aaad88df51acbdc2e9eeec3c3da8d0ffd3caa3b6006dcfd3e2aa27bf04b2f6",
+    "site/data/qsar_drd2.json": "4a192a382efb7a7631777f63da9336230918bcdba30e310b26360f53592546aa"
+  },
+  "export_sha256": "4a192a382efb7a7631777f63da9336230918bcdba30e310b26360f53592546aa",
+  "export_bytes": 159449,
+  "site_raw_bytes": 8152039,
+  "cap_raw_bytes": 8388608,
+  "new_site_directories": [],
+  "focused_browser_tests": {
+    "passed": 3,
+    "failed": 0,
+    "environments": [
+      "headless Chromium desktop 1280x800",
+      "headless Chromium Pixel 7 emulation"
+    ],
+    "journeys": [
+      "open home QSAR overlay, display all 250 points and coefficient tables, verify 100-scramble histogram and AD flags",
+      "toggle explorer domain colors, select joined compound, reopen, close via Escape and restore focus",
+      "missing JSON error then retry with actual file",
+      "no serious/critical axe violations; no horizontal dialog overflow"
+    ]
+  },
+  "unit_tests": {
+    "passed": 35,
+    "failed": 0
+  },
+  "static_checks": {
+    "errors": 0,
+    "baseline_warnings": 5
+  },
+  "visual_review": "Independently inspected A5-captured final desktop/phone overview, surface and validation screenshots; axis overlap fix confirmed. Independently inspected notebook Williams and y-scramble PNGs.",
+  "limits": [
+    "Phone is browser emulation, not physical hardware.",
+    "No hosted production deployment tested; this PR source served locally."
+  ]
+}

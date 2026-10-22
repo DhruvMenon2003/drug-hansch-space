@@ -6,7 +6,8 @@ import { AX, axLong, passes } from './model.js';
 export function renderLegend() {
   const v = app.view, T = app.tokens, sw = (c, t) => `<span><span class="sw" style="background:${c}"></span>${esc(t)}</span>`;
   let h = '';
-  if (v.color === 'atc') {
+  if (app.qsarHighlight) h = sw(T.s1, 'DRD2: within domain') + sw(T.mark, 'DRD2: outside domain') + sw(T.point, 'Not in the DRD2 dataset');
+  else if (v.color === 'atc') {
     v.atc.forEach((c, i) => { if (c) h += sw(T['s' + (i + 1)], `${c} ${cap(app.meta.atc_names[c])}`); });
     h += sw(T.point, 'Other ATC groups');
   } else if (v.color === 'oral') h = sw(T.s1, 'Oral route') + sw(T.s2, 'No oral route') + sw(T.point, 'No route listed');
