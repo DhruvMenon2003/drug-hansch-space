@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateQsar, joinCompounds } from '../../site/js/qsar.js';
+import { readFileSync } from 'node:fs';
+import { validateQsar, joinCompounds, filterCompounds, equationBreakdown } from '../../site/js/qsar.js';
 
 // Deliberately synthetic validation cases; never shipped as scientific results.
 const key = i => `${'A'.repeat(12)}${String.fromCharCode(65 + Math.floor(i / 26), 65 + i % 26)}-${'B'.repeat(10)}-N`;
@@ -45,4 +46,28 @@ test('QSAR joins exact structures before CID, and leaves ambiguous parents unjoi
   assert.equal(joined.has(key(3)), false, 'shared parent is ambiguous');
   assert.equal(joined.get(key(4)).cid, 3, 'unique parent is usable');
   assert.equal(joined.has(key(5)), false);
+});
+
+test('record search combines identity, split and domain filters without changing stored rows', () => {
+  const rows = [
+    { inchikey: key(0), split: 'train', outside_domain: false, pubchem_cid: 123 },
+    { inchikey: key(1), split: 'test', outside_domain: true, pubchem_cid: 456, pubchem_cids: [456, 789] },
+  ];
+  const matched = new Map([[key(0), { name: 'Example Drug', cid: 123, pcid: 321 }]]);
+  assert.deepEqual(filterCompounds(rows, matched, { query: ' example ' }), [rows[0]]);
+  assert.deepEqual(filterCompounds(rows, matched, { query: key(1).toLowerCase().slice(5), split: 'test', domain: 'outside' }), [rows[1]]);
+  assert.deepEqual(filterCompounds(rows, matched, { query: 'CID: 789' }), [rows[1]]);
+  assert.deepEqual(filterCompounds(rows, matched, { query: '123', domain: 'outside' }), []);
+  assert.deepEqual(filterCompounds(rows, matched, { query: 'null' }), []);
+  assert.deepEqual(filterCompounds(rows, matched), rows);
+});
+
+test('training-equation terms reconstruct every frozen prediction to better than 1e-10 pChEMBL', () => {
+  const snapshot = JSON.parse(readFileSync(new URL('../../site/data/qsar_drd2.json', import.meta.url), 'utf8'));
+  for (const p of snapshot.compounds) {
+    const result = equationBreakdown(snapshot.training_coefficients, p);
+    assert.ok(result, `descriptor values exist for ${p.inchikey}`);
+    assert.ok(Math.abs(result.total - p.predicted) < 1e-10, `training equation matches ${p.inchikey}`);
+  }
+  assert.equal(equationBreakdown(snapshot.training_coefficients, { descriptors: {} }), null);
 });
