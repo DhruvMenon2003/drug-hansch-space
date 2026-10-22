@@ -70,9 +70,12 @@ test('QSAR reports missing data and retries without replacing it with invented v
 test('QSAR records can be searched and filtered, then inspected in the frozen training equation @mobile', async ({ page }) => {
   const exported = readData();
   const drugs = JSON.parse(readFileSync(new URL('../../site/data/drugs.json', import.meta.url), 'utf8')).drugs;
-  const compound = exported.compounds.find(p => p.pubchem_cid && drugs.some(d => d.cid === p.pubchem_cid));
-  const drug = drugs.find(d => d.cid === compound.pubchem_cid);
+  const drug = drugs.find(d => d.name === 'amisulpride');
+  const compound = exported.compounds.find(p => p.pubchem_cid === drug.cid);
   await open(page);
+  for (const text of ['195 training', '6.78353846', '55 held-out', '1.2139731436', '1.2564908302', 'Lower RMSE is better', 'does not beat'])
+    await expect(page.locator('#qsar-baseline')).toContainText(text);
+  await expect(page.locator('#qsar-baseline a')).toHaveAttribute('href', /944a7e8717ea6bf85815cb1fa103bcd2c4ca2fd4\/curation\/results\/hansch_drd2\/predictions.csv$/);
   await page.locator('#qsar-compound-summary').click();
   await expect(page.locator('#qsar-record-count')).toContainText(`Showing ${exported.n} of ${exported.n}`);
   await page.locator('#qsar-search').fill(compound.inchikey.slice(0, 10).toLowerCase());
@@ -103,8 +106,29 @@ test('QSAR records can be searched and filtered, then inspected in the frozen tr
   await expect(page.locator('#qsar-equation-terms')).toContainText('Å²');
   await expect(page.locator('#qsar-equation-terms')).toContainText('Da');
   await expect(page.locator('#qsar-equation-inspector')).toContainText('not causal or mechanistic effects');
-  await page.locator('#qsar-inspect-compound').selectOption(exported.compounds.find(p => p.split === 'test').inchikey);
-  await expect(page.locator('#qsar-equation-result')).toContainText('Held-out test record');
+  await expect(page.locator('#qsar-equation-terms tr').filter({ has: page.getByRole('rowheader', { name: 'HBD', exact: true }) }).locator('td').first()).toHaveText('2');
+  await expect(page.locator('#qsar-equation-terms tr').filter({ has: page.getByRole('rowheader', { name: 'HBA', exact: true }) }).locator('td').first()).toHaveText('6');
+  for (const text of ['NumHDonors', 'CalcNumHBD', 'NumHAcceptors', 'CalcNumHBA', 'CalcNumLipinskiHBD', 'CalcNumLipinskiHBA'])
+    await expect(page.locator('#qsar-hbond-method')).toContainText(text);
+  for (const split of ['train', 'test']) for (const outside of [true, false]) {
+    const record = exported.compounds.find(p => p.split === split && p.outside_domain === outside);
+    await page.locator('#qsar-inspect-compound').selectOption(record.inchikey);
+    const context = page.locator('#qsar-equation-context');
+    await expect(context).toContainText(`${split === 'test' ? 'Held-out test' : 'Training'} record`);
+    await expect(context).toContainText(`stored domain flag: ${outside ? 'Outside' : 'Within'} applicability domain`);
+    await expect(context).toContainText(`Leverage ${Number(record.leverage.toPrecision(6))}`);
+    await expect(context).toContainText(`warning threshold h* = ${Number(exported.applicability_domain.threshold.toPrecision(6))}`);
+    await expect(context).toContainText(`Standardized residual ${Number(record.standardized_residual.toPrecision(6))}`);
+    await expect(context).toContainText(`limit ±${exported.applicability_domain.standardized_residual_limit}`);
+    await expect(context).toContainText('not predictive');
+    await expect(context).toContainText('arithmetic match do not establish prediction reliability');
+  }
+  await page.locator('#qsar-inspect-compound').evaluate(el => { el.value = ''; el.dispatchEvent(new Event('change', { bubbles: true })); });
+  await expect(page.locator('#qsar-equation-context')).toHaveText('No valid dataset record is selected. Applicability-domain diagnostics are unavailable.');
+  await expect(page.locator('#qsar-equation-result')).toContainText('unavailable');
+  await expect(page.locator('#qsar-equation-terms tr')).toHaveCount(0);
+  await page.locator('#qsar-inspect-compound').selectOption(compound.inchikey);
+  await expect(page.locator('#qsar-equation-terms tr')).toHaveCount(exported.training_coefficients.length);
   await page.locator('#qsar-workflow > summary').click();
   await expect(page.locator('#qsar-workflow')).toContainText('Every training fold repeats descriptor selection');
   await expect(page.locator('#qsar-workflow-outcome')).toContainText('not predictive');
@@ -112,4 +136,14 @@ test('QSAR records can be searched and filtered, then inspected in the frozen tr
   expect(await page.locator('#qsar-dialog').evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
   const results = await new AxeBuilder({ page }).include('#qsar-dialog').analyze();
   expect(results.violations.filter(v => ['critical', 'serious'].includes(v.impact))).toEqual([]);
+  await page.locator('#qsar-compounds button[data-cid]').click();
+  const sheetHandle = page.locator('#sheet-handle');
+  if (await sheetHandle.isVisible() && await page.locator('#detail').getAttribute('data-sheet') === 'peek') {
+    await sheetHandle.click();
+    await expect(sheetHandle).toHaveAttribute('aria-expanded', 'true');
+  }
+  await expect(page.locator('#d-desc div').filter({ hasText: 'N/O-bound hydrogens · Lipinski count' }).locator('dd')).toHaveText('3');
+  await expect(page.locator('#d-desc div').filter({ hasText: 'N + O atoms · Lipinski count' }).locator('dd')).toHaveText('7');
+  await expect(page.locator('#d-hbond-method')).toBeVisible();
+  await expect(page.locator('#d-hbond-method')).toContainText('3/7 here and 2/6 in the QSAR');
 });

@@ -204,9 +204,12 @@ function renderCompounds() {
 }
 
 function renderEquationRecord() {
-  if (!data) return;
-  const p = data.compounds.find(p => p.inchikey === $('#qsar-inspect-compound').value);
-  const breakdown = equationBreakdown(data.training_coefficients, p);
+  const p = data?.compounds.find(p => p.inchikey === $('#qsar-inspect-compound').value);
+  const ad = data?.applicability_domain;
+  $('#qsar-equation-context').textContent = p
+    ? `${p.split === 'test' ? 'Held-out test' : 'Training'} record · stored domain flag: ${p.outside_domain ? 'Outside' : 'Within'} applicability domain. Leverage ${number(p.leverage)}; warning threshold h* = ${number(ad.threshold)}. Standardized residual ${number(p.standardized_residual)}; limit ±${number(ad.standardized_residual_limit)}. This frozen model is not predictive. A within-domain flag and an arithmetic match do not establish prediction reliability.`
+    : 'No valid dataset record is selected. Applicability-domain diagnostics are unavailable.';
+  const breakdown = equationBreakdown(data?.training_coefficients, p);
   if (!breakdown) {
     $('#qsar-equation-result').textContent = 'The training coefficients or descriptor values needed for this record are unavailable.';
     $('#qsar-equation-terms').replaceChildren();
