@@ -178,7 +178,7 @@ function showDetail({ index }) {
   $('#d-desc').innerHTML = [
     kv('log P', fx(D.logp, 2), fin(D.xlogp) ? `Crippen; XLogP3 ${fx(D.xlogp, 2)}` : 'Crippen'),
     kv('MR', fx(D.mr, 1), 'cm³/mol'), kv('TPSA', fx(D.tpsa, 1), 'Å²'), kv('MW', fx(D.mw, 1), 'Da'),
-    kv('H-bond donors', D.hbd ?? '–'), kv('H-bond acceptors', D.hba ?? '–'), kv('Rotatable bonds', D.rotb ?? '–'),
+    kv('N/O-bound hydrogens · Lipinski count', D.hbd ?? '–'), kv('N + O atoms · Lipinski count', D.hba ?? '–'), kv('Rotatable bonds', D.rotb ?? '–'),
     kv('Aromatic rings', D.arom ?? '–'), kv('Fsp3', fx(D.fsp3, 2)), kv('Complexity', fx(D.cx, 0), 'PubChem'),
     kv('Rule-of-five violations', D.ro5 ?? '–'), kv('Formal charge', D.charge ?? '–'),
   ].join('');
