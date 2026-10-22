@@ -59,6 +59,37 @@ export function joinCompounds(compounds, drugs) {
   return result;
 }
 
+/** Table-only search: every filter narrows the same frozen records; the model and plotted population stay fixed. */
+export function filterCompounds(compounds, matched, { query = '', split = '', domain = '' } = {}) {
+  const needle = String(query).trim().toLowerCase().replace(/^cid[\s:]+/, '');
+  return compounds.filter(p => {
+    if (split && p.split !== split) return false;
+    if (domain && p.outside_domain !== (domain === 'outside')) return false;
+    if (!needle) return true;
+    const d = matched.get(p.inchikey);
+    const fields = [p.inchikey, d?.name, d?.cid, d?.pcid, p.pubchem_cid, ...(p.pubchem_cids || [])];
+    return fields.some(value => value != null && String(value).toLowerCase().includes(needle));
+  });
+}
+
+const DESCRIPTOR_UNITS = {
+  QED: 'dimensionless (0–1)', MolLogP: 'dimensionless log₁₀ ratio', MolLogP_squared: '(log₁₀ ratio)²',
+  MolMR: 'cm³/mol', TPSA: 'Å²', MolWt: 'Da', HBD: 'donor count', HBA: 'acceptor count',
+  RotatableBonds: 'bond count', AromaticRings: 'ring count', FractionCSP3: 'fraction (0–1)',
+};
+const isIntercept = descriptor => /^(intercept|const)$/i.test(descriptor);
+
+/** Reconstruct only a stored dataset record. No structure entry, new descriptors or new-compound predictions. */
+export function equationBreakdown(coefficients, compound) {
+  if (!Array.isArray(coefficients) || !coefficients.length || !compound) return null;
+  const terms = coefficients.map(c => {
+    const intercept = isIntercept(c.descriptor), input = intercept ? 1 : compound.descriptors?.[c.descriptor];
+    return { descriptor: c.descriptor, coefficient: c.coefficient, input, contribution: input * c.coefficient, units: intercept ? 'constant 1' : DESCRIPTOR_UNITS[c.descriptor] || 'descriptor units' };
+  });
+  if (terms.some(t => !fin(t.input) || !fin(t.coefficient) || !fin(t.contribution))) return null;
+  return { terms, total: terms.reduce((sum, t) => sum + t.contribution, 0) };
+}
+
 export async function openQsar() {
   wire();
   const dialog = $('#qsar-dialog');
@@ -98,7 +129,25 @@ function wire() {
   $('#qsar-retry').addEventListener('click', openQsar);
   $('#qsar-highlight').addEventListener('change', e => highlight(e.target.checked));
   $('#qsar-clear').addEventListener('click', () => highlight(false));
+  $('#qsar-search').addEventListener('input', renderCompounds);
+  $('#qsar-split-filter').addEventListener('change', renderCompounds);
+  $('#qsar-domain-filter').addEventListener('change', renderCompounds);
+  $('#qsar-reset-filters').addEventListener('click', () => {
+    for (const id of ['#qsar-search', '#qsar-split-filter', '#qsar-domain-filter']) $(id).value = '';
+    renderCompounds();
+    $('#qsar-search').focus();
+  });
+  $('#qsar-inspect-compound').addEventListener('change', renderEquationRecord);
   $('#qsar-compounds').addEventListener('click', e => {
+    const inspect = e.target.closest('button[data-inspect]');
+    if (inspect) {
+      $('#qsar-inspect-compound').value = inspect.dataset.inspect;
+      renderEquationRecord();
+      $('#qsar-equation-inspector').open = true;
+      $('#qsar-equation-title').focus({ preventScroll: true });
+      $('#qsar-equation-title').scrollIntoView({ block: 'start' });
+      return;
+    }
     const button = e.target.closest('button[data-cid]');
     if (!button) return;
     $('#qsar-dialog').close();
@@ -139,6 +188,47 @@ function metricRows(value, prefix = '') {
   }).join('');
 }
 
+function renderCompounds() {
+  if (!data) return;
+  const query = $('#qsar-search').value, split = $('#qsar-split-filter').value, domain = $('#qsar-domain-filter').value;
+  const visible = filterCompounds(data.compounds, joins, { query, split, domain });
+  $('#qsar-record-count').textContent = `Showing ${visible.length} of ${data.n} compounds · ${visible.filter(p => p.outside_domain).length} outside the applicability domain.`;
+  $('#qsar-reset-filters').disabled = !query && !split && !domain;
+  $('#qsar-no-matches').hidden = !!visible.length;
+  $('#qsar-compounds').innerHTML = visible.map(p => {
+    const d = joins.get(p.inchikey), name = d?.name || p.inchikey;
+    const identity = d ? `<button type="button" class="ghost" data-cid="${d.cid}">${esc(d.name)}</button><br>` : '';
+    const cid = p.pubchem_cid == null ? '' : `<br><span class="small">CID ${esc(p.pubchem_cid)}</span>`;
+    return `<tr${p.outside_domain ? ' class="qsar-outside"' : ''}><th scope="row">${identity}<span class="mono">${esc(p.inchikey)}</span>${cid}<br><button type="button" class="ghost" data-inspect="${esc(p.inchikey)}" aria-label="Inspect equation for ${esc(name)}">Inspect equation</button></th><td>${esc(p.split)}</td><td>${number(p.observed)}</td><td>${number(p.predicted)}</td><td>${number(p.leverage)}</td><td>${number(p.standardized_residual)}</td><td class="qsar-domain">${p.outside_domain ? 'Outside' : 'Within'}</td></tr>`;
+  }).join('');
+}
+
+function renderEquationRecord() {
+  if (!data) return;
+  const p = data.compounds.find(p => p.inchikey === $('#qsar-inspect-compound').value);
+  const breakdown = equationBreakdown(data.training_coefficients, p);
+  if (!breakdown) {
+    $('#qsar-equation-result').textContent = 'The training coefficients or descriptor values needed for this record are unavailable.';
+    $('#qsar-equation-terms').replaceChildren();
+    return;
+  }
+  const agrees = Math.abs(breakdown.total - p.predicted) <= 1e-8;
+  $('#qsar-equation-result').textContent = `${p.split === 'test' ? 'Held-out test' : 'Training'} record · observed ${number(p.observed)} pChEMBL · stored prediction ${number(p.predicted)} pChEMBL · term sum ${number(breakdown.total)} pChEMBL. ${agrees ? 'The full-precision sum matches the stored prediction.' : 'The sum differs from the stored prediction; check the frozen export.'}`;
+  $('#qsar-equation-terms').innerHTML = breakdown.terms.map(t => `<tr><th scope="row">${esc(t.descriptor)}</th><td>${number(t.input)}</td><td>${esc(t.units)}</td><td>${number(t.coefficient)}</td><td>${number(t.contribution)}</td></tr>`).join('');
+}
+
+function renderEquation() {
+  const coefficients = data.training_coefficients || [];
+  $('#qsar-equation-inspector').hidden = !coefficients.length;
+  $('#qsar-equation').textContent = 'Predicted pChEMBL = ' + coefficients.map((c, i) => {
+    const sign = c.coefficient < 0 ? (i ? ' − ' : '−') : (i ? ' + ' : '');
+    return `${sign}${number(Math.abs(c.coefficient))}${isIntercept(c.descriptor) ? '' : ` × ${c.descriptor}`}`;
+  }).join('');
+  $('#qsar-inspect-compound').innerHTML = data.compounds.map(p => `<option value="${esc(p.inchikey)}">${esc(joins.get(p.inchikey)?.name ? `${joins.get(p.inchikey).name} · ${p.inchikey}` : p.inchikey)}</option>`).join('');
+  $('#qsar-inspect-compound').value = (data.compounds.find(p => joins.has(p.inchikey)) || data.compounds[0]).inchikey;
+  renderEquationRecord();
+}
+
 function render() {
   const t = data.target, ad = data.applicability_domain, flagged = data.compounds.filter(p => p.outside_domain).length;
   $('#qsar-title').textContent = `${t.gene || 'DRD2'} · ${t.name}`;
@@ -152,10 +242,10 @@ function render() {
   $('#qsar-training-table').hidden = !data.training_coefficients?.length;
   $('#qsar-training-coefficients').innerHTML = coefficients(data.training_coefficients || []);
   $('#qsar-compound-summary').textContent = `Compounds and domain flags · ${flagged} outside of ${data.n}`;
-  $('#qsar-compounds').innerHTML = data.compounds.map(p => {
-    const d = joins.get(p.inchikey), identity = d ? `<button type="button" class="ghost" data-cid="${d.cid}">${esc(d.name)}</button><br>` : '';
-    return `<tr${p.outside_domain ? ' class="qsar-outside"' : ''}><th scope="row">${identity}<span class="mono">${esc(p.inchikey)}</span></th><td>${esc(p.split)}</td><td>${number(p.observed)}</td><td>${number(p.predicted)}</td><td>${number(p.leverage)}</td><td>${number(p.standardized_residual)}</td><td>${p.outside_domain ? 'Outside' : 'Within'}</td></tr>`;
-  }).join('');
+  renderCompounds();
+  renderEquation();
+  $('#qsar-workflow-outcome').textContent = `The frozen dataset contains ${data.n} compounds: ${data.metrics.train.n} training and ${data.metrics.test.n} held-out test compounds. The model is labelled ${data.verdict_label || 'not predictive'}; scaffold-test r² = ${fx(data.metrics.test.r2, 3)}, five-fold q² = ${fx(data.metrics.cv.q2, 3)}, and LOO q² = ${fx(data.metrics.loo.q2, 3)}. Passing the scrambling check alone does not establish predictive performance.`;
+  $('#qsar-workflow-snapshot').textContent = `Frozen source: ${data.sources?.chembl_release || 'ChEMBL'} · seed ${data.seed}. The linked executed notebook records the filters, pinned software versions, assumptions and cache replay checks.`;
   $('#qsar-surface-caption').textContent = data.fit_surface?.note || 'Conditional slice of the training-only model. Other descriptors are held at training medians.';
   const exceeds = data.scrambling.r2.filter(r => r >= data.scrambling.real_r2).length;
   $('#qsar-scrambling-caption').textContent = `100 shuffled-activity refits; ${exceeds} reach or exceed the real r² (${fx(data.scrambling.real_r2, 3)}), shown by the orange line. The real r² must lie above the entire shuffled distribution for this check to pass. This is a chance-correlation check, not a held-out prediction score.`;

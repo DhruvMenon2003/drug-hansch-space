@@ -429,6 +429,28 @@
       <a href="data/qsar_drd2.json" download>Download results JSON</a>
     </div>
     <p id="qsar-join" class="small"></p>
+    <details id="qsar-workflow">
+      <summary>How the workflow works · from assay records to a checked model</summary>
+      <ol class="qsar-workflow-steps">
+        <li><strong>Collect one endpoint.</strong> ChEMBL records describe the single human DRD2 protein, Ki and binding assays (B). Keep exact measurements (=), nM source units, a reported pChEMBL value, assay confidence ≥8, no data-validity comment and no potential-duplicate flag. This is a human target assignment; confidence 8 can include homologous or unspecified-source assays. Only pChEMBL enters the model; −log₁₀ of molar concentration means higher values indicate stronger measured binding.</li>
+        <li><strong>Resolve compound identity.</strong> RDKit parses structures, strips salts, neutralizes charges, removes solvents, keeps the largest fragment and chooses a canonical tautomer before generating a full InChIKey. Each retained compound needs at least two independent document IDs and a replicate spread ≤1 log unit; its response is the median pChEMBL. Molecules above 1000 Da are excluded.</li>
+        <li><strong>Calculate descriptors and fit.</strong> RDKit supplies lipophilicity, refractivity, polarity, size, hydrogen-bond counts and other molecular descriptors, including squared log P. Zero-variance terms are removed; pairs with |Pearson r| &gt;0.9 keep the term more correlated with activity. Ordinary least squares uses at most one descriptor per five compounds. Every training fold repeats descriptor selection using its own training responses.</li>
+        <li><strong>Validate beyond the fit.</strong> A fixed-seed Murcko scaffold split aims for 80/20 while keeping scaffolds together. Five-fold scaffold CV, leave-one-out q² and 100 complete y-scrambled refits test generalization and chance correlation. The Williams plot flags leverage above 3p/n or standardized residuals beyond ±3. Coefficient standard errors, p-values and VIF describe uncertainty and collinearity; post-selection p-values remain descriptive.</li>
+        <li><strong>Read the conclusion, then inspect records.</strong> <span id="qsar-workflow-outcome"></span> Sharing a target does not make these compounds a congeneric series. The training equation below explains the stored plot values; the separate full-data fit is descriptive.</li>
+      </ol>
+      <p class="small" id="qsar-workflow-snapshot"></p>
+      <p class="qsar-resource-links"><a href="https://github.com/DhruvMenon2003/drug-toxicity-qsar-prediction/blob/be9bcd29a70b545ecc2420728f5e1206e084a809/curation/hansch_drd2.ipynb" target="_blank" rel="noopener noreferrer">Frozen executed notebook</a><a href="https://github.com/DhruvMenon2003/drug-toxicity-qsar-prediction/tree/944a7e8717ea6bf85815cb1fa103bcd2c4ca2fd4/curation/results/hansch_drd2" target="_blank" rel="noopener noreferrer">Dataset, exclusions, provenance and figures</a></p>
+      <p class="small">The record → descriptor → equation connection follows the workflow documented for <a href="http://www.biobyte.com/bb/prod/bioloom.html" target="_blank" rel="noopener noreferrer">Bio-Loom</a>. This implementation uses ChEMBL records and RDKit calculations. BioByte’s ClogP/CMR calculators and licensed Masterfile/CQSAR collections are not included.</p>
+    </details>
+    <details id="qsar-equation-inspector">
+      <summary id="qsar-equation-title">Inspect the training equation</summary>
+      <p class="small">The terms below reconstruct a stored dataset prediction using the frozen scaffold-training coefficients. They are algebraic contributions in pChEMBL units, not causal or mechanistic effects. Coefficients describe conditional associations with the other included descriptors held fixed.</p>
+      <p id="qsar-equation" class="qsar-equation mono"></p>
+      <div class="field"><label for="qsar-inspect-compound">Compound already in this dataset</label><select id="qsar-inspect-compound"></select></div>
+      <p id="qsar-equation-result" class="qsar-equation-result" aria-live="polite"></p>
+      <p class="small">Descriptor values use their native units shown below; they are not z-scores. Coefficient units are pChEMBL per descriptor unit. Displayed numbers are rounded; the sum uses the full precision stored in the JSON. The intercept is the algebraic offset at zero descriptor values.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Training equation contributions"><table class="stats"><thead><tr><th scope="col">Term</th><th scope="col">Input</th><th scope="col">Input units</th><th scope="col">Coefficient</th><th scope="col">Contribution (pChEMBL)</th></tr></thead><tbody id="qsar-equation-terms"></tbody></table></div>
+    </details>
     <div class="qsar-grid">
       <figure><h3>Conditional fit surface</h3><svg id="qsar-surface" role="img" aria-labelledby="qsar-surface-caption"></svg><figcaption id="qsar-surface-caption"></figcaption></figure>
       <figure><h3>Observed and predicted</h3><svg id="qsar-prediction" role="img" aria-labelledby="qsar-prediction-caption"></svg><figcaption id="qsar-prediction-caption">Predictions use only the scaffold training set. Filled circles: training; hollow circles: held-out test. Crosses flag points outside the applicability domain. Dashed line: perfect prediction.</figcaption></figure>
@@ -438,7 +460,18 @@
     <details open><summary>Validation metrics</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Validation metrics"><table class="stats"><thead><tr><th scope="col">Metric</th><th scope="col">Value</th></tr></thead><tbody id="qsar-metrics"></tbody></table></div></details>
     <details id="qsar-training-table"><summary>Coefficients · training fit used in plots</summary><p class="small">This equation is fit only to the scaffold training set. It supplies the predictions, conditional surface and applicability domain above.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Training model coefficients"><table class="stats"><thead><tr><th scope="col">Descriptor</th><th scope="col">Coefficient</th><th scope="col">SE</th><th scope="col">p</th><th scope="col">VIF</th></tr></thead><tbody id="qsar-training-coefficients"></tbody></table></div></details>
     <details><summary>Coefficients · full-data descriptive fit</summary><p class="small">The final descriptive fit uses all retained compounds after descriptor selection. The plots and domain diagnostics above use the separate training-only fit. Coefficient p-values are descriptive post-selection values.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Descriptive model coefficients"><table class="stats"><thead><tr><th scope="col">Descriptor</th><th scope="col">Coefficient</th><th scope="col">SE</th><th scope="col">p</th><th scope="col">VIF</th></tr></thead><tbody id="qsar-coefficients"></tbody></table></div></details>
-    <details><summary id="qsar-compound-summary">Compounds and domain flags</summary><p class="small">All activity and prediction values are pChEMBL (−log₁₀ M). Select a linked compound to open it in the home explorer.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Compound predictions and domain flags"><table class="stats"><thead><tr><th scope="col">InChIKey / explorer drug</th><th scope="col">Split</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">Leverage</th><th scope="col">Standardized residual</th><th scope="col">Domain</th></tr></thead><tbody id="qsar-compounds"></tbody></table></div></details>
+    <details id="qsar-records"><summary id="qsar-compound-summary">Compounds and domain flags</summary>
+      <p class="small">Search the stored records, open a matched drug in the home explorer, or inspect its equation terms. All activity and prediction values are pChEMBL (−log₁₀ M). Filters apply to this table; plots and models continue to use the full dataset.</p>
+      <div class="qsar-record-filters">
+        <div class="field"><label for="qsar-search">InChIKey, matched name or CID</label><input type="search" id="qsar-search" placeholder="Whole or partial identifier / name" autocomplete="off" aria-controls="qsar-compounds" aria-describedby="qsar-record-count"></div>
+        <div class="field"><label for="qsar-split-filter">Data split</label><select id="qsar-split-filter" aria-controls="qsar-compounds"><option value="">All compounds</option><option value="train">Training</option><option value="test">Held-out test</option></select></div>
+        <div class="field"><label for="qsar-domain-filter">Applicability domain</label><select id="qsar-domain-filter" aria-controls="qsar-compounds"><option value="">All domains</option><option value="within">Within</option><option value="outside">Outside</option></select></div>
+        <button type="button" id="qsar-reset-filters" class="ghost" disabled>Clear filters</button>
+      </div>
+      <p id="qsar-record-count" class="small" role="status" aria-atomic="true"></p>
+      <p id="qsar-no-matches" hidden>No compounds match these filters. Clear the filters or change the search.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Compound predictions and domain flags"><table class="stats"><thead><tr><th scope="col">InChIKey / explorer drug</th><th scope="col">Split</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">Leverage</th><th scope="col">Standardized residual</th><th scope="col">Domain</th></tr></thead><tbody id="qsar-compounds"></tbody></table></div>
+    </details>
   </div>
 </dialog>
 

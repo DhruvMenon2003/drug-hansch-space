@@ -1,0 +1,214 @@
+{
+  "reviewed_at_utc": "2026-10-22T16:51:51.892765+00:00",
+  "result": "pass",
+  "scope": "Independent read-only scientific explanation and exact-source UI review; no implementation edits or publishing by reviewer.",
+  "baseline": {
+    "pipeline_commit": "944a7e8717ea6bf85815cb1fa103bcd2c4ca2fd4",
+    "site_commit": "de2ca0fa6973ee87eb7115c20e40ac32ad4953e2"
+  },
+  "build": {
+    "pipeline_explanatory_commit": "be9bcd29a70b545ecc2420728f5e1206e084a809",
+    "notebook_git_blob": "73b261aeadb0ed8065fdb296b77499d74be32b76",
+    "notebook_sha256": "7e220960c885f1fee661f893d8dc6884e165a258ac61c24671dc2d0f368ab857",
+    "site_source_sha256": {
+      "README.md": "c40e8f5e48fa7936be2c2a649be8d684fe9d68f2f4ac244dc9b3c435c72fa66a",
+      "site/index.html": "d81553784fb9a6a8c79f96c9095fb60fea28f6a791e8761abd79fd53c5f5edcb",
+      "site/js/qsar.js": "93656f2c52023d403d11ac6b3d2ae6a4927c53302168def89697391cdef49a56",
+      "site/style.css": "46b9d39ac5a95cefb4afb20c2898f7c00b1a3283a69413a84a0f2dbfbd133cd4",
+      "tests/e2e/qsar.spec.mjs": "3654ce2a61cffbeac09d0ff94e7313de8d36ca1eb9222dd46941c7cc9e0c4114",
+      "tests/unit/qsar.test.mjs": "8228bdd28c7dbdc079af240d17906e798aec48c1417410518753f2ec244e9c79"
+    },
+    "site_source_git_blobs": {
+      "README.md": "feb06591fecce04d40642f89217dfe10037db08c",
+      "site/index.html": "594f1341c2ee641d988da182b88760d1c76182b0",
+      "site/js/qsar.js": "43f3c73e9414873f8d35b4c999e9c126ebc45f6e",
+      "site/style.css": "55fef98e9a6fd0745701044af6b91ecae67d67b3",
+      "tests/e2e/qsar.spec.mjs": "07ff05436d7ab7c035fd434c48fcce7479ad06f7",
+      "tests/unit/qsar.test.mjs": "013fdf898f615b663ef4b75c807911eae11c6bb4"
+    },
+    "model_sha256": "622ba5d1d93e3ff4eee49b665e0ceeb8645785713ce5660eb8765f2b513aef23",
+    "export_sha256": "4a192a382efb7a7631777f63da9336230918bcdba30e310b26360f53592546aa",
+    "root_and_published_exports_identical": true,
+    "published_file_count": 306,
+    "published_bytes": 8165238,
+    "site_cap_bytes": 8388608,
+    "no_new_site_files_directories_pages_or_bundle": true
+  },
+  "notebook_review": {
+    "all_code_cell_objects_including_outputs_identical_to_baseline": true,
+    "code_cells_checked": 8,
+    "code_cell_objects_canonical_json_sha256": "d25a22f1ca0442c59d55b585096f729c6a216151bd1a6732c92118d1ed9414ee",
+    "result_files_byte_identical_to_baseline": 24,
+    "checks": [
+      "Sequential activity filters and standardized-compound attrition reconcile with preserved outputs.",
+      "Target confidence >=8 caveat distinguishes human target assignment from assay species.",
+      "pKi response, representation standardization, full InChIKey and document-independence definitions are accurately bounded.",
+      "Descriptor removal, correlation values, VIF, nested selection and split/validation figures match outputs.",
+      "Training equation, all-data descriptive fit, AD residual definitions and conditional surface are distinguished.",
+      "Negative predictive results and noncausal interpretation are explicit.",
+      "CHEMBL8946 worked example independently reconciles source rows, median, descriptors, prediction and AD.",
+      "User-supplied teaching reference note is README-only; its units, pre-split preprocessing and probability-distance Williams-plot observations were independently checked in source."
+    ],
+    "scientific_limitations": [
+      "The model remains not predictive; no changed numerical fit is claimed.",
+      "Whole-scaffold split achieves 195/55 (78/22), the previously accepted disclosed approximation to 80/20.",
+      "This review did not execute the external teaching notebook or Bio-Loom binaries."
+    ]
+  },
+  "numeric_inspector": {
+    "timestamp_utc": "2026-10-22T16:43:05.349Z",
+    "export_sha256": "4a192a382efb7a7631777f63da9336230918bcdba30e310b26360f53592546aa",
+    "equation_records_checked": 250,
+    "maximum_absolute_prediction_error": 2.6645352591003757e-15,
+    "filter_counts": {
+      "all/all": 250,
+      "all/within": 241,
+      "all/outside": 9,
+      "train/all": 195,
+      "train/within": 191,
+      "train/outside": 4,
+      "test/all": 55,
+      "test/within": 50,
+      "test/outside": 5
+    },
+    "matched_names_and_cids_checked": 4,
+    "data_unchanged": true
+  },
+  "browser_record_checks": {
+    "timestamp_utc": "2026-10-22T16:49:07.153Z",
+    "results": {
+      "desktop": {
+        "viewport": {
+          "width": 1440,
+          "height": 1040
+        },
+        "rendered_records_checked": 250,
+        "all_predictions_match": true,
+        "all_split_labels_match": true,
+        "all_term_counts_match": true,
+        "record_inspect_button_visible_without_horizontal_scroll": true,
+        "inspect_focus": true,
+        "workflow_caveat_and_verdict": true,
+        "no_horizontal_dialog_overflow": true,
+        "escape_and_focus_restore": true,
+        "javascript_errors": []
+      },
+      "phone": {
+        "viewport": {
+          "width": 412,
+          "height": 839
+        },
+        "rendered_records_checked": 250,
+        "all_predictions_match": true,
+        "all_split_labels_match": true,
+        "all_term_counts_match": true,
+        "record_inspect_button_visible_without_horizontal_scroll": true,
+        "inspect_focus": true,
+        "workflow_caveat_and_verdict": true,
+        "no_horizontal_dialog_overflow": true,
+        "escape_and_focus_restore": true,
+        "javascript_errors": []
+      }
+    }
+  },
+  "tests": {
+    "unit": {
+      "passed": 37,
+      "failed": 0
+    },
+    "focused_browser_suite": {
+      "passed": 5,
+      "failed": 0,
+      "projects": [
+        "desktop",
+        "phone"
+      ],
+      "coverage": [
+        "real JSON and chart counts",
+        "home overlay and exact joins",
+        "missing-data and retry",
+        "search by key/name/CID",
+        "split and AD intersections",
+        "no-match and clear/reset focus",
+        "table filters leave plotted population unchanged",
+        "equation record selection and full-precision reconstruction",
+        "workflow wording and immutable notebook link",
+        "no serious or critical axe findings",
+        "Escape close and focus restoration"
+      ],
+      "timing": "Full suite passed before final immutable notebook URL/test-regex replacement; no JavaScript/CSS change followed."
+    },
+    "final_pin_browser_tests": {
+      "passed": 2,
+      "failed": 0,
+      "projects": [
+        "desktop",
+        "phone"
+      ],
+      "timing": "Final source; workflow interaction and immutable notebook URL assertion rerun after link pin."
+    },
+    "static_and_import_checks": {
+      "errors": 0,
+      "warnings": 5,
+      "baseline_warnings_only": true,
+      "modules": 32,
+      "imports": 91,
+      "layers": 6
+    },
+    "git_diff_check": "pass"
+  },
+  "screenshots": {
+    "tests/workflow-desktop.png": {
+      "sha256": "c2b6b9f58ffbff6ba143ccc4d132bcd76b32fceb5fce93ec69f6be2ae47b541a",
+      "visually_reviewed": true
+    },
+    "tests/workflow-phone.png": {
+      "sha256": "e53f6df086c57ee1c1628fc047398f86dafce846e98d74663cc5fd11df990c9f",
+      "visually_reviewed": true
+    }
+  },
+  "screenshot_notes": "Desktop shows the held-out CHEMBL8946 training-equation reconstruction. Phone shows lookup, filters, one real record and reachable Inspect equation action. Captures precede only the invisible href pin; pixels and layout are otherwise the final build.",
+  "prior_deployment_verification": {
+    "timestamp_utc": "2026-10-22T16:40:47.134Z",
+    "url": "https://dhruvmenon2003.github.io/drug-hansch-space/",
+    "commit": "de2ca0fa6973ee87eb7115c20e40ac32ad4953e2",
+    "hashes": {
+      "index.html": {
+        "live": "62f91b515b2fb3b053ae89f6cdf6f5b40f49bcec14492de55f2e3290ed99dbc0",
+        "expected": "62f91b515b2fb3b053ae89f6cdf6f5b40f49bcec14492de55f2e3290ed99dbc0",
+        "matches": true
+      },
+      "js/qsar.js": {
+        "live": "6cbf3ad6190f2b86c96584dfe70d23a68e62ca4bb3df214e213adac4f63782f4",
+        "expected": "6cbf3ad6190f2b86c96584dfe70d23a68e62ca4bb3df214e213adac4f63782f4",
+        "matches": true
+      },
+      "data/qsar_drd2.json": {
+        "live": "4a192a382efb7a7631777f63da9336230918bcdba30e310b26360f53592546aa",
+        "expected": "4a192a382efb7a7631777f63da9336230918bcdba30e310b26360f53592546aa",
+        "matches": true
+      }
+    },
+    "checks": {
+      "home_loaded": true,
+      "overlay_loaded": true,
+      "points": 250,
+      "flags": 9,
+      "bins": 15,
+      "surface_polygons": 400,
+      "verdict": "not predictive",
+      "escape_close": true,
+      "focus_restored": true,
+      "javascript_errors": []
+    },
+    "screenshot": "tests/workflow-live-baseline.png",
+    "environment_note": "Used configured environment HTTPS proxy; Chromium ignored the proxy certificate trust error. Live bytes independently matched the exact merged Git commit.",
+    "screenshot_sha256": "6fefcb787751d5f7a7e87dd7dd79e13d48e6c8aafe03a65b03901ca92fac7745"
+  },
+  "limitations": [
+    "New workflow build tested locally; prior merged PR22 deployment was verified separately against its own exact bytes.",
+    "No hosted Colab browser session was exercised; current milestone is Markdown/UI-only and preserves previously executed code and outputs.",
+    "Browser tests used Chromium desktop and Pixel 7 emulation, not a physical phone.",
+    "Axe check gates serious/critical findings; it does not establish exhaustive accessibility compliance."
+  ]
+}

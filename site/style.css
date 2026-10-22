@@ -266,12 +266,20 @@ select, input[type="search"] { font: 400 0.95rem var(--font-display); color: var
 .qsar-dialog details { margin-top: 14px; }
 .qsar-dialog .table-wrap { margin-top: 8px; }
 .qsar-dialog td { white-space: nowrap; }
-.qsar-outside td:last-child { color: var(--mark); font-weight: 700; }
+.qsar-outside .qsar-domain { color: var(--mark); font-weight: 700; }
+.qsar-workflow-steps { padding-left: 24px; display: grid; gap: 12px; }
+.qsar-workflow-steps strong { font-family: var(--font-display); }
+.qsar-resource-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.qsar-resource-links a { display: inline-flex; align-items: center; min-height: var(--target); }
+.qsar-equation { overflow-wrap: anywhere; padding: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; line-height: 1.8; }
+.qsar-equation-result { font-family: var(--font-display); font-size: 0.95rem; }
+.qsar-record-filters { display: grid; grid-template-columns: minmax(220px, 2fr) minmax(125px, 1fr) minmax(145px, 1fr) auto; gap: 12px; align-items: end; margin-block: 16px; }
 @media (max-width: 740px) {
   .qsar-dialog { padding: 16px; }
   .qsar-grid { grid-template-columns: minmax(0, 1fr); }
   .qsar-grid figure { padding: 8px; }
   .qsar-head h2 { font-size: 1.2rem; }
+  .qsar-record-filters { grid-template-columns: minmax(0, 1fr); }
 }
 summary { display: list-item; min-height: var(--target); padding-block: 9px; }
 details > summary h2 { display: inline; }
