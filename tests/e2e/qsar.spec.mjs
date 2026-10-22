@@ -132,7 +132,7 @@ test('QSAR records can be searched and filtered, then inspected in the frozen tr
   await page.locator('#qsar-workflow > summary').click();
   await expect(page.locator('#qsar-workflow')).toContainText('Every training fold repeats descriptor selection');
   await expect(page.locator('#qsar-workflow-outcome')).toContainText('not predictive');
-  await expect(page.locator('#qsar-workflow a').first()).toHaveAttribute('href', /be9bcd29a70b545ecc2420728f5e1206e084a809\/curation\/hansch_drd2.ipynb$/);
+  await expect(page.locator('#qsar-workflow a').first()).toHaveAttribute('href', /f026e2dcac2f5fe6688387c6764e0aef3f43d7de\/curation\/hansch_drd2.ipynb$/);
   expect(await page.locator('#qsar-dialog').evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
   const results = await new AxeBuilder({ page }).include('#qsar-dialog').analyze();
   expect(results.violations.filter(v => ['critical', 'serious'].includes(v.impact))).toEqual([]);
