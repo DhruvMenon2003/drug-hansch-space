@@ -6,11 +6,21 @@
 import { detectCaps } from './caps.js';
 import { setProgress, setStatus, showFatal, showNoWebGL } from './fallback.js';
 
+/**
+ * Start the 3D layer's downloads. Its modulepreload hints live in an inert <template> in index.html, so a browser
+ * without WebGL never asks for three.js at all; copying them into the head starts those fetches a round trip before
+ * the dynamic import below would discover them. tools/check_site.py checks the template against the import graph.
+ */
+function preloadGl() {
+  const t = document.getElementById('gl-preload');
+  if (t) document.head.append(t.content.cloneNode(true));
+}
+
 async function main() {
   const caps = detectCaps();
   // start fetching the 3D half in parallel with the core, but only for a browser that can use it; its modules do nothing
   // until bootGl() is called
-  const glModule = caps.webgl ? import('./boot-gl.js') : null;
+  const glModule = caps.webgl ? (preloadGl(), import('./boot-gl.js')) : null;
   glModule?.catch(() => {});                      // reported below, where it is awaited
   let core;
   try { core = await import('./boot-core.js'); }

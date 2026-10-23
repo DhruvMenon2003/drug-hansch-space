@@ -38,9 +38,6 @@
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/kbd.css">
-<link rel="stylesheet" href="css/export.css">
-<link rel="stylesheet" href="css/xr.css">
 <noscript><style>.step{opacity:1;--step-ink:var(--ink);--step-head:var(--ink)}.stage{display:none}.skip-link{display:none}</style></noscript>
 <script type="importmap">
 { "imports": {
@@ -56,15 +53,9 @@
 <link rel="modulepreload" href="js/main.js">
 <link rel="modulepreload" href="js/caps.js">
 <link rel="modulepreload" href="js/fallback.js">
-<link rel="modulepreload" href="js/boot-gl.js">
 <link rel="modulepreload" href="js/boot-core.js">
 <link rel="modulepreload" href="js/kernel.js">
 <link rel="modulepreload" href="js/announce.js">
-<link rel="modulepreload" href="vendor/three/three.module.min.js">
-<link rel="modulepreload" href="js/gl/scene.js">
-<link rel="modulepreload" href="js/gl/scenery.js">
-<link rel="modulepreload" href="js/gl/render.js">
-<link rel="modulepreload" href="js/gl/molviewer.js">
 <link rel="modulepreload" href="js/data.js">
 <link rel="modulepreload" href="js/theme.js">
 <link rel="modulepreload" href="js/view.js">
@@ -77,13 +68,22 @@
 <link rel="modulepreload" href="js/layout.js">
 <link rel="modulepreload" href="js/sheet.js">
 <link rel="modulepreload" href="js/version.js">
+<link rel="modulepreload" href="js/model.js">
+<link rel="modulepreload" href="js/domain.js">
+<link rel="modulepreload" href="js/idle.js">
+<template id="gl-preload"><!-- the 3D layer; js/main.js copies these into the head only when WebGL works -->
+<link rel="modulepreload" href="js/boot-gl.js">
+<link rel="modulepreload" href="vendor/three/three.module.min.js">
+<link rel="modulepreload" href="js/gl/scene.js">
+<link rel="modulepreload" href="js/gl/scenery.js">
+<link rel="modulepreload" href="js/gl/render.js">
+<link rel="modulepreload" href="js/gl/molviewer.js">
 <link rel="modulepreload" href="vendor/three/addons/controls/OrbitControls.js">
 <link rel="modulepreload" href="vendor/three/addons/renderers/CSS2DRenderer.js">
 <link rel="modulepreload" href="js/scheduler.js">
 <link rel="modulepreload" href="js/gl/quality.js">
-<link rel="modulepreload" href="js/model.js">
 <link rel="modulepreload" href="js/gl/chimera.js">
-<link rel="modulepreload" href="js/idle.js">
+</template>
 <link rel="preload" href="data/drugs.json" as="fetch" type="application/json" crossorigin fetchpriority="low">
 <link rel="preload" href="data/hansch.json" as="fetch" type="application/json" crossorigin fetchpriority="low">
 <!-- preload:end -->
@@ -143,9 +143,9 @@
         <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
         <div class="stage-status" id="stage-status" role="status"><progress id="load-progress" max="4" value="0" aria-label="Loading data and 3D scene"></progress><span class="status-text">Loading data…</span></div>
         <div class="stage-tools">
-          <button type="button" id="btn-reset" class="ghost" title="Reset the camera">Reset view</button>
-          <button type="button" id="btn-spin" class="ghost" aria-pressed="false" title="Turn the scene slowly">Spin</button>
-          <button type="button" id="btn-expand" class="ghost" aria-label="Expand view" title="Make the 3D view larger" hidden>Expand view</button>
+          <button type="button" id="btn-reset" class="ghost" title="Reset the camera"><span class="btn-label">Reset view</span></button>
+          <button type="button" id="btn-spin" class="ghost" aria-pressed="false" title="Turn the scene slowly"><span class="btn-label">Spin</span></button>
+          <button type="button" id="btn-expand" class="ghost" aria-label="Expand view" title="Make the 3D view larger" hidden><span class="btn-label">Expand view</span></button>
           <button type="button" id="btn-copy" class="ghost" aria-label="Copy link" title="Copy a link to this exact view" hidden>Copy link</button>
           <button type="button" id="btn-png" class="ghost" aria-label="Save image" title="Save the current view as a PNG image" hidden>Save image</button>
           <button type="button" id="btn-csv" class="ghost" aria-label="Download CSV" title="Download the drugs in this view as a CSV file" hidden>Download CSV</button>
@@ -245,7 +245,7 @@
         </div>
         <div class="field wide"><label for="upload">Load your own table <small>CSV with drug name or PubChem CID, plus any of route, F, half-life, dose, interval, toxicity, activity</small></label>
           <input id="upload" type="file" accept=".csv,.tsv,.txt,text/csv">
-          <div id="upload-out" class="small" role="status"></div>
+          <div id="upload-out" class="small"></div>
         </div>
         <details class="group" id="g-axes" open>
           <summary>Axes and colour</summary>
@@ -293,7 +293,7 @@
             <span class="sheet-metrics" id="sheet-metrics"></span>
             <span class="sr-only" id="sheet-state">Show details</span>
           </button>
-          <button type="button" id="sheet-close" class="sheet-close ghost" aria-label="Close the drug panel">Close</button>
+          <button type="button" id="sheet-close" class="sheet-close ghost" aria-label="Close the drug panel"><span class="btn-label">Close</span></button>
         </div>
         <div class="sheet-body" id="sheet-body">
         <h2 id="detail-h">Drug</h2>
@@ -312,6 +312,7 @@
           </div>
           <div class="depict" id="d-2d" role="group" aria-label="2D structure"></div>
           <dl class="kv" id="d-desc"></dl>
+          <p class="small" id="d-domain"></p>
           <p class="small" id="d-hbond-method">These Lipinski counts use RDKit <code>CalcNumLipinskiHBD</code> (N/O-bound hydrogens) and <code>CalcNumLipinskiHBA</code> (N + O atoms). The frozen DRD2 QSAR uses <code>NumHDonors</code> → <code>CalcNumHBD</code> and <code>NumHAcceptors</code> → <code>CalcNumHBA</code>, which count hydrogen-bond donor and acceptor sites. These definitions differ: amisulpride is 3/7 here and 2/6 in the QSAR. Both stored datasets are unchanged.</p>
           <div id="d-act"></div>
           <p class="small" id="d-qsar" hidden></p>
@@ -358,6 +359,19 @@
         </details>
       </section>
 
+      <section class="panel" id="scaf" aria-labelledby="scaf-h">
+        <details id="scaf-details">
+          <summary><h2 id="scaf-h">Scaffold clusters</h2></summary>
+          <p class="lede">The Bemis–Murcko frameworks shared by two or more drugs in the current view: strip every side chain and these are the skeletons that are left. Click a family to colour its drugs in the 3D plot and see where one chemical series sits in Hansch space.</p>
+          <div class="controls">
+            <div class="field"><span class="label">Highlight</span><button type="button" id="scaf-clear" class="ghost" disabled>Clear the highlight</button></div>
+          </div>
+          <div class="scaf-list" id="scaf-list"></div>
+          <p class="count" id="scaf-note"></p>
+          <p class="fig" id="scaf-cite"></p>
+        </details>
+      </section>
+
       <section class="panel" aria-labelledby="table-h">
         <details id="table-details" tabindex="-1">
           <summary><h2 id="table-h">Data table</h2></summary>
@@ -401,7 +415,7 @@
     <div class="bind-stage-wrap">
       <canvas id="bind-canvas" role="img" aria-label="The ligand settling into its receptor pocket"></canvas>
       <p class="bind-legend" aria-hidden="true"><span class="lg-lig">Ligand</span><span class="lg-res">Contact residue</span><span class="lg-hb">H-bond</span><span class="lg-hp">Apolar contact</span></p>
-      <p class="bind-stage" id="bind-stage" aria-live="off"></p>
+      <p class="bind-stage" id="bind-stage"></p>
       <a class="bind-art" id="bind-art" hidden target="_blank" rel="noopener noreferrer"><img alt="" width="132" height="132" decoding="async"><span></span></a>
     </div>
     <div class="bind-ctl">
@@ -421,10 +435,15 @@
     <div><p class="eyebrow">OECD QSAR workflow · all targets</p><h2 id="qsb-title">QSAR builder</h2></div>
     <form method="dialog"><button type="submit" class="ghost" autofocus>Close</button></form>
   </div>
-  <p id="qsb-status" role="status">Loading the target list…</p>
+  <p id="qsb-status">Loading the target list…</p>
   <div id="qsb-body" hidden>
     <div class="field"><label for="qsb-target">Target (ChEMBL, human, binding assays, one assay type)</label><select id="qsb-target"></select></div>
     <p id="qsb-summary" class="small"></p>
+    <div class="gate-flow" id="qsb-flow" tabindex="0" role="region" aria-label="Workflow gates"></div>
+    <details class="gates" id="qsb-gates-details">
+      <summary>What each gate asks, and where this run stands <span class="small" id="qsb-gates-sum"></span></summary>
+      <div id="qsb-gates"></div>
+    </details>
     <div class="qsb-tabs" role="tablist" aria-label="Workflow steps">
       <button type="button" role="tab" id="qsb-t-data" aria-controls="qsb-p-data" aria-selected="true">1 Data</button>
       <button type="button" role="tab" id="qsb-t-out" aria-controls="qsb-p-out" aria-selected="false">2 Outliers</button>
@@ -447,29 +466,50 @@
         <label class="check"><input type="checkbox" id="qsb-r-ro3"> <span id="qsb-n-ro3">Ro3</span></label>
         <label class="check"><input type="checkbox" id="qsb-r-cliff" checked> <span id="qsb-n-cliff">Activity cliffs</span></label>
       </fieldset>
-      <p id="qsb-kept" class="small" aria-live="polite"></p>
+      <p id="qsb-kept" class="small"></p>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Activity cliffs"><table class="stats"><thead><tr><th scope="col">Pair</th><th scope="col">Tanimoto</th><th scope="col">Δ pActivity</th></tr></thead><tbody id="qsb-cliffs"></tbody></table></div>
+      <div class="qsar-grid">
+        <figure><h3>Rule-of-five compliance</h3><svg id="qsb-ro5" role="img" aria-labelledby="qsb-ro5-cap"></svg><figcaption id="qsb-ro5-cap"></figcaption></figure>
+        <figure><h3>Scaffold families</h3>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Scaffold families"><table class="stats"><thead><tr><th scope="col">Framework</th><th scope="col">Compounds</th><th scope="col">Representative</th></tr></thead><tbody id="qsb-scaf"></tbody></table></div>
+          <figcaption id="qsb-scaf-cap"></figcaption>
+        </figure>
+      </div>
     </section>
     <section role="tabpanel" id="qsb-p-split" aria-labelledby="qsb-t-split" hidden>
       <p class="small">OECD principle 2: an unambiguous algorithm. The split decides which compounds the model never sees.</p>
       <div class="qsb-row">
-        <div class="field"><label for="qsb-split">Method</label><select id="qsb-split"><option value="random">Random</option><option value="ks">Kennard–Stone</option><option value="cluster">Butina cluster</option></select></div>
+        <div class="field"><label for="qsb-split">Method</label><select id="qsb-split"><option value="random">Random</option><option value="ks">Kennard–Stone</option><option value="cluster">Butina cluster</option><option value="scaffold">Bemis–Murcko scaffold</option></select></div>
         <div class="field"><label for="qsb-test">Test share</label><select id="qsb-test"><option value="0.2">20%</option><option value="0.25">25%</option><option value="0.3">30%</option></select></div>
         <div class="field"><label for="qsb-seed">Seed</label><input id="qsb-seed" type="number" value="42" min="0" step="1"></div>
       </div>
-      <p id="qsb-split-note" class="small" aria-live="polite"></p>
+      <p id="qsb-split-note" class="small"></p>
     </section>
     <section role="tabpanel" id="qsb-p-model" aria-labelledby="qsb-t-model" hidden>
       <p class="small">OECD principle 4: goodness of fit, robustness and predictivity. Multiple linear regression (Hansch); at most one descriptor per five training compounds. Pass marks follow the OECD workflow figure.</p>
       <fieldset class="qsb-checks" id="qsb-desc"><legend>Descriptors</legend></fieldset>
       <p id="qsb-eq" class="qsar-equation mono"></p>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Validation metrics"><table class="stats"><thead><tr><th scope="col">Metric</th><th scope="col">Value</th><th scope="col">Pass mark</th><th scope="col">Result</th></tr></thead><tbody id="qsb-metrics"></tbody></table></div>
+      <p id="qsb-baseline" class="small"></p>
+      <div class="qsb-row">
+        <div class="field"><label for="qsb-cut">Active at or above (log units)</label><input id="qsb-cut" type="number" value="6" min="0" max="14" step="0.5"></div>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Active and inactive classes"><table class="stats"><thead><tr><th scope="col">Held-out compounds</th><th scope="col">Predicted active</th><th scope="col">Predicted inactive</th></tr></thead><tbody id="qsb-classes"></tbody></table></div>
+      <p id="qsb-class-note" class="small"></p>
       <div class="qsar-grid"><figure><h3>Observed and predicted</h3><svg id="qsb-pred" role="img" aria-labelledby="qsb-pred-cap"></svg><figcaption id="qsb-pred-cap">Filled: training; hollow: test. Dashed: perfect prediction.</figcaption></figure>
       <figure><h3>Y-randomisation</h3><svg id="qsb-yrand" role="img" aria-labelledby="qsb-yrand-cap"></svg><figcaption id="qsb-yrand-cap"></figcaption></figure></div>
     </section>
     <section role="tabpanel" id="qsb-p-ad" aria-labelledby="qsb-t-ad" hidden>
       <p class="small">OECD principle 3: a defined applicability domain. Williams plot: leverage h against standardized residual; h* = 3(p + 1)/n and ±3 residual limits.</p>
       <div class="qsar-grid"><figure><h3>Williams plot</h3><svg id="qsb-will" role="img" aria-labelledby="qsb-will-cap"></svg><figcaption id="qsb-will-cap"></figcaption></figure>
+      <figure><h3>Percentile bounding box</h3>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Percentile bounding box"><table class="stats"><thead><tr><th scope="col">Descriptor</th><th scope="col">5th</th><th scope="col">95th</th><th scope="col">Test compounds outside</th></tr></thead><tbody id="qsb-box"></tbody></table></div>
+        <figcaption id="qsb-box-cap"></figcaption>
+      </figure>
+      <figure><h3>Held-out predictions</h3>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Held-out predictions"><table class="stats"><thead><tr><th scope="col">Compound</th><th scope="col">Observed</th><th scope="col">Predicted ± SD</th><th scope="col">Leverage</th><th scope="col">Box</th></tr></thead><tbody id="qsb-test-rows"></tbody></table></div>
+        <figcaption id="qsb-test-cap"></figcaption>
+      </figure>
       <figure><h3>Reproduce this model</h3><p class="small">The recipe records the target file, every choice above, the seed and the result, so the same model can be rebuilt.</p><button type="button" id="qsb-export" class="ghost">Download recipe JSON</button><p class="small" id="qsb-hash"></p></figure></div>
     </section>
   </div>
@@ -479,7 +519,7 @@
     <div><p class="eyebrow">Single-target Hansch QSAR</p><h2 id="qsar-title">DRD2 · validation</h2></div>
     <form method="dialog"><button type="submit" class="ghost" autofocus>Close</button></form>
   </div>
-  <p id="qsar-status" role="status">Open the panel to load the exported results.</p>
+  <p id="qsar-status">Open the panel to load the exported results.</p>
   <button type="button" id="qsar-retry" class="ghost" hidden>Retry loading results</button>
   <div id="qsar-body" hidden>
     <p id="qsar-summary" class="lede"></p>
@@ -501,15 +541,15 @@
       <p class="small" id="qsar-workflow-snapshot"></p>
       <p class="qsar-resource-links"><a href="https://github.com/DhruvMenon2003/drug-toxicity-qsar-prediction/blob/f026e2dcac2f5fe6688387c6764e0aef3f43d7de/curation/hansch_drd2.ipynb" target="_blank" rel="noopener noreferrer">Frozen 250-compound DRD2 notebook</a><a href="https://github.com/DhruvMenon2003/drug-toxicity-qsar-prediction/tree/944a7e8717ea6bf85815cb1fa103bcd2c4ca2fd4/curation/results/hansch_drd2" target="_blank" rel="noopener noreferrer">Dataset, exclusions, provenance and figures</a></p>
       <p class="small">The eight-drug teaching activity is separate from this notebook, which analyses 250 standardized DRD2 compounds, with 195 training and 55 held-out test records, and concludes that the model is not predictive.</p>
-      <p class="small">The record → descriptor → equation connection follows the workflow documented for <a href="http://www.biobyte.com/bb/prod/bioloom.html" target="_blank" rel="noopener noreferrer">Bio-Loom</a>. This implementation uses ChEMBL records and RDKit calculations. BioByte’s ClogP/CMR calculators and licensed Masterfile/CQSAR collections are not included.</p>
+      <p class="small">The record → descriptor → equation connection follows the workflow documented for Bio-Loom (BioByte Corp.; its page is served over plain HTTP, so it is named here rather than linked). This implementation uses ChEMBL records and RDKit calculations. BioByte’s ClogP/CMR calculators and licensed Masterfile/CQSAR collections are not included.</p>
     </details>
     <details id="qsar-equation-inspector">
       <summary id="qsar-equation-title">Inspect the training equation</summary>
       <p class="small">The terms below reconstruct a stored dataset prediction using the frozen scaffold-training coefficients. They are algebraic contributions in pChEMBL units, not causal or mechanistic effects. Coefficients describe conditional associations with the other included descriptors held fixed.</p>
       <p id="qsar-equation" class="qsar-equation mono"></p>
       <div class="field"><label for="qsar-inspect-compound">Compound already in this dataset</label><select id="qsar-inspect-compound"></select></div>
-      <p id="qsar-equation-result" class="qsar-equation-result" aria-live="polite"></p>
-      <p id="qsar-equation-context" class="small" aria-live="polite"></p>
+      <p id="qsar-equation-result" class="qsar-equation-result"></p>
+      <p id="qsar-equation-context" class="small"></p>
       <p class="small" id="qsar-hbond-method">Here HBD and HBA use RDKit <code>NumHDonors</code> → <code>CalcNumHBD</code> and <code>NumHAcceptors</code> → <code>CalcNumHBA</code> (donor/acceptor sites). The main explorer uses <code>CalcNumLipinskiHBD</code> (N/O-bound hydrogens) and <code>CalcNumLipinskiHBA</code> (N + O atoms). For amisulpride, the frozen QSAR counts are 2/6; the main explorer’s Lipinski counts remain 3/7.</p>
       <p class="small">Descriptor values use their native units shown below; they are not z-scores. Coefficient units are pChEMBL per descriptor unit. Displayed numbers are rounded; the sum uses the full precision stored in the JSON. The intercept is the algebraic offset at zero descriptor values.</p>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Training equation contributions"><table class="stats"><thead><tr><th scope="col">Term</th><th scope="col">Input</th><th scope="col">Input units</th><th scope="col">Coefficient</th><th scope="col">Contribution (pChEMBL)</th></tr></thead><tbody id="qsar-equation-terms"></tbody></table></div>
@@ -531,7 +571,7 @@
         <div class="field"><label for="qsar-domain-filter">Applicability domain</label><select id="qsar-domain-filter" aria-controls="qsar-compounds"><option value="">All domains</option><option value="within">Within</option><option value="outside">Outside</option></select></div>
         <button type="button" id="qsar-reset-filters" class="ghost" disabled>Clear filters</button>
       </div>
-      <p id="qsar-record-count" class="small" role="status" aria-atomic="true"></p>
+      <p id="qsar-record-count" class="small"></p>
       <p id="qsar-no-matches" hidden>No compounds match these filters. Clear the filters or change the search.</p>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Compound predictions and domain flags"><table class="stats"><thead><tr><th scope="col">InChIKey / explorer drug</th><th scope="col">Split</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">Leverage</th><th scope="col">Standardized residual</th><th scope="col">Domain</th></tr></thead><tbody id="qsar-compounds"></tbody></table></div>
     </details>
@@ -584,7 +624,7 @@
 </footer>
 
 <div class="read-progress" id="read-progress" aria-hidden="true"><i></i></div>
-<button type="button" id="fab-top" class="fab" aria-label="Back to top" title="Back to top" hidden>Top</button>
+<button type="button" id="fab-top" class="fab" aria-label="Back to top" title="Back to top" hidden><span class="btn-label">Top</span></button>
 
 <div id="xr-overlay" hidden></div>
 

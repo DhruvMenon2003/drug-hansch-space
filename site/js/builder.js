@@ -1,6 +1,10 @@
 // The all-target QSAR builder: a lazy dialog on the existing explorer that walks the OECD workflow on a cleaned
 // ChEMBL dataset (tools/build_qsar_targets.py). Data, outliers, split, MLR model, applicability domain, recipe export.
 import { $, esc, fin, fx, getSide } from './kernel.js';
+import { BANDS, band, distribution } from './domain.js';
+import { MARKS, baseline, chainSummary, classify, gateChain, verdict } from './gates.js';
+
+export { verdict };
 
 const INDEX_URL = 'data/qsar/index.json';
 const COLS = { y: 'pActivity', logp: 'log P (Crippen)', mr: 'Molar refractivity', tpsa: 'TPSA (Å²)', mw: 'Molecular weight',
@@ -96,6 +100,48 @@ export function kennardStone(Z, k) {
   return new Set(chosen);
 }
 
+/**
+ * Spread of each prediction over `B` ordinary-least-squares refits on bootstrap resamples of the training rows: the
+ * uncertainty an ensemble reports, which a single fit's R² hides. Returns one SD per row of `newX` (NaN when the
+ * resamples were too degenerate to fit).
+ */
+export function bootstrapSd(X, y, newX, seed, B = 40) {
+  if (!newX.length || y.length < 6) return newX.map(() => NaN);
+  const rand = rng(seed), draws = newX.map(() => []);
+  for (let b = 0; b < B; b++) {
+    const pick = y.map(() => Math.floor(rand() * y.length));
+    const f = ols(pick.map(i => X[i]), pick.map(i => y[i]));
+    if (!f) continue;
+    newX.forEach((r, j) => draws[j].push(predict(f.beta, r)));
+  }
+  return draws.map(v => {
+    if (v.length < 5) return NaN;
+    const m = v.reduce((s, x) => s + x, 0) / v.length;
+    return Math.sqrt(v.reduce((s, x) => s + (x - m) ** 2, 0) / (v.length - 1));
+  });
+}
+
+/**
+ * The percentile bounding box of this run (admetSAR 3.0's basic-property view, used here as an applicability-domain
+ * rule): the training distribution of each descriptor, and which band every held-out compound falls in — inside the
+ * 5th–95th percentile, past a percentile, or outside the observed range altogether.
+ */
+export function boxOf(data, res, keys = res.xs) {
+  if (!keys?.length || !res.train?.length) return null;
+  const dists = keys.map(k => distribution(res.train.map(i => value(data.compounds[i], k))));
+  const per = new Map(res.test.map(i => [i, keys.map((k, j) => band(dists[j], value(data.compounds[i], k)))]));
+  const counts = { in: 0, warn: 0, out: 0 };
+  for (const bands of per.values()) for (const b of bands) if (b) counts[b]++;
+  const rows = keys.map((k, j) => {
+    const bands = [...per.values()].map(b => b[j]);
+    return { key: k, dist: dists[j], warn: bands.filter(b => b === 'warn').length, out: bands.filter(b => b === 'out').length };
+  });
+  return { keys, rows, per, counts, worst: counts.out ? 'out' : counts.warn ? 'warn' : counts.in ? 'in' : null };
+}
+
+/** Lipinski violations of one compound, counted from the descriptors the file carries. */
+export function ro5Count(c) { return (c.mw > 500) + (c.logp > 5) + (c.hbd > 5) + (c.hba > 10); }
+
 export const value = (c, key) => (key === 'logp2' ? c.logp * c.logp : c[key]);
 
 /** Checkpoint 3 filter: which compounds the chosen rules remove (rule violators, then members of activity cliffs). */
@@ -116,9 +162,12 @@ export function split(data, idx, method, share, seed, xs) {
     return { train: idx.filter((_, j) => train.has(j)), test: idx.filter((_, j) => !train.has(j)) };
   }
   const rand = rng(seed);
-  if (method === 'cluster') {
+  // A series split is the harder test: whole scaffolds (or whole fingerprint clusters) are held out, so the model has to
+  // extrapolate to a skeleton it has never seen. 'scaffold' falls back to the cluster split for a file without scaffolds.
+  if (method === 'cluster' || method === 'scaffold') {
+    const key = method === 'scaffold' && idx.some(i => data.compounds[i].sc != null) ? 'sc' : 'cl';
     const byCl = new Map();
-    for (const i of idx) { const k = data.compounds[i].cl; if (!byCl.has(k)) byCl.set(k, []); byCl.get(k).push(i); }
+    for (const i of idx) { const k = data.compounds[i][key]; if (!byCl.has(k)) byCl.set(k, []); byCl.get(k).push(i); }
     const test = [];
     for (const k of shuffle([...byCl.keys()].sort((a, b) => a - b), rand)) { if (test.length >= nTest) break; test.push(...byCl.get(k)); }
     const t = new Set(test);
@@ -147,20 +196,13 @@ export function runModel(data, opts) {
     ...test.map((i, k) => ({ i, set: 'test', obs: yt[k], pred: pt[k], h: leverage(m.inv, row(i)) }))]
     .map(p => ({ ...p, r: sres(p.i), out: p.h > hstar || Math.abs(sres(p.i)) > 3 }));
   const looRm = rm2(y, m.loo), extRm = test.length > 2 ? rm2(yt, pt) : { avg: NaN, delta: NaN };
-  return { ...base, beta: m.beta, s: m.s, hstar, points, rnd,
+  const sd = bootstrapSd(train.map(row), y, test.map(row), opts.seed + 7);
+  test.forEach((i, k) => { const p = points.find(q => q.i === i && q.set === 'test'); if (p) p.sd = sd[k]; });
+  return { ...base, beta: m.beta, s: m.s, hstar, points, rnd, trainMean: yMean,
     metrics: { r2: R2, q2: r2(y, m.loo), rm2loo: looRm.avg, drm2loo: looRm.delta, crp2: Math.sqrt(R2) * Math.sqrt(Math.max(0, R2 - rr)),
       r2pred: test.length > 1 ? r2(yt, pt, yMean) : NaN, rm2test: extRm.avg, drm2test: extRm.delta,
       rmse: Math.sqrt(y.reduce((s, v, i) => s + (v - m.fit[i]) ** 2, 0) / y.length),
       rmsep: test.length ? Math.sqrt(yt.reduce((s, v, i) => s + (v - pt[i]) ** 2, 0) / yt.length) : NaN } };
-}
-const MARKS = [['r2', 'R² (training)', '> 0.6', v => v > 0.6], ['q2', 'Q² (LOO)', '> 0.5', v => v > 0.5],
-  ['rm2loo', 'r²m (LOO), average', '> 0.5', v => v > 0.5], ['drm2loo', 'Δr²m (LOO)', '< 0.2', v => v < 0.2],
-  ['crp2', 'cR²p (y-randomisation)', '> 0.5', v => v > 0.5], ['r2pred', 'R²pred (test)', '> 0.5', v => v > 0.5],
-  ['rm2test', 'r²m (test), average', '> 0.5', v => v > 0.5], ['drm2test', 'Δr²m (test)', '< 0.2', v => v < 0.2],
-  ['rmse', 'RMSE training (log units)', '', null], ['rmsep', 'RMSE test (log units)', '', null]];
-export function verdict(metrics) {
-  const failed = MARKS.filter(([k, , , ok]) => ok && !(fin(metrics[k]) && ok(metrics[k]))).map(([, label]) => label);
-  return { pass: !failed.length, failed };
 }
 
 /** The files are column-wise (tools/build_qsar_targets.py columns()); rebuild one object per compound, once. */
@@ -171,6 +213,7 @@ export function withRows(data) {
   data.compounds = c.id.map((id, i) => {
     const row = { id: `CHEMBL${id}`, rules: RULES.filter((_, b) => c.rules[i] & (1 << b)) };
     for (const k of ['y', 'nm', ...data.descriptors, 'cl']) row[k] = c[k][i];
+    if (c.sc) row.sc = c.sc[i];                 // Bemis–Murcko family index (tools/add_scaffolds.py); absent in older files
     return row;
   });
   return data;
@@ -214,11 +257,14 @@ async function loadTarget(id) {
   $('#qsb-cliffs').innerHTML = set.cliffs.slice(0, 50).map(([a, b, s, g]) => `<tr><td>${esc(set.compounds[a].id)} / ${esc(set.compounds[b].id)}</td><td>${fx(s)}</td><td>${fx(g)}</td></tr>`).join('')
     || '<tr><td colspan="3">No activity cliffs in this set.</td></tr>';
   drawColumn();
+  drawRo5();
+  drawScaffolds();
   refresh();
 }
 function opts() {
   return { Ro5: $('#qsb-r-ro5').checked, Pfizer: $('#qsb-r-pfizer').checked, Ro3: $('#qsb-r-ro3').checked, cliff: $('#qsb-r-cliff').checked,
-    method: $('#qsb-split').value, share: +$('#qsb-test').value, seed: Math.max(0, Math.floor(+$('#qsb-seed').value || 0)), xs: [...ui.x] };
+    method: $('#qsb-split').value, share: +$('#qsb-test').value, seed: Math.max(0, Math.floor(+$('#qsb-seed').value || 0)),
+    cut: +$('#qsb-cut').value, xs: [...ui.x] };
 }
 function refresh() {
   if (!set) return;
@@ -229,8 +275,9 @@ function refresh() {
   if (res.error) {
     $('#qsb-eq').textContent = res.error;
     $('#qsb-metrics').innerHTML = '';
-    for (const id of ['#qsb-pred', '#qsb-yrand', '#qsb-will']) $(id).innerHTML = '';
-    $('#qsb-will-cap').textContent = '';
+    for (const id of ['#qsb-pred', '#qsb-yrand', '#qsb-will', '#qsb-box', '#qsb-classes', '#qsb-test-rows']) $(id).innerHTML = '';
+    for (const id of ['#qsb-will-cap', '#qsb-box-cap', '#qsb-test-cap', '#qsb-class-note', '#qsb-baseline']) $(id).textContent = '';
+    drawGates(res, null, null);
     return;
   }
   const label = k => (k === 'logp2' ? 'logP²' : k);
@@ -243,7 +290,12 @@ function refresh() {
   $('#qsb-yrand-cap').textContent = `${res.rnd.length} refits on shuffled activity. Real R² ${fx(res.metrics.r2, 3)}. ${v.pass ? 'Every OECD pass mark is met.' : `Not acceptable yet: ${v.failed.join(', ')}. Go back and change the data, split or descriptors.`}`;
   const outside = res.points.filter(p => p.out).length;
   $('#qsb-will-cap').textContent = `h* = ${fx(res.hstar, 3)}. ${outside} of ${res.points.length} compounds fall outside the domain (crosses); predictions for them are unreliable.`;
-  drawPred(res); drawYrand(res); drawWilliams(res);
+  const b = baseline(res);
+  $('#qsb-baseline').textContent = fin(b.rmse)
+    ? `Against the baseline: predicting the training mean (${fx(b.mean)}) for every held-out compound gives RMSE ${fx(b.rmse)}; this model gives ${fx(b.model)}. ${b.beats ? `That is ${fx((1 - b.ratio) * 100, 0)}% better than the baseline.` : 'The model is no better than the mean, so it predicts nothing.'}`
+    : 'No held-out compounds, so there is no baseline to beat.';
+  const box = boxOf(set, res), cls = drawClasses(res, o.cut);
+  drawPred(res); drawYrand(res); drawWilliams(res); drawDomain(res, box); drawGates(res, box, cls);
 }
 
 // ---------------------------------------------------------------- charts (plain SVG, same classes as js/qsar.js)
@@ -294,6 +346,86 @@ function drawWilliams(res) {
     + res.points.map(p => dot(p, f.X(p.h), f.Y(p.r))).join('');
 }
 
+// ---------------------------------------------------------------- the gate chain (the workflow flowchart)
+const VERDICT = { yes: 'Yes', no: 'No', ask: 'Your call', wait: 'Waiting' };
+function drawGates(res, box, cls) {
+  const gates = gateChain({ set, o: last.o, res, box, cls }), sum = chainSummary(gates);
+  $('#qsb-flow').innerHTML = gates.map(g =>
+    `<button type="button" class="gate-chip gate-${g.status}" data-tab="${g.tab}" aria-describedby="qsb-gates-sum">
+       <span class="gate-id">${g.id}</span><span class="gate-name">${esc(g.title)}</span><span class="gate-verdict">${VERDICT[g.status]}</span>
+     </button>`).join('<span class="gate-arrow" aria-hidden="true">›</span>');
+  $('#qsb-gates').innerHTML = gates.map(g => `<article class="gate gate-${g.status}">
+      <h3>${g.id} ${esc(g.title)} <span class="gate-verdict">${VERDICT[g.status]}</span></h3>
+      <p class="gate-q">${esc(g.question)}</p>
+      <ul class="gate-ev">${g.evidence.filter(Boolean).map(e => `<li>${esc(e)}</li>`).join('')}</ul>
+      ${g.status === 'yes' ? '' : `<p class="gate-fix">${g.status === 'ask' ? 'Your judgement: ' : 'To get to Yes: '}${esc(g.remedy)}</p>`}
+    </article>`).join('');
+  $('#qsb-gates-sum').textContent = sum.text;
+}
+function showTab(name) {
+  for (const other of TABS) {
+    $(`#qsb-t-${other}`).setAttribute('aria-selected', String(other === name));
+    $(`#qsb-p-${other}`).hidden = other !== name;
+  }
+}
+
+// ---------------------------------------------------------------- the three added views (rules, scaffolds, classes, domain)
+/** Rule-of-five compliance as a bar per violation count, with the mean donor and acceptor counts under it. */
+function drawRo5() {
+  const counts = [0, 0, 0, 0, 0];
+  for (const c of set.compounds) counts[ro5Count(c)]++;
+  const f = frame('#qsb-ro5', [-0.5, 4.5], [0, Math.max(...counts)], 'Lipinski violations', 'Compounds');
+  const w = (f.R - f.L) / 5;
+  $('#qsb-ro5').innerHTML = f.html + counts.map((n, i) => `<rect class="qsar-bar" x="${f.X(i - 0.4)}" y="${f.Y(n)}" width="${Math.max(1, w * 0.8)}" height="${f.B - f.Y(n)}"><title>${n} compounds with ${i} violation${i === 1 ? '' : 's'}</title></rect>`).join('');
+  const avg = k => mean(set.compounds.map(c => c[k]).filter(fin));
+  $('#qsb-ro5-cap').textContent = `${counts[0]} of ${set.compounds.length} compounds break no rule of five; mean donors ${fx(avg('hbd'), 1)}, mean acceptors ${fx(avg('hba'), 1)}, mean MW ${fx(avg('mw'), 0)}.`;
+}
+
+/** The scaffold families of this set, largest first, each with the compound that represents it (median activity). */
+function drawScaffolds() {
+  const fams = set.scaffolds || [], body = $('#qsb-scaf');
+  if (!fams.length) {
+    body.innerHTML = '<tr><td colspan="3">This target file carries no scaffolds; rebuild it with tools/add_scaffolds.py.</td></tr>';
+    $('#qsb-scaf-cap').textContent = '';
+    return;
+  }
+  const mem = new Map();
+  set.compounds.forEach((c, i) => { if (c.sc != null) { if (!mem.has(c.sc)) mem.set(c.sc, []); mem.get(c.sc).push(i); } });
+  const shared = fams.filter(f => (mem.get(f.i) || []).length > 1);
+  body.innerHTML = (shared.length ? shared : fams).slice(0, 8).map(f => {
+    const list = (mem.get(f.i) || []).slice().sort((a, b) => set.compounds[a].y - set.compounds[b].y);
+    const rep = list[list.length >> 1];
+    return `<tr><td class="mono">${esc(f.smiles || '—')}</td><td>${list.length}</td><td>${rep == null ? '—' : `${esc(set.compounds[rep].id)} (p${esc(set.standard_type)} ${fx(set.compounds[rep].y)})`}</td></tr>`;
+  }).join('');
+  const singles = fams.length - shared.length;
+  $('#qsb-scaf-cap').textContent = `${fams.length} Bemis–Murcko framework${fams.length === 1 ? '' : 's'} over ${set.compounds.length} compounds: ${shared.length} shared by two or more, ${singles} carried by one compound. A scaffold split holds whole families out.`;
+}
+
+/** Active and inactive at the cut-off: the confusion matrix of the regression's held-out predictions. */
+function drawClasses(res, cut) {
+  const c = classify(res.points, cut, 'test');
+  $('#qsb-classes').innerHTML = `<tr><th scope="row">Observed active</th><td>${c.tp}</td><td>${c.fn}</td></tr>
+    <tr><th scope="row">Observed inactive</th><td>${c.fp}</td><td>${c.tn}</td></tr>`;
+  $('#qsb-class-note').textContent = c.n
+    ? `At p${set.standard_type} ≥ ${fx(cut, 1)}: ${c.actives} of the ${c.n} held-out compounds are active. Accuracy ${fx(c.acc * 100, 0)}%, sensitivity ${fin(c.sens) ? fx(c.sens * 100, 0) + '%' : '—'}, specificity ${fin(c.spec) ? fx(c.spec * 100, 0) + '%' : '—'}. The regression is the model; this is only another way of reading it.`
+    : 'No held-out compounds to classify.';
+  return c;
+}
+
+/** The percentile box table, and the held-out compounds with their bootstrap spread and their band. */
+function drawDomain(res, box) {
+  const body = $('#qsb-box');
+  if (!box) { body.innerHTML = ''; $('#qsb-box-cap').textContent = ''; $('#qsb-test-rows').innerHTML = ''; return; }
+  body.innerHTML = box.rows.map(r => `<tr><td>${esc(COLS[r.key] || r.key)}</td><td>${fx(r.dist.p5)}</td><td>${fx(r.dist.p95)}</td><td class="${r.out ? 'qsb-fail' : ''}">${r.warn + r.out ? `${r.warn} past a percentile${r.out ? `, ${r.out} out of range` : ''}` : 'none'}</td></tr>`).join('');
+  $('#qsb-box-cap').textContent = `Over the ${res.train.length} training compounds. ${box.counts.in} descriptor values of the held-out compounds are inside the 5th–95th percentile, ${box.counts.warn} past a percentile, ${box.counts.out} outside the training range. Green, amber and red follow admetSAR 3.0's bands.`;
+  const worstOf = i => { const b = box.per.get(i) || []; return b.includes('out') ? 'out' : b.includes('warn') ? 'warn' : 'in'; };
+  $('#qsb-test-rows').innerHTML = res.points.filter(p => p.set === 'test').map(p => {
+    const w = worstOf(p.i);
+    return `<tr><td>${esc(set.compounds[p.i].id)}</td><td>${fx(p.obs)}</td><td>${fx(p.pred)}${fin(p.sd) ? ` ± ${fx(p.sd)}` : ''}</td><td class="${p.h > res.hstar ? 'qsb-fail' : ''}">${fx(p.h, 3)}</td><td><span class="pct pct-${w}" title="${esc(BANDS[w])}">${w === 'in' ? 'inside' : w === 'warn' ? 'warning' : 'outside'}</span></td></tr>`;
+  }).join('') || '<tr><td colspan="5">No held-out compounds.</td></tr>';
+  $('#qsb-test-cap').textContent = `Predicted ± the spread over 40 refits on bootstrap resamples of the training set. A wide spread, a leverage above h* or a red band all mean the same thing: that prediction is not supported.`;
+}
+
 // ---------------------------------------------------------------- recipe export
 /** FNV-1a over the compound table: identifies the exact data the recipe was built from. */
 export function fingerprint(compounds) {
@@ -310,6 +442,16 @@ function exportRecipe() {
     split: { method: o.method, test_share: o.share, seed: o.seed, train: ids(res.train), test: ids(res.test) },
     model: res.error ? { error: res.error } : { type: 'MLR', descriptors: res.xs, intercept: res.beta[0], coefficients: Object.fromEntries(res.xs.map((k, j) => [k, res.beta[j + 1]])), s: res.s },
     metrics: res.metrics || null, applicability_domain: res.error ? null : { method: 'leverage (Williams)', h_star: res.hstar, residual_limit: 3, outside: res.points.filter(p => p.out).map(p => set.compounds[p.i].id) } };
+  if (!res.error) {
+    const box = boxOf(set, res), b = baseline(res), cls = classify(res.points, o.cut, 'test');
+    recipe.split.scaffolds = o.method === 'scaffold' ? (set.scaffolds || []).length : null;
+    recipe.baseline = { rule: 'training mean', mean: b.mean, rmse: b.rmse, model_rmsep: b.model, beats_baseline: b.beats };
+    recipe.classes = { cut: o.cut, ...cls };
+    recipe.percentile_box = box && { rule: 'admetSAR 3.0 bands (p5–p95 inside, within range warning, outside range out)',
+      counts: box.counts, descriptors: Object.fromEntries(box.rows.map(r => [r.key, { p5: r.dist.p5, p95: r.dist.p95, min: r.dist.min, max: r.dist.max, test_warn: r.warn, test_out: r.out }])) };
+    recipe.predictions = res.points.filter(p => p.set === 'test').map(p => ({ id: set.compounds[p.i].id, observed: p.obs, predicted: p.pred, bootstrap_sd: fin(p.sd) ? p.sd : null, leverage: p.h }));
+    recipe.gates = gateChain({ set, o, res, box, cls }).map(g => ({ id: g.id, title: g.title, status: g.status, remedy: g.status === 'yes' ? null : g.remedy }));
+  }
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(recipe, null, 2)], { type: 'application/json' }));
   a.download = `qsar_${set.target.id}_${o.method}_seed${o.seed}.json`;
@@ -327,12 +469,9 @@ function wire() {
   $('#qsb-desc').addEventListener('change', e => { if (e.target.checked) ui.x.add(e.target.value); else ui.x.delete(e.target.value); refresh(); });
   $('#qsb-target').addEventListener('change', e => loadTarget(e.target.value).catch(err => { $('#qsb-status').textContent = `That target could not load (${err.message}).`; }));
   $('#qsb-col').addEventListener('change', () => set && drawColumn());
-  for (const id of ['#qsb-r-ro5', '#qsb-r-pfizer', '#qsb-r-ro3', '#qsb-r-cliff', '#qsb-split', '#qsb-test', '#qsb-seed']) $(id).addEventListener('change', refresh);
+  for (const id of ['#qsb-r-ro5', '#qsb-r-pfizer', '#qsb-r-ro3', '#qsb-r-cliff', '#qsb-split', '#qsb-test', '#qsb-seed', '#qsb-cut']) $(id).addEventListener('change', refresh);
   $('#qsb-export').addEventListener('click', exportRecipe);
-  for (const name of TABS) $(`#qsb-t-${name}`).addEventListener('click', () => {
-    for (const other of TABS) {
-      $(`#qsb-t-${other}`).setAttribute('aria-selected', String(other === name));
-      $(`#qsb-p-${other}`).hidden = other !== name;
-    }
-  });
+  for (const name of TABS) $(`#qsb-t-${name}`).addEventListener('click', () => showTab(name));
+  // a gate names the step it belongs to, so clicking it opens that step's panel
+  $('#qsb-flow').addEventListener('click', e => { const b = e.target.closest('.gate-chip'); if (b) showTab(b.dataset.tab); });
 }

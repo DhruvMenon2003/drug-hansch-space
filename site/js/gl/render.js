@@ -201,10 +201,12 @@ export function bindPointer(canvas, host) {
 // The camera distance of a pose comes from two rules. The original one scales the pose up on stages that are narrower than
 // 1.2 : 1. The fit (UX-09) additionally pulls the camera back until all eight corners of the plot cube, with a margin for the
 // tick labels and axis titles, are inside the view: it applies to compact stages (shorter or narrower than COMPACT px: phones,
-// landscape phones, narrow columns) where the original rule cropped the cube and its labels. It never brings the camera
-// nearer than the original rule, and a big desktop stage keeps the original distance (the cube's near corner may be cropped
-// there, which costs nothing: it is empty).
+// landscape phones, narrow columns) where the original rule cropped the cube and its labels, and to the expanded view, which
+// is there to show the whole plot larger (the original rule moved the camera in when a fitted stage was expanded). It never
+// brings the camera nearer than the original rule, and a big desktop stage in the page keeps the original distance (the
+// cube's near corner may be cropped there, which costs nothing: it is empty).
 export const FIT = { margin: { x: 0.03, top: 0.04, bottom: 0.09 }, compact: 560, reach: 0.3 };
+const fitted = (w, h) => Math.min(w, h) < FIT.compact || layoutState.expanded;
 const _dir = new THREE.Vector3(), _bx = new THREE.Vector3(), _by = new THREE.Vector3(), _bz = new THREE.Vector3(), _cc = new THREE.Vector3(), _mat = new THREE.Matrix4(), _tmp = new THREE.Vector3();
 const ORIGIN = new THREE.Vector3(), UP = new THREE.Vector3(0, 1, 0);
 const CORNERS = [];
@@ -236,7 +238,7 @@ const fit = { base: 0, aspect: 0, compact: false, pos: null };
 
 /** Move the camera to `pos` (scaled to fit the stage) looking at the origin: tweened, or at once when `instant` or reduced motion. */
 export function camTo(pos, { instant = false } = {}) {
-  const c = stage.camera, [w, h] = stageBox(), compact = Math.min(w, h) < FIT.compact;
+  const c = stage.camera, [w, h] = stageBox(), compact = fitted(w, h);
   const base = Math.hypot(...pos), dir = _dir.set(...pos).normalize();
   const k = distanceFactor(base, dir, c.aspect, compact);
   Object.assign(fit, { base, aspect: c.aspect, compact, pos: [...pos] });
@@ -257,7 +259,7 @@ export function camTo(pos, { instant = false } = {}) {
 export function refit() {
   const c = stage.camera, ctl = stage.controls, [w, h] = stageBox();
   if (!c || !w || !h || !fit.base || stage.collapsed) return;
-  const compact = Math.min(w, h) < FIT.compact, aspect = w / h;
+  const compact = fitted(w, h), aspect = w / h;
   if (aspect === fit.aspect && compact === fit.compact) return;
   if (window.gsap?.isTweening(c.position) && fit.pos) { camTo(fit.pos); return; }
   const off = _tmp.copy(c.position).sub(ctl.target), dist = off.length();

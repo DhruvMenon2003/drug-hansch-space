@@ -2,6 +2,7 @@
 // The curated values come from data/clean_drugs.json, fetched on the first selection. Edits stay in this browser
 // (localStorage, the same key the lab page used) and download as CSV with their source, ready to send back for curation.
 import { app, bus, $, cap, esc, fx, getSide } from './kernel.js';
+import { announce } from './announce.js';
 import { selectDrug } from './view.js';
 
 const KEY = 'hansch-lab-v1';
@@ -106,7 +107,7 @@ export async function importTable(file) {
   const out = $('#upload-out');
   const grid = parse(await file.text());
   const hi = grid.findIndex(r => r.some(c => HEAD.slice(0, 2).some(([re]) => re.test(c.trim().toLowerCase()))));
-  if (hi < 0) { out.textContent = 'No drug name or CID column found. Name a column "Generic Name" or "Compound Identifier".'; return; }
+  if (hi < 0) { out.textContent = 'No drug name or CID column found. Name a column "Generic Name" or "Compound Identifier".'; announce(out.textContent); return; }
   const map = grid[hi].map(h => HEAD.find(([re]) => re.test(h.trim().toLowerCase()))?.[1]);
   await curated(-1);
   const byName = new Map([...rows.values()].map(l => [String(l[0].nm).toLowerCase(), l]));
@@ -125,6 +126,7 @@ export async function importTable(file) {
   save();
   out.innerHTML = `Filled ${n} drug routes for ${hit.size} drugs.` + (miss.size ? ` ${miss.size} names not in this dataset.` : '') +
     (hit.size ? `<br>${[...hit].slice(0, 30).map(c => `<button type="button" class="ghost" data-cid="${c}">${esc(cap(rows.get(c)[0].nm))}</button>`).join(' ')}` : '');
+  announce(`Filled ${n} drug routes for ${hit.size} drugs${miss.size ? `; ${miss.size} names are not in this dataset` : ''}.`);
   out.querySelectorAll('[data-cid]').forEach(b => b.onclick = () => selectDrug(+b.dataset.cid));
   if (cur != null) bus.emit('selection', { index: app.drugs.findIndex(d => d.cid === cur) });
 }

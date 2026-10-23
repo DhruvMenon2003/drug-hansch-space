@@ -142,8 +142,8 @@ test('QSAR records can be searched and filtered, then inspected in the frozen tr
     await sheetHandle.click();
     await expect(sheetHandle).toHaveAttribute('aria-expanded', 'true');
   }
-  await expect(page.locator('#d-desc div').filter({ hasText: 'N/O-bound hydrogens · Lipinski count' }).locator('dd')).toHaveText('3');
-  await expect(page.locator('#d-desc div').filter({ hasText: 'N + O atoms · Lipinski count' }).locator('dd')).toHaveText('7');
+  await expect(page.locator('#d-desc div').filter({ hasText: 'N/O-bound hydrogens · Lipinski count' }).locator('dd')).toHaveText(/^3\b/);
+  await expect(page.locator('#d-desc div').filter({ hasText: 'N + O atoms · Lipinski count' }).locator('dd')).toHaveText(/^7\b/);
   await expect(page.locator('#d-hbond-method')).toBeVisible();
   await expect(page.locator('#d-hbond-method')).toContainText('3/7 here and 2/6 in the QSAR');
 });

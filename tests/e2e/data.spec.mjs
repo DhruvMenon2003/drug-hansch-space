@@ -27,7 +27,14 @@ async function open(browser, baseURL, { init, route, wait = true, query = '?debu
   const net = { requests: [], responses: [], console: [], bodies: [] };
   page.on('console', m => net.console.push({ type: m.type(), text: m.text() }));
   page.on('pageerror', e => net.console.push({ type: 'pageerror', text: e.message }));
-  page.on('request', r => net.requests.push({ url: r.url(), type: r.resourceType(), headers: r.headers(), t: Date.now() }));
+  page.on('request', r => {
+    // request.headers() is the header set the page asked for; the ones the network stack adds (Cache-Control from fetch's
+    // cache mode among them) only appear in allHeaders(), which is async: fill the row in when it resolves, and await
+    // net.bodies before reading headers.
+    const row = { url: r.url(), type: r.resourceType(), headers: r.headers(), t: Date.now() };
+    net.requests.push(row);
+    net.bodies.push(r.allHeaders().then(h => { row.headers = h; }).catch(() => {}));
+  });
   page.on('response', res => {
     net.bodies.push(res.body().then(buf => {
       const ct = res.headers()['content-type'] || '';
@@ -381,6 +388,7 @@ test.describe('preload hints and the load budget', () => {
       await m.loadData();
       await m.loadMolecule(m.MOL_SHARDS * 1000 + 7).catch(() => {});       // a CID no drug has: only the request matters
     });
+    await Promise.all(net.bodies);                                            // the full header sets (see open())
     const fresh = net.requests.slice(n0).filter(r => /\/data\//.test(r.url));
     expect(fresh.map(r => new URL(r.url).pathname).sort(), 'one fetch of each data file by loadData(), and the shard that loadMolecule() needs').toEqual(['/data/drugs.json', '/data/hansch.json', '/data/mol/7.json']);
     for (const r of fresh) expect(r.headers['cache-control'] || r.headers.pragma || '', r.url).toMatch(/max-age=0|no-cache/);
@@ -388,6 +396,7 @@ test.describe('preload hints and the load budget', () => {
     const n1 = net.requests.length;
     await pick(page, nameToCid('dexamethasone'));
     await settleDetail(page);
+    await Promise.all(net.bodies);
     const shard = net.requests.slice(n1).find(r => /\/data\/mol\//.test(r.url));
     expect(shard, 'a shard request was made').toBeTruthy();
     expect(shard.headers['cache-control'] || '', shard.url).toMatch(/max-age=0|no-cache/);

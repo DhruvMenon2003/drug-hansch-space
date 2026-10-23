@@ -114,9 +114,11 @@ goldens). Without the work, the longest task in the first 3 s on an unloaded box
 on real GPUs that is a few ms.
 
 **Preload and load order.** The block between `<!-- preload:start -->` and `<!-- preload:end -->` in the head is written by
-`tools/check_site.py --write-preload` from the real import graph of `js/main.js` (static and dynamic, through the import map): 30
-`modulepreload` links plus `data/drugs.json` and `data/hansch.json` as `preload as=fetch crossorigin fetchpriority=low`; the check
-fails when the list and the graph differ. The two font preloads stay as they were; there is no `preconnect` (one origin). Placement
+`tools/check_site.py --write-preload` from the real import graph of `js/main.js` (static and dynamic, through the import map): 21
+`modulepreload` links for the core app, 11 more for the 3D layer inside `<template id="gl-preload">`, plus `data/drugs.json` and
+`data/hansch.json` as `preload as=fetch crossorigin fetchpriority=low`; the check fails when either list and the graph differ. The 3D
+hints sit in an inert template because a browser without WebGL must never download three.js (`fallbacks.spec.mjs`); `js/main.js`
+copies them into the head only after the capability probe finds WebGL, which still starts those fetches before the dynamic import. The two font preloads stay as they were; there is no `preconnect` (one origin). Placement
 matters: with the block after the stylesheets and `gsap`, first contentful paint is unchanged; with it before them, FCP doubles.
 Measured with Chromium's CDP emulation (`Network.emulateNetworkConditions`, `Emulation.setCPUThrottlingRate`, gzip -6 and
 `max-age=600` like Pages, five cold loads each, median):
@@ -136,17 +138,17 @@ every link where latency matters they take 20 to 26 % off the first draw and lea
 `fetchpriority=low` was tried and changed nothing (first draw 4.67 s), so it was not done. The 1.6 Mbps first draw of 4.6 s misses the
 scouts' 4.0 s target: with the fonts it is bytes, not round trips.
 
-**Budgets** (`tools/check_site.py` for files, `data.spec.mjs` for what a browser really fetches): first load 45 requests (limit
-45: there is no headroom, see below), one origin, 0 third-party; 428 KB gzip without fonts (limit 450), CLS 0.005 to 0.007 (limit 0.02).
+**Budgets** (`tools/check_site.py` for files, `data.spec.mjs` for what a browser really fetches): first load 44 requests (limit
+45: one request of headroom, see below), one origin, 0 third-party; 428 KB gzip without fonts (limit 450), CLS 0.005 to 0.007 (limit 0.02).
 **Not met: 723 KB including fonts against the 450 KB aim.** Chromium requests all five vendored woff2 files at first load (295 KB; they
 are already compressed and the owner ruled out re-subsetting): Newsreader 129 KB and Bricolage Grotesque 75 KB (preloaded), Newsreader
 italic 62 KB (used by exactly one line, the hint under the plot), IBM Plex Mono 400 and 500 (15 KB each). Even with no fonts at all,
 the 428 KB of code and data leave 22 KB. The scouts' measured way to ~410 KB is subsetting to the used glyphs and pinning the variable axes
 (fonts ~80 KB), which needs a designer's look at the type; dropping the italic face would save 62 KB and change that one line. The
-test keeps a ceiling (740 KB) so the figure cannot grow unnoticed; nothing was relaxed. The request count is also at its limit
-(30 modules, 6 stylesheets, gsap, 2 data files, 5 fonts, the page): the three empty stub stylesheets (`kbd.css`, `export.css`,
-`xr.css`) cost a request each until they carry content, and each later stage that adds a first-load module or file will break the
-count; merging the stylesheets into one file is the cheap fix.
+test keeps a ceiling (740 KB) so the figure cannot grow unnoticed; nothing was relaxed. The request count is close to its limit
+(32 modules, 3 stylesheets, gsap, 2 data files, 5 fonts, the page). The three empty stub stylesheets (`kbd.css`, `export.css`, `xr.css`)
+were removed when the scaffold and percentile-box modules pushed the count to 47; any later stage that adds a first-load module or file
+should merge the remaining stylesheets, the next cheap fix.
 
 **Caching and versions.** GitHub Pages sends `max-age=600`, so a visitor can hold code from one deploy and revalidate data from the
 next. Data and shard JSON is fetched with `cache: 'no-cache'` (a cheap 304 when unchanged; tested on the wire). `tools/stamp_build.py`

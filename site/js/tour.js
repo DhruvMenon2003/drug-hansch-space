@@ -8,7 +8,7 @@
 import { $, app, bus, narrow, STEPS } from './kernel.js';
 import { setView } from './view.js';
 import { announce } from './announce.js';
-import { isSheetMode, readingLine, restoreAnchor } from './layout.js';
+import { isSheetMode, layoutState, readingLine, restoreAnchor } from './layout.js';
 
 const NAMES = Object.keys(STEPS);
 
@@ -76,8 +76,11 @@ export function refreshTourBand() {
 /**
  * Rebuild the band only when it can have moved: the width changed, the height changed by 150 px or more, or (same viewport)
  * the sticky stack changed height. A same-width height change under 150 px is the browser chrome sliding in or out.
+ * Not while the stage is expanded: the page behind it does not move, but the full-screen stage would count as a sticky stack
+ * as tall as the screen, and the new band would pick another step and change the plot the reader has just expanded.
  */
 function maybeRebuild() {
+  if (layoutState.expanded) return;
   const widthChanged = innerWidth !== built.w, dh = Math.abs(innerHeight - built.h);
   if (!widthChanged && dh > 0 && dh < 150) return;
   if (!widthChanged && dh === 0 && Math.abs(readingLine() - line) < 2) return;
