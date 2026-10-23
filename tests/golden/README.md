@@ -49,3 +49,15 @@ scale 0. The old snapshot hashed the raw instance arrays, which differ by constr
 `docs/DECISIONS.md`. Metric: share of pixels that differ visibly (pixelmatch YIQ, threshold 0.2, the metric of Playwright's
 `toHaveScreenshot`); the share of pixels that differ by even one grey level is larger (silhouette anti-aliasing of 759
 smaller polygons) and is reported as `pctAny`.
+
+## Later stages (explorer features after the split)
+
+Features merged after the shell stage changed what some snapshot fields hold. The goldens were not regenerated (they come only
+from the original), and the two tests below check their property without them. The recorded-views test and the search-box test
+still compare these fields, and the detail panel HTML that later features extended, with the original, so they report these
+differences until each one has an allow-list row and a check of its own.
+
+| Change | Where it shows in a snapshot | How it is checked instead |
+| --- | --- | --- |
+| The camera fits the cube to the stage (`distanceFactor` in `js/gl/render.js`), so the first pose is 5 % closer than the original's: (2656, 1549, 2988) against (2796, 1631, 3146), with or without a late three.js | `camera.pos` in `load` and every view that has not moved the camera yet | "the first camera pose does not depend on how late three.js arrives" compares a load with three.js held back 1.5 s against a prompt load of the same build, which is the property it names; the recorded-views test still compares the golden pose. |
+| The conformer viewer draws a silhouette hull beside the atoms and the bonds (ChimeraX finish, `outline()` in `js/gl/chimera.js`): four meshes over two geometries instead of two meshes | `detail.mol` (four counts instead of two) | "swapping the conformer disposes the old one" collects every mesh, geometry and material of the old group once and requires each to be disposed, instead of counting two of each. |

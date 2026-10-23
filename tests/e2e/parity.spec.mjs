@@ -150,14 +150,19 @@ test.describe('parity with the original app', () => {
   test('the first camera pose does not depend on how late three.js arrives', async ({ browser, baseURL }) => {
     // The camera distance of a camTo scales with the stage aspect at the time of the call. The original app made its first
     // move in the same task that created the masthead observer (which later changes the stage height); the split must too.
-    const page = await (await browser.newContext(CONTEXT)).newPage();
-    await page.route('**/vendor/three/three.module.min.js', async route => { await new Promise(r => setTimeout(r, 1500)); await route.continue(); });
-    await page.goto(new URL('index.html?debug', baseURL).href);
-    await waitReady(page, '__hansch');
-    const s = await snapshot(page, '__hansch');
-    expect(s.step).toBe('space');
-    expect(s.camera).toEqual(golden.views.load.camera);
-    await page.context().close();
+    // Compared with a prompt load of the same build, not the golden: see tests/golden/README.md (first camera pose).
+    const pose = async delay => {
+      const page = await (await browser.newContext(CONTEXT)).newPage();
+      if (delay) await page.route('**/vendor/three/three.module.min.js', async route => { await new Promise(r => setTimeout(r, delay)); await route.continue(); });
+      await page.goto(new URL('index.html?debug', baseURL).href);
+      await waitReady(page, '__hansch');
+      const s = await snapshot(page, '__hansch');
+      await page.context().close();
+      return s;
+    };
+    const late = await pose(1500), prompt = await pose(0);
+    expect(late.step).toBe('space');
+    expect(late.camera, 'three.js 1.5 s late gives the same first pose as a prompt load').toEqual(prompt.camera);
   });
 
   test('swapping the conformer disposes the old one, instanced buffers included', async ({ browser, baseURL }) => {
@@ -165,18 +170,27 @@ test.describe('parity with the original app', () => {
     await waitReady(page, '__hansch');
     await page.evaluate(() => window.__hansch.selectDrug(window.__hansch.app.drugs.find(d => d.name === 'dexamethasone').cid));
     await page.waitForFunction(() => window.__hansch.molv.group, null, { timeout: 30_000 });
-    // watch the old group for three.js 'dispose' events on the meshes (frees instanceMatrix/instanceColor), geometries and materials
+    // watch the old group for three.js 'dispose' events on the meshes (frees instanceMatrix/instanceColor), geometries and materials.
+    // Each object once: since the ChimeraX finish every atom and bond mesh has a silhouette hull that shares its geometry and
+    // instance matrix (js/gl/chimera.js outline()), so the group holds four meshes over two geometries.
     await page.evaluate(() => {
-      const old = window.__hansch.molv.group, seen = (window.__disposed = { meshes: 0, geometries: 0, materials: 0, group: old });
-      for (const m of old.children) {
-        m.addEventListener('dispose', () => seen.meshes++);
-        m.geometry.addEventListener('dispose', () => seen.geometries++);
-        m.material.addEventListener('dispose', () => seen.materials++);
-      }
+      const old = window.__hansch.molv.group, seen = (window.__disposed = { want: new Set(), done: new Set(), group: old });
+      old.traverse(o => {
+        for (const x of [o.isMesh ? o : null, o.geometry, ...[].concat(o.material || [])]) {
+          if (!x || seen.want.has(x)) continue;
+          seen.want.add(x);
+          x.addEventListener('dispose', () => seen.done.add(x));
+        }
+      });
     });
     await page.evaluate(() => window.__hansch.selectDrug(window.__hansch.app.drugs.find(d => d.name === 'caffeine').cid));
     await page.waitForFunction(() => window.__hansch.molv.group !== window.__disposed.group && window.__hansch.molv.group, null, { timeout: 30_000 });
-    expect(await page.evaluate(() => ({ meshes: window.__disposed.meshes, geometries: window.__disposed.geometries, materials: window.__disposed.materials }))).toEqual({ meshes: 2, geometries: 2, materials: 2 });
+    const r = await page.evaluate(() => {
+      const { want, done } = window.__disposed, kind = x => (x.isMesh ? 'mesh' : x.isBufferGeometry ? 'geometry' : 'material');
+      return { meshes: [...want].filter(x => x.isMesh).length, missed: [...want].filter(x => !done.has(x)).map(kind) };
+    });
+    expect(r.meshes, 'atoms and bonds were drawn').toBeGreaterThanOrEqual(2);
+    expect(r.missed, 'every mesh, geometry and material of the old conformer was disposed').toEqual([]);
     expect(await page.evaluate(() => window.__disposed.group.parent), 'the old group left the scene').toBeNull();
     await page.context().close();
   });
