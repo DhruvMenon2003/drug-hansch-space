@@ -26,7 +26,8 @@ import random
 import statistics
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
+from functools import lru_cache
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -85,6 +86,7 @@ _unch = rdMolStandardize.Uncharger()
 _taut = rdMolStandardize.TautomerEnumerator()
 
 
+@lru_cache(maxsize=None)
 def standardize(smiles: str):
     """Return (mol, reason). mol is None when the structure is unusable for QSAR."""
     m = Chem.MolFromSmiles(smiles or "")
@@ -223,8 +225,8 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     index = []
     items = sorted(targets.items())
-    with ThreadPoolExecutor(8) as pool:                      # the API is slow per request, not rate limited
-        results = list(pool.map(lambda kv: build(*kv), items))
+    with ProcessPoolExecutor() as pool:                      # RDKit standardisation is CPU-bound; the API calls are cached
+        results = list(pool.map(build, *zip(*items)))
     for (tid, meta), res in zip(items, results):
         row = {"id": tid, "name": meta["name"], "n_drugs": len(meta["drugs"]), "n": res.get("n", 0),
                "type": res.get("standard_type") or res.get("type")}
