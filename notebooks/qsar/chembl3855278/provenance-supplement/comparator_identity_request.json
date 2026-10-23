@@ -1,0 +1,6 @@
+{
+  "url": "https://www.ebi.ac.uk/chembl/api/data/molecule.json?molecule_synonyms__molecule_synonym__iexact=GSK598809&limit=20",
+  "retrieved_utc": "2026-10-23T03:35:59.879409+00:00",
+  "sha256": "c4e2727ca3ac5b893c5bd5ea8d918848a8174a41d53b6eafa4621fe5bcbe968c",
+  "bytes": 108
+}

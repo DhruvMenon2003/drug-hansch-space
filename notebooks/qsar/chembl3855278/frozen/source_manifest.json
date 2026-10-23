@@ -1,0 +1,47 @@
+{
+  "retrieved_utc": "2026-10-23T03:27:45.726092+00:00",
+  "assay_id": "CHEMBL3855278",
+  "scope": "Complete official activities for this one assay; no endpoint filter at retrieval.",
+  "requests": [
+    {
+      "url": "https://www.ebi.ac.uk/chembl/api/data/assay/CHEMBL3855278.json",
+      "final_url": "https://www.ebi.ac.uk/chembl/api/data/assay/CHEMBL3855278.json",
+      "retrieved_utc": "2026-10-23T03:27:45.726257+00:00",
+      "status": 200,
+      "bytes": 1019,
+      "sha256": "fe4db420ef4b2316de0f2e58cd34f51a836023aad88a833b9bd1e75175369856",
+      "file": "raw/assay.json"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/chembl/api/data/target/CHEMBL217.json",
+      "final_url": "https://www.ebi.ac.uk/chembl/api/data/target/CHEMBL217.json",
+      "retrieved_utc": "2026-10-23T03:27:51.844357+00:00",
+      "status": 200,
+      "bytes": 16803,
+      "sha256": "a776f57c123398b048370f76c58dbab794dd60c74748c3a54bf78942d04033c7",
+      "file": "raw/target.json"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/chembl/api/data/document/CHEMBL3853329.json",
+      "final_url": "https://www.ebi.ac.uk/chembl/api/data/document/CHEMBL3853329.json",
+      "retrieved_utc": "2026-10-23T03:27:54.322791+00:00",
+      "status": 200,
+      "bytes": 1433,
+      "sha256": "2f73fd0f820092da42fd6522012ed162adcd9f412304d7781afa7c39f731e572",
+      "file": "raw/document.json"
+    },
+    {
+      "url": "https://www.ebi.ac.uk/chembl/api/data/activity.json?assay_chembl_id=CHEMBL3855278&limit=1000&offset=0",
+      "final_url": "https://www.ebi.ac.uk/chembl/api/data/activity.json?assay_chembl_id=CHEMBL3855278&limit=1000&offset=0",
+      "retrieved_utc": "2026-10-23T03:27:58.254688+00:00",
+      "status": 200,
+      "bytes": 168840,
+      "sha256": "1c1d0bc534a15752059afd2009f3547265906794202a2fbe31e251ded31ad884",
+      "file": "raw/activities_page_000.json"
+    }
+  ],
+  "api_total_count": 107,
+  "retrieved_rows": 107,
+  "unique_activity_ids": 107,
+  "complete_for_assay_snapshot": true
+}

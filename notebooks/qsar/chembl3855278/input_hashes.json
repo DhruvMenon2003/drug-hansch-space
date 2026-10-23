@@ -1,0 +1,19 @@
+{
+  "frozen/all_activity_rows.csv": "58970bf15d19d29673fc5c45ba631118f507fc8870391796aa7f7617936de678",
+  "frozen/censoring_and_missing_ledger.csv": "e657a7504572d215a943b22cc65e48cfe49cee266dfc55f0e36174e9201334d7",
+  "frozen/cohort_rules.json": "487c5f9a8f41f01cb953a3c39b8b6bd7cc4db0d61e299e7788d2e6c847224253",
+  "frozen/cohort_summary.json": "e7595c93fb723fd2a015769ec192fa6ef949a3880043e835070290c9ea0f59fd",
+  "frozen/curate_assay.py": "494ddb0e0d2b5c7bd48c71e4ca8476d1ef232c93b13027e07cc139a6e14599a5",
+  "frozen/decision_ledger.csv": "e3692dcff32de631790a0f56afbd7967caf68e09c6b10440055d9640ccfc44a0",
+  "frozen/duplicate_ledger.csv": "c7caab9caa65f4b74dc836cc8838627ea99c35168c56c29298a5788a3b179cdd",
+  "frozen/eligible_compounds.csv": "39ddd83e407bda3800f3cc0b6c220574417ea859fa85b3875ba7475600b6db61",
+  "frozen/exclusion_ledger.csv": "0c1d715ee5dccecb2073641520deebc92210fc417d6f732c1ad0a41a38350501",
+  "frozen/fetch_assay.py": "5e4ed69917be50e5abc55b48a756d1c95336135e24eb1f560f7d67284277c8c7",
+  "frozen/raw/activities_page_000.json": "1c1d0bc534a15752059afd2009f3547265906794202a2fbe31e251ded31ad884",
+  "frozen/raw/assay.json": "fe4db420ef4b2316de0f2e58cd34f51a836023aad88a833b9bd1e75175369856",
+  "frozen/raw/document.json": "2f73fd0f820092da42fd6522012ed162adcd9f412304d7781afa7c39f731e572",
+  "frozen/raw/target.json": "a776f57c123398b048370f76c58dbab794dd60c74748c3a54bf78942d04033c7",
+  "frozen/source_manifest.json": "6ea36af76e928c1198802f2e867c1a2a1eb8629f8b8e197a36b984fd06439e95",
+  "pilot.py": "14dc625b61b1058dc44f4138944ddc2d8d46ff66f3e2604fe8afd3820e23ba99",
+  "predeclared_recipe.json": "78fbca589bb204605e81438ae5660bd764077b4b4e5475f9c9958e76d3054b3f"
+}

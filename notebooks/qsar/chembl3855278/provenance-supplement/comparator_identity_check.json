@@ -1,0 +1,17 @@
+{
+  "created_utc": "2026-10-23T03:38:20.173671+00:00",
+  "identity_source": "PubChem name GSK598809; corroborating ChEMBL molecule search",
+  "pubchem_cid": 11784937,
+  "comparator_full_inchikey": "ZKRWPAYTJMRKLJ-BTYIYWSLSA-N",
+  "comparator_nonisomeric_parent_smiles": "Cc1ncoc1-c1nnc(SCCCN2CC3CC3(c3ccc(C(F)(F)F)cc3F)C2)n1C",
+  "matching_activity_ids_full_inchikey": [],
+  "matching_activity_ids_connectivity_ignoring_stereo": [],
+  "full_assay_rows_checked": 107,
+  "cohort_changed": false,
+  "decision": "No matching comparator graph among the full107 activity structures; no exclusion or refit justified by this identity check.",
+  "limitation": "Manuscript uses GSK598809A name; source figure was not visually verified. Name-suffix resolution checked separately.",
+  "exact_A_name_lookup": {
+    "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/GSK598809A/property/InChIKey,IsomericSMILES/JSON",
+    "error": "<HTTPError 404: 'Not Found'>"
+  }
+}

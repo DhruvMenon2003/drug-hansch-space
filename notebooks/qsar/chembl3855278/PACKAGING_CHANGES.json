@@ -1,0 +1,27 @@
+{
+  "purpose": "Portable local deliverable; no public publication",
+  "changes": [
+    {
+      "file": "frozen/cohort_rules.json",
+      "change": "Absolute local split recipe path replaced by relative filename only",
+      "original_sha256": "445494bb0496aec9edae79a2bc7724cc873c0fcfcf8cc6665a886abc657e3e6b",
+      "packaged_sha256": "487c5f9a8f41f01cb953a3c39b8b6bd7cc4db0d61e299e7788d2e6c847224253"
+    },
+    {
+      "file": "frozen/curate_assay.py",
+      "change": "Expected rule hash updated for that path-only redaction",
+      "original_sha256": "af58b108697aecff880581f967f44d3cf12ca97791f2326068c7471d6fbb7be8",
+      "packaged_sha256": "494ddb0e0d2b5c7bd48c71e4ca8476d1ef232c93b13027e07cc139a6e14599a5"
+    },
+    {
+      "file": "frozen/cohort_summary.json",
+      "change": "Rule/script hash references updated only"
+    }
+  ],
+  "cohort_changed": false,
+  "split_changed": false,
+  "model_changed": false,
+  "model_refit": false,
+  "eligible_sha256": "39ddd83e407bda3800f3cc0b6c220574417ea859fa85b3875ba7475600b6db61",
+  "note": "Original prefit/firstfit local files retained unchanged; same dataset, source bytes, model coefficients, predictions and metrics."
+}

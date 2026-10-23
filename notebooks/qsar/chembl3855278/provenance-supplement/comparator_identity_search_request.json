@@ -1,0 +1,6 @@
+{
+  "url": "https://www.ebi.ac.uk/chembl/api/data/molecule/search.json?q=GSK598809&limit=20",
+  "retrieved_utc": "2026-10-23T03:36:16.990506+00:00",
+  "sha256": "07d8bad9aa7f6eb7b47e2cc0cd55bbf1b4b9e0477d2522620f3768d4596d5bd5",
+  "bytes": 9283
+}

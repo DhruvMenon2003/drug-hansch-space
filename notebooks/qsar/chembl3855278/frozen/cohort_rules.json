@@ -1,0 +1,34 @@
+{
+  "declared_utc": "2026-10-23T03:31:07.592947+00:00",
+  "purpose": "Provisional local-domain single-assay experimental binding pKi pilot, not regulatory validation.",
+  "assay": "CHEMBL3855278",
+  "target": "CHEMBL217",
+  "document": "CHEMBL3853329",
+  "population": "All officially returned activity records, not old pilot intersection.",
+  "source_response": "Prefer original source pKi exactly; source Ki only when explicit convertible molar unit. Do not round-trip standardized nM to replace original pKi.",
+  "row_rules": [
+    "Exact assay/target/document; human; binding B; official single protein P14416 with confidence9/direct target mapping.",
+    "Original and standardized relations must both equal =. Missing/nonexact/censored values retained as exclusions, not imputed.",
+    "Original endpoint pKi with null/dimensionless unit or Ki with explicit M/mM/uM/nM/pM; finite numeric value. Standardized endpoint Ki, nM, finite positive value.",
+    "No activity comment, data-validity comment or potential_duplicate flag; otherwise retain for review outside pilot.",
+    "Standardized Ki must agree with original scale transformation to max(0.00501 nM, 1e-6 relative) tolerance; source-original value retained as label.",
+    "RDKit-parseable source SMILES; parent cleanup/fragment parent/uncharging only; preserve stereochemistry, no tautomer enumeration.",
+    "Exclude every full-isomeric standardized parent identity with more than one activity record in this full assay snapshot, regardless of numeric agreement/range. No median, selective replicate choice or response-dependent disagreement cutoff."
+  ],
+  "duplicate_rationale": "Paired source-record provenance is unresolved; table statistics are not proof that ChEMBL rows are independent raw replicates. One-record-per-full-identity conservative pilot avoids unsupported averaging.",
+  "identity_policy": {
+    "rdkit_cleanup": true,
+    "fragment_parent": true,
+    "uncharger": true,
+    "tautomer_canonicalization": false,
+    "isomeric_identity": "canonical isomeric standardized parent SMILES + full InChIKey",
+    "split_connectivity_key": "canonical nonisomeric standardized parent SMILES, with hash"
+  },
+  "split_plan": "Builder predeclared recipe at predeclared_recipe.json: deterministic SHA256 group order seed assay-pilot-v1; scaffold/parent/connectivity grouping; approximately20%holdout; fallback connectivity grouping only if structural feasibility demands; minimum10train/5test. No response used to choose split.",
+  "acknowledged_limits": [
+    "Primary source binding Ki derivation/Kd not rederived; missing method details do not convert source-reported experimental pKi into predicted labels.",
+    "Preprint evidence supports binding vs functional endpoint distinction but final publication table mapping incomplete.",
+    "Source selection based on coherence/access/sample feasibility before model performance, not outcome search.",
+    "Conservative exclusions can bias representativeness; report loss explicitly."
+  ]
+}

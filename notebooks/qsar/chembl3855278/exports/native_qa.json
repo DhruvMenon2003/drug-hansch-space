@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "method": "Python standard-library XLSX ZIP/XML parsing and independent csv.reader comparison",
+  "sheets": 15,
+  "csv_tables": [
+    {
+      "sheet": "Predictions",
+      "records": 80,
+      "numeric_cells": 1600,
+      "text_cells": 2855,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Computed features",
+      "records": 80,
+      "numeric_cells": 1280,
+      "text_cells": 2689,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Frozen split",
+      "records": 80,
+      "numeric_cells": 0,
+      "text_cells": 324,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Eligible cohort",
+      "records": 80,
+      "numeric_cells": 880,
+      "text_cells": 2441,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Source activities",
+      "records": 107,
+      "numeric_cells": 531,
+      "text_cells": 4545,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Exclusions",
+      "records": 27,
+      "numeric_cells": 333,
+      "text_cells": 1487,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Repeated identities",
+      "records": 26,
+      "numeric_cells": 329,
+      "text_cells": 1426,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Censoring and missing",
+      "records": 2,
+      "numeric_cells": 8,
+      "text_cells": 187,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    },
+    {
+      "sheet": "Decision ledger",
+      "records": 107,
+      "numeric_cells": 1373,
+      "text_cells": 5647,
+      "all_csv_cells_match": true,
+      "frozen_header_and_id": true
+    }
+  ],
+  "formula_count": 643,
+  "archived_files_byte_exact": 16,
+  "external_links": false,
+  "macros": false,
+  "formula_errors": 0,
+  "scientific_csv_and_raw_api_bytes_unchanged": true,
+  "original_local_workbook_preserved": true,
+  "results_and_unit_formulas_values_unchanged": true,
+  "metadata_matches_sanitized_release": true,
+  "all_native_xml_and_relationship_parts_scanned": 51,
+  "private_path_matches": 0,
+  "public_json_path_scan": "PASS"
+}

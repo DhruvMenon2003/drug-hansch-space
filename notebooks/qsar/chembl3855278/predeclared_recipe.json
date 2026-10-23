@@ -1,0 +1,29 @@
+{
+  "declared_before_model_execution": true,
+  "cohort": "CHEMBL3855278 only; exact original source-reported experimental pKi; no predicted labels",
+  "descriptors": [
+    "MolWt",
+    "MolLogP",
+    "TPSA",
+    "NumHDonors",
+    "NumHAcceptors"
+  ],
+  "split": "Murcko scaffolds (nonchiral) grouped, deterministic hash order seed assay-pilot-v1, target 20% holdout. At least 10 train and 5 test; scaffold holdout preferred. If fewer than 2 usable groups or cannot meet sizes, connectivity-group holdout with explicit congeneric-only limitation. Never select split from outcomes.",
+  "models": [
+    "training mean DummyRegressor",
+    "StandardScaler fitted on train + Ridge alpha=1.0"
+  ],
+  "metrics": [
+    "MAE",
+    "RMSE",
+    "R2"
+  ],
+  "tuning": "none; no fit on holdout, no refit on all data",
+  "domain": "training descriptor min/max and maximum train Morgan similarity (radius 2, 2048 bits, nonchiral); descriptive only, not calibrated confidence",
+  "primary_label": "Exact source-reported experimental pKi from ChEMBL original value; standard Ki nM and roundtrip pKi retained only as conversion checks, not new measurements.",
+  "scope": "single-assay exploratory pilot, not external validation, not the old frozen 250-compound model",
+  "label_provenance": "Source-reported pKi is experimental; ChEMBL standard Ki nM and recomputed pKi are transformations of that same observation.",
+  "duplicate_policy": "Before label inspection, cohort curator excludes every full-isomeric parent identity with multiple source records regardless of values; unresolved replicate mapping is not averaged. All records retained in ledger.",
+  "endpoint_decision": "Parent clarified original source pKi preferred before any fit or metric inspection.",
+  "structure_policy": "Use cohort-curated parent_smiles, preserving source_canonical_smiles and ledger; no additional model-side neutralization/tautomerization."
+}

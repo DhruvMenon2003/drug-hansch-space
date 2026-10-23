@@ -1,0 +1,75 @@
+{
+  "cohort_n": 80,
+  "train_n": 57,
+  "test_n": 23,
+  "split": {
+    "method": "scaffold_and_parent_grouped",
+    "groups": 32,
+    "group_sizes": [
+      18,
+      14,
+      7,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "target_test_count": 16,
+    "achieved_test_fraction": 0.2875,
+    "seed": "assay-pilot-v1"
+  },
+  "holdout_metrics": {
+    "training_mean": {
+      "test_n": 23,
+      "MAE": 0.37567505720823824,
+      "RMSE": 0.49685998251590124,
+      "R2": -0.07680935610672401
+    },
+    "ridge_alpha_1": {
+      "test_n": 23,
+      "MAE": 0.3698930238683352,
+      "RMSE": 0.49120500680238127,
+      "R2": -0.05243758807300014
+    }
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "rdkit": "2026.9.1",
+    "useful_rdkit_utils": "2.0.1",
+    "scikit-learn": "1.9.1"
+  },
+  "python": "3.12.14",
+  "limitations": [
+    "Single assay/document; no external validation.",
+    "Very small holdout: metrics are uncertain; no model selection or tuning was performed.",
+    "Scaffold grouping does not guarantee unrelated chemistry; nearest training similarity is descriptive.",
+    "Descriptors and predictions are calculated; only source Ki/pKi observations are experimental evidence.",
+    "No claim of improvement over the separate frozen 250-compound model."
+  ]
+}

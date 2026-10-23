@@ -1,0 +1,13 @@
+{
+  "PropertyTable": {
+    "Properties": [
+      {
+        "CID": 11784937,
+        "MolecularFormula": "C22H23F4N5OS",
+        "SMILES": "CC1=C(OC=N1)C2=NN=C(N2C)SCCCN3C[C@@H]4C[C@@]4(C3)C5=C(C=C(C=C5)C(F)(F)F)F",
+        "InChI": "InChI=1S/C22H23F4N5OS/c1-13-18(32-12-27-13)19-28-29-20(30(19)2)33-7-3-6-31-10-15-9-21(15,11-31)16-5-4-14(8-17(16)23)22(24,25)26/h4-5,8,12,15H,3,6-7,9-11H2,1-2H3/t15-,21-/m0/s1",
+        "InChIKey": "ZKRWPAYTJMRKLJ-BTYIYWSLSA-N"
+      }
+    ]
+  }
+}
