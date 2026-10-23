@@ -7,6 +7,7 @@
 // task, so molecules above MAX_AUTO_ATOMS heavy atoms are drawn on request ("Draw anyway") instead of freezing the page.
 import { app, bus, ORDER, $, cap, esc, fin, fx, fmtConc, isDark } from './kernel.js';
 import { announce } from './announce.js';
+import { BANDS, band, distribution, percentileRank, profile } from './domain.js';
 import { whenIdle } from './idle.js';
 
 const SD_SRC = 'vendor/smiles-drawer/smiles-drawer.min.js';
@@ -164,6 +165,36 @@ function updateViewNote() {
   outAnnounced = out ? d : null;
 }
 
+// ---------------------------------------------------------------- percentile bounding box
+// Each descriptor carries where it sits in the whole plotted table, the way admetSAR 3.0 shows a basic property:
+// green inside the 5th–95th percentile, amber past one of them, red outside the observed range. It describes this
+// drug against the drugs on the page; it is not a prediction and not a safety statement.
+/** Descriptors that carry a percentile pill, with the name used in the summary line. */
+const BOX = { logp: 'log P', mr: 'MR', tpsa: 'TPSA', mw: 'MW', hbd: 'donor count', hba: 'acceptor count',
+  rotb: 'rotatable bonds', arom: 'aromatic rings', fsp3: 'Fsp3', cx: 'complexity' };
+const BOX_KEYS = Object.keys(BOX);
+let refs = null;
+/** Reference distribution of every pilled descriptor over the whole drug table, built once. */
+function references() {
+  if (!refs) refs = Object.fromEntries(BOX_KEYS.map(k => [k, distribution(app.drugs.map(x => x.d?.[k]))]));
+  return refs;
+}
+function pill(key, value) {
+  const dist = references()[key], b = band(dist, value);
+  if (!b) return '';
+  const pct = percentileRank(dist, value);
+  return ` <span class="pct pct-${b}" title="${fx(pct, 0)}th percentile of ${dist.n} drugs: ${BANDS[b]}. 5th ${fx(dist.p5, 2)}, 95th ${fx(dist.p95, 2)}, range ${fx(dist.min, 2)} to ${fx(dist.max, 2)}.">${fx(pct, 0)}%</span>`;
+}
+function showBox(d) {
+  const bands = BOX_KEYS.map(k => band(references()[k], d.d?.[k])), p = profile(bands), n = bands.filter(Boolean).length;
+  const flagged = BOX_KEYS.filter((k, i) => bands[i] && bands[i] !== 'in')
+    .map(k => `${BOX[k]} ${bands[BOX_KEYS.indexOf(k)] === 'out' ? 'outside the observed range' : 'past a percentile'}`);
+  $('#d-domain').textContent = n
+    ? `Percentile box: ${p.counts.in} of ${n} descriptors inside the 5th–95th percentile of the ${references().logp.n} drugs here`
+      + (flagged.length ? `; ${flagged.join(', ')}.` : '.')
+    : '';
+}
+
 function showDetail({ index }) {
   const d = app.drugs[index];
   $('#detail-empty').hidden = true;
@@ -174,14 +205,16 @@ function showDetail({ index }) {
     (d.pcid !== d.cid ? ` (dataset CID ${d.cid})` : '') +
     (d.chembl ? ` · <a href="https://www.ebi.ac.uk/chembl/compound_report_card/${esc(d.chembl)}/" target="_blank" rel="noopener noreferrer">${esc(d.chembl)}</a>` : '') +
     `<br>${esc(d.ik || '')}${d.d.formula ? ' · ' + esc(d.d.formula) : ''}`;
-  const D = d.d, kv = (k, v, small = '') => `<div><dt>${k}</dt><dd>${v}${small ? ` <small>${small}</small>` : ''}</dd></div>`;
+  const D = d.d, kv = (k, v, small = '', key = '') => `<div><dt>${k}</dt><dd>${v}${small ? ` <small>${small}</small>` : ''}${key ? pill(key, D[key]) : ''}</dd></div>`;
   $('#d-desc').innerHTML = [
-    kv('log P', fx(D.logp, 2), fin(D.xlogp) ? `Crippen; XLogP3 ${fx(D.xlogp, 2)}` : 'Crippen'),
-    kv('MR', fx(D.mr, 1), 'cm³/mol'), kv('TPSA', fx(D.tpsa, 1), 'Å²'), kv('MW', fx(D.mw, 1), 'Da'),
-    kv('N/O-bound hydrogens · Lipinski count', D.hbd ?? '–'), kv('N + O atoms · Lipinski count', D.hba ?? '–'), kv('Rotatable bonds', D.rotb ?? '–'),
-    kv('Aromatic rings', D.arom ?? '–'), kv('Fsp3', fx(D.fsp3, 2)), kv('Complexity', fx(D.cx, 0), 'PubChem'),
+    kv('log P', fx(D.logp, 2), fin(D.xlogp) ? `Crippen; XLogP3 ${fx(D.xlogp, 2)}` : 'Crippen', 'logp'),
+    kv('MR', fx(D.mr, 1), 'cm³/mol', 'mr'), kv('TPSA', fx(D.tpsa, 1), 'Å²', 'tpsa'), kv('MW', fx(D.mw, 1), 'Da', 'mw'),
+    kv('N/O-bound hydrogens · Lipinski count', D.hbd ?? '–', '', 'hbd'), kv('N + O atoms · Lipinski count', D.hba ?? '–', '', 'hba'),
+    kv('Rotatable bonds', D.rotb ?? '–', '', 'rotb'),
+    kv('Aromatic rings', D.arom ?? '–', '', 'arom'), kv('Fsp3', fx(D.fsp3, 2), '', 'fsp3'), kv('Complexity', fx(D.cx, 0), 'PubChem', 'cx'),
     kv('Rule-of-five violations', D.ro5 ?? '–'), kv('Formal charge', D.charge ?? '–'),
   ].join('');
+  showBox(d);
   const a = d.act;
   $('#d-act').innerHTML = a
     ? `<div class="act-box"><span class="big">${fx(a.p, 2)}</span> pChEMBL <small>(about ${fmtConc(a.p)})</small><br>` +

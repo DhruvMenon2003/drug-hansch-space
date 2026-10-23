@@ -137,8 +137,10 @@ test.describe('adaptive resolution', () => {
     await feedHz(page, 1000 / 60, 100);
     const changes = [];
     let last = 2;
-    for (let i = 0; i < 30; i++) {                                              // 3000 frames of 33 ms in batches
-      const r = await feedHz(page, 1000 / 30, 100, 100 + 100 * i);
+    // 3000 frames of 33 ms in batches of 10: a drop needs 20 slow frames after the last move (DROP_FRAMES), so a batch can hold
+    // at most one move and every rung the page passes through is seen (batches of 100 hid the first two drops, at the 24th and 48th slow frame)
+    for (let i = 0; i < 300; i++) {
+      const r = await feedHz(page, 1000 / 30, 10, 100 + 10 * i);
       if (r.learned !== last) { changes.push(r.learned); last = r.learned; }
     }
     expect(changes, 'only downward moves, one rung at a time').toEqual([1.5, 1, 0.75]);

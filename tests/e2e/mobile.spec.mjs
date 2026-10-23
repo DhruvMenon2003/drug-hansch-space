@@ -240,6 +240,9 @@ for (const [label, context] of Object.entries(VP)) {
         for (const el of document.querySelectorAll(SEL)) {
           if (seen.has(el) || el.matches('canvas') || !el.checkVisibility({ checkVisibilityCSS: true })) continue;
           seen.add(el);
+          // A scroll container that js/layout.js made focusable (the legend when it overflows, a wide table's wrapper) is
+          // reachable so a keyboard can scroll it, not so it can be pressed; the 44 px rule is about press targets.
+          if (el.matches('div[tabindex="0"]') && (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)) continue;
           let t = el;
           if (el.matches('input[type="checkbox"], input[type="radio"]')) t = el.closest('label') || document.querySelector(`label[for="${el.id}"]`) || el;
           if (el.matches('a[href]')) { const own = [...el.parentElement.childNodes].filter(x => x.nodeType === 3).map(x => x.textContent).join(' '); if (/[A-Za-z]{3,}/.test(own)) continue; }

@@ -46,6 +46,7 @@ export const app = {
   view: { x: 'pc1', y: 'pc2', z: 'pc3', color: 'atc', atc: [null, null, null], l1: '', l2: '', l3: '', route: '', small: false, group: null, veber: false },
   scales: null, visible: [], selected: -1, hover: -1, tokens: {}, step: null, seriesId: null,
   qsarByCid: new Map(), qsarHighlight: false,
+  scafFocus: null,                        // Set of CIDs: the scaffold family the cluster panel is highlighting (js/clusters.js)
 };
 /** Float32 buffers [x, y, z, scale] per drug: tween start, tween end, current. Allocated by initView(). */
 export const anim = { from: null, to: null, t: 1, tween: null };
