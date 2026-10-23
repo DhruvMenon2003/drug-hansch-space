@@ -617,16 +617,18 @@ test.describe('collapsing header and Contents menu @ 390x844', () => {
     expect(s.tp, 'only the transform animates').toBe('transform');
     await scrollToY(page, 600);
     await page.waitForTimeout(450);
+    // the end of the 0.22 s slide, polled: with software WebGL a frame can last over a second (the tour step changes on the way
+    // down), and a read after a fixed 450 ms caught the header 4 px short of the top
+    await expect.poll(async () => (await read()).top, { message: 'slid off the top', timeout: 5_000 }).toBeLessThan(-40);
     s = await read();
     expect(s.hidden, 'hidden after scrolling down').toBe(true);
-    expect(s.top, 'slid off the top').toBeLessThan(-40);
     expect(s.stageTop, 'the stage rides up with it').toBeLessThanOrEqual(1);
     const stackBefore = s.stack;
     await page.evaluate(() => window.scrollBy({ top: -60, behavior: 'instant' }));
     await page.waitForTimeout(450);
+    await expect.poll(async () => (await read()).top, { message: 'back at the top', timeout: 5_000 }).toBe(0);
     s = await read();
     expect(s.hidden, 'back after scrolling up').toBe(false);
-    expect(s.top).toBe(0);
     expect(s.stack, 'the published stack does not depend on the header sliding').toBe(stackBefore);
     // a jitter of a few pixels does not toggle it
     await page.evaluate(() => window.scrollBy({ top: 10, behavior: 'instant' })); await page.waitForTimeout(100);
@@ -683,9 +685,10 @@ test.describe('collapsing header and Contents menu @ 390x844', () => {
     await page.locator('#btn-show3d').click();
     await page.waitForTimeout(300);
     expect(await page.evaluate(() => document.body.dataset.stageSize)).toBe('strip');
-    // the skip link to the plot works even from the strip
-    await page.keyboard.press('Home');
+    // the skip link to the plot works even from the strip (no Home key first: with focus on the Hide 3D button, Home scrolls the
+    // page to the top, the tour takes over the stage at its own height and the strip is gone before the link is used)
     await page.evaluate(() => document.querySelector('a[href="#space-skip"]').focus());
+    expect(await page.evaluate(() => document.body.dataset.stageSize), 'still the strip').toBe('strip');
     await page.keyboard.press('Enter');
     await page.waitForTimeout(500);
     expect(await page.evaluate(() => ({ focus: document.activeElement?.id, size: document.body.dataset.stageSize })), 'the plot is revealed and focused').toEqual({ focus: 'space', size: 'explore' });
@@ -702,7 +705,11 @@ test.describe('collapsing header and Contents menu @ 390x844', () => {
     const cdp = await page.context().newCDPSession(page);
     const c = await page.evaluate(() => { const b = document.querySelector('#space').getBoundingClientRect(); return { x: Math.round(b.left + b.width / 2), y: Math.round(b.top + b.height * 0.6) }; });
     const before = await page.evaluate(() => scrollY);
-    await cdp.send('Input.synthesizeScrollGesture', { x: c.x, y: c.y, yDistance: -250, gestureSourceType: 'touch', speed: 800 });
+    // a finger, as touch events: Input.synthesizeScrollGesture does not scroll this headless Chromium at all (it sent no touchmove
+    // and left the page at 0 even over plain text), while these scroll text and stage alike, with pointercancel as the page takes over
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: c.x, y: c.y }] });
+    for (let k = 1; k <= 12; k++) { await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: c.x, y: c.y - k * 20 }] }); await page.waitForTimeout(16); }
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     await page.waitForTimeout(500);
     expect(await page.evaluate(() => scrollY), 'a one-finger swipe that starts on the stage scrolls the page').toBeGreaterThan(before + 100);
     await tidy(page);
@@ -818,7 +825,8 @@ test.describe('reduced motion @ 390x844', () => {
     const { ctx, page } = await open(browser, baseURL, touchCtx(390, 844, { reducedMotion: 'reduce' }));
     const d = await page.evaluate(() => ({ head: getComputedStyle(document.querySelector('.masthead')).transitionDuration, stage: getComputedStyle(document.querySelector('.stage')).transitionDuration, step: getComputedStyle(document.querySelector('.step')).transitionDuration }));
     expect(d).toEqual({ head: '0s', stage: '0s', step: '0s' });
-    await scrollToY(page, 700); await page.waitForTimeout(150);
+    // 1400, not 700: js/layout.js shows back-to-top from 80 % of the screen height (675 px here), and 700 - 80 left it hidden
+    await scrollToY(page, 1400); await page.waitForTimeout(150);
     expect(await page.evaluate(() => document.body.classList.contains('header-hidden')), 'hides').toBe(true);
     await page.evaluate(() => window.scrollBy({ top: -80, behavior: 'instant' })); await page.waitForTimeout(150);
     expect(await page.evaluate(() => document.body.classList.contains('header-hidden')), 'returns').toBe(false);
