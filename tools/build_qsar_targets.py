@@ -216,7 +216,21 @@ def build(target: str, meta: dict) -> dict:
             "activity": f"p{st} (-log10 mol/L, ChEMBL pChEMBL)", "n_clean": n_clean, "n": len(comps),
             "capped": n_clean > CAP, "seed": SEED, "descriptors": DESCRIPTORS, "ledger": ledger,
             "cliff_rule": "Morgan r2 Tanimoto >= 0.8 and |delta p| >= 1.5", "butina_cutoff": 0.6,
-            "compounds": comps, "cliffs": cliffs}
+            "cols": columns(comps), "cliffs": cliffs}
+
+
+RULES = ["Ro5", "Ro3", "Pfizer"]
+ROUND = {"logp": 2, "fsp3": 2, "mr": 1, "tpsa": 1, "mw": 1}
+
+
+def columns(comps: list) -> dict:
+    """Column-wise compound table, small enough for every target to ship with the site. ChEMBL ids keep only the
+    number, rules are a bit mask (1 Ro5, 2 Ro3, 4 Pfizer); js/builder.js rebuilds the rows."""
+    cols = {"id": [int(c["id"].removeprefix("CHEMBL")) for c in comps]}
+    for k in ["y", "nm", *DESCRIPTORS, "cl"]:
+        cols[k] = [round(c[k], ROUND[k]) if k in ROUND else c[k] for c in comps]
+    cols["rules"] = [sum(1 << i for i, r in enumerate(RULES) if r in c["rules"]) for c in comps]
+    return cols
 
 
 def main() -> None:

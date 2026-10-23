@@ -163,6 +163,19 @@ export function verdict(metrics) {
   return { pass: !failed.length, failed };
 }
 
+/** The files are column-wise (tools/build_qsar_targets.py columns()); rebuild one object per compound, once. */
+const RULES = ['Ro5', 'Ro3', 'Pfizer'];
+export function withRows(data) {
+  if (data.compounds) return data;
+  const c = data.cols;
+  data.compounds = c.id.map((id, i) => {
+    const row = { id: `CHEMBL${id}`, rules: RULES.filter((_, b) => c.rules[i] & (1 << b)) };
+    for (const k of ['y', 'nm', ...data.descriptors, 'cl']) row[k] = c[k][i];
+    return row;
+  });
+  return data;
+}
+
 // ---------------------------------------------------------------- dialog
 export async function openBuilder() {
   wire();
@@ -185,7 +198,7 @@ async function loadTarget(id) {
   const meta = index.targets.find(t => t.id === id);
   if (!meta) return;
   $('#qsb-status').textContent = `Loading ${meta.name}…`;
-  set = await getSide(meta.file);
+  set = withRows(await getSide(meta.file));
   $('#qsb-status').textContent = '';
   const L = set.ledger;
   $('#qsb-summary').textContent = `${set.target.name} (${set.target.id}): ${set.n} compounds, p${set.standard_type}${set.capped ? `, a seeded draw of ${set.n} from ${set.n_clean} clean compounds` : ''}. Explorer drugs acting here: ${set.explorer_drugs.length}.`;
@@ -285,7 +298,7 @@ function drawWilliams(res) {
 /** FNV-1a over the compound table: identifies the exact data the recipe was built from. */
 export function fingerprint(compounds) {
   let h = 0x811c9dc5;
-  for (const ch of compounds.map(c => `${c.ik}:${c.y}`).join('|')) { h ^= ch.charCodeAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
+  for (const ch of compounds.map(c => `${c.id}:${c.y}`).join('|')) { h ^= ch.charCodeAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
   return h.toString(16).padStart(8, '0');
 }
 function exportRecipe() {

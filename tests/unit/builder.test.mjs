@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ols, r2, rm2, kennardStone, split, runModel, rng, fingerprint } from '../../site/js/builder.js';
+import { ols, r2, rm2, kennardStone, split, runModel, rng, fingerprint, withRows } from '../../site/js/builder.js';
 
 // Synthetic data with a known equation; never shipped as a scientific result.
 const synth = n => {
@@ -53,4 +53,22 @@ test('the full model passes on clean synthetic data and refuses too many descrip
   const bad = runModel(synth(20), { method: 'random', share: 0.2, seed: 1, xs: ['logp', 'mr', 'tpsa', 'mw'] });
   assert.match(bad.error, /Too many descriptors/);
   assert.equal(fingerprint(d.compounds), fingerprint(synth(80).compounds));
+});
+
+test('column-wise target files rebuild into rows, and the shipped files are consistent', async () => {
+  const { readFileSync, readdirSync } = await import('node:fs');
+  const dir = new URL('../../site/data/qsar/', import.meta.url), index = JSON.parse(readFileSync(new URL('index.json', dir)));
+  const files = index.targets.filter(t => t.file);
+  assert.ok(files.length > 100);
+  assert.equal(readdirSync(dir).length, files.length + 1);
+  for (const t of files) {
+    const d = withRows(JSON.parse(readFileSync(new URL(t.file.replace('data/qsar/', ''), dir))));
+    assert.equal(d.compounds.length, d.n);
+    assert.equal(d.n, t.n);
+    assert.ok(d.n >= index.min_n && d.n <= index.cap);
+    assert.ok(d.compounds.every(c => /^CHEMBL\d+$/.test(c.id) && Number.isFinite(c.y) && Number.isInteger(c.cl)));
+    assert.ok(d.cliffs.every(([a, b]) => a < d.n && b < d.n));
+  }
+  const one = withRows({ descriptors: ['logp'], cols: { id: [25], y: [6.5], nm: [2], logp: [1.2], cl: [0], rules: [5] } });
+  assert.deepEqual(one.compounds[0], { id: 'CHEMBL25', rules: ['Ro5', 'Pfizer'], y: 6.5, nm: 2, logp: 1.2, cl: 0 });
 });
