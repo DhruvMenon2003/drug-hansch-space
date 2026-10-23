@@ -1,0 +1,27 @@
+{
+  "source_commit": "6d07e2ab78b54cc6aeb44523101a4672aa159705",
+  "manifest_sha256": "cfb8b096f3c00c2be092993bbbfd90f1a15d8cbdcda6fb3f910dc508360f2cf9",
+  "files": {
+    "DATA_LICENSE.md": "1dfa667fcf6281770ace20fd0e4b44cdb011d39cd84730c4688093005660dcd5",
+    "frozen/eligible_compounds.csv": "39ddd83e407bda3800f3cc0b6c220574417ea859fa85b3875ba7475600b6db61",
+    "frozen/decision_ledger.csv": "e3692dcff32de631790a0f56afbd7967caf68e09c6b10440055d9640ccfc44a0",
+    "frozen/exclusion_ledger.csv": "0c1d715ee5dccecb2073641520deebc92210fc417d6f732c1ad0a41a38350501",
+    "frozen/duplicate_ledger.csv": "c7caab9caa65f4b74dc836cc8838627ea99c35168c56c29298a5788a3b179cdd",
+    "frozen/censoring_and_missing_ledger.csv": "e657a7504572d215a943b22cc65e48cfe49cee266dfc55f0e36174e9201334d7",
+    "frozen/all_activity_rows.csv": "58970bf15d19d29673fc5c45ba631118f507fc8870391796aa7f7617936de678",
+    "frozen/cohort_rules.json": "487c5f9a8f41f01cb953a3c39b8b6bd7cc4db0d61e299e7788d2e6c847224253",
+    "frozen/cohort_summary.json": "e7595c93fb723fd2a015769ec192fa6ef949a3880043e835070290c9ea0f59fd",
+    "frozen/source_manifest.json": "6ea36af76e928c1198802f2e867c1a2a1eb8629f8b8e197a36b984fd06439e95",
+    "frozen/raw/assay.json": "fe4db420ef4b2316de0f2e58cd34f51a836023aad88a833b9bd1e75175369856",
+    "frozen/raw/target.json": "a776f57c123398b048370f76c58dbab794dd60c74748c3a54bf78942d04033c7",
+    "frozen/raw/document.json": "2f73fd0f820092da42fd6522012ed162adcd9f412304d7781afa7c39f731e572",
+    "frozen/raw/activities_page_000.json": "1c1d0bc534a15752059afd2009f3547265906794202a2fbe31e251ded31ad884",
+    "predeclared_recipe.json": "78fbca589bb204605e81438ae5660bd764077b4b4e5475f9c9958e76d3054b3f",
+    "prefit_split_manifest.csv": "c22f5a6425202543714b8bb2071ee295dbdf54800cbbe1abc680519ef05b68ad",
+    "prefit_split_info.json": "99c5234a6f462bce22643a72d004ba611d22fa17fc230b54c759f60b1b8e03f9",
+    "results/model_dataset.csv": "b82d468ee9cbfd7ae5621e459e8408f597c8430198f5fdbd9be1f9e09cce32d3",
+    "results/predictions.csv": "18668f5a5999794f9253b2db33dfcddc32492ee36d28c1bb62359eda5da5559a",
+    "results/report.json": "bbe475f1dae24b8106ea3582cb4bc8723c731bed521c1720bc208810561a5eff",
+    "results/model_parameters.json": "298c4d7e5a9d036ffd811476be7ce47f34ca61697d3483c56ce66b01c9079289"
+  }
+}
