@@ -26,6 +26,12 @@ This exploratory D2-binding pilot uses 80 eligible compounds from assay CHEMBL38
 
 Download the [checked Excel workbook](notebooks/qsar/chembl3855278/exports/assay_qsar_pilot_public.xlsx) to inspect source records, curation, descriptors, predictions and validation together; its [QA receipt](notebooks/qsar/chembl3855278/exports/public_qa_receipt.json) records the checks and limitations. This is a static export: notebook replay regenerates CSV/JSON, but portable automatic XLSX regeneration is not yet established.
 
+### Open the standalone Datamol workflow
+
+[View the public notebook](notebooks/qsar/chembl3855278/assay_qsar_datamol_standalone.ipynb) or [open it in Colab](https://colab.research.google.com/github/DhruvMenon2003/drug-hansch-space/blob/main/notebooks/qsar/chembl3855278/assay_qsar_datamol_standalone.ipynb). It adapts Pat Walters' molecule, descriptor, property-flag and cluster inspection workflow, then runs the same frozen 80-compound QSAR recipe. The 57/23 split, five model features, labels and weak held-out result are unchanged; inspection flags and clusters do not select or refit the model.
+
+The notebook includes genuine tested local outputs and static structure grids. Its setup downloads a commit-pinned, hash-checked public snapshot and installs pinned dependencies in a fresh Python 3.12 CPU runtime; a restart may be needed. Nine ordinary Python cells passed locally, but **actual Google Colab execution and a complete live download of all 45 source files are not verified**. See [setup, attribution and verification notes](notebooks/qsar/chembl3855278/DATAMOL_STANDALONE.md). The original replay bundle, Excel workbook and public explorer remain unchanged.
+
 ## Bio-Loom research and the scope of the emulation
 
 Research checked **22 October 2026**. The intended reference is **BioByte's Bio-Loom**, the Hansch/Leo QSAR software, rather than unrelated projects named BioLoom or BioBloom.

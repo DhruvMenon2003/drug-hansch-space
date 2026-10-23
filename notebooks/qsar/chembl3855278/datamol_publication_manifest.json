@@ -1,0 +1,15 @@
+{
+  "file_name": "assay_qsar_datamol_standalone.ipynb",
+  "sha256": "db854577783333fa53077f90eb26a54e9bc209bb6f81ceca409bf7b8478194ea",
+  "bytes": 595720,
+  "code_source_sha256": "cb6cd64cdc633fe1155789e8cfea4ef87a4387c04c0776f0e51774d3dfb98230",
+  "local_all_code_cells_passed": 9,
+  "fresh_clean_dependency_install": true,
+  "pip_check_passed": true,
+  "live_public_manifest_fetch_passed": true,
+  "full45filelivefetch": false,
+  "actual_google_colab_execution": false,
+  "original_model_changed": false,
+  "upstream_tutorial_commit": "370dc66428819e06a2c87a859fab122b77b22f5b",
+  "frozen_model_commit": "6d07e2ab78b54cc6aeb44523101a4672aa159705"
+}
