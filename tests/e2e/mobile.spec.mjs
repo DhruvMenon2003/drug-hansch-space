@@ -44,8 +44,12 @@ async function open(browser, baseURL, context, { query = '?debug', counters = tr
 const tweensDone = page => page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.gsap.globalTimeline.getChildren(false, true, true).every(k => k.paused()), null, { timeout: 30_000 });
 const frames = page => page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 140)))));
 const scrollToY = async (page, y) => { await page.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), y); await frames(page); };
-/** Wait until the page has stopped scrolling (smooth or not). */
-const scrollSettled = page => page.waitForFunction(() => { const y = scrollY, t = performance.now(), s = window.__ss; if (!s || s.y !== y) { window.__ss = { y, t }; return false; } return t - s.t > 350; }, null, { timeout: 15_000, polling: 60 });
+/**
+ * Wait until the page has stopped scrolling (smooth or not): the same scrollY for 350 ms and for 6 animation frames. Time alone
+ * is not enough here: with software WebGL one frame can take 0.2 to 1.3 s (a tour step's first draw), and a smooth scroll that
+ * has not drawn its next frame looked settled (back-to-top was read at 13509 px at 1280 x 800 and at 58 px at 768 x 1024).
+ */
+const scrollSettled = page => page.waitForFunction(() => { const y = scrollY, t = performance.now(), s = window.__ss; if (!s || s.y !== y) { window.__ss = { y, t, n: 0 }; return false; } return ++s.n >= 6 && t - s.t > 350; }, null, { timeout: 15_000, polling: 'raf' });
 
 /** Geometry of what sticks to the top of the screen, in the current layout. */
 const geom = page => page.evaluate(() => {
@@ -299,7 +303,9 @@ for (const [label, context] of Object.entries(VP)) {
       expect(i.h).toBeLessThanOrEqual(104);
       expect(i.handleH, 'handle is a 44 px button').toBeGreaterThanOrEqual(44);
       expect(i.expanded).toBe('false');
-      expect(i.bottom, 'sits on the bottom edge').toBeGreaterThanOrEqual(i.H - 1);
+      // a full-width sheet sits on the bottom edge; on tablets and landscape phones css/layout.css floats a card 12 px above it
+      if (tablet || landscape) expect(Math.round(i.bottom), 'a card 12 px above the bottom edge').toBe(i.H - 12);
+      else expect(i.bottom, 'sits on the bottom edge').toBeGreaterThanOrEqual(i.H - 1);
       expect(await page.locator('#sheet-metrics').textContent()).toMatch(/log P .* MR .* TPSA/);
       expect(await page.locator('#sheet-title').textContent()).toMatch(/dexamethasone/i);
       const idx = await page.evaluate(c => window.__hansch.app.drugs.findIndex(d => d.cid === c), cid);
@@ -321,6 +327,9 @@ for (const [label, context] of Object.entries(VP)) {
       if (stacked || tablet) expect(i.h / i.H, 'half = 50 svh').toBeGreaterThan(0.47);
       if (stacked || tablet) expect(i.h / i.H).toBeLessThan(0.53);
       await page.waitForFunction(() => { const t = document.querySelector('#d-src').textContent; return t && !/Loading/.test(t); }, null, { timeout: 30_000 });
+      // a landscape phone's half card is 195 px tall and shows about 100 px of panel under the name, so the conformer is one
+      // scroll down inside the sheet, as a reader would scroll to it; js/gl/molviewer.js draws only while its canvas is on screen
+      if (landscape) await page.locator('#sheet-body').evaluate(b => { b.scrollTop += document.querySelector('#mol').getBoundingClientRect().top - b.getBoundingClientRect().top; });
       await page.waitForFunction(() => (window.__draws.mol || 0) > 0, null, { timeout: 20_000 });
       await page.waitForFunction(() => window.__hansch.molv.visible, null, { timeout: 10_000 });
       await expect.poll(() => canvasInk(page, '#mol'), { timeout: 15_000, message: 'the conformer is drawn in the open sheet' }).toBeGreaterThan(0.01);
@@ -337,7 +346,8 @@ for (const [label, context] of Object.entries(VP)) {
       await page.waitForTimeout(500);
       i = await info();
       expect(i.sheet).toBe('full');
-      if (stacked || tablet) { expect(i.h / i.H).toBeGreaterThan(0.85); expect(i.h / i.H).toBeLessThan(0.91); }
+      if (stacked) { expect(i.h / i.H).toBeGreaterThan(0.85); expect(i.h / i.H).toBeLessThan(0.91); }
+      if (tablet) expect(Math.abs(i.h - Math.min(0.88 * i.H, 760)), 'the card stops at 760 px (88 svh would be 901 px)').toBeLessThan(2);
       // Escape steps down: full > half > peek > closed, and focus ends on the plot
       await page.keyboard.press('Escape');
       expect((await info()).sheet).toBe('half');
@@ -365,7 +375,12 @@ for (const [label, context] of Object.entries(VP)) {
       const bb = await btn.boundingBox();
       expect(bb.width).toBeGreaterThanOrEqual(44);
       expect(bb.height).toBeGreaterThanOrEqual(44);
-      await btn.click();
+      // Pressed where it is on screen, as a finger or a mouse would. locator.click() first scrolls the button "into view", and the
+      // sticky stage sits under the scroll-padding-top that css/layout.css sets for anchors (263 px here), so the test driver itself moved
+      // the page from 700 to 307 and the tour announced the step it landed on.
+      const press = async () => { const b = await btn.boundingBox(); await page.mouse.click(b.x + b.width / 2, b.y + b.height / 2); };
+      const compact = await page.evaluate(() => [document.querySelector('#space').clientWidth, document.querySelector('#space').clientHeight]);
+      await press();
       await page.waitForTimeout(500);
       const on = await page.evaluate(() => { const i = document.querySelector('.stage-inner').getBoundingClientRect(), h = window.__hansch; return { full: document.body.classList.contains('stage-full'), rect: [i.left, i.top, i.width, i.height], W: innerWidth, H: innerHeight, pressed: document.querySelector('#btn-expand').getAttribute('aria-expanded'), label: document.querySelector('#btn-expand').getAttribute('aria-label'), overflow: getComputedStyle(document.body).overflow, ta: getComputedStyle(document.querySelector('#space')).touchAction, one: h.stage.controls.touches.ONE, focus: document.activeElement?.id, live: document.querySelector('#sr-live').textContent }; });
       expect(on.full).toBe(true);
@@ -381,7 +396,11 @@ for (const [label, context] of Object.entries(VP)) {
       await settle(page);
       const fit = await page.evaluate(() => { const h = window.__hansch, cam = h.stage.camera; cam.updateMatrixWorld(); let w = 0; const v = new h.THREE.Vector3(); for (const x of [-10, 10]) for (const y of [-10, 10]) for (const z of [-10, 10]) { v.set(x, y, z).project(cam); w = Math.max(w, Math.abs(v.x), Math.abs(v.y)); } return { w, canvas: [document.querySelector('#space').clientWidth, document.querySelector('#space').clientHeight], buf: [h.stage.renderer.domElement.width, h.stage.renderer.domElement.height] }; });
       expect(fit.w, 'cube inside the expanded canvas').toBeLessThanOrEqual(1.0);
-      expect(fit.canvas[1], 'the canvas is taller than the compact stage').toBeGreaterThan(400);
+      // bigger than the stage in the page, not taller than a fixed 400 px: a landscape phone's screen is 390 px tall and its stage
+      // in the page is already full height (346 px), so there the expanded canvas gains width
+      expect(fit.canvas[0], `no narrower than the compact stage (${compact})`).toBeGreaterThanOrEqual(compact[0]);
+      expect(fit.canvas[1], 'no shorter').toBeGreaterThanOrEqual(compact[1]);
+      expect(fit.canvas[0] * fit.canvas[1], 'and bigger').toBeGreaterThan(1.2 * compact[0] * compact[1]);
       // Escape closes; scroll position and focus come back
       await page.keyboard.press('Escape');
       await page.waitForTimeout(500);
@@ -394,9 +413,9 @@ for (const [label, context] of Object.entries(VP)) {
       expect(off.live).toMatch(/back in the page/);
       if (stacked) expect(off.ta, 'compact stage on touch: one finger scrolls the page').toBe('pan-y');
       // and the Close button does the same
-      await btn.click();
+      await press();
       await page.waitForTimeout(400);
-      await btn.click();
+      await press();
       await page.waitForTimeout(400);
       expect(await page.evaluate(() => document.body.classList.contains('stage-full'))).toBe(false);
       await tidy(page);
@@ -407,22 +426,36 @@ for (const [label, context] of Object.entries(VP)) {
       await scrollToY(page, 0);
       await settle(page);
       const r = await page.evaluate(() => {
-        const h = window.__hansch, c = document.querySelector('#space').getBoundingClientRect(); let mouse = 0, touch = 0, n = 0;
-        for (let y = c.top + 4; y < c.bottom; y += 8) for (let x = c.left + 4; x < c.right; x += 8) { n++; if (h.pickAt(x, y, 'mouse') >= 0) mouse++; if (h.pickAt(x, y, 'touch') >= 0) touch++; }
-        return { n, mouse, touch, pen: (() => { let k = 0; for (let y = c.top + 4; y < c.bottom; y += 8) for (let x = c.left + 4; x < c.right; x += 8) if (h.pickAt(x, y, 'pen') >= 0) k++; return k; })() };
+        const h = window.__hansch, c = document.querySelector('#space').getBoundingClientRect(), cur = h.anim.cur; let mouse = 0, touch = 0, n = 0, reach = 0;
+        // the screen position of every visible sphere centre in front of the camera, worked out here and not through the app's picking
+        h.stage.camera.updateMatrixWorld();
+        const v = new h.THREE.Vector3(), pts = [];
+        for (let s = 0; s < h.stage.points.count; s++) { const i = h.stage.drugAt[s], k = i * 4; if (cur[k + 3] <= 0.5) continue; v.set(cur[k], cur[k + 1], cur[k + 2]).project(h.stage.camera); if (v.z >= -1 && v.z <= 1) pts.push([c.left + (v.x * 0.5 + 0.5) * c.width, c.top + (-v.y * 0.5 + 0.5) * c.height]); }
+        for (let y = c.top + 4; y < c.bottom; y += 8) for (let x = c.left + 4; x < c.right; x += 8) {
+          n++;
+          const m = h.pickAt(x, y, 'mouse') >= 0;
+          if (m) mouse++;
+          if (h.pickAt(x, y, 'touch') >= 0) touch++;
+          if (m || pts.some(([px, py]) => Math.hypot(px - x, py - y) <= 22)) reach++;   // a sphere centre within 22 px, or an exact ray hit (the fallback)
+        }
+        return { n, mouse, touch, reach, pen: (() => { let k = 0; for (let y = c.top + 4; y < c.bottom; y += 8) for (let x = c.left + 4; x < c.right; x += 8) if (h.pickAt(x, y, 'pen') >= 0) k++; return k; })() };
       });
       const rate = { mouse: r.mouse / r.n, touch: r.touch / r.n };
       test.info().annotations.push({ type: 'hit rate', description: `${label}: ${r.n} taps on an 8 px grid; selects a drug: mouse (exact ray) ${(rate.mouse * 100).toFixed(1)} %, touch (nearest within 22 px) ${(rate.touch * 100).toFixed(1)} %` });
       console.log(`HIT-RATE ${label}: mouse ${(rate.mouse * 100).toFixed(1)} % touch ${(rate.touch * 100).toFixed(1)} % (${r.n} taps)`);
       expect(rate.touch, 'touch reaches far more of the plot').toBeGreaterThan(rate.mouse * 3);
-      expect(rate.touch).toBeGreaterThan(0.2);
+      // Exactly the taps within 22 px of a sphere select one. This replaced a floor of 20 % on the touch rate: how much of the grid
+      // lies that close to a sphere depends on how the cloud spreads over the stage, and since the camera fits the cube to a compact
+      // stage the 320 x 568 rate is 17 % with the picking rule unchanged (main gives the same number).
+      expect(r.touch, 'every tap within 22 px of a sphere centre selects a drug, and no other tap does').toBe(r.reach);
       expect(r.pen, 'pen picks like touch').toBe(r.touch);
       // end to end: a real touch tap 10 px beside an isolated sphere selects it; a mouse click at the same point does not
       const target = await page.evaluate(() => {
         const h = window.__hansch, c = document.querySelector('#space').getBoundingClientRect(), cur = h.anim.cur; h.stage.camera.updateMatrixWorld();
         const v = new h.THREE.Vector3(), pts = [];
         for (let s = 0; s < h.stage.points.count; s++) { const i = h.stage.drugAt[s], k = i * 4; if (cur[k + 3] <= 0.5) continue; v.set(cur[k], cur[k + 1], cur[k + 2]).project(h.stage.camera); pts.push({ i, x: c.left + (v.x * 0.5 + 0.5) * c.width, y: c.top + (-v.y * 0.5 + 0.5) * c.height }); }
-        const ok = pts.filter(p => p.x > c.left + 30 && p.x < c.right - 30 && p.y > c.top + 30 && p.y < c.bottom - 30 && !pts.some(q => q !== p && Math.hypot(q.x - p.x, q.y - p.y) < 40));
+        // the only sphere within reach of the tap point (10, -9 px from its centre): on the 320 px stage no sphere is 40 px clear of all others
+        const ok = pts.filter(p => p.x > c.left + 30 && p.x < c.right - 30 && p.y > c.top + 30 && p.y < c.bottom - 30 && !pts.some(q => q !== p && Math.hypot(q.x - p.x - 10, q.y - p.y + 9) <= 22));
         const p = ok[0];
         return p ? { ...p, mouseAt: h.pickAt(p.x + 10, p.y - 9, 'mouse'), touchAt: h.pickAt(p.x + 10, p.y - 9, 'touch') } : null;
       });
@@ -475,7 +508,7 @@ for (const [label, context] of Object.entries(VP)) {
       await jump(page, 'explore');
       const r = await page.evaluate(() => {
         const q = s => document.querySelector(s), groups = [...document.querySelectorAll('#explore details.group')];
-        const kids = [...q('#explore').children].map(e => e.id || e.className.split(' ')[0] || e.tagName);
+        const kids = [...q('#explore').children].map(e => e.classList[0] || e.id || e.tagName);   // by class: the groups have ids too (g-axes ...)
         const cols = getComputedStyle(q('#g-axes .controls')).gridTemplateColumns.split(' ').length;
         const opts = [...q('#ax-x').options].map(o => o.textContent);
         return { open: groups.map(g => [g.id, g.open]), order: kids, cols, opts, hint: q('#ax-x-hint').textContent, w: q('#explore').getBoundingClientRect().width,
@@ -561,6 +594,10 @@ test.describe('collapsing header and Contents menu @ 390x844', () => {
     expect(top).toBeGreaterThanOrEqual(g.stack - 0.5);
     // Tab out of the menu and a click outside both close it
     await btn.click(); expect((await state()).expanded).toBe('true');
+    // opening puts focus on the first item (js/layout.js, as with Enter above), so the first Shift+Tab reaches the Contents
+    // button, which belongs to the menu, and the second one leaves it
+    await page.keyboard.press('Shift+Tab');
+    expect(await state(), 'the button is part of the menu').toEqual({ expanded: 'true', hidden: false, active: 'contents-btn' });
     await page.keyboard.press('Shift+Tab');
     expect((await state()).expanded, 'focus left the menu').toBe('false');
     await btn.click(); expect((await state()).expanded).toBe('true');
