@@ -1,0 +1,20 @@
+{
+  "model_manifest_sha256": "cfb8b096f3c00c2be092993bbbfd90f1a15d8cbdcda6fb3f910dc508360f2cf9",
+  "files": {
+    "assay_qsar_pilot_public.xlsx": {
+      "bytes": 268023,
+      "sha256": "6ecd6a2258f558d2a3de520b2a2189f78afd066fade72201441c8262c3d30b39"
+    },
+    "native_qa.json": {
+      "bytes": 2332,
+      "sha256": "f6edc13c60bfa8f8bc5c9f9b8eb8875dbcd573659b2fd25bb62ce63bfd6e1f32"
+    },
+    "public_qa_receipt.json": {
+      "bytes": 1758,
+      "sha256": "c8cdc174bdde809f2f8a13fdda8ca4b37aca2068051d6a4a076e8210e3c8fc1b"
+    }
+  },
+  "original_public_qa_receipt_sha256": "24f399a35fd77f0b8d9f38e82a9328235cadfdd65d44608eeed75dad3dbc9b1a",
+  "receipt_packaging_changes": "Corrected packaging_changes relative path; omitted unbundled detailed-QA/preview references; added publication note. No scientific verification fields changed.",
+  "replay_limit": "The audited notebook reproduces scientific CSV/JSON, not this static XLSX export. Portable XLSX regeneration is not yet established."
+}

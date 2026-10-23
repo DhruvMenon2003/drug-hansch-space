@@ -1,0 +1,47 @@
+{
+  "created_utc": "2026-10-23T03:33:31.665722+00:00",
+  "api_total": 107,
+  "api_complete": true,
+  "unique_source_molecule_ids": 94,
+  "exact_measured_rows_before_identity_exclusion": 105,
+  "included_compounds": 80,
+  "excluded_rows": 27,
+  "duplicate_full_identities": 13,
+  "duplicate_rows_excluded": 26,
+  "missing_or_nonexact_rows": 2,
+  "censored_nonexact_nonmissing_rows": 0,
+  "exclusion_reason_counts": {
+    "multiple_source_records_for_full_parent_identity": 26,
+    "nonexact_or_missing_original_relation": 2,
+    "nonexact_or_missing_standard_relation": 2,
+    "standard_endpoint_or_unit_not_Ki_nM": 2,
+    "activity_comment_requires_review": 2,
+    "missing_or_nonfinite_original_value": 2,
+    "missing_or_nonpositive_standard_value": 2
+  },
+  "eligible_label_origins": {
+    "source_reported_pKi": 80
+  },
+  "structure_changes": 0,
+  "eligible_connectivity_groups": 60,
+  "eligible_scaffolds": 32,
+  "rdkit_version": "2026.09.1",
+  "python_version": "3.12.14",
+  "rules_sha256": "487c5f9a8f41f01cb953a3c39b8b6bd7cc4db0d61e299e7788d2e6c847224253",
+  "source_manifest_sha256": "6ea36af76e928c1198802f2e867c1a2a1eb8629f8b8e197a36b984fd06439e95",
+  "curation_script_sha256": "494ddb0e0d2b5c7bd48c71e4ca8476d1ef232c93b13027e07cc139a6e14599a5",
+  "eligible_sha256": "39ddd83e407bda3800f3cc0b6c220574417ea859fa85b3875ba7475600b6db61",
+  "raw_snapshot_sha256": {
+    "raw/assay.json": "fe4db420ef4b2316de0f2e58cd34f51a836023aad88a833b9bd1e75175369856",
+    "raw/target.json": "a776f57c123398b048370f76c58dbab794dd60c74748c3a54bf78942d04033c7",
+    "raw/document.json": "2f73fd0f820092da42fd6522012ed162adcd9f412304d7781afa7c39f731e572",
+    "raw/activities_page_000.json": "1c1d0bc534a15752059afd2009f3547265906794202a2fbe31e251ded31ad884"
+  },
+  "modeling_response": "pKi: source-original reported pKi; standardized nM and reverse-log pKi are cross-checks only.",
+  "remaining_limits": [
+    "Source table-to-record repeat mapping unresolved; all multi-record identities excluded conservatively.",
+    "Binding Ki derivation/Kd/buffer/isoform not fully independently reconstructed.",
+    "Not a regulatory-valid or independent-laboratory validated dataset.",
+    "No labels/outcomes used to choose duplicate exclusions or split."
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "frozen_hashes": "pass",
+  "heldout_label_perturbation_does_not_change_fit": "pass",
+  "row_order_invariant_split": "pass",
+  "baseline_train_mean_only": "pass",
+  "one_prediction_per_eligible_compound": "pass",
+  "transparent_parameters_reproduce_predictions": "pass"
+}
