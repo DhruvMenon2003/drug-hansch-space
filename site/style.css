@@ -264,6 +264,15 @@ select, input[type="search"] { font: 400 0.95rem var(--font-display); color: var
 .qsar-surface-cell { fill: var(--accent); fill-opacity: 0.25; stroke: var(--accent); stroke-opacity: 0.5; stroke-width: 0.5; }
 .qsar-axis { stroke: var(--ink-2); stroke-width: 1.5; }
 .qsar-dialog details { margin-top: 14px; }
+.qsb-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-block: 14px; }
+.qsb-tabs button { min-height: var(--target); padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: var(--bg); }
+.qsb-tabs button[aria-selected="true"] { border-color: var(--ink); font-weight: 600; }
+.qsb-checks { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-block: 10px; border: 1px solid var(--line); border-radius: 8px; }
+.qsb-checks label { min-height: var(--target); display: inline-flex; align-items: center; gap: 6px; }
+.qsb-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.qsb-row input, .qsb-row select, #qsb-dialog select { min-height: var(--target); }
+.qsb-pass { color: var(--s1, inherit); font-weight: 600; }
+.qsb-fail { color: var(--mark, inherit); font-weight: 600; }
 .qsar-dialog .table-wrap { margin-top: 8px; }
 .qsar-dialog td { white-space: nowrap; }
 .qsar-outside .qsar-domain { color: var(--mark); font-weight: 700; }

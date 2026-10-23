@@ -54,6 +54,7 @@ export function passes(d, axes = true, ignoreSize = false) {
   if (v.l3 && !d.atc.some(a => a.code.startsWith(v.l3))) return false;
   if (v.route && !d.routes.includes(v.route)) return false;
   if (v.small && !ignoreSize && !(d.d.mw <= app.hansch.max_mw)) return false;
+  if (v.small && !ignoreSize && d.inorg) return false;    // metal or inorganic after RDKit standardisation (tools/flag_inorganic.py)
   if (v.group && !app.groups.get(v.group)?.cids.has(d.cid)) return false;
   if (v.qbin && !v.qbin.has(d.cid)) return false;             // the QED panel's bar highlight (js/qed.js); the key is absent until that panel is opened
   if (axes) for (const k of [v.x, v.y, v.z]) if (!AX[k].pseudo && !fin(AX[k].get(d))) return false;
