@@ -28,6 +28,7 @@
     "js/layout.js": 2,
     "js/view.js": 2,
     "js/bench.js": 3,
+    "js/builder.js": 3,
     "js/controls.js": 3,
     "js/gl/molviewer.js": 3,
     "js/gl/render.js": 3,

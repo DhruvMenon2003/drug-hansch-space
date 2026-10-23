@@ -330,6 +330,7 @@
         <div class="qsar-cue">
           <button type="button" id="qsar-open" class="ghost" aria-haspopup="dialog" aria-controls="qsar-dialog">DRD2 QSAR · validation</button>
           <button type="button" id="qsar-clear" class="ghost" hidden>Clear domain colours</button>
+          <button type="button" id="qsb-open" class="ghost" aria-haspopup="dialog" aria-controls="qsb-dialog">QSAR builder · every target</button>
           <p class="small">One human target, binding assays and Ki only. Explore the reproducible model, scaffold holdout and applicability domain.</p>
         </div>
         <p class="lede">Drugs are grouped by their first ChEMBL mechanism target. Drugs up to 1000 Da are fitted. A group with at least five drugs gets the regression with the best leave-one-out q², allowing one descriptor per five drugs.</p>
@@ -415,6 +416,64 @@
   </div>
 </div>
 
+<dialog id="qsb-dialog" class="qsar-dialog" aria-labelledby="qsb-title">
+  <div class="qsar-head">
+    <div><p class="eyebrow">OECD QSAR workflow · all targets</p><h2 id="qsb-title">QSAR builder</h2></div>
+    <form method="dialog"><button type="submit" class="ghost" autofocus>Close</button></form>
+  </div>
+  <p id="qsb-status" role="status">Loading the target list…</p>
+  <div id="qsb-body" hidden>
+    <div class="field"><label for="qsb-target">Target (ChEMBL, human, binding assays, one assay type)</label><select id="qsb-target"></select></div>
+    <p id="qsb-summary" class="small"></p>
+    <div class="qsb-tabs" role="tablist" aria-label="Workflow steps">
+      <button type="button" role="tab" id="qsb-t-data" aria-controls="qsb-p-data" aria-selected="true">1 Data</button>
+      <button type="button" role="tab" id="qsb-t-out" aria-controls="qsb-p-out" aria-selected="false">2 Outliers</button>
+      <button type="button" role="tab" id="qsb-t-split" aria-controls="qsb-p-split" aria-selected="false">3 Split</button>
+      <button type="button" role="tab" id="qsb-t-model" aria-controls="qsb-p-model" aria-selected="false">4 Model</button>
+      <button type="button" role="tab" id="qsb-t-ad" aria-controls="qsb-p-ad" aria-selected="false">5 Domain · export</button>
+    </div>
+    <section role="tabpanel" id="qsb-p-data" aria-labelledby="qsb-t-data">
+      <p class="small">OECD principle 1: a defined endpoint. Every value is ChEMBL pChEMBL (−log₁₀ mol/L) from one standard type on one human protein. RDKit standardisation kept the largest organic fragment, neutralised and picked the canonical tautomer; metals and inorganic species were dropped; duplicates merged to the median.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Cleaning ledger"><table class="stats"><thead><tr><th scope="col">Cleaning step</th><th scope="col">Rows</th></tr></thead><tbody id="qsb-ledger"></tbody></table></div>
+      <div class="field"><label for="qsb-col">Column to visualise</label><select id="qsb-col"></select></div>
+      <div class="qsar-grid"><figure><h3 id="qsb-hist-h">Distribution</h3><svg id="qsb-hist" role="img" aria-labelledby="qsb-hist-cap"></svg><figcaption id="qsb-hist-cap"></figcaption></figure>
+      <figure><h3>Against activity</h3><svg id="qsb-scatter" role="img" aria-labelledby="qsb-scatter-cap"></svg><figcaption id="qsb-scatter-cap"></figcaption></figure></div>
+    </section>
+    <section role="tabpanel" id="qsb-p-out" aria-labelledby="qsb-t-out" hidden>
+      <p class="small">Checkpoint 3: compounds that break a drug-likeness rule are outliers; the rest are clustered (Butina, Morgan radius 2, distance 0.6) and checked for activity cliffs, the fingerprint stand-in for mmpdb matched pairs (Tanimoto ≥ 0.8 with a gap of 1.5 log units or more).</p>
+      <fieldset class="qsb-checks"><legend>Remove from the model</legend>
+        <label class="check"><input type="checkbox" id="qsb-r-ro5" checked> <span id="qsb-n-ro5">Ro5</span></label>
+        <label class="check"><input type="checkbox" id="qsb-r-pfizer"> <span id="qsb-n-pfizer">Pfizer 3/75</span></label>
+        <label class="check"><input type="checkbox" id="qsb-r-ro3"> <span id="qsb-n-ro3">Ro3</span></label>
+        <label class="check"><input type="checkbox" id="qsb-r-cliff" checked> <span id="qsb-n-cliff">Activity cliffs</span></label>
+      </fieldset>
+      <p id="qsb-kept" class="small" aria-live="polite"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Activity cliffs"><table class="stats"><thead><tr><th scope="col">Pair</th><th scope="col">Tanimoto</th><th scope="col">Δ pActivity</th></tr></thead><tbody id="qsb-cliffs"></tbody></table></div>
+    </section>
+    <section role="tabpanel" id="qsb-p-split" aria-labelledby="qsb-t-split" hidden>
+      <p class="small">OECD principle 2: an unambiguous algorithm. The split decides which compounds the model never sees.</p>
+      <div class="qsb-row">
+        <div class="field"><label for="qsb-split">Method</label><select id="qsb-split"><option value="random">Random</option><option value="ks">Kennard–Stone</option><option value="cluster">Butina cluster</option></select></div>
+        <div class="field"><label for="qsb-test">Test share</label><select id="qsb-test"><option value="0.2">20%</option><option value="0.25">25%</option><option value="0.3">30%</option></select></div>
+        <div class="field"><label for="qsb-seed">Seed</label><input id="qsb-seed" type="number" value="42" min="0" step="1"></div>
+      </div>
+      <p id="qsb-split-note" class="small" aria-live="polite"></p>
+    </section>
+    <section role="tabpanel" id="qsb-p-model" aria-labelledby="qsb-t-model" hidden>
+      <p class="small">OECD principle 4: goodness of fit, robustness and predictivity. Multiple linear regression (Hansch); at most one descriptor per five training compounds. Pass marks follow the OECD workflow figure.</p>
+      <fieldset class="qsb-checks" id="qsb-desc"><legend>Descriptors</legend></fieldset>
+      <p id="qsb-eq" class="qsar-equation mono"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Validation metrics"><table class="stats"><thead><tr><th scope="col">Metric</th><th scope="col">Value</th><th scope="col">Pass mark</th><th scope="col">Result</th></tr></thead><tbody id="qsb-metrics"></tbody></table></div>
+      <div class="qsar-grid"><figure><h3>Observed and predicted</h3><svg id="qsb-pred" role="img" aria-labelledby="qsb-pred-cap"></svg><figcaption id="qsb-pred-cap">Filled: training; hollow: test. Dashed: perfect prediction.</figcaption></figure>
+      <figure><h3>Y-randomisation</h3><svg id="qsb-yrand" role="img" aria-labelledby="qsb-yrand-cap"></svg><figcaption id="qsb-yrand-cap"></figcaption></figure></div>
+    </section>
+    <section role="tabpanel" id="qsb-p-ad" aria-labelledby="qsb-t-ad" hidden>
+      <p class="small">OECD principle 3: a defined applicability domain. Williams plot: leverage h against standardized residual; h* = 3(p + 1)/n and ±3 residual limits.</p>
+      <div class="qsar-grid"><figure><h3>Williams plot</h3><svg id="qsb-will" role="img" aria-labelledby="qsb-will-cap"></svg><figcaption id="qsb-will-cap"></figcaption></figure>
+      <figure><h3>Reproduce this model</h3><p class="small">The recipe records the target file, every choice above, the seed and the result, so the same model can be rebuilt.</p><button type="button" id="qsb-export" class="ghost">Download recipe JSON</button><p class="small" id="qsb-hash"></p></figure></div>
+    </section>
+  </div>
+</dialog>
 <dialog id="qsar-dialog" class="qsar-dialog" aria-labelledby="qsar-title">
   <div class="qsar-head">
     <div><p class="eyebrow">Single-target Hansch QSAR</p><h2 id="qsar-title">DRD2 · validation</h2></div>
