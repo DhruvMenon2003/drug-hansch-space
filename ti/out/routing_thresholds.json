@@ -1,0 +1,16 @@
+{
+ "sampled_compounds": 2835,
+ "own_target_top5_similarity": {
+  "p10": 0.4536,
+  "median": 0.7342,
+  "p90": 0.8562
+ },
+ "own_minus_best_other": {
+  "p25": -0.0336,
+  "median": 0.2571,
+  "share_negative": 0.2765
+ },
+ "scope_floor": 0.4536,
+ "margin": 0.01,
+ "derived_from": "training sets only, leave-one-out; no drug labels were used"
+}

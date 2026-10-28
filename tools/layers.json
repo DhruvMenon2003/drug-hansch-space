@@ -41,6 +41,7 @@
     "js/qsar.js": 3,
     "js/sheet.js": 3,
     "js/table.js": 3,
+    "js/ti.js": 3,
     "js/tour.js": 3,
     "js/boot-core.js": 4,
     "js/boot-gl.js": 4,

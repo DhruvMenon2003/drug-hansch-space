@@ -1,0 +1,5 @@
+# Caches. Every one of these is rebuilt by the scripts that read it, and two of
+# them are far too large for a repository: cache/models/models.pkl is 2.8 GB of
+# fitted models and cache/train/ is the raw ChEMBL pull.
+cache/
+__pycache__/

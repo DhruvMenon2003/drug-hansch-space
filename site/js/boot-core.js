@@ -3,7 +3,8 @@
 // step (so the scene is listening when the first layout is emitted).
 const BENCH_MOD = 'bench.js';                       // a variable specifier: loaded on demand, never preloaded
 const QSAR_MOD = 'qsar.js';
-const BUILDER_MOD = 'builder.js';                    // the all-target QSAR builder, also on request                         // the existing-home overlay loads only on request
+const BUILDER_MOD = 'builder.js';
+const TI_MOD = 'ti.js';                              // the ranked therapeutic-index overlay, on request                    // the all-target QSAR builder, also on request                         // the existing-home overlay loads only on request
 import { app, anim, bus, STEPS, $ } from './kernel.js';
 import { announce, initAnnounce } from './announce.js';
 import { loadData } from './data.js';
@@ -85,6 +86,11 @@ export async function bootCore(caps) {
     const panel = $('#qsb-dialog');
     if (!panel.open) panel.showModal();
     $('#qsb-status').textContent = 'The QSAR builder could not load. Close it and try again.';
+  }));
+  $('#ti-open')?.addEventListener('click', () => import(`./${TI_MOD}`).then(m => m.openIndex()).catch(() => {
+    const panel = $('#ti-dialog');
+    if (!panel.open) panel.showModal();
+    $('#ti-status').textContent = 'The therapeutic-index overlay could not load. Close it and try again.';
   }));
   initExtras({ gl: !!caps?.webgl });                 // the QED panel and the binding overlay: both arrive on first use
   fillTourText();

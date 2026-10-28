@@ -1,0 +1,27 @@
+{
+  "Dataset": [
+    "1345 drugs from dataset3, each one name-matched to ChEMBL and then standardised with RDKit \u2014 largest fragment, neutralised, metals refused.",
+    "Routing target: ChEMBL's mechanism-of-action table, filtered on parent_molecule_chembl_id. 683 of them carry a primary target and can be routed at all.",
+    "Training data: one ChEMBL set per target, 35 targets, 58,260 cleaned compound/activity pairs. One standard_type per target (never Ki and IC50 mixed), binding assays only, exact relations only, duplicates merged by median, replicates spanning more than one log unit dropped.",
+    "Predictors: 16 declared whole-molecule descriptors, fixed before any model was fitted \u2014 mw, clogp, clogp_sq, mr, tpsa, hbd, hba, rotb and 8 more.",
+    "Measured human PK from dataset3 (fu, Vdss, clearance, MRT, half-life) travels with every row under a measured_ prefix and is never fitted against. It is a measurement, not a descriptor.",
+    "Output: one CSV. One column per predictor, therapeutic index last. 144 rows carry an index; the remaining 1201 are in the file with an empty index and a stated reason, the largest being \u201cno primary target in ChEMBL's mechanism table\u201d (662)."
+  ],
+  "Workflow": [
+    "Endpoint (OECD 1): p_toxicity(hERG, CHEMBL240) - p_activity(primary target), both -log10 mol/L. Higher is a wider margin over the cardiac liability. This is not LD50/ED50, not a clinical therapeutic index, not dose-aware, not safety evidence.",
+    "Conditional routing: a molecule's activity is only ever predicted from a model trained on its own primary target. There is no fallback to another target \u2014 if that target has no usable model the row is left empty with a reason. The toxicity side always comes from hERG (CHEMBL240).",
+    "Two tiers per target, in order. 1. Measurement, where ChEMBL has one. 2. A Hansch equation for the congeneric series the molecule belongs to. 3. A declared non-linear fallback on the same descriptors, labelled non-mechanistic.",
+    "A molecule reaches a series equation only by belonging to that series: median Morgan Tanimoto at or above that series' own membership floor, the 10th percentile of its internal pairwise similarity. Exact scaffold matching was tried first and was wrong \u2014 it refused true camptothecins that differed from the series by one ring nitrogen.",
+    "Acceptance (OECD 4): series \u2014 n \u2265 15, median similarity \u2265 0.55, r\u00b2 \u2265 0.6, q\u00b2(leave-one-out) \u2265 0.5, shuffled q\u00b2 < 0.05. Terms capped at n/5 and chosen on AICc, so the criterion selected on is never the criterion reported.",
+    "Result: 53 of 543 candidate series passed; 28 of 35 targets produced a usable fallback, q\u00b2 0.25\u20130.68 with whole chemical families held out.",
+    "Applicability domain (OECD 3): descriptor range for a series equation, kNN distance at the 95th percentile for the fallback. 68 ranked rows sit inside it; the rest say so in their own row."
+  ],
+  "Software": [
+    "Python 3.13.16, RDKit 2026.09.1, NumPy 2.5.3, scikit-learn 1.9.1.",
+    "RDKit: standardisation (LargestFragmentChooser, Uncharger), Crippen logP and molar refractivity, TPSA, QED, Gasteiger partial charges, Bemis\u2013Murcko scaffolds, Morgan fingerprints at radius 2.",
+    "scikit-learn: the declared non-linear fallback (random forest, 300 trees) and the standardiser behind the kNN applicability domain. Nothing else.",
+    "Ordinary least squares, leave-one-out q\u00b2, AICc and the y-randomisation test are written out in ti/fit.py rather than imported, so every figure in the report can be traced to the line that computed it.",
+    "Data sources: ChEMBL web API (activities, mechanisms, structures) and dataset3 for the batch and its measured human PK. No PubChem structures.",
+    "Reproducibility: ti/resolve.py \u2192 ti/pull_training.py \u2192 ti/fit.py --all \u2192 ti/rank.py \u2192 ti/report.py. Every stage caches, the random seed is fixed, and audit.json carries the input hashes and library versions that produced the CSV."
+  ]
+}

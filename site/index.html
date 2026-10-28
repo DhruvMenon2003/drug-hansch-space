@@ -332,6 +332,7 @@
           <button type="button" id="qsar-open" class="ghost" aria-haspopup="dialog" aria-controls="qsar-dialog">DRD2 QSAR · validation</button>
           <button type="button" id="qsar-clear" class="ghost" hidden>Clear domain colours</button>
           <button type="button" id="qsb-open" class="ghost" aria-haspopup="dialog" aria-controls="qsb-dialog">QSAR builder · every target</button>
+          <button type="button" id="ti-open" class="ghost" aria-haspopup="dialog" aria-controls="ti-dialog">Therapeutic index · ranked batch</button>
           <p class="small">One human target, binding assays and Ki only. Explore the reproducible model, scaffold holdout and applicability domain.</p>
         </div>
         <p class="lede">Drugs are grouped by their first ChEMBL mechanism target. Drugs up to 1000 Da are fitted. A group with at least five drugs gets the regression with the best leave-one-out q², allowing one descriptor per five drugs.</p>
@@ -582,24 +583,24 @@
   <div class="foot-inner">
     <h2 id="sources-h">Data sources and licences</h2>
     <p class="foot-disclaimer"><strong>Educational exploration only.</strong> This is not medical advice and not a toxicity predictor. Do not use it to choose, change or stop any medicine, or for any clinical, regulatory, safety or purchasing decision. Ask a qualified health professional and read the current official label.</p>
-    <p class="foot-line">Data: drug list and ATC assignments from a DrugBank-derived table (DrugBank); ATC names from the WHO Collaborating Centre for Drug Statistics Methodology, ATC/DDD Index 2026; activities from ChEMBL (CC BY-SA 3.0); structures and 3D conformers from PubChem (NCBI/NLM); routes from WHO codes and US drug labels (openFDA, DailyMed). Descriptors computed with RDKit. Built with three.js (MIT), GSAP, SmilesDrawer (MIT); fonts under the SIL OFL 1.1. Source code: <a href="https://github.com/DhruvMenon2003/drug-hansch-space" target="_blank" rel="noopener noreferrer">github.com/DhruvMenon2003/drug-hansch-space</a>.</p>
-    <p>Drug Hansch Space is a non-commercial, educational exploration. It places drugs in a 3D descriptor space and walks through exploratory Hansch-type fits. It combines records from the sources below with values computed for this project. It is not affiliated with or endorsed by any of them, and it uses no source's logo. Each source keeps its own terms; where a source asks for a citation it is given here.</p>
+    <p class="foot-line">Source code: <a href="https://github.com/DhruvMenon2003/drug-hansch-space" target="_blank" rel="noopener noreferrer">github.com/DhruvMenon2003/drug-hansch-space</a>.</p>
+    <p>Drug Hansch Space is a non-commercial, educational exploration. It places drugs in a 3D descriptor space and walks through exploratory Hansch-type fits. It combines records from the sources below with values computed for this project. It is not affiliated with or endorsed by any of them, and it uses no source's logo.</p>
 
     <h3>What comes from where</h3>
     <div class="sources-wrap">
       <table class="sources-table">
         <thead><tr><th scope="col">On the page</th><th scope="col">Source</th><th scope="col">Terms</th></tr></thead>
         <tbody>
-          <tr><td data-label="On the page">The 759 drugs, generic names (salts removed), PubChem compound IDs, ATC code assignments</td><td data-label="Source">A DrugBank-derived table (DrugBank). The DrugBank release is not recorded by the data build.</td><td data-label="Terms"><span class="link-list"><a href="https://trust.drugbank.com/drugbank-trust-center/terms-of-use" target="_blank" rel="noopener noreferrer">DrugBank Terms of Use</a></span> DrugBank offers its academic release under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC 4.0</a>.</td></tr>
+          <tr><td data-label="On the page">The 759 drugs, generic names (salts removed), PubChem compound IDs, ATC code assignments</td><td data-label="Source">A DrugBank-derived table (DrugBank)</td><td data-label="Terms"><span class="link-list"><a href="https://trust.drugbank.com/drugbank-trust-center/terms-of-use" target="_blank" rel="noopener noreferrer">DrugBank Terms of Use</a></span> DrugBank offers its academic release under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">CC BY-NC 4.0</a>.</td></tr>
           <tr><td data-label="On the page">ATC level 1 to 4 names, ATC code structure, administration-route codes</td><td data-label="Source"><span class="link-list"><a href="https://atcddd.fhi.no/atc_ddd_index/" target="_blank" rel="noopener noreferrer">WHO Collaborating Centre for Drug Statistics Methodology, ATC/DDD Index 2026</a></span></td><td data-label="Terms"><span class="link-list"><a href="https://atcddd.fhi.no/copyright_disclaimer/" target="_blank" rel="noopener noreferrer">WHOCC copyright notice</a></span></td></tr>
-          <tr><td data-label="On the page">Potency (median pChEMBL at the drug's mechanism target), target names and IDs, compound IDs</td><td data-label="Source"><a href="https://www.ebi.ac.uk/chembl/" target="_blank" rel="noopener noreferrer">ChEMBL</a>. The release is not recorded by the data build.</td><td data-label="Terms"><span class="link-list"><a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a><a href="https://www.ebi.ac.uk/about/terms-of-use/" target="_blank" rel="noopener noreferrer">EMBL-EBI Terms of Use</a></span></td></tr>
+          <tr><td data-label="On the page">Potency (median pChEMBL at the drug's mechanism target), target names and IDs, compound IDs</td><td data-label="Source"><a href="https://www.ebi.ac.uk/chembl/" target="_blank" rel="noopener noreferrer">ChEMBL</a></td><td data-label="Terms"><span class="link-list"><a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a><a href="https://www.ebi.ac.uk/about/terms-of-use/" target="_blank" rel="noopener noreferrer">EMBL-EBI Terms of Use</a></span></td></tr>
           <tr><td data-label="On the page">XLogP3, structural complexity, parent compound ID, titles, 3D conformers (649 drugs)</td><td data-label="Source"><a href="https://pubchem.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">PubChem</a> (NCBI, National Library of Medicine)</td><td data-label="Terms"><span class="link-list"><a href="https://www.ncbi.nlm.nih.gov/home/about/policies/" target="_blank" rel="noopener noreferrer">NCBI data usage policies</a></span> Records may carry depositor rights.</td></tr>
           <tr><td data-label="On the page">Routes of administration where the WHO table had none (about a third of drug-ATC pairs)</td><td data-label="Source">US drug labels via <a href="https://open.fda.gov/terms/" target="_blank" rel="noopener noreferrer">openFDA</a> and <a href="https://dailymed.nlm.nih.gov/dailymed/about-dailymed.cfm" target="_blank" rel="noopener noreferrer">DailyMed</a>; route names from the <a href="https://www.fda.gov/industry/structured-product-labeling-resources/route-administration" target="_blank" rel="noopener noreferrer">FDA route list</a></td><td data-label="Terms">openFDA CC0 unless noted; FDA and NLM government content is public domain</td></tr>
-          <tr><td data-label="On the page">Crippen log P, molar refractivity, TPSA, weight, H-bond counts, rotatable bonds, aromatic rings, Fsp3, 89 further 3D conformers, structure map</td><td data-label="Source">Computed here with <a href="https://www.rdkit.org/" target="_blank" rel="noopener noreferrer">RDKit</a> (BSD-3-Clause) and <a href="https://pypi.org/project/marimo-chem-utils/" target="_blank" rel="noopener noreferrer">marimo-chem-utils</a> (MIT)</td><td data-label="Terms">Computed values; RDKit code is not distributed</td></tr>
-          <tr><td data-label="On the page">PCA scores, Hansch-type fits, leave-one-out and shuffled-activity checks</td><td data-label="Source">Computed here from the values above</td><td data-label="Terms">Exploratory, see the notice below</td></tr>
+          <tr><td data-label="On the page">Crippen log P, molar refractivity, TPSA, weight, H-bond counts, rotatable bonds, aromatic rings, Fsp3, 89 further 3D conformers, structure map, PCA scores, Hansch-type fits, leave-one-out and shuffled-activity checks</td><td data-label="Source">Computed here from the records above, with <a href="https://www.rdkit.org/" target="_blank" rel="noopener noreferrer">RDKit</a> (BSD-3-Clause) and <a href="https://pypi.org/project/marimo-chem-utils/" target="_blank" rel="noopener noreferrer">marimo-chem-utils</a> (MIT)</td><td data-label="Terms">Computed values, exploratory. RDKit code is not distributed.</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="small">The data build does not record which DrugBank or ChEMBL release a record came from.</p>
 
     <h3>Citations</h3>
     <ul class="foot-list">
@@ -628,6 +629,95 @@
 
 <div id="xr-overlay" hidden></div>
 
+
+<!-- The therapeutic-index overlay: the ranked batch, where each number came from, and the five OECD principles with
+     this run's own figures. Empty until js/ti.js is loaded on first use; the data is site/data/ti/summary.json,
+     written by ti/rank.py. -->
+<dialog id="ti-dialog" class="qsar-dialog" aria-labelledby="ti-title">
+  <div class="qsar-head">
+    <div><p class="eyebrow">OECD QSAR workflow · ranked batch</p><h2 id="ti-title">Therapeutic index</h2></div>
+    <form method="dialog"><button type="submit" class="ghost" autofocus>Close</button></form>
+  </div>
+  <p id="ti-status">Loading the ranked batch…</p>
+  <div id="ti-body" hidden>
+    <p class="lede" id="ti-lede"></p>
+    <p class="foot-disclaimer"><strong>Not a clinical therapeutic index.</strong> This is an in&nbsp;vitro
+      selectivity margin over one liability (the hERG cardiac channel), for putting a batch of molecules in order.
+      It is not LD50/ED50, it says nothing about dose, and it is not evidence that anything here is safe in a
+      person.</p>
+
+    <div class="ti-tabs" role="tablist" aria-label="Therapeutic index views">
+      <button type="button" role="tab" id="ti-t-rank" aria-controls="ti-p-rank" aria-selected="true">Ranked batch</button>
+      <button type="button" role="tab" id="ti-t-route" aria-controls="ti-p-route" aria-selected="false">Routing</button>
+      <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
+      <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
+    </div>
+
+    <section role="tabpanel" id="ti-p-rank" aria-labelledby="ti-t-rank">
+      <p class="small">Sorted by the margin, widest first. Each whole number is a tenfold difference: an index of
+        2.0 means the molecule grips its intended target about a hundred times more tightly than it grips the
+        heart channel. Rows marked <em>outside</em> fall beyond the model's applicability domain and should be
+        read as suggestions at best.</p>
+      <div class="field"><label for="ti-filter">Show</label><select id="ti-filter">
+        <option value="all">every ranked molecule</option>
+        <option value="inside">inside the applicability domain only</option>
+        <option value="measured">measured on both sides, no prediction</option>
+        <option value="series">from a validated Hansch series model</option>
+      </select></div>
+      <p id="ti-count" class="small"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Ranked molecules">
+        <table class="stats"><thead><tr>
+          <th scope="col">Rank in target</th><th scope="col">Molecule</th><th scope="col">Target</th>
+          <th scope="col">Activity</th><th scope="col">hERG</th><th scope="col">Index</th>
+          <th scope="col">Domain</th>
+        </tr></thead><tbody id="ti-rows"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-route" aria-labelledby="ti-t-route" hidden>
+      <p class="small" id="ti-route-rule"></p>
+      <p class="small">A molecule's activity may only come from a model fitted on its own intended target, with the
+        same assay type and the same organism. There is no falling back to a related protein and none to a
+        general model across targets. A number from the wrong target's model is worse than no number, because on
+        the page it looks exactly like a right one. So where no model applies, the cell is empty and the row says
+        why.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Where each number came from">
+        <table class="stats"><thead><tr><th scope="col">Source</th><th scope="col">What it means</th>
+          <th scope="col">Molecules</th></tr></thead><tbody id="ti-sources"></tbody></table>
+      </div>
+      <h3>Left out, and why</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Molecules not ranked">
+        <table class="stats"><thead><tr><th scope="col">Reason</th><th scope="col">Molecules</th></tr></thead>
+        <tbody id="ti-excluded"></tbody></table>
+      </div>
+      <h3>Models, one per target</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Model report per target">
+        <table class="stats"><thead><tr><th scope="col">Target</th><th scope="col">Compounds</th>
+          <th scope="col">Assay</th><th scope="col">Series validated</th>
+          <th scope="col">Fallback q²</th><th scope="col">Shuffled q²</th></tr></thead>
+        <tbody id="ti-models"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-series" aria-labelledby="ti-t-series" hidden>
+      <p class="small">A Hansch model is a model of a <em>series</em>, not of a target: a set of molecules sharing
+        one chemical core, where only the decorations change. Each of these cleared every gate — enough
+        compounds, genuinely related to each other, a fit, an honest leave-one-out score, and a shuffled-label
+        control. The equation is readable, which is the whole point of the method.</p>
+      <p id="ti-series-note" class="small"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Validated Hansch series models">
+        <table class="stats"><thead><tr><th scope="col">Target</th><th scope="col">n</th>
+          <th scope="col">Similarity</th><th scope="col">Terms</th><th scope="col">r²</th>
+          <th scope="col">q² (leave one out)</th><th scope="col">log P optimum</th></tr></thead>
+        <tbody id="ti-series"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-oecd" aria-labelledby="ti-t-oecd" hidden>
+      <div id="ti-oecd"></div>
+    </section>
+  </div>
+</dialog>
 
 <script type="module" src="js/main.js"></script>
 </body>
