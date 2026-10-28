@@ -363,6 +363,9 @@ def build(out_dir: Path) -> dict:
         },
         "source_exclusions": resolved["exclusions"],
         "input_ledger": resolved["ledger"],
+        # Where DrugBank and ChEMBL both name a structure for a drug and the two are not the same molecule,
+        # the drug is named here rather than quietly resolved in favour of one source.
+        "structure_disagreements": resolved.get("structure_disagreements", []),
     }
     (out_dir / "audit.json").write_text(json.dumps(audit, indent=1, sort_keys=True), encoding="utf-8")
 

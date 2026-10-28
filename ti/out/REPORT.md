@@ -1,0 +1,180 @@
+# Predicting a therapeutic index, and how much to trust it
+
+This explains what the accompanying `therapeutic_index.csv` contains, how each number in it was produced, and — the part that matters most — where it should not be believed. It assumes no background in computational chemistry. Every figure quoted here comes from `audit.json`, written by the same run.
+
+## The short version
+
+- 1345 molecules went in. **649 came out with a usable therapeutic index**, sorted from the widest safety margin to the narrowest.
+- 29 of those rest on two real laboratory measurements and no prediction at all. Those are the rows to trust most.
+- 337 have at least one predicted side. Each of those rows names the model that produced it and how well that model scored.
+- The remaining 696 molecules are **in the file with an empty index and a reason**. They were not quietly filled in.
+
+A classical Hansch analysis is the intended centrepiece. It holds up on a minority of chemical families rather than everywhere: 2238 candidate series were fitted and **190 passed** the fit, prediction and chance-correlation gates together. Those series get a readable equation with a lipophilicity optimum. Everything else falls back to a declared non-linear model, labelled as such in every row it produced. Both outcomes are reported below, with the figures.
+
+## What the number in the last column is
+
+```
+therapeutic index = (how tightly it binds the target it is meant to hit)
+                    - (how tightly it binds the heart channel)
+```
+
+Both halves are measured on the same scale, where each whole number is a tenfold change in the concentration needed. So the difference is a plain ratio: **an index of 2.0 means the molecule grips its intended target about a hundred times more tightly than it grips the heart channel.** Bigger is better. A negative index means the opposite, and is a warning.
+
+The heart channel is hERG, a potassium channel in heart muscle. Blocking it can disturb the heart's rhythm, and it is the single most common reason a promising drug is abandoned late, so it is the standard liability to measure a margin against.
+
+> **This is not a clinical therapeutic index.** It is not LD50/ED50, not a clinical therapeutic index, not dose-aware, not safety evidence. It compares molecules in a test tube against one specific risk. It says nothing about dose, nothing about what a liver does to the molecule, and nothing about whether anything here is safe in a person. It is a way to put a batch of molecules in a sensible order for deciding what to look at next.
+
+## The five OECD principles, one at a time
+
+### 1. A defined endpoint
+
+*The thing being predicted has to be one measurable quantity, not a vague idea of 'activity'.*
+
+Both halves are `pChEMBL` values — binding affinities from **binding assays only** (`assay_type = B`), on the **human** protein, taken from ChEMBL. Within one target, one assay type is used and never mixed: a Ki and an IC50 are different experiments and averaging them averages two different things. Where a molecule was measured more than once the median is used, and if its repeats disagreed by more than tenfold it was dropped, because at that spread the median is not measuring anything.
+
+### 2. An unambiguous algorithm
+
+*Someone else, given the same inputs, has to be able to get the same numbers.*
+
+The inputs are fixed by checksum in `audit.json`, the library versions are recorded (numpy 2.5.3, python 3.13.16, rdkit 2026.09.1, scikit-learn 1.9.1), and the same 16 molecular properties are calculated the same way for every molecule, by one function:
+
+A structure comes from the DrugBank export first and from ChEMBL by exact name second. Where both name one, the two are standardised identically and compared by InChIKey skeleton. 800 of the molecules could be checked that way and 795 are the same molecule in both databases. The 5 that are not (Acarbose, GPX-150, Mifamurtide, Mipomersen, Nafarelin) are named in `audit.json` rather than merged, because which database is right is a question about that one drug. This check is here because it is the one that catches a drug name joined to the wrong structure, which is a silent error no model can detect downstream.
+
+| property | what it stands for |
+| --- | --- |
+| `clogp, clogp_sq` | how greasy it is, and that figure squared — see principle 5 |
+| `mr` | molar refractivity: roughly how much space and how many loose electrons it has |
+| `tpsa` | how much of its surface is polar, which sets the cost of leaving water |
+| `hbd, hba` | how many hydrogen bonds it can give and take |
+| `mw, rotb, fsp3, aromatic_rings` | size, floppiness, three-dimensionality, flatness |
+| `formal_charge, n_basic_centres, n_acidic_centres` | its charge state at body pH |
+| `max/min_partial_charge` | its electronic extremes |
+| `qed` | a standard composite score for how drug-like it looks |
+
+Two kinds of value are kept strictly apart. These 16 are **calculated** from the structure. The `measured_*` columns (fu, vdss_l_per_kg, cl_ml_per_min_per_kg, mrt_h, t_half_h, assay_hit_rate, assays_active, assays_tried) are **laboratory measurements in humans**, carried through into the file because they are useful to see, and never used as model inputs. Mixing the two is how a model ends up quietly learning from the answer.
+
+**The routing rule.** A molecule's predicted activity may only come from a model built on its own target. There is no falling back to a related protein and no general-purpose model pooled across targets. If a molecule's target has no model that validates, its activity cell is left empty and it leaves the ranking. A number from the wrong target's model is worse than no number, because on the page it looks exactly like a right one.
+
+**How the target is decided, when nobody says what it is.** This is the case that matters for a molecule that does not exist yet. A chemist with a new compound should not have to declare its target - working that out is half of what they are doing. So the pipeline decides, in a fixed order, and records which way it went in the `target_source` column:
+
+1. **`chembl_mechanism`** - ChEMBL's mechanism-of-action table records a target against this exact molecule. A curated annotation always wins, because it is a fact and the alternative is a guess.
+2. **`structure_router`** - there is no annotation, or none with a working model. The structure is then compared against the training chemistry of every model in the registry, and the router returns one of three answers: **routed** to a single model, **ambiguous** with its candidates listed and no prediction made, or **abstain** because nothing was close enough.
+
+The registry holds 189 eligible local models built from 236,374 training compounds; 98 targets were refused for having fewer than 20 compounds, which is too few to fit anything worth trusting. Matching uses Morgan r=2 top-5 mean Tanimoto against each local model's training set.
+
+**A routed target is an inference, not a measurement.** It is a statement about chemical resemblance and nothing more. Two molecules can share a scaffold and hit different proteins. Every row says which kind of assignment it got, so the two can never be read as the same thing.
+
+**Abstaining is a result.** A router that always answers is not a router, it is a lookup table with extra steps. Of the molecules in this run:
+
+- **581** sent to a target ChEMBL records for them
+- **212** routed on structure alone
+- **23** called ambiguous, with candidates listed and no prediction made
+- **372** abstained on, as unlike anything in the registry
+- **157** left unrouted for having no usable structure
+
+### 3. A defined domain of applicability
+
+*A model is only entitled to speak about molecules resembling the ones it learned from.*
+
+This is the principle most often skipped and it is the one that does the most work. Every model here refuses to answer outside its range, and every row in the CSV carries an `applicability_domain` column saying `measured`, `inside`, or `outside`.
+
+- For a Hansch series model: the molecule's properties must all fall inside the span the series covered.
+- For the fallback: the molecule must sit no further from the training set, in property space, than the training molecules sit from each other (its distance to the nearest 5 training molecules, against the 95th percentile of that same distance within the training set).
+
+371 of 649 ranked molecules are inside. The rest are flagged `outside`: they are still listed, and their numbers should be read as suggestions at best.
+
+### 4. Measures of fit, robustness and predictivity
+
+*Three different questions, and only the third one matters for prediction.*
+
+A model can describe the data it was shown (**fit**, r²) while being useless on anything new (**predictivity**, q²). The gap between them is where most bad QSAR lives. So:
+
+- **Fit (r²)** — how well it reproduces its own training data. The weakest evidence there is.
+- **Predictivity (q²)** — scored only on molecules the model never saw. For the fallback, whole chemical families are held out at once, so a near-twin cannot sit on both sides of the split and flatter the score. This is a deliberately harsh test and the honest one.
+- **Robustness (shuffled labels)** — the model is refitted against deliberately scrambled answers. If it still 'works', the method is manufacturing patterns. Worst shuffled score across all models here: **q² = 0.067** — at or below zero, which is what it must be.
+
+What each kind of model had to clear to be used at all:
+
+| | requirement |
+| --- | --- |
+| Hansch series model | at least 15 compounds; genuinely related to each other (median similarity ≥ 0.55); r² ≥ 0.6; q² ≥ 0.5 leaving each one out; shuffled q² < 0.05 |
+| Fallback | q² ≥ 0.25 with whole families held out; shuffled q² < 0.1 |
+
+**Result: 190 of 2238 series models passed. 139 of 189 targets produced a usable fallback**, with q² from 0.25 to 0.72 (median 0.42).
+
+### 5. A mechanistic interpretation, where there is one
+
+*Can you say, in chemistry, why the model works? And if you cannot, say so.*
+
+A Hansch analysis asks whether activity can be written as a short equation in a few physical properties — above all greasiness, with a squared term so the equation can find an *optimum* rather than assuming greasier is always better. That optimum is the classic insight: a molecule too water-loving never crosses a membrane, one too greasy never leaves it, and the best sits in between. When it works it beats a black box, because it tells you which direction to move.
+
+It works **within a congeneric series** — molecules sharing one chemical core, where only the decorations change. That is what Hansch himself fitted: ten to thirty close relatives at a time.
+
+Three things had to be right before that test meant anything, and the first attempt here got all three wrong. They are written out because each one is a standard way to fool yourself, and because the corrected result is the opposite of the uncorrected one.
+
+- **One term per five compounds, no more.** Fitting all six properties to a fifteen-member series gave a respectable r² and a *negative* q² — on one series, −30.8. A negative q² means the model predicts held-out members worse than guessing the series average: it had memorised, not modelled. The rule that prevents this is old and specific — at least five compounds for every fitted variable, or the correlation is chance. Terms are now capped at n/5.
+- **The squared term has to be centred.** `clogp²` computed raw is almost perfectly correlated with `clogp` over any normal range, so the two terms fight and both coefficients become unstable. Subtracting the series mean before squaring removes that, and the parabola survives.
+- **The criterion used to choose must not be the criterion reported.** Picking which terms to keep by maximising q², then reporting that same q², inflates it — the number has been optimised. Terms are now chosen on AICc, a fit criterion that charges for each extra one, and q² is computed afterwards on the chosen form.
+
+With those three in place the Hansch form does work, on a minority of series: **190 of 2238 passed**, the best reaching q² = 0.95 leaving each compound out. Where a series model applies, the row carries its equation's lipophilicity optimum, and that is a number a chemist can act on: it says which way to move the next analogue.
+
+Most candidate series still fail, and for this liability the chemistry says why. hERG blockade is driven by specific contacts — an aromatic group stacking against two particular residues in the channel, plus a basic nitrogen — not by bulk greasiness. Bulk properties correlate loosely with hERG across enormous diverse collections and stop predicting the moment you look inside one chemical family. A failed series here is usually a true negative, not a missed fit.
+
+One grouping artefact is excluded deliberately. Reducing a molecule to its ring skeleton collapses every single-benzene-ring compound into one bucket; that bucket is not a congeneric series and scored well for the wrong reason. A group must now also show a median pairwise similarity above 0.55 to its own members before it is fitted at all.
+
+Where no series model covers a molecule, the ranking comes from the fallback, and the fallback is honest about what it is: the same 16 properties, a model allowed to combine them in non-straight lines, **q² roughly 0.42 with whole chemical families held out, and no equation to read.** It gives a defensible order; it does not give a mechanism. Any row whose source column says `fallback_nonlinear` should be read that way.
+
+The mechanistic statement that survives either way: the properties carry the signal, the straight line does not travel. Dropping from all of them to the six Hansch terms costs the fallback about half its predictivity (q² 0.32 against 0.18 on hERG), so the descriptor block is not the weak link — the linear form used off-series is. That is precisely what Hansch theory predicts, and it is why the equation is kept where it is valid and refused where it is not.
+
+## How to read the CSV
+
+One row per molecule. `therapeutic_index` is the last column, as requested.
+
+**The ranking is inside each target, never across them.** `rank_in_target` 1 is the widest margin among the molecules routed to that same model, out of `n_in_target` of them. There is no global ranking in this file and that is deliberate: potency against one receptor and potency against another are measured in different assays, so a number that mixes them has no referent. Target groups are written largest first, so the substantive ranked lists are at the top; rows that could not be ranked follow with a stated reason. What makes this a single global method is the assembly - many local models plus a router that decides which one a molecule may use - not one pooled fit.
+
+| column group | what it is |
+| --- | --- |
+| `rank_in_target`, `n_in_target` | position within this molecule's own target group, and the size of that group. Compare rows that share a `target_chembl_id`; do not compare across groups |
+| `name`, ids, `canonical_smiles` | which molecule, and the exact structure used after salts were stripped and charges neutralised |
+| `target_source` | `chembl_mechanism` (a curated annotation) or `structure_router` (an inference from chemical similarity). Never read the second as the first |
+| `routing_decision` | `mechanism`, `routed`, `ambiguous`, or `abstain` |
+| `routing_score`, `routing_separation`, `routing_alternatives` | how close the winning model was, how far clear of the runner-up, and the three best candidates with their scores |
+| the 16 property columns | the predictors, one per column, calculated from that structure |
+| `measured_*` | human pharmacokinetic measurements from the source data. Never model inputs |
+| `p_activity`, `p_toxicity_herg` | the two halves of the index |
+| `*_source` | `measured`, `series_hansch`, `fallback_nonlinear`, or `unavailable` |
+| `*_model`, `*_quality` | which model, and its validation score |
+| `applicability_domain` | `measured`, `inside`, or `outside` — read `outside` rows with suspicion |
+| `faers_*` | the most-reported adverse reaction terms from openFDA. Spontaneous reports with no exposure denominator: context for a reader, never a model input |
+| `status` | `ranked`, or why not |
+
+**Sensible use:** compare rows against each other, prefer `measured` over `fallback_nonlinear`, and discard `outside`. **Not sensible use:** reading one molecule's index as its real-world safety margin.
+
+## What was left out, and why
+
+- **167** — no validated series model and the fallback is below q2=0.25
+- **151** — no usable structure: no SMILES
+- **3** — no usable structure: contains Pt, which the Crippen parameters do not cover
+- **2** — no usable structure: contains Gd, which the Crippen parameters do not cover
+- **1** — no usable structure: RDKit could not parse the SMILES
+- **372** — the router abstained: nothing in the registry was close enough to this molecule, the nearest local model scoring between 0.17 and 0.45 against a scope floor of 0.45
+
+Hammett σ and Taft Es were considered and deliberately excluded. Both are *substituent* constants: σ is defined for a group attached to a shared aromatic core, Es for a group next to a shared reaction centre. Neither has a value for a whole molecule, and neither is comparable between molecules that share no core. Assigning a single σ to amphotericin B and to atenolol would be inventing a number. Calculated partial charge extremes stand in as the electronic term, because they are defined everywhere.
+
+## Reproducing it
+
+```
+python3 ti/inputs.py        # read the three source datasets, log every exclusion
+python3 ti/resolve.py       # structures and primary targets
+python3 ti/descriptors.py --selftest
+python3 ti/pull_training.py --from-resolved --top 45
+python3 ti/fit.py --all     # series models and fallbacks, with their gates
+python3 ti/registry.py      # the registry of eligible local models + fingerprint bank
+python3 ti/cores.py         # matched-pair core index, for the second routing basis
+python3 ti/router_test.py --calibrate   # routing thresholds, from training data only
+python3 ti/router_test.py --benchmark   # does structure alone find the right target?
+python3 ti/rank.py          # the CSV and audit.json
+python3 ti/report.py        # this file
+python3 ti/publish.py       # copy the finished artefacts into one numbered folder
+```
+

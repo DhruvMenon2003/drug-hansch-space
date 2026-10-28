@@ -185,7 +185,16 @@ def show(result: dict) -> None:
                   f"({cand['n']:,} training compounds)")
 
     if not result["ok"]:
-        print(f"\nNOT PLACED: {result['why']}\n")
+        if result.get("why"):
+            print(f"\nNOT PLACED: {result['why']}\n")
+            return
+        # The router reached its candidates but no local model could speak about the molecule, and the reason
+        # differs from one target to the next, so each is printed rather than collapsed into one sentence.
+        print("\nNOT PLACED: the router found candidate targets, but none of their models can speak about "
+              "this molecule.")
+        for p in result.get("placements", []):
+            print(f"   {p['target']}  -  {p.get('why', 'no reason recorded')}")
+        print()
         return
 
     print(f"\npredicted    p_hERG {result['p_toxicity_herg']:.2f}   [{result['p_toxicity_model']}]")

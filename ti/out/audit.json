@@ -13,12 +13,12 @@
   }
  },
  "counts": {
-  "at least one side predicted": 338,
+  "at least one side predicted": 337,
   "both sides measured": 29,
-  "from a validated Hansch series model": 4,
-  "inside the applicability domain": 353,
+  "from a validated Hansch series model": 5,
+  "inside the applicability domain": 371,
   "molecules in": 1345,
-  "ranked": 645
+  "ranked": 649
  },
  "descriptors": {
   "declared_block": [
@@ -67,19 +67,23 @@
   "units": "log10 ratio"
  },
  "input_ledger": {
-  "  from ChEMBL": 331,
-  "  from DrugBank export": 874,
+  "  different (recorded per row, not silently merged)": 5,
+  "  from ChEMBL": 375,
+  "  from DrugBank export": 818,
   "  from the datasets": 1,
+  "  same molecule": 795,
   "FDA route legend entries": 112,
   "dataset3 named rows": 1345,
   "distinct primary targets": 287,
   "matched in ChEMBL by exact name": 1198,
   "matched to dataset1/dataset2 identity": 439,
+  "structures checked against ChEMBL's own": 800,
   "with a measured VDss": 1306,
+  "with a measured assay hit rate": 304,
   "with a measured fu": 912,
   "with a measured half-life": 1326,
   "with a primary target": 852,
-  "with a structure": 1206
+  "with a structure": 1194
  },
  "inputs": {
   "dataset1.md": "ddd26e47e1275508",
@@ -1982,39 +1986,37 @@
  "not_ranked": {
   "no usable structure: RDKit could not parse the SMILES": 1,
   "no usable structure: contains Gd, which the Crippen parameters do not cover": 2,
-  "no usable structure: contains Pt, which the Crippen parameters do not cover": 5,
-  "no usable structure: fewer than three heavy atoms after the salt was removed": 4,
-  "no usable structure: no SMILES": 139,
-  "no usable structure: no carbon: not an organic molecule": 1,
-  "no validated series model and the fallback is below q2=0.25": 172,
+  "no usable structure: contains Pt, which the Crippen parameters do not cover": 3,
+  "no usable structure: no SMILES": 151,
+  "no validated series model and the fallback is below q2=0.25": 167,
   "the router abstained: closest local model scored 0.17, below the scope floor of 0.45": 2,
-  "the router abstained: closest local model scored 0.18, below the scope floor of 0.45": 2,
-  "the router abstained: closest local model scored 0.19, below the scope floor of 0.45": 5,
-  "the router abstained: closest local model scored 0.20, below the scope floor of 0.45": 9,
-  "the router abstained: closest local model scored 0.21, below the scope floor of 0.45": 19,
-  "the router abstained: closest local model scored 0.22, below the scope floor of 0.45": 14,
-  "the router abstained: closest local model scored 0.23, below the scope floor of 0.45": 19,
-  "the router abstained: closest local model scored 0.24, below the scope floor of 0.45": 17,
-  "the router abstained: closest local model scored 0.25, below the scope floor of 0.45": 14,
-  "the router abstained: closest local model scored 0.26, below the scope floor of 0.45": 14,
-  "the router abstained: closest local model scored 0.27, below the scope floor of 0.45": 15,
-  "the router abstained: closest local model scored 0.28, below the scope floor of 0.45": 16,
-  "the router abstained: closest local model scored 0.29, below the scope floor of 0.45": 15,
-  "the router abstained: closest local model scored 0.30, below the scope floor of 0.45": 14,
-  "the router abstained: closest local model scored 0.31, below the scope floor of 0.45": 14,
-  "the router abstained: closest local model scored 0.32, below the scope floor of 0.45": 17,
+  "the router abstained: closest local model scored 0.18, below the scope floor of 0.45": 3,
+  "the router abstained: closest local model scored 0.19, below the scope floor of 0.45": 6,
+  "the router abstained: closest local model scored 0.20, below the scope floor of 0.45": 8,
+  "the router abstained: closest local model scored 0.21, below the scope floor of 0.45": 20,
+  "the router abstained: closest local model scored 0.22, below the scope floor of 0.45": 13,
+  "the router abstained: closest local model scored 0.23, below the scope floor of 0.45": 21,
+  "the router abstained: closest local model scored 0.24, below the scope floor of 0.45": 19,
+  "the router abstained: closest local model scored 0.25, below the scope floor of 0.45": 15,
+  "the router abstained: closest local model scored 0.26, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.27, below the scope floor of 0.45": 16,
+  "the router abstained: closest local model scored 0.28, below the scope floor of 0.45": 17,
+  "the router abstained: closest local model scored 0.29, below the scope floor of 0.45": 14,
+  "the router abstained: closest local model scored 0.30, below the scope floor of 0.45": 11,
+  "the router abstained: closest local model scored 0.31, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.32, below the scope floor of 0.45": 18,
   "the router abstained: closest local model scored 0.33, below the scope floor of 0.45": 7,
-  "the router abstained: closest local model scored 0.34, below the scope floor of 0.45": 16,
-  "the router abstained: closest local model scored 0.35, below the scope floor of 0.45": 11,
-  "the router abstained: closest local model scored 0.36, below the scope floor of 0.45": 15,
-  "the router abstained: closest local model scored 0.37, below the scope floor of 0.45": 16,
-  "the router abstained: closest local model scored 0.38, below the scope floor of 0.45": 12,
-  "the router abstained: closest local model scored 0.39, below the scope floor of 0.45": 15,
+  "the router abstained: closest local model scored 0.34, below the scope floor of 0.45": 17,
+  "the router abstained: closest local model scored 0.35, below the scope floor of 0.45": 13,
+  "the router abstained: closest local model scored 0.36, below the scope floor of 0.45": 16,
+  "the router abstained: closest local model scored 0.37, below the scope floor of 0.45": 14,
+  "the router abstained: closest local model scored 0.38, below the scope floor of 0.45": 14,
+  "the router abstained: closest local model scored 0.39, below the scope floor of 0.45": 11,
   "the router abstained: closest local model scored 0.40, below the scope floor of 0.45": 11,
   "the router abstained: closest local model scored 0.41, below the scope floor of 0.45": 17,
-  "the router abstained: closest local model scored 0.42, below the scope floor of 0.45": 16,
-  "the router abstained: closest local model scored 0.43, below the scope floor of 0.45": 13,
-  "the router abstained: closest local model scored 0.44, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.42, below the scope floor of 0.45": 11,
+  "the router abstained: closest local model scored 0.43, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.44, below the scope floor of 0.45": 13,
   "the router abstained: closest local model scored 0.45, below the scope floor of 0.45": 9
  },
  "ranking_rule": "ranked within each target, never across them: rank_in_target 1 is the widest margin among the molecules routed to that same local model",
@@ -2032,15 +2034,15 @@
  "routing": {
   "basis": "Morgan r=2 top-5 mean Tanimoto against each local model's training set",
   "decisions": {
-   "": 152,
-   "abstain": 376,
-   "ambiguous": 24,
+   "": 157,
+   "abstain": 372,
+   "ambiguous": 23,
    "mechanism": 581,
    "routed": 212
   },
   "is_not": "a measured target assignment; a routed target is an inference from structure",
-  "largest_group": 26,
-  "targets_with_a_ranked_group": 169,
+  "largest_group": 25,
+  "targets_with_a_ranked_group": 170,
   "thresholds": {
    "margin": 0.01,
    "scope_floor": 0.4536
@@ -2063,6 +2065,38 @@
    "reason": "the target schema's measurement columns are blank in the source (9060 non-empty cells across all rows and columns, mostly identity and ATC); no Activity, Toxicity or Therapeutic Index value can be read from it",
    "row": "1294 rows",
    "stage": "dataset2 wide worksheet"
+  }
+ ],
+ "structure_disagreements": [
+  {
+   "chembl_id": "CHEMBL404271",
+   "chembl_smiles": "C[C@H]1O[C@H](O[C@H]2[C@H](O)[C@@H](O)[C@@H](O[C@H]3[C@H](O)[C@@H](O)C(O)O[C@@H]3CO)O[C@@H]2CO)[C@H](O)[C@@H](O)[C@@H]1N[C@H]1C=C(CO)[C@@H](O)[C@H](O)[C@H]1O",
+   "drugbank_smiles": "[H][C@@](O)(CO)[C@@]([H])(O[C@@]1([H])O[C@]([H])(CO)[C@@]([H])(O[C@@]2([H])O[C@]([H])(C)[C@@]([H])(N[C@@]3([H])C=C(CO)[C@@]([H])(O)[C@]([H])(O)[C@@]3([H])O)[C@]([H])(O)[C@@]2([H])O)[C@]([H])(O)[C@@]1([H])O)[C@]([H])(O)[C@@]([H])(O)C=O",
+   "name": "Acarbose"
+  },
+  {
+   "chembl_id": "CHEMBL5095173",
+   "chembl_smiles": "COc1cccc2c1C(=N)c1c(O)c3c(c(O)c1C2=O)C[C@@](O)(CCO)C[C@@H]3O[C@H]1C[C@H](N)[C@H](O)[C@H](C)O1",
+   "drugbank_smiles": "COC1=C2C(=N)C3=C(O)C4=C(C[C@](O)(C[C@@H]4O[C@H]4C[C@H](N)[C@H](O)[C@H](C)O4)C(=O)CO)C(O)=C3C(=O)C2=CC=C1",
+   "name": "GPX-150"
+  },
+  {
+   "chembl_id": "CHEMBL2107354",
+   "chembl_smiles": "CCCCCCCCCCCCCCCC(=O)OC[C@H](COP(=O)([O-])OCCNC(=O)[C@H](C)NC(=O)CC[C@@H](NC(=O)[C@H](C)NC(=O)[C@@H](C)O[C@H]1[C@H](O)[C@@H](CO)OC(O)[C@@H]1NC(C)=O)C(N)=O)OC(=O)CCCCCCCCCCCCCCC.O.[Na+]",
+   "drugbank_smiles": "O.[Na+].CCCCCCCCCCCCCCCC(=O)OC[C@H](COP([O-])(=O)OCCNC(=O)[C@H](C)NC(=O)CC[C@@H](NC(=O)[C@H](C)NC(=O)[C@@H](C)O[C@@H]([C@H](O)[C@H](O)CO)[C@@H](NC(C)=O)C=O)C(N)=O)OC(=O)CCCCCCCCCCCCCCC",
+   "name": "Mifamurtide"
+  },
+  {
+   "chembl_id": "CHEMBL2219536",
+   "chembl_smiles": "COCCO[C@@H]1[C@H](SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)[C@H](OCCOC)[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)[C@H](OCCOC)[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(N)ncnc43)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(=O)[nH]c(N)nc43)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(=O)[nH]c(N)nc43)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(=O)[nH]c(N)nc43)[C@H](OCCOC)[C@@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cc(C)c(N)nc3=O)[C@@H](OCCOC)[C@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cnc4c(N)ncnc43)[C@@H](OCCOC)[C@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cc(C)c(N)nc3=O)[C@@H](OCCOC)[C@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cc(C)c(N)nc3=O)[C@@H](OCCOC)[C@H]2O)[C@@H](COP(=O)(O)S[C@H]2[C@@H](OCCOC)[C@H](n3cc(C)c(N)nc3=O)O[C@@H]2COP(=O)(O)S[C@H]2[C@@H](OCCOC)[C@H](n3cnc4c(=O)[nH]c(N)nc43)O[C@@H]2CO)O[C@H]1n1cc(C)c(N)nc1=O",
+   "drugbank_smiles": "[H]C1(CC([H])(OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=NC4=C3NC(=N)N=C4O)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=C(C)C(=N)N=C3O)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=NC4=C(N)N=CN=C34)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=C(C)C(=N)N=C3O)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=C(C)C(=N)N=C3O)C([H])(OCCOC)C2([H])O)N2C=C(C)C(=N)N=C2O)N2C=C(C)C(O)=NC2=O)N2C=C(C)C(O)=NC2=O)N2C=C(C)C(=N)N=C2O)N2C=NC3=C2NC(=N)N=C3O)N2C=C(C)C(O)=NC2=O)N2C=C(C)C(=N)N=C2O)N2C=C(C)C(O)=NC2=O)C([H])(COP(O)(=S)OC2([H])CC([H])(OC2([H])COP(O)(=S)OC2([H])C([H])(COP(O)(=S)OC3([H])C([H])(COP(O)(=S)OC4([H])C([H])(COP(O)(=S)OC5([H])C([H])(COP(O)(=S)OC6([H])C([H])(CO)OC([H])(N7C=NC8=C7NC(=N)N=C8O)C6([H])OCCOC)OC([H])(N6C=C(C)C(=N)N=C6O)C5([H])OCCOC)OC([H])(N5C=C(C)C(=N)N=C5O)C4([H])OCCOC)OC([H])(N4C=C(C)C(O)=NC4=O)C3([H])OCCOC)OC([H])(N3C=C(C)C(=N)N=C3O)C2([H])OCCOC)N2C=NC3=C(N)N=CN=C23)O1)N1C=NC2=C1NC(=N)N=C2O",
+   "name": "Mipomersen"
+  },
+  {
+   "chembl_id": "CHEMBL1201309",
+   "chembl_smiles": "CC(C)C[C@H](NC(=O)[C@@H](Cc1cccc2ccccc12)NC(=O)[C@H](Cc1ccc(O)cc1)NC(=O)[C@H](CO)NC(=O)[C@H](Cc1c[nH]c2ccccc12)NC(=O)[C@H](Cc1cnc[nH]1)NC(=O)[C@@H]1CCC(=O)N1)C(=O)N[C@@H](CCCNC(=N)N)C(=O)N1CCC[C@H]1C(=O)NCC(N)=O",
+   "drugbank_smiles": "CC(C)C[C@H](NC(=O)[C@@H](CC1=CC2=CC=CC=C2C=C1)NC(=O)[C@H](CC1=CC=C(O)C=C1)NC(=O)[C@H](CO)NC(=O)[C@H](CC1=CNC2=CC=CC=C12)NC(=O)[C@H](CC1=CN=CN1)NC(=O)[C@@H]1CCC(=O)N1)C(=O)N[C@@H](CCCN=C(N)N)C(=O)N1CCC[C@H]1C(=O)NCC(N)=O",
+   "name": "Nafarelin"
   }
  ]
 }

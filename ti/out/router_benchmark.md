@@ -18,19 +18,19 @@ For scale: a compound's median similarity to its own target's chemistry is **0.7
 | | A · Morgan fingerprint neighbours | B · shared-core matched pairs |
 | --- | --- | --- |
 | drugs with a known, modellable target | 592 | 592 |
-| coverage (willing to route at all) | 57.4% | 43.6% |
-| top-1 accuracy, of those routed | 67.9% | 68.2% |
-| true target among the 3 best candidates | 62.2% | 45.3% |
-| routed confidently to the wrong target | 109 | 82 |
-| ambiguous (candidates shown, no prediction) | 51 | 44 |
-| abstained (no model used) | 201 | 290 |
+| coverage (willing to route at all) | 61.5% | 45.8% |
+| top-1 accuracy, of those routed | 70.3% | 72.0% |
+| true target among the 3 best candidates | 68.6% | 51.2% |
+| routed confidently to the wrong target | 108 | 76 |
+| ambiguous (candidates shown, no prediction) | 54 | 47 |
+| abstained (no model used) | 174 | 274 |
 | baseline: always route to the largest model | 0.2% | 0.2% |
 
 **The baseline is the bar to beat.** Always sending every molecule to the largest model requires no chemistry at all. If the router does not beat that, the conditional is decoration.
 
 ## What this means in practice
 
-The better of the two neighbourhoods is **B · shared-core matched pairs**, at **68.2%** top-1 accuracy against a **0.2%** baseline: it clears the bar. Read the three numbers together rather than the accuracy alone - a router can buy accuracy by abstaining more, so coverage of **43.6%** is part of the same claim.
+The better of the two neighbourhoods is **B · shared-core matched pairs**, at **72.0%** top-1 accuracy against a **0.2%** baseline: it clears the bar. Read the three numbers together rather than the accuracy alone - a router can buy accuracy by abstaining more, so coverage of **45.8%** is part of the same claim.
 
 The honest reading of a routed row is: *this molecule's chemistry resembles the compounds measured against this target, closely enough and distinctly enough that this target's model is the one entitled to speak about it.* It is not a claim that the molecule binds that target. For that, run the assay.
 

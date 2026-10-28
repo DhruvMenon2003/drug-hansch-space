@@ -20,6 +20,30 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "out"
 
 
+# The audit records the fingerprint as a dict and the routing decisions keyed by the value rank.py wrote,
+# including the empty string for a molecule that had no structure to route. Both are correct in a machine-read
+# file and unreadable on a slide, so they are turned into prose here rather than being changed at the source.
+DECISION_NAMES = {
+    "mechanism": "routed by ChEMBL's recorded mechanism",
+    "routed": "routed on structure",
+    "ambiguous": "called ambiguous",
+    "abstain": "abstained",
+    "": "no structure to route",
+}
+
+
+def routing_fingerprint(fingerprint) -> str:
+    if isinstance(fingerprint, dict):
+        return (f"{fingerprint.get('kind', 'Morgan')} r={fingerprint.get('radius', 2)}, "
+                f"{fingerprint.get('bits', 2048)} bits")
+    return str(fingerprint or "Morgan r=2, 2048 bits")
+
+
+def decision_phrase(decisions: dict) -> str:
+    order = [k for k in DECISION_NAMES if k in decisions] + [k for k in decisions if k not in DECISION_NAMES]
+    return ", ".join(f"{DECISION_NAMES.get(k, k or 'unrecorded')} {decisions[k]}" for k in order)
+
+
 def bodies(audit: dict, thresholds: dict | None = None) -> dict:
     c, e, acc = audit["counts"], audit["endpoint"], audit["acceptance"]
     sw = audit["software"]
@@ -33,7 +57,8 @@ def bodies(audit: dict, thresholds: dict | None = None) -> dict:
     series_all = sum(m["series_tried"] for m in models.values())
     block = audit["descriptors"]["declared_block"]
     reasons = sorted(audit["not_ranked"].items(), key=lambda kv: -kv[1])
-    decisions = routing.get("decisions", {})
+    fp = routing_fingerprint(reg.get("fingerprint"))
+    decisions = decision_phrase(routing.get("decisions", {}))
     floor = routing.get("thresholds", {}).get("scope_floor", thresholds.get("scope_floor"))
     margin = routing.get("thresholds", {}).get("margin", thresholds.get("margin"))
     share_negative = (thresholds.get("own_minus_best_other") or {}).get("share_negative")
@@ -50,7 +75,7 @@ def bodies(audit: dict, thresholds: dict | None = None) -> dict:
         f"standard_type per target (never Ki and IC50 mixed), binding assays only, exact relations only, "
         f"duplicates merged by median, replicates spanning more than one log unit dropped.",
         f"A fingerprint bank of {reg.get('training_compounds_in_the_bank', 0):,} training compounds "
-        f"({reg.get('fingerprint', 'Morgan r=2, 2048 bits')}) is what a new molecule is compared against. It is "
+        f"({fp}) is what a new molecule is compared against. It is "
         f"built once and is the only thing the router reads.",
         f"Predictors: {len(block)} declared whole-molecule descriptors, fixed before any model was fitted — "
         f"{', '.join(block[:8])} and {len(block) - 8} more.",
@@ -74,7 +99,7 @@ def bodies(audit: dict, thresholds: dict | None = None) -> dict:
         f"{routing.get('basis', 'Morgan r=2 top-5 mean Tanimoto')}. The chemist never has to name the target.",
         f"The router is allowed three answers, and two of them are not an answer: route it, call it ambiguous "
         f"when several neighbourhoods are within the margin, or abstain when nothing clears the scope floor. "
-        + (f"On this batch: {', '.join(f'{k} {v}' for k, v in decisions.items())}. " if decisions else "")
+        + (f"On this batch: {decisions}. " if decisions else "")
         + f"A routed target is an inference from chemical similarity and the row says so; it is never recorded "
         f"as a measurement.",
         f"Routing thresholds are calibrated on the training sets only, leave-one-out, with no drug labels: "
@@ -84,7 +109,7 @@ def bodies(audit: dict, thresholds: dict | None = None) -> dict:
            f"similarity alone cannot be treated as a target assignment. " if share_negative is not None else "")
         + "The router is tested separately from the models it routes to, against a baseline that always "
         "answers with the largest model, because an easy conditional is not evidence of valid routing.",
-        "Inside each local model, two tiers in order. 1. Measurement, where ChEMBL has one. 2. A Hansch "
+        "Inside each local model, three tiers in order. 1. Measurement, where ChEMBL has one. 2. A Hansch "
         "equation for the congeneric series the molecule belongs to. 3. A declared non-linear fallback on the "
         "same descriptors, labelled non-mechanistic. A molecule reaches a series equation only by belonging to "
         "that series: median Morgan Tanimoto at or above that series' own membership floor, the 10th "

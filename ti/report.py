@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -99,6 +100,20 @@ def write(audit: dict, models: dict, out_dir: Path) -> Path:
       f"{len(audit['descriptors']['declared_block'])} molecular properties are calculated the same way for "
       f"every molecule, by one function:")
     w("")
+    ledger = audit.get("input_ledger") or {}
+    checked = ledger.get("structures checked against ChEMBL's own")
+    differing = audit.get("structure_disagreements") or []
+    if checked:
+        w(f"A structure comes from the DrugBank export first and from ChEMBL by exact name second. Where both "
+          f"name one, the two are standardised identically and compared by InChIKey skeleton. "
+          f"{checked} of the molecules could be checked that way and {checked - len(differing)} are the same "
+          f"molecule in both databases."
+          + (f" The {len(differing)} that are not ({', '.join(d['name'] for d in differing)}) are named in "
+             f"`audit.json` rather than merged, because which database is right is a question about that one "
+             f"drug." if differing else "")
+          + f" This check is here because it is the one that catches a drug name joined to the wrong "
+            f"structure, which is a silent error no model can detect downstream.")
+        w("")
     w("| property | what it stands for |")
     w("| --- | --- |")
     for key, meaning in [
@@ -149,8 +164,18 @@ def write(audit: dict, models: dict, out_dir: Path) -> Path:
       "nothing more. Two molecules can share a scaffold and hit different proteins. Every row says which kind "
       "of assignment it got, so the two can never be read as the same thing.")
     w("")
+    decision_names = {"mechanism": "sent to a target ChEMBL records for them",
+                      "routed": "routed on structure alone",
+                      "ambiguous": "called ambiguous, with candidates listed and no prediction made",
+                      "abstain": "abstained on, as unlike anything in the registry",
+                      "": "left unrouted for having no usable structure"}
+    decisions = routing.get("decisions", {}) or {}
+    ordered = [k for k in decision_names if k in decisions] + [k for k in decisions if k not in decision_names]
     w("**Abstaining is a result.** A router that always answers is not a router, it is a lookup table with "
-      f"extra steps. Of the molecules in this run: {routing.get('decisions', {})}.")
+      "extra steps. Of the molecules in this run:")
+    w("")
+    for key in ordered:
+        w(f"- **{decisions[key]}** {decision_names.get(key, key or 'unrecorded')}")
     w("")
     w("### 3. A defined domain of applicability")
     w("")
@@ -190,7 +215,7 @@ def write(audit: dict, models: dict, out_dir: Path) -> Path:
     w(f"| Hansch series model | at least {acc['series_hansch']['min_n']} compounds; genuinely related to each "
       f"other (median similarity ≥ {acc['series_hansch']['min_median_tanimoto']}); r² ≥ "
       f"{acc['series_hansch']['min_r2']}; q² ≥ {acc['series_hansch']['min_q2_loo']} leaving each one out; "
-      f"shuffled r² < {acc['series_hansch']['max_scramble_r2']} |")
+      f"shuffled q² < {acc['series_hansch']['max_scramble_q2']} |")
     w(f"| Fallback | q² ≥ {acc['fallback_nonlinear']['min_q2_scaffold_grouped']} with whole families held out; "
       f"shuffled q² < {acc['fallback_nonlinear']['max_shuffled_q2']} |")
     w("")
@@ -299,8 +324,23 @@ def write(audit: dict, models: dict, out_dir: Path) -> Path:
     w("")
     w("## What was left out, and why")
     w("")
+    abstained, scores, others = 0, [], []
     for reason, n in audit["not_ranked"].items():
+        found = re.search(r"closest local model scored ([0-9.]+), below the scope floor of ([0-9.]+)", reason)
+        if found:
+            abstained += n
+            scores.append(float(found.group(1)))
+            floor = found.group(2)
+        else:
+            others.append((reason, n))
+    for reason, n in sorted(others, key=lambda kv: -kv[1]):
         w(f"- **{n}** — {reason}")
+    if abstained:
+        # One line rather than thirty: these rows differ only in the similarity the router saw, and the
+        # distribution of that similarity is in audit.json for anyone who wants it.
+        w(f"- **{abstained}** — the router abstained: nothing in the registry was close enough to this "
+          f"molecule, the nearest local model scoring between {min(scores):.2f} and {max(scores):.2f} "
+          f"against a scope floor of {floor}")
     w("")
     w("Hammett σ and Taft Es were considered and deliberately excluded. Both are *substituent* constants: σ is "
       "defined for a group attached to a shared aromatic core, Es for a group next to a shared reaction centre. "

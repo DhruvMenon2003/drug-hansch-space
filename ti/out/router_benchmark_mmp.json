@@ -6,15 +6,15 @@
    "margin": 0.01
   },
   "drugs_with_a_known_eligible_target": 592,
-  "coverage": 0.4358,
-  "routed": 258,
-  "ambiguous": 44,
-  "abstained": 290,
-  "top1_accuracy_of_routed": 0.6822,
-  "top1_right": 176,
-  "wrong": 82,
-  "top3_accuracy_of_all": 0.4527,
-  "ambiguous_best_candidate_right": 0.3864,
+  "coverage": 0.4578,
+  "routed": 271,
+  "ambiguous": 47,
+  "abstained": 274,
+  "top1_accuracy_of_routed": 0.7196,
+  "top1_right": 195,
+  "wrong": 76,
+  "top3_accuracy_of_all": 0.5118,
+  "ambiguous_best_candidate_right": 0.4681,
   "baseline_always_largest_model": 0.0017,
   "note": "the router saw structures only; each drug's own training rows were hidden; a routing is counted correct when it names any target ChEMBL records for that molecule",
   "targets_per_drug_median": 1
@@ -37,7 +37,10 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL247",
+    "CHEMBL4005"
+   ],
    "score": null
   },
   {
@@ -115,13 +118,13 @@
     "CHEMBL205",
     "CHEMBL261"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL230",
+   "decision": "ambiguous",
+   "routed": null,
    "ranked": [
-    "CHEMBL230",
-    "CHEMBL221"
+    "CHEMBL205",
+    "CHEMBL261"
    ],
-   "score": 0.762
+   "score": 0.6489
   },
   {
    "name": "Acetylsalicylic Acid",
@@ -140,14 +143,10 @@
    "truth": [
     "CHEMBL245"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL245",
-   "ranked": [
-    "CHEMBL245",
-    "CHEMBL211",
-    "CHEMBL216"
-   ],
-   "score": 0.741
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "AFN-1252",
@@ -188,12 +187,10 @@
    "truth": [
     "CHEMBL1782"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL2034",
-   "ranked": [
-    "CHEMBL2034"
-   ],
-   "score": 0.643
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Alfacalcidol",
@@ -247,12 +244,10 @@
    "truth": [
     "CHEMBL1929"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL1808",
-   "ranked": [
-    "CHEMBL1808"
-   ],
-   "score": 0.8958
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Almotriptan",
@@ -483,13 +478,11 @@
     "CHEMBL249"
    ],
    "decision": "routed",
-   "routed": "CHEMBL2034",
+   "routed": "CHEMBL249",
    "ranked": [
-    "CHEMBL2034",
-    "CHEMBL208",
-    "CHEMBL1994"
+    "CHEMBL249"
    ],
-   "score": 0.8474
+   "score": 0.7396
   },
   {
    "name": "Argatroban",
@@ -649,14 +642,12 @@
    "truth": [
     "CHEMBL2363135"
    ],
-   "decision": "ambiguous",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL2363135",
    "ranked": [
-    "CHEMBL205",
-    "CHEMBL261",
-    "CHEMBL1951"
+    "CHEMBL2363135"
    ],
-   "score": 0.6401
+   "score": 0.503
   },
   {
    "name": "Bambuterol",
@@ -897,11 +888,12 @@
     "CHEMBL213"
    ],
    "decision": "routed",
-   "routed": "CHEMBL2034",
+   "routed": "CHEMBL210",
    "ranked": [
-    "CHEMBL2034"
+    "CHEMBL210",
+    "CHEMBL213"
    ],
-   "score": 0.7395
+   "score": 0.5722
   },
   {
    "name": "Bivalirudin",
@@ -1057,7 +1049,7 @@
    "ranked": [
     "CHEMBL1977"
    ],
-   "score": 0.7427
+   "score": 0.8437
   },
   {
    "name": "Canagliflozin",
@@ -1312,10 +1304,13 @@
    "truth": [
     "CHEMBL1907598"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL1907598",
+   "ranked": [
+    "CHEMBL1907598",
+    "CHEMBL2093869"
+   ],
+   "score": 0.7834
   },
   {
    "name": "Cilomilast",
@@ -1383,10 +1378,12 @@
    "truth": [
     "CHEMBL2363135"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": 0.7916
   },
   {
    "name": "Clavulanic Acid",
@@ -1439,12 +1436,13 @@
    "truth": [
     "CHEMBL2095215"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL251",
    "ranked": [
-    "CHEMBL2094255"
+    "CHEMBL251",
+    "CHEMBL226"
    ],
-   "score": null
+   "score": 0.6191
   },
   {
    "name": "Clomipramine",
@@ -1647,12 +1645,12 @@
    "truth": [
     "CHEMBL204"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL204",
    "ranked": [
     "CHEMBL204"
    ],
-   "score": null
+   "score": 0.4675
   },
   {
    "name": "Dabrafenib",
@@ -1660,11 +1658,11 @@
     "CHEMBL5145"
    ],
    "decision": "routed",
-   "routed": "CHEMBL3587",
+   "routed": "CHEMBL5145",
    "ranked": [
-    "CHEMBL3587"
+    "CHEMBL5145"
    ],
-   "score": 0.5238
+   "score": 0.5949
   },
   {
    "name": "Daclatasvir",
@@ -1716,10 +1714,12 @@
    "truth": [
     "CHEMBL3884"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL3884",
+   "ranked": [
+    "CHEMBL3884"
+   ],
+   "score": 0.829
   },
   {
    "name": "Darapladib",
@@ -1753,10 +1753,12 @@
    "truth": [
     "CHEMBL243"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL243",
+   "ranked": [
+    "CHEMBL243"
+   ],
+   "score": 0.8657
   },
   {
    "name": "Dasabuvir",
@@ -1765,11 +1767,7 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [
-    "CHEMBL243",
-    "CHEMBL4302",
-    "CHEMBL233"
-   ],
+   "ranked": [],
    "score": null
   },
   {
@@ -1947,10 +1945,13 @@
    "truth": [
     "CHEMBL2094253"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.7323
   },
   {
    "name": "Didanosine",
@@ -2090,10 +2091,14 @@
    "truth": [
     "CHEMBL231"
    ],
-   "decision": "abstain",
+   "decision": "ambiguous",
    "routed": null,
-   "ranked": [],
-   "score": null
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL231",
+    "CHEMBL222"
+   ],
+   "score": 0.6455
   },
   {
    "name": "Diprophylline",
@@ -2186,10 +2191,14 @@
    "truth": [
     "CHEMBL217"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL234",
+   "ranked": [
+    "CHEMBL234",
+    "CHEMBL214",
+    "CHEMBL224"
+   ],
+   "score": 0.6209
   },
   {
    "name": "Dopamine",
@@ -2316,10 +2325,14 @@
     "CHEMBL222",
     "CHEMBL228"
    ],
-   "decision": "abstain",
+   "decision": "ambiguous",
    "routed": null,
-   "ranked": [],
-   "score": null
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL228",
+    "CHEMBL238"
+   ],
+   "score": 0.6647
   },
   {
    "name": "Edotecarin",
@@ -2532,14 +2545,10 @@
    "truth": [
     "CHEMBL242"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL206",
-   "ranked": [
-    "CHEMBL206",
-    "CHEMBL228",
-    "CHEMBL2034"
-   ],
-   "score": 0.5269
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Ethinylestradiol",
@@ -2558,11 +2567,7 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [
-    "CHEMBL1980",
-    "CHEMBL240",
-    "CHEMBL205"
-   ],
+   "ranked": [],
    "score": null
   },
   {
@@ -2832,12 +2837,12 @@
     "CHEMBL2034"
    ],
    "decision": "routed",
-   "routed": "CHEMBL234",
+   "routed": "CHEMBL2034",
    "ranked": [
-    "CHEMBL234",
-    "CHEMBL213"
+    "CHEMBL2034",
+    "CHEMBL208"
    ],
-   "score": 0.5621
+   "score": 0.7836
   },
   {
    "name": "Fluvastatin",
@@ -2886,7 +2891,7 @@
    "ranked": [
     "CHEMBL249"
    ],
-   "score": 0.8018
+   "score": 0.629
   },
   {
    "name": "Fosfomycin",
@@ -2929,7 +2934,11 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL238",
+    "CHEMBL228",
+    "CHEMBL222"
+   ],
    "score": null
   },
   {
@@ -3054,14 +3063,14 @@
    "truth": [
     "CHEMBL224"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL214",
+   "decision": "ambiguous",
+   "routed": null,
    "ranked": [
-    "CHEMBL214",
-    "CHEMBL1983",
-    "CHEMBL1898"
+    "CHEMBL217",
+    "CHEMBL234",
+    "CHEMBL214"
    ],
-   "score": 0.6293
+   "score": 0.7424
   },
   {
    "name": "Hydrocortisone",
@@ -3115,25 +3124,24 @@
    "truth": [
     "CHEMBL2095215"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL2034",
-   "ranked": [
-    "CHEMBL2034"
-   ],
-   "score": 0.7395
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Ibrutinib",
    "truth": [
     "CHEMBL5251"
    ],
-   "decision": "ambiguous",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL5251",
    "ranked": [
-    "CHEMBL204",
-    "CHEMBL325"
+    "CHEMBL5251",
+    "CHEMBL1862",
+    "CHEMBL240"
    ],
-   "score": 0.4679
+   "score": 0.8723
   },
   {
    "name": "Ibuprofen",
@@ -3202,7 +3210,9 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL1995"
+   ],
    "score": null
   },
   {
@@ -3263,12 +3273,13 @@
     "CHEMBL2094253"
    ],
    "decision": "routed",
-   "routed": "CHEMBL240",
+   "routed": "CHEMBL230",
    "ranked": [
-    "CHEMBL240",
-    "CHEMBL251"
+    "CHEMBL230",
+    "CHEMBL221",
+    "CHEMBL235"
    ],
-   "score": 0.6031
+   "score": 0.815
   },
   {
    "name": "Indoprofen",
@@ -3422,14 +3433,10 @@
    "truth": [
     "CHEMBL2094253"
    ],
-   "decision": "ambiguous",
+   "decision": "abstain",
    "routed": null,
-   "ranked": [
-    "CHEMBL205",
-    "CHEMBL261",
-    "CHEMBL1951"
-   ],
-   "score": 0.6401
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Lamivudine",
@@ -3540,14 +3547,12 @@
    "truth": [
     "CHEMBL1978"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL1978",
    "ranked": [
-    "CHEMBL1980",
-    "CHEMBL240",
-    "CHEMBL205"
+    "CHEMBL1978"
    ],
-   "score": null
+   "score": 0.7364
   },
   {
    "name": "Leuprolide",
@@ -3559,30 +3564,30 @@
    "ranked": [
     "CHEMBL1855"
    ],
-   "score": 0.6546
+   "score": 0.7732
   },
   {
    "name": "Levetiracetam",
    "truth": [
     "CHEMBL4478"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL230",
-   "ranked": [
-    "CHEMBL230",
-    "CHEMBL221"
-   ],
-   "score": 0.762
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Levobupivacaine",
    "truth": [
     "CHEMBL2072"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL2321613"
+   ],
+   "score": 0.755
   },
   {
    "name": "Levocabastine",
@@ -3644,11 +3649,11 @@
     "CHEMBL284"
    ],
    "decision": "routed",
-   "routed": "CHEMBL3884",
+   "routed": "CHEMBL284",
    "ranked": [
-    "CHEMBL3884"
+    "CHEMBL284"
    ],
-   "score": 0.9016
+   "score": 0.8096
   },
   {
    "name": "Lincomycin",
@@ -3665,22 +3670,24 @@
    "truth": [
     "CHEMBL2363135"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL2039",
    "ranked": [
-    "CHEMBL262"
+    "CHEMBL2039"
    ],
-   "score": null
+   "score": 0.5317
   },
   {
    "name": "Liraglutide",
    "truth": [
     "CHEMBL1784"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL1784",
+   "ranked": [
+    "CHEMBL1784"
+   ],
+   "score": 0.8682
   },
   {
    "name": "Lisdexamfetamine",
@@ -3703,13 +3710,11 @@
     "CHEMBL1808"
    ],
    "decision": "routed",
-   "routed": "CHEMBL210",
+   "routed": "CHEMBL1808",
    "ranked": [
-    "CHEMBL210",
-    "CHEMBL246",
-    "CHEMBL234"
+    "CHEMBL1808"
    ],
-   "score": 0.8909
+   "score": 0.662
   },
   {
    "name": "Lorazepam",
@@ -3726,10 +3731,14 @@
    "truth": [
     "CHEMBL227"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL227",
+   "ranked": [
+    "CHEMBL227",
+    "CHEMBL2094125",
+    "CHEMBL2093863"
+   ],
+   "score": 0.7558
   },
   {
    "name": "Losmapimod",
@@ -3795,10 +3804,13 @@
    "truth": [
     "CHEMBL274"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL274",
+   "ranked": [
+    "CHEMBL274",
+    "CHEMBL240"
+   ],
+   "score": 0.7857
   },
   {
    "name": "Maxipost",
@@ -4020,14 +4032,14 @@
    "truth": [
     "CHEMBL213"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL210",
+   "decision": "ambiguous",
+   "routed": null,
    "ranked": [
+    "CHEMBL213",
     "CHEMBL210",
-    "CHEMBL246",
-    "CHEMBL234"
+    "CHEMBL287"
    ],
-   "score": 0.8909
+   "score": 0.622
   },
   {
    "name": "Midazolam",
@@ -4069,12 +4081,13 @@
     "CHEMBL2034",
     "CHEMBL208"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL2034",
    "ranked": [
-    "CHEMBL1849"
+    "CHEMBL2034",
+    "CHEMBL208"
    ],
-   "score": null
+   "score": 0.8308
   },
   {
    "name": "Miglitol",
@@ -4157,7 +4170,11 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL1806",
+    "CHEMBL203",
+    "CHEMBL222"
+   ],
    "score": null
   },
   {
@@ -4323,25 +4340,26 @@
    "truth": [
     "CHEMBL2095181"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL2095181",
+   "decision": "ambiguous",
+   "routed": null,
    "ranked": [
+    "CHEMBL233",
     "CHEMBL2095181"
    ],
-   "score": 0.7612
+   "score": 0.7732
   },
   {
    "name": "Naproxen",
    "truth": [
     "CHEMBL2094253"
    ],
-   "decision": "ambiguous",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL230",
    "ranked": [
-    "CHEMBL205",
-    "CHEMBL261"
+    "CHEMBL230",
+    "CHEMBL221"
    ],
-   "score": 0.5814
+   "score": 0.7702
   },
   {
    "name": "Naratriptan",
@@ -4721,14 +4739,12 @@
    "truth": [
     "CHEMBL233"
    ],
-   "decision": "ambiguous",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL2095181",
    "ranked": [
-    "CHEMBL205",
-    "CHEMBL261",
-    "CHEMBL1951"
+    "CHEMBL2095181"
    ],
-   "score": 0.6401
+   "score": 0.6497
   },
   {
    "name": "Oxytetracycline",
@@ -4814,7 +4830,7 @@
    "ranked": [
     "CHEMBL1977"
    ],
-   "score": 0.7427
+   "score": 0.5741
   },
   {
    "name": "Paritaprevir",
@@ -4859,10 +4875,14 @@
     "CHEMBL1936",
     "CHEMBL2095189"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL1936",
+   "ranked": [
+    "CHEMBL1936",
+    "CHEMBL2093865",
+    "CHEMBL1844"
+   ],
+   "score": 0.6783
   },
   {
    "name": "Pazufloxacin",
@@ -5108,13 +5128,10 @@
    "truth": [
     "CHEMBL402"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL402",
-   "ranked": [
-    "CHEMBL402",
-    "CHEMBL325"
-   ],
-   "score": 0.5821
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
   },
   {
    "name": "Prazosin",
@@ -5137,9 +5154,10 @@
    "decision": "routed",
    "routed": "CHEMBL2034",
    "ranked": [
-    "CHEMBL2034"
+    "CHEMBL2034",
+    "CHEMBL208"
    ],
-   "score": 0.643
+   "score": 0.6935
   },
   {
    "name": "Prednisone",
@@ -5242,7 +5260,11 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL221"
+   ],
    "score": null
   },
   {
@@ -5347,21 +5369,25 @@
     "CHEMBL206"
    ],
    "decision": "routed",
-   "routed": "CHEMBL220",
+   "routed": "CHEMBL206",
    "ranked": [
-    "CHEMBL220"
+    "CHEMBL206",
+    "CHEMBL242",
+    "CHEMBL2093866"
    ],
-   "score": 0.6917
+   "score": 0.8085
   },
   {
    "name": "Raltitrexed",
    "truth": [
     "CHEMBL1952"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL1952",
+   "ranked": [
+    "CHEMBL1952"
+   ],
+   "score": 0.6268
   },
   {
    "name": "Ramelteon",
@@ -5395,7 +5421,11 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL1980",
+    "CHEMBL1997"
+   ],
    "score": null
   },
   {
@@ -5417,24 +5447,26 @@
    "truth": [
     "CHEMBL251"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL251",
+   "ranked": [
+    "CHEMBL251",
+    "CHEMBL226",
+    "CHEMBL2094257"
+   ],
+   "score": 0.8529
   },
   {
    "name": "Remifentanil",
    "truth": [
     "CHEMBL233"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL233",
    "ranked": [
-    "CHEMBL1980",
-    "CHEMBL240",
-    "CHEMBL205"
+    "CHEMBL233"
    ],
-   "score": null
+   "score": 0.6932
   },
   {
    "name": "Remimazolam",
@@ -5522,14 +5554,14 @@
     "CHEMBL217",
     "CHEMBL224"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL231",
+   "decision": "ambiguous",
+   "routed": null,
    "ranked": [
-    "CHEMBL231",
+    "CHEMBL224",
     "CHEMBL240",
     "CHEMBL234"
    ],
-   "score": 0.4958
+   "score": 0.5676
   },
   {
    "name": "Ritodrine",
@@ -5715,11 +5747,13 @@
     "CHEMBL216"
    ],
    "decision": "routed",
-   "routed": "CHEMBL249",
+   "routed": "CHEMBL245",
    "ranked": [
-    "CHEMBL249"
+    "CHEMBL245",
+    "CHEMBL216",
+    "CHEMBL211"
    ],
-   "score": 0.8018
+   "score": 0.6887
   },
   {
    "name": "Selegiline",
@@ -5841,14 +5875,14 @@
     "CHEMBL211",
     "CHEMBL245"
    ],
-   "decision": "routed",
-   "routed": "CHEMBL245",
+   "decision": "abstain",
+   "routed": null,
    "ranked": [
+    "CHEMBL216",
     "CHEMBL245",
-    "CHEMBL211",
-    "CHEMBL216"
+    "CHEMBL211"
    ],
-   "score": 0.6717
+   "score": null
   },
   {
    "name": "Sotalol",
@@ -6204,10 +6238,13 @@
    "truth": [
     "CHEMBL1902"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL2842",
+   "ranked": [
+    "CHEMBL2842",
+    "CHEMBL1902"
+   ],
+   "score": 0.8698
   },
   {
    "name": "Teniposide",
@@ -6314,7 +6351,9 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL2363135"
+   ],
    "score": null
   },
   {
@@ -6378,12 +6417,12 @@
    "truth": [
     "CHEMBL2001"
    ],
-   "decision": "abstain",
-   "routed": null,
+   "decision": "routed",
+   "routed": "CHEMBL2001",
    "ranked": [
-    "CHEMBL228"
+    "CHEMBL2001"
    ],
-   "score": null
+   "score": 0.7091
   },
   {
    "name": "Tigecycline",
@@ -6490,7 +6529,11 @@
    ],
    "decision": "abstain",
    "routed": null,
-   "ranked": [],
+   "ranked": [
+    "CHEMBL1951",
+    "CHEMBL2039",
+    "CHEMBL2023"
+   ],
    "score": null
   },
   {
@@ -6673,7 +6716,7 @@
    "ranked": [
     "CHEMBL2034"
    ],
-   "score": 0.7886
+   "score": 0.6583
   },
   {
    "name": "Triapine",
@@ -6856,10 +6899,14 @@
     "CHEMBL222",
     "CHEMBL228"
    ],
-   "decision": "abstain",
+   "decision": "ambiguous",
    "routed": null,
-   "ranked": [],
-   "score": null
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL228",
+    "CHEMBL238"
+   ],
+   "score": 0.8878
   },
   {
    "name": "Verapamil",
@@ -6929,10 +6976,12 @@
    "truth": [
     "CHEMBL284"
    ],
-   "decision": "abstain",
-   "routed": null,
-   "ranked": [],
-   "score": null
+   "decision": "routed",
+   "routed": "CHEMBL284",
+   "ranked": [
+    "CHEMBL284"
+   ],
+   "score": 0.8059
   },
   {
    "name": "Viloxazine",

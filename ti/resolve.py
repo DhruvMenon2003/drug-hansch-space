@@ -43,28 +43,34 @@ USER_AGENT = "drug-hansch-space/ti (research use; contact via repository)"
 
 
 def drugbank_smiles(path: Path) -> dict[str, str]:
-    """name -> SMILES from the DrugBank export. The file repeats column names, so every 'name' column is read."""
+    """name -> SMILES from the DrugBank export.
+
+    The export is a wide join of several DrugBank tables with repeated column names, so a single row carries a
+    clinical trial as well as a drug: column 'title' is the trial's title and column 'name' is the drug's own
+    name. Only the drug's name describes the structure in that row. Reading 'title' as a name is how
+    "Haloperidol + Promethazine + Chlorpromazine", a trial on a Zolmitriptan row, once gave haloperidol
+    zolmitriptan's structure. So the name column is the drug block's own: the last 'name' before moldb_smiles.
+    """
     csv.field_size_limit(10 ** 7)
     out: dict[str, str] = {}
     with path.open(newline="", encoding="utf-8", errors="replace") as handle:
         reader = csv.reader(handle)
         header = next(reader)
-        name_cols = [i for i, c in enumerate(header) if c in ("name", "title")]
-        smiles_col = [i for i, c in enumerate(header) if c == "moldb_smiles"]
-        if not smiles_col:
+        smiles_cols = [i for i, c in enumerate(header) if c == "moldb_smiles"]
+        if not smiles_cols:
             return out
-        smiles_col = smiles_col[0]
+        smiles_col = smiles_cols[0]
+        drug_name_cols = [i for i, c in enumerate(header) if c == "name" and i < smiles_col]
+        if not drug_name_cols:
+            return out
+        name_col = drug_name_cols[-1]
         for row in reader:
             if len(row) <= smiles_col:
                 continue
             smiles = row[smiles_col].strip()
-            if not smiles:
-                continue
-            for i in name_cols:
-                if i < len(row):
-                    key = normalise_name(row[i])
-                    if key:
-                        out.setdefault(key, smiles)
+            key = normalise_name(row[name_col]) if name_col < len(row) else ""
+            if smiles and key:
+                out.setdefault(key, smiles)
     return out
 
 
@@ -134,6 +140,50 @@ def chembl_mechanism(chembl_id: str) -> list[dict]:
     return out
 
 
+def structure_skeleton(smiles: str) -> str | None:
+    """The InChIKey connectivity block of a SMILES, standardised exactly as the pipeline standardises it.
+
+    Only the first block is compared, so a stereo re-assignment between two databases is not read as a
+    different molecule, while a different skeleton is.
+    """
+    try:
+        from descriptors import standardise
+        from rdkit import Chem
+    except Exception:
+        return None
+    try:
+        standardised = standardise(smiles)
+        mol = standardised[0] if isinstance(standardised, tuple) else standardised
+        return Chem.MolToInchiKey(mol).split("-")[0] if mol is not None else None
+    except Exception:
+        return None
+
+
+def cross_check_structures(molecules: list[dict], book: dict[str, str], cache: dict) -> list[dict]:
+    """Where DrugBank and ChEMBL both name a structure for a drug, say whether they are the same molecule.
+
+    This is the check that catches a name joined to the wrong structure, which is how a trial title once gave
+    haloperidol zolmitriptan's skeleton. A disagreement is recorded on the molecule and counted in the ledger
+    rather than resolved silently, because which source is right is a question about that one drug.
+    """
+    disagreements = []
+    for mol in molecules:
+        drugbank = book.get(mol["name_key"])
+        chembl = (cache.get(mol["name_key"]) or {}).get("smiles_chembl")
+        if not (drugbank and chembl):
+            mol["structure_agrees_with_chembl"] = None
+            continue
+        ours, theirs = structure_skeleton(drugbank), structure_skeleton(chembl)
+        if not (ours and theirs):
+            mol["structure_agrees_with_chembl"] = None
+            continue
+        mol["structure_agrees_with_chembl"] = ours == theirs
+        if ours != theirs:
+            disagreements.append({"name": mol["name"], "chembl_id": mol.get("chembl_id"),
+                                  "drugbank_smiles": drugbank, "chembl_smiles": chembl})
+    return disagreements
+
+
 def resolve(offline: bool = False, limit: int | None = None, workers: int = 6) -> dict:
     data = build()
     molecules = data["molecules"]
@@ -184,6 +234,10 @@ def resolve(offline: bool = False, limit: int | None = None, workers: int = 6) -
             "dataset1" if mol.get("smiles_dataset1") else None
         )
 
+    disagreements = cross_check_structures(molecules, book, cache)
+    checked = sum(1 for m in molecules if m.get("structure_agrees_with_chembl") is not None)
+    data["structure_disagreements"] = disagreements
+
     data["ledger"].update({
         "with a structure": sum(1 for m in molecules if m.get("smiles")),
         "  from DrugBank export": sum(1 for m in molecules if m.get("smiles_source") == "drugbank_drugs_info.csv"),
@@ -192,6 +246,9 @@ def resolve(offline: bool = False, limit: int | None = None, workers: int = 6) -
         "matched in ChEMBL by exact name": sum(1 for m in molecules if m.get("chembl_id")),
         "with a primary target": sum(1 for m in molecules if m.get("target_chembl_id")),
         "distinct primary targets": len({m["target_chembl_id"] for m in molecules if m.get("target_chembl_id")}),
+        "structures checked against ChEMBL's own": checked,
+        "  same molecule": checked - len(disagreements),
+        "  different (recorded per row, not silently merged)": len(disagreements),
     })
     return data
 
