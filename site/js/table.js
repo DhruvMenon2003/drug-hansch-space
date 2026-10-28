@@ -136,13 +136,19 @@ export function initTable() {
 // ---- The two panels that are not part of the first load: the QED distributions and the ligand-binding overlay. ----
 // Their modules are imported on first use. The specifiers are assembled rather than written as literals so they stay
 // outside the module graph the build preloads (tools/check_site.py reads the literals).
-const QED_MOD = 'qed.js', BIND_MOD = 'binding.js';
-let qed = null, binding = null;
+const QED_MOD = 'qed.js', BIND_MOD = 'binding.js', SCAF_MOD = 'clusters.js';
+let qed = null, binding = null, clusters = null;
 
 /** Import and start the QED panel on first use. Later calls hand back the same module. */
 export function openQed() {
   qed ||= import(`./${QED_MOD}`).then(m => { m.initQed(); return m; });
   return qed;
+}
+
+/** Import and start the scaffold cluster panel on first use. Later calls hand back the same module. */
+export function openClusters() {
+  clusters ||= import(`./${SCAF_MOD}`).then(m => { m.initClusters(); return m; });
+  return clusters;
 }
 
 /** Import and start the binding overlay on first use, then toggle it. Needs WebGL; without it the button says so. */
@@ -162,6 +168,8 @@ export function toggleBinding() {
 export function initExtras({ gl = true } = {}) {
   const det = $('#qed-details');
   det?.addEventListener('toggle', () => { if (det.open) openQed(); });
+  const scaf = $('#scaf-details');
+  scaf?.addEventListener('toggle', () => { if (scaf.open) openClusters(); });
   const btn = $('#d-bind');
   if (!gl) { if (btn) { btn.disabled = true; btn.title = 'The binding overlay needs WebGL.'; } return; }
   btn?.addEventListener('click', () => toggleBinding());

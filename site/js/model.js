@@ -71,6 +71,7 @@ export function colorOf(d) {
     const point = app.qsarByCid.get(d.cid);
     return point ? (point.outside_domain ? T.mark : T.s1) : T.point;
   }
+  if (app.scafFocus) return app.scafFocus.has(d.cid) ? T.s1 : T.point;
   switch (v.color) {
     case 'atc': {
       const mine = l1sOf(d), slot = v.atc.findIndex(c => c && mine.includes(c));

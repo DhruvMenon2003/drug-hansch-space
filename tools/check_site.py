@@ -18,8 +18,8 @@ What it checks (each line of the report is one check; "FAIL" lines carry the det
               no other inline script, no inline event handler, no unsafe-eval / unsafe-inline for scripts, no remote source
   importmap   every entry resolves to a file (or a folder for a prefix entry)
   preload     the modulepreload list equals the real import graph of js/main.js (static + dynamic, through the import map),
-              data/drugs.json and data/hansch.json are preloaded as=fetch crossorigin fetchpriority=low, the fonts as=font,
-              and no hint points at another origin
+              with the 3D layer's branch inside <template id="gl-preload"> instead, data/drugs.json and data/hansch.json
+              preloaded as=fetch crossorigin fetchpriority=low, the fonts as=font, and no hint pointing at another origin
   json        every .json / .webmanifest parses
   data        drugs.json / hansch.json / conformer shards agree with each other and with the page and the code
               (counts, CIDs, shard = cid % shards = MOL_SHARDS in js/data.js, no full molecules.json in site/, stamped build ids equal)
@@ -644,18 +644,30 @@ def check_importmap(cx):
     rep.note(f"{len(cx.importmap)} entries resolve")
 
 
+GL_ENTRY = "js/boot-gl.js"
+
+
 def expected_preloads(cx):
-    """The files js/main.js needs: itself plus its whole import graph (static and dynamic), in discovery order."""
+    """(core, gl): the files js/main.js needs at once, and the ones only the 3D layer needs, in discovery order.
+
+    main.js imports js/boot-gl.js only when WebGL works, so that branch of the graph is hinted from an inert <template>
+    the page copies into the head in that case: a browser without WebGL must not download three.js at all
+    (tests/e2e/fallbacks.spec.mjs). Everything else is a plain <link rel="modulepreload">."""
     edges, _ = cx.graph()
-    seen, order, todo = set(), [], [cx.entry] if cx.entry else []
-    while todo:
-        f = todo.pop(0)
-        if f in seen or f is None:
-            continue
-        seen.add(f)
-        order.append(f)
-        todo += edges.get(f, [])
-    return order
+
+    def reach(roots, blocked=()):
+        seen, order, todo = set(blocked), [], [r for r in roots if r]
+        while todo:
+            f = todo.pop(0)
+            if f is None or f in seen:
+                continue
+            seen.add(f)
+            order.append(f)
+            todo += edges.get(f, [])
+        return order
+
+    core = reach([cx.entry], blocked={GL_ENTRY})
+    return core, [f for f in reach([GL_ENTRY]) if f not in set(core)]
 
 
 def preload_block(text):
@@ -663,10 +675,19 @@ def preload_block(text):
     return m
 
 
+def split_gl_template(block):
+    """(outside, inside) of the <template id="gl-preload"> that holds the 3D layer's hints."""
+    m = re.search(r'<template id="gl-preload".*?>(.*?)</template>', block, re.S)
+    return (block[: m.start()] + block[m.end():], m.group(1)) if m else (block, None)
+
+
 def render_preload_block(cx):
-    mods = expected_preloads(cx)
+    mods, gl = expected_preloads(cx)
     L = ["<!-- preload:start (written by tools/check_site.py --write-preload from the import graph of js/main.js; do not edit by hand) -->"]
     L += [f'<link rel="modulepreload" href="{f}">' for f in mods]
+    L.append('<template id="gl-preload"><!-- the 3D layer; js/main.js copies these into the head only when WebGL works -->')
+    L += [f'<link rel="modulepreload" href="{f}">' for f in gl]
+    L.append("</template>")
     L += [f'<link rel="preload" href="{f}" as="fetch" type="application/json" crossorigin fetchpriority="low">' for f in data_fetches(cx)]
     L.append("<!-- preload:end -->")
     return "\n".join(L)
@@ -695,9 +716,9 @@ def check_preload(cx):
     if not m:
         rep.error("index.html has no <!-- preload:start --> ... <!-- preload:end --> block")
         return
-    block = Page(m.group(1))
+    outside, inside = split_gl_template(m.group(1))
     mods, fetches = [], []
-    for a, ln in block.find("link"):
+    for a, ln in Page(outside).find("link"):
         rel = (a.get("rel") or "").lower()
         if rel == "modulepreload":
             mods.append(norm("", a.get("href", "")))
@@ -705,14 +726,27 @@ def check_preload(cx):
             fetches.append(a)
         else:
             rep.error(f"preload block: unexpected <link rel={rel!r}>")
-    want = expected_preloads(cx)
+    glmods = []
+    if inside is not None:
+        for a, ln in Page(inside).find("link"):
+            if (a.get("rel") or "").lower() != "modulepreload":
+                rep.error('the gl-preload template holds only <link rel="modulepreload">')
+            else:
+                glmods.append(norm("", a.get("href", "")))
+    want, want_gl = expected_preloads(cx)
+    if inside is None and want_gl:
+        rep.error('index.html has no <template id="gl-preload"> for the 3D layer\'s hints')
     got_set, want_set = set(mods), set(want)
     for f in sorted(want_set - got_set):
         rep.error(f"modulepreload missing for {f} (it is in the import graph of {cx.entry})")
     for f in sorted(got_set - want_set):
-        rep.error(f"modulepreload for {f}, which js/main.js does not import (static or dynamic)")
+        rep.error(f"modulepreload for {f}, which js/main.js does not import outside the 3D layer")
     if len(mods) != len(got_set):
         rep.error("duplicate modulepreload entries")
+    for f in sorted(set(want_gl) - set(glmods)):
+        rep.error(f"the gl-preload template is missing {f} (the 3D layer imports it)")
+    for f in sorted(set(glmods) - set(want_gl)):
+        rep.error(f"the gl-preload template hints {f}, which the 3D layer does not import")
     # data
     wants = data_fetches(cx)
     gots = [norm("", a.get("href", "")) for a in fetches]
@@ -741,7 +775,8 @@ def check_preload(cx):
             t = norm("", href)
             if t is None or not site.exists(t):
                 rep.error(f"index.html:{ln}: font preload target {href} does not exist")
-    rep.note(f"{len(mods)} modules + {len(fetches)} data files; the list equals the import graph" if not rep.failed("preload") else "")
+    rep.note(f"{len(mods)} modules + {len(glmods)} in the 3D template + {len(fetches)} data files; the lists equal the import graph"
+              if not rep.failed("preload") else "")
 
 
 def check_json(cx):
@@ -988,7 +1023,8 @@ def check_budget(cx):
                 t = norm("", a["src"])
                 if t and site.exists(t):
                     js_files.add(t)
-        js_files.update(f for f in expected_preloads(cx) if site.exists(f))
+        core, gl = expected_preloads(cx)       # a browser with WebGL downloads both halves, so the budget counts both
+        js_files.update(f for f in core + gl if site.exists(f))
         js = sum(site.gz_kb(f) for f in js_files)
         data = sum(site.gz_kb(f) for f in data_fetches(cx) if site.exists(f))
         fonts = sum(site.gz_kb(f) for f in set(font_files))

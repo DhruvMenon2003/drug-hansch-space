@@ -1,5 +1,6 @@
 // A lazy, native dialog on the existing explorer. Reads the notebook's frozen export; never fits a model in the browser.
 import { app, bus, $, esc, fin, fx } from './kernel.js';
+import { announce } from './announce.js';
 import { selectDrug } from './view.js';
 
 const DATA_URL = 'data/qsar_drd2.json';
@@ -193,6 +194,7 @@ function renderCompounds() {
   const query = $('#qsar-search').value, split = $('#qsar-split-filter').value, domain = $('#qsar-domain-filter').value;
   const visible = filterCompounds(data.compounds, joins, { query, split, domain });
   $('#qsar-record-count').textContent = `Showing ${visible.length} of ${data.n} compounds · ${visible.filter(p => p.outside_domain).length} outside the applicability domain.`;
+  announce($('#qsar-record-count').textContent);
   $('#qsar-reset-filters').disabled = !query && !split && !domain;
   $('#qsar-no-matches').hidden = !!visible.length;
   $('#qsar-compounds').innerHTML = visible.map(p => {

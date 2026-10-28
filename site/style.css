@@ -46,6 +46,8 @@
   --mark: #b3441c;          /* 4.9:1 on --bg (was #c94f24, 4.0:1) */
   --point: #7a8a85;         /* grey spheres: 3.2:1 against --bg, the non-text minimum is 3:1 (was #9aaaa5, 2.2:1) */
   --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;
+  --ok: #0f7a52;            /* 4.8:1 on --bg: the percentile box's "inside" band */
+  --warn: #8a5200;          /* 5.1:1 on --bg: "past a percentile" */
   --q1: #cde2fb; --q2: #86b6ef; --q3: #3987e5; --q4: #1c5cab; --q5: #0d366b;
   --surface-alpha: 0.28;
   --font-display: "Bricolage Grotesque", "Bricolage Fallback", "Segoe UI", system-ui, sans-serif;
@@ -64,6 +66,7 @@
     --bg: #0d1416; --panel: #131c1f; --ink: #e4ecea; --ink-2: #a9b8b4; --muted: #7a8b87; --line: #27353a; --grid: #1b272b;
     --accent: #5aa8ea; --accent-ink: #08131a; --mark: #f07a4a; --point: #5f726d;
     --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --ok: #3fc795; --warn: #e0a33c;
     --q1: #184f95; --q2: #256abf; --q3: #3987e5; --q4: #86b6ef; --q5: #cde2fb;
     --surface-alpha: 0.32;
     color-scheme: dark;
@@ -73,6 +76,7 @@
   --bg: #0d1416; --panel: #131c1f; --ink: #e4ecea; --ink-2: #a9b8b4; --muted: #7a8b87; --line: #27353a; --grid: #1b272b;
   --accent: #5aa8ea; --accent-ink: #08131a; --mark: #f07a4a; --point: #5f726d;   /* --point: 3.6:1 on --bg (was #4f605c, 2.8:1) */
   --s1: #3987e5; --s2: #d95926; --s3: #199e70;
+  --ok: #3fc795; --warn: #e0a33c;
   --q1: #184f95; --q2: #256abf; --q3: #3987e5; --q4: #86b6ef; --q5: #cde2fb;
   --surface-alpha: 0.32;
   color-scheme: dark;
@@ -194,6 +198,7 @@ button:disabled { cursor: default; }
 .field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .field.wide { grid-column: 1 / -1; }
 .field label, .field .label { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+.field label small { display: block; font-size: 0.78rem; letter-spacing: 0; text-transform: none; }   /* a <small> of a 12.5 px label is 10 px */
 select, input[type="search"] { font: 400 0.95rem var(--font-display); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-height: var(--target); width: 100%; min-width: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font: 500 0.82rem/1 var(--font-display); padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink-2); }
@@ -209,6 +214,10 @@ select, input[type="search"] { font: 400 0.95rem var(--font-display); color: var
 /* The checkbox is 20 px; its label is the 44 px target */
 .check { display: inline-flex; gap: 10px; align-items: center; min-height: var(--target); font-family: var(--font-display); font-size: 0.85rem; color: var(--ink); cursor: pointer; }
 .check input[type="checkbox"] { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
+/* A file input draws its own button, and that button is about 21 px tall whatever the font size: the minimum target has to
+   come from the input box itself, with the padding that centres the button inside it. */
+.field input[type="file"] { min-height: var(--target); padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--ink); font-family: var(--font-display); font-size: 0.85rem; max-width: 100%; }
 .field label.check { text-transform: none; letter-spacing: 0; font-size: 0.85rem; color: var(--ink); }
 .depict { display: flex; justify-content: center; }
 .depict svg { max-width: 100%; height: auto; }
@@ -273,6 +282,36 @@ select, input[type="search"] { font: 400 0.95rem var(--font-display); color: var
 .qsb-row input, .qsb-row select, #qsb-dialog select { min-height: var(--target); }
 .qsb-pass { color: var(--s1, inherit); font-weight: 600; }
 .qsb-fail { color: var(--mark, inherit); font-weight: 600; }
+
+/* The gate chain (js/gates.js): the workflow as a strip of gates above the steps, each one a question this run either
+   answers or does not. The verdict is always a word, so the tint is a second cue and never the only one. */
+.gate-flow { display: flex; align-items: stretch; gap: 2px; overflow-x: auto; padding: 4px 0 8px; }
+.gate-arrow { align-self: center; color: var(--muted); flex: none; }
+.gate-chip { flex: none; display: grid; gap: 1px; justify-items: start; min-height: var(--target); padding: 6px 10px;
+  border: 1px solid var(--line); border-left-width: 3px; border-radius: 8px; background: var(--bg); color: var(--ink); text-align: left; }
+.gate-chip .gate-id { font-family: var(--font-data); font-size: 12px; color: var(--muted); }
+.gate-chip .gate-name { font-family: var(--font-display); font-size: 0.8rem; white-space: nowrap; }
+.gate-chip .gate-verdict { font-family: var(--font-data); font-size: 12px; }
+.gates { margin-block: 8px; }
+.gates .gate { padding: 10px 12px; margin-block: 8px; border: 1px solid var(--line); border-left-width: 3px; border-radius: 8px; }
+.gates .gate h3 { font-size: 0.9rem; margin: 0 0 4px; }
+.gates .gate h3 .gate-verdict { font-family: var(--font-data); font-size: 0.78rem; color: var(--muted); }
+.gate-q { margin: 0 0 6px; color: var(--ink-2); }
+.gate-ev { margin: 0; padding-left: 20px; font-family: var(--font-data); font-size: 0.8rem; color: var(--ink-2); }
+.gate-fix { margin: 6px 0 0; font-size: 0.85rem; }
+.gate-yes { border-left-color: var(--ok); }
+.gate-no { border-left-color: var(--mark); background: color-mix(in oklab, var(--mark) 7%, transparent); }
+.gate-ask { border-left-color: var(--warn); }
+.gate-wait { border-left-color: var(--line); color: var(--muted); }
+
+/* Percentile bounding box (js/domain.js), after admetSAR 3.0's basic property display. The band is a tint and a left
+   border, never colour on its own: the pill's title and the summary line under the list name every flagged descriptor. */
+.pct { font-family: var(--font-data); font-size: 12px; padding: 1px 6px; border: 1px solid var(--line);
+  border-left-width: 3px; border-radius: 999px; color: var(--ink); white-space: nowrap; }
+.pct-in { border-left-color: var(--ok); background: color-mix(in oklab, var(--ok) 12%, transparent); }
+.pct-warn { border-left-color: var(--warn); background: color-mix(in oklab, var(--warn) 16%, transparent); }
+.pct-out { border-left-color: var(--mark); background: color-mix(in oklab, var(--mark) 16%, transparent); }
+#d-domain { color: var(--ink-2); }
 .qsar-dialog .table-wrap { margin-top: 8px; }
 .qsar-dialog td { white-space: nowrap; }
 .qsar-outside .qsar-domain { color: var(--mark); font-weight: 700; }
@@ -355,6 +394,22 @@ details > summary h2 { display: inline; }
 .qed-bar:hover { fill-opacity: 1; }
 .qed-bar[aria-current="true"] { fill: var(--mark); fill-opacity: 1; }
 .qed-des { fill: none; stroke: var(--mark); stroke-width: 1.4; stroke-linejoin: round; pointer-events: none; }
+
+/* The scaffold cluster panel (js/clusters.js): one row per Bemis-Murcko family, its framework drawn beside its size */
+.scaf-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.scaf-row { display: flex; gap: 10px; align-items: center; width: 100%; min-width: 0; min-height: 44px; margin: 0; padding: 8px;
+  text-align: left; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--ink); cursor: pointer; }
+.scaf-row:hover { border-color: var(--accent); }
+.scaf-row[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in oklab, var(--accent) 12%, var(--bg)); }
+.scaf-pic { flex: 0 0 96px; display: block; }
+.scaf-pic svg { display: block; width: 100%; height: auto; }
+.scaf-body { flex: 1 1 auto; min-width: 0; display: block; }
+.scaf-top { display: flex; justify-content: space-between; gap: 8px; font-family: var(--font-data); font-size: 12px; }
+.scaf-n { color: var(--ink); font-variant-numeric: tabular-nums; }
+.scaf-all { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.scaf-bar { display: block; height: 6px; margin: 4px 0; border-radius: 3px; background: var(--line); }
+.scaf-bar > span { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
+.scaf-who { display: block; font-size: 12px; line-height: 1.35; color: var(--ink-2); overflow-wrap: anywhere; }
 
 /* The ligand-binding overlay (js/gl/binding.js): the pocket, the ligand and the contacts it touches */
 .bind-cue { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; }
