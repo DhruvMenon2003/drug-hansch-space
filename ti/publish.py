@@ -85,13 +85,21 @@ def readme(dest: Path, present: list[tuple[str, str]], missing: list[str]) -> st
         "From `drug-hansch-space/ti/`:",
         "",
         "```",
-        "python3 place.py --smiles 'CC(=O)Oc1ccccc1C(=O)O'            # route it, show it in its cohort",
+        "python3 place.py --smiles 'CC(C)NCC(O)COc1cccc2ccccc12'      # route it, show it in its cohort",
         "python3 place.py --smiles '<SMILES>' --target CHEMBL217      # or name the target yourself",
         "```",
         "",
         "It prints the routing decision with the similarity to each candidate target, the predicted hERG "
         "affinity, and the ranked cohort of known drugs with your molecule inserted at its place. If the "
         "router cannot decide, it shows the ranked candidates and their similarities instead of guessing.",
+        "",
+        "Read the runners-up, not only the chosen target. The propranolol-like structure above routes to "
+        "CHEMBL287 at 0.879, with the two adrenergic receptors at 0.859 and 0.858 right behind it, and the "
+        "margin between first and second is 0.02. That is the honest state of a structure-only assignment, "
+        "and it is printed rather than hidden. Two other outcomes are just as normal: aspirin routes to "
+        "CHEMBL230 and then reports that no model there is validated enough to score it, and a molecule "
+        "sitting between several neighbourhoods is called ambiguous and placed against each candidate in "
+        "turn for you to pick from.",
         "",
         "## What this is not",
         "",
