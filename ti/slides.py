@@ -95,7 +95,7 @@ def bodies(audit: dict, thresholds: dict | None = None) -> dict:
         "meaning, so the CSV never does it.",
         f"Routing, step one: ChEMBL's mechanism-of-action table, where it records one and that target has a "
         f"fitted model. Step two, for everything else: structure alone. The query is compared against every "
-        f"eligible model's training set and routed on the top-5 mean Tanimoto — "
+        f"eligible model's training set and routed on the "
         f"{routing.get('basis', 'Morgan r=2 top-5 mean Tanimoto')}. The chemist never has to name the target.",
         f"The router is allowed three answers, and two of them are not an answer: route it, call it ambiguous "
         f"when several neighbourhoods are within the margin, or abstain when nothing clears the scope floor. "
