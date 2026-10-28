@@ -1,0 +1,7191 @@
+{
+ "summary": {
+  "basis": "mmp",
+  "thresholds": {
+   "scope_floor": 0.4536,
+   "margin": 0.01
+  },
+  "drugs_with_a_known_eligible_target": 592,
+  "coverage": 0.4358,
+  "routed": 258,
+  "ambiguous": 44,
+  "abstained": 290,
+  "top1_accuracy_of_routed": 0.6822,
+  "top1_right": 176,
+  "wrong": 82,
+  "top3_accuracy_of_all": 0.4527,
+  "ambiguous_best_candidate_right": 0.3864,
+  "baseline_always_largest_model": 0.0017,
+  "note": "the router saw structures only; each drug's own training rows were hidden; a routing is counted correct when it names any target ChEMBL records for that molecule",
+  "targets_per_drug_median": 1
+ },
+ "cases": [
+  {
+   "name": "852A",
+   "truth": [
+    "CHEMBL5936"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Abacavir",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Abexinostat",
+   "truth": [
+    "CHEMBL2093865"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL325"
+   ],
+   "score": null
+  },
+  {
+   "name": "ABP-700",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Acamprosate",
+   "truth": [
+    "CHEMBL2093872",
+    "CHEMBL2094124"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Acarbose",
+   "truth": [
+    "CHEMBL2074"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Acebutolol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL213"
+   ],
+   "score": null
+  },
+  {
+   "name": "Acetaminophen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL1951"
+   ],
+   "score": 0.5401
+  },
+  {
+   "name": "Acetazolamide",
+   "truth": [
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.762
+  },
+  {
+   "name": "Acetylsalicylic Acid",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230"
+   ],
+   "score": 0.4727
+  },
+  {
+   "name": "Aclidinium bromide",
+   "truth": [
+    "CHEMBL245"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL245",
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211",
+    "CHEMBL216"
+   ],
+   "score": 0.741
+  },
+  {
+   "name": "AFN-1252",
+   "truth": [
+    "CHEMBL3994"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3994",
+   "ranked": [
+    "CHEMBL3994"
+   ],
+   "score": 0.6965
+  },
+  {
+   "name": "Alcuronium",
+   "truth": [
+    "CHEMBL211"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Alectinib",
+   "truth": [
+    "CHEMBL4247"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4247",
+   "ranked": [
+    "CHEMBL4247"
+   ],
+   "score": 0.8608
+  },
+  {
+   "name": "Alendronate",
+   "truth": [
+    "CHEMBL1782"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.643
+  },
+  {
+   "name": "Alfacalcidol",
+   "truth": [
+    "CHEMBL1977"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1977",
+   "ranked": [
+    "CHEMBL1977"
+   ],
+   "score": 0.7682
+  },
+  {
+   "name": "Alfentanil",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.51
+  },
+  {
+   "name": "Alfuzosin",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL223",
+   "ranked": [
+    "CHEMBL223",
+    "CHEMBL229"
+   ],
+   "score": 0.4913
+  },
+  {
+   "name": "Alizapride",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Allopurinol",
+   "truth": [
+    "CHEMBL1929"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1808",
+   "ranked": [
+    "CHEMBL1808"
+   ],
+   "score": 0.8958
+  },
+  {
+   "name": "Almotriptan",
+   "truth": [
+    "CHEMBL1805",
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL214",
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL1983",
+    "CHEMBL1898"
+   ],
+   "score": 0.5858
+  },
+  {
+   "name": "Alosetron",
+   "truth": [
+    "CHEMBL1899"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL1899",
+    "CHEMBL1833"
+   ],
+   "score": null
+  },
+  {
+   "name": "Alprazolam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Alprostadil",
+   "truth": [
+    "CHEMBL1811"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1995",
+   "ranked": [
+    "CHEMBL1995",
+    "CHEMBL1811"
+   ],
+   "score": 0.7169
+  },
+  {
+   "name": "Alvimopan",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.774
+  },
+  {
+   "name": "Amantadine",
+   "truth": [
+    "CHEMBL2094124"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Amikacin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Aminocamptothecin, 9-",
+   "truth": [
+    "CHEMBL1781"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Amiodarone",
+   "truth": [
+    "CHEMBL240"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL1833",
+    "CHEMBL211"
+   ],
+   "score": null
+  },
+  {
+   "name": "Amitriptyline",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL231",
+   "ranked": [
+    "CHEMBL231",
+    "CHEMBL1833",
+    "CHEMBL234"
+   ],
+   "score": 0.6347
+  },
+  {
+   "name": "Amlodipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL229",
+    "CHEMBL223",
+    "CHEMBL238"
+   ],
+   "score": null
+  },
+  {
+   "name": "AMP579",
+   "truth": [
+    "CHEMBL226",
+    "CHEMBL251"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Amrinone",
+   "truth": [
+    "CHEMBL241"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2094125",
+    "CHEMBL2093863"
+   ],
+   "score": null
+  },
+  {
+   "name": "Amsacrine",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2094255",
+   "ranked": [
+    "CHEMBL2094255"
+   ],
+   "score": 0.4555
+  },
+  {
+   "name": "Antazoline",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL223",
+    "CHEMBL229",
+    "CHEMBL325"
+   ],
+   "score": null
+  },
+  {
+   "name": "Antipyrine",
+   "truth": [
+    "CHEMBL221"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Apixaban",
+   "truth": [
+    "CHEMBL244"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL244",
+   "ranked": [
+    "CHEMBL244",
+    "CHEMBL204"
+   ],
+   "score": 0.7253
+  },
+  {
+   "name": "Apremilast",
+   "truth": [
+    "CHEMBL2093863"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2093863",
+   "ranked": [
+    "CHEMBL2093863"
+   ],
+   "score": 0.7397
+  },
+  {
+   "name": "Aprepitant",
+   "truth": [
+    "CHEMBL249"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034",
+    "CHEMBL208",
+    "CHEMBL1994"
+   ],
+   "score": 0.8474
+  },
+  {
+   "name": "Argatroban",
+   "truth": [
+    "CHEMBL204"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL204",
+   "ranked": [
+    "CHEMBL204"
+   ],
+   "score": 0.733
+  },
+  {
+   "name": "Aripiprazole",
+   "truth": [
+    "CHEMBL214",
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL217",
+   "ranked": [
+    "CHEMBL217",
+    "CHEMBL234",
+    "CHEMBL2056"
+   ],
+   "score": 0.8462
+  },
+  {
+   "name": "Asenapine",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Asunaprevir",
+   "truth": [
+    "CHEMBL2095231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095231",
+   "ranked": [
+    "CHEMBL2095231"
+   ],
+   "score": 0.8403
+  },
+  {
+   "name": "Atenolol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL287"
+   ],
+   "score": 0.5747
+  },
+  {
+   "name": "Atomoxetine",
+   "truth": [
+    "CHEMBL222"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL228",
+    "CHEMBL238"
+   ],
+   "score": 0.5715
+  },
+  {
+   "name": "Atropine",
+   "truth": [
+    "CHEMBL211",
+    "CHEMBL216",
+    "CHEMBL245"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL211",
+    "CHEMBL216",
+    "CHEMBL245"
+   ],
+   "score": 0.737
+  },
+  {
+   "name": "Avibactam",
+   "truth": [
+    "CHEMBL2364670"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2364670"
+   ],
+   "score": null
+  },
+  {
+   "name": "Avosentan",
+   "truth": [
+    "CHEMBL252"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL252",
+   "ranked": [
+    "CHEMBL252"
+   ],
+   "score": 0.7913
+  },
+  {
+   "name": "Azapropazone",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "AZD4877",
+   "truth": [
+    "CHEMBL4581"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Azelastine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL229",
+   "ranked": [
+    "CHEMBL229",
+    "CHEMBL231",
+    "CHEMBL240"
+   ],
+   "score": 0.7974
+  },
+  {
+   "name": "Azithromycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL1951"
+   ],
+   "score": 0.6401
+  },
+  {
+   "name": "Bambuterol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": null
+  },
+  {
+   "name": "Basimglurant",
+   "truth": [
+    "CHEMBL3227"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL287",
+    "CHEMBL246"
+   ],
+   "score": null
+  },
+  {
+   "name": "Bazedoxifene",
+   "truth": [
+    "CHEMBL2093866"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL206",
+   "ranked": [
+    "CHEMBL206",
+    "CHEMBL242"
+   ],
+   "score": 0.9497
+  },
+  {
+   "name": "Becatecarin",
+   "truth": [
+    "CHEMBL1781",
+    "CHEMBL2094255"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Beclabuvir",
+   "truth": [
+    "CHEMBL4296320"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Beclomethasone dipropionate",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Belinostat",
+   "truth": [
+    "CHEMBL2093865"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2093865",
+   "ranked": [
+    "CHEMBL2093865",
+    "CHEMBL325"
+   ],
+   "score": 0.8166
+  },
+  {
+   "name": "Benperidol",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "score": 0.5158
+  },
+  {
+   "name": "Benzydamine",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL218",
+   "ranked": [
+    "CHEMBL218",
+    "CHEMBL220"
+   ],
+   "score": 0.4985
+  },
+  {
+   "name": "Bepridil",
+   "truth": [
+    "CHEMBL2363032"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL325",
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "score": null
+  },
+  {
+   "name": "Berubicin",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1806",
+   "ranked": [
+    "CHEMBL1806"
+   ],
+   "score": 0.6926
+  },
+  {
+   "name": "Betamethasone",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.8013
+  },
+  {
+   "name": "Betaxolol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL287"
+   ],
+   "score": 0.6642
+  },
+  {
+   "name": "BI2536",
+   "truth": [
+    "CHEMBL3024"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3024",
+   "ranked": [
+    "CHEMBL3024",
+    "CHEMBL4247"
+   ],
+   "score": 0.9426
+  },
+  {
+   "name": "Bilastine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Bimatoprost",
+   "truth": [
+    "CHEMBL1987"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Binodenoson",
+   "truth": [
+    "CHEMBL251"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL251",
+   "ranked": [
+    "CHEMBL251"
+   ],
+   "score": 0.8038
+  },
+  {
+   "name": "Biperiden",
+   "truth": [
+    "CHEMBL216"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211",
+    "CHEMBL216"
+   ],
+   "score": 0.4736
+  },
+  {
+   "name": "Biricodar",
+   "truth": [
+    "CHEMBL4302"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1902",
+   "ranked": [
+    "CHEMBL1902"
+   ],
+   "score": 0.8838
+  },
+  {
+   "name": "Bisoprolol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.7395
+  },
+  {
+   "name": "Bivalirudin",
+   "truth": [
+    "CHEMBL204"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Bortezomib",
+   "truth": [
+    "CHEMBL2364701"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL204",
+    "CHEMBL325"
+   ],
+   "score": null
+  },
+  {
+   "name": "Brexpiprazole",
+   "truth": [
+    "CHEMBL214",
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL217",
+   "ranked": [
+    "CHEMBL217",
+    "CHEMBL234",
+    "CHEMBL224"
+   ],
+   "score": 0.6392
+  },
+  {
+   "name": "Bromazepam",
+   "truth": [
+    "CHEMBL4956"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Bromfenac",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": null
+  },
+  {
+   "name": "Bromopride",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Budesonide",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034",
+    "CHEMBL208",
+    "CHEMBL206"
+   ],
+   "score": 0.6878
+  },
+  {
+   "name": "Bunazosin",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Bupivacaine",
+   "truth": [
+    "CHEMBL2072"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL2321613"
+   ],
+   "score": 0.88
+  },
+  {
+   "name": "Buprenorphine",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL2095181"
+   ],
+   "score": 0.8627
+  },
+  {
+   "name": "Butorphanol",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.7094
+  },
+  {
+   "name": "Cabazitaxel",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Calcitriol",
+   "truth": [
+    "CHEMBL1977"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1977",
+   "ranked": [
+    "CHEMBL1977"
+   ],
+   "score": 0.7427
+  },
+  {
+   "name": "Canagliflozin",
+   "truth": [
+    "CHEMBL3884"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3884",
+   "ranked": [
+    "CHEMBL3884"
+   ],
+   "score": 0.8382
+  },
+  {
+   "name": "Candesartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL227",
+   "ranked": [
+    "CHEMBL227"
+   ],
+   "score": 0.4956
+  },
+  {
+   "name": "Cangrelor",
+   "truth": [
+    "CHEMBL2001"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Cannabidiol",
+   "truth": [
+    "CHEMBL218"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL218",
+   "ranked": [
+    "CHEMBL218"
+   ],
+   "score": 0.9023
+  },
+  {
+   "name": "Captopril",
+   "truth": [
+    "CHEMBL1808"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1808",
+   "ranked": [
+    "CHEMBL1808"
+   ],
+   "score": 0.7319
+  },
+  {
+   "name": "Carfilzomib",
+   "truth": [
+    "CHEMBL2364701"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2364701",
+   "ranked": [
+    "CHEMBL2364701"
+   ],
+   "score": 0.6461
+  },
+  {
+   "name": "Carprofen",
+   "truth": [
+    "CHEMBL230"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230"
+   ],
+   "score": 0.6432
+  },
+  {
+   "name": "Carvedilol",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL246"
+   ],
+   "score": 0.836
+  },
+  {
+   "name": "Casopitant",
+   "truth": [
+    "CHEMBL249"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287"
+   ],
+   "score": null
+  },
+  {
+   "name": "Cerivastatin",
+   "truth": [
+    "CHEMBL402"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Cetrorelix",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Chenodeoxycholic acid",
+   "truth": [
+    "CHEMBL2047"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "score": 0.616
+  },
+  {
+   "name": "Chloramphenicol",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2363135"
+   ],
+   "score": null
+  },
+  {
+   "name": "Chlorazepate",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Chlordiazepoxide",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Chlormethiazole",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Chlorprothixene",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL224",
+    "CHEMBL234"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2056",
+    "CHEMBL231",
+    "CHEMBL234"
+   ],
+   "score": 0.4843
+  },
+  {
+   "name": "Chlorpheniramine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL231",
+   "ranked": [
+    "CHEMBL231",
+    "CHEMBL211",
+    "CHEMBL216"
+   ],
+   "score": 0.5957
+  },
+  {
+   "name": "Chlorpromazine",
+   "truth": [
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL217",
+   "ranked": [
+    "CHEMBL217",
+    "CHEMBL287",
+    "CHEMBL2056"
+   ],
+   "score": 0.7163
+  },
+  {
+   "name": "Chlortetracycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ciclesonide",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.6323
+  },
+  {
+   "name": "Cilengitide",
+   "truth": [
+    "CHEMBL1907598"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Cilomilast",
+   "truth": [
+    "CHEMBL2093863"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2093863",
+   "ranked": [
+    "CHEMBL2093863"
+   ],
+   "score": 0.7142
+  },
+  {
+   "name": "Cimetidine",
+   "truth": [
+    "CHEMBL1941"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Cinacalcet",
+   "truth": [
+    "CHEMBL1878"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL287",
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL1833"
+   ],
+   "score": 0.586
+  },
+  {
+   "name": "Cisapride",
+   "truth": [
+    "CHEMBL1875"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1875",
+   "ranked": [
+    "CHEMBL1875",
+    "CHEMBL217",
+    "CHEMBL1899"
+   ],
+   "score": 0.6281
+  },
+  {
+   "name": "Citalopram",
+   "truth": [
+    "CHEMBL228"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL228",
+   "ranked": [
+    "CHEMBL228"
+   ],
+   "score": 0.8754
+  },
+  {
+   "name": "Clarithromycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Clavulanic Acid",
+   "truth": [
+    "CHEMBL2364670"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2364670",
+   "ranked": [
+    "CHEMBL2364670"
+   ],
+   "score": 0.4586
+  },
+  {
+   "name": "Clazosentan",
+   "truth": [
+    "CHEMBL252"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL252",
+   "ranked": [
+    "CHEMBL252"
+   ],
+   "score": 0.6739
+  },
+  {
+   "name": "Clevidipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2047"
+   ],
+   "score": null
+  },
+  {
+   "name": "Clindamycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Clofarabine",
+   "truth": [
+    "CHEMBL2095215"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2094255"
+   ],
+   "score": null
+  },
+  {
+   "name": "Clomipramine",
+   "truth": [
+    "CHEMBL228"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL228",
+   "ranked": [
+    "CHEMBL228",
+    "CHEMBL231",
+    "CHEMBL325"
+   ],
+   "score": 0.6336
+  },
+  {
+   "name": "Clonazepam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Clonidine",
+   "truth": [
+    "CHEMBL2095158"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL229",
+   "ranked": [
+    "CHEMBL229",
+    "CHEMBL223",
+    "CHEMBL2095158"
+   ],
+   "score": 0.5536
+  },
+  {
+   "name": "Clopidogrel",
+   "truth": [
+    "CHEMBL2001"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL228"
+   ],
+   "score": null
+  },
+  {
+   "name": "Clozapine",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Cobimetinib",
+   "truth": [
+    "CHEMBL3587"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2111289",
+    "CHEMBL3587"
+   ],
+   "score": 0.6445
+  },
+  {
+   "name": "Codeine",
+   "truth": [
+    "CHEMBL2095181"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.7919
+  },
+  {
+   "name": "Colchicine",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Combretastatin A4 Phosphate",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095182",
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": 0.5565
+  },
+  {
+   "name": "Conivaptan",
+   "truth": [
+    "CHEMBL1790"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1790",
+   "ranked": [
+    "CHEMBL1790"
+   ],
+   "score": 0.5053
+  },
+  {
+   "name": "Copanlisib",
+   "truth": [
+    "CHEMBL4005"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2842"
+   ],
+   "score": null
+  },
+  {
+   "name": "Crizotinib",
+   "truth": [
+    "CHEMBL3717",
+    "CHEMBL4247"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3717",
+   "ranked": [
+    "CHEMBL3717",
+    "CHEMBL4247"
+   ],
+   "score": 0.8835
+  },
+  {
+   "name": "CUDC-101",
+   "truth": [
+    "CHEMBL203",
+    "CHEMBL2093865"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2093865",
+   "ranked": [
+    "CHEMBL2093865",
+    "CHEMBL203",
+    "CHEMBL325"
+   ],
+   "score": 0.9418
+  },
+  {
+   "name": "Cyclizine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.506
+  },
+  {
+   "name": "Cyclosporine",
+   "truth": [
+    "CHEMBL1949"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1949",
+   "ranked": [
+    "CHEMBL1949",
+    "CHEMBL247"
+   ],
+   "score": 0.91
+  },
+  {
+   "name": "CYT997",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dabigatran",
+   "truth": [
+    "CHEMBL204"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL204"
+   ],
+   "score": null
+  },
+  {
+   "name": "Dabrafenib",
+   "truth": [
+    "CHEMBL5145"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3587",
+   "ranked": [
+    "CHEMBL3587"
+   ],
+   "score": 0.5238
+  },
+  {
+   "name": "Daclatasvir",
+   "truth": [
+    "CHEMBL3307224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3307224",
+   "ranked": [
+    "CHEMBL3307224"
+   ],
+   "score": 0.7779
+  },
+  {
+   "name": "Dalfopristin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Danazol",
+   "truth": [
+    "CHEMBL1871",
+    "CHEMBL208"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Danoprevir",
+   "truth": [
+    "CHEMBL2095231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095231"
+   ],
+   "score": null
+  },
+  {
+   "name": "Dapagliflozin",
+   "truth": [
+    "CHEMBL3884"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Darapladib",
+   "truth": [
+    "CHEMBL3514"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3514",
+   "ranked": [
+    "CHEMBL3514"
+   ],
+   "score": 0.8329
+  },
+  {
+   "name": "Darifenacin",
+   "truth": [
+    "CHEMBL211",
+    "CHEMBL245"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL216",
+    "CHEMBL245",
+    "CHEMBL211"
+   ],
+   "score": null
+  },
+  {
+   "name": "Darunavir",
+   "truth": [
+    "CHEMBL243"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dasabuvir",
+   "truth": [
+    "CHEMBL4296320"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL243",
+    "CHEMBL4302",
+    "CHEMBL233"
+   ],
+   "score": null
+  },
+  {
+   "name": "Daunorubicin",
+   "truth": [
+    "CHEMBL1806"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1806",
+   "ranked": [
+    "CHEMBL1806",
+    "CHEMBL325"
+   ],
+   "score": 0.6718
+  },
+  {
+   "name": "Decitabine",
+   "truth": [
+    "CHEMBL1992"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Degarelix",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1855",
+   "ranked": [
+    "CHEMBL1855"
+   ],
+   "score": 0.8034
+  },
+  {
+   "name": "Demethylchlortetracycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL242"
+   ],
+   "score": null
+  },
+  {
+   "name": "Desipramine",
+   "truth": [
+    "CHEMBL222"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL224",
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL222",
+    "CHEMBL231"
+   ],
+   "score": 0.5094
+  },
+  {
+   "name": "Desvenlafaxine",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL228",
+    "CHEMBL238"
+   ],
+   "score": 0.7031
+  },
+  {
+   "name": "Dexamethasone",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034",
+    "CHEMBL208"
+   ],
+   "score": 0.8474
+  },
+  {
+   "name": "Dexloxiglumide",
+   "truth": [
+    "CHEMBL1901"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1901",
+   "ranked": [
+    "CHEMBL1901"
+   ],
+   "score": 0.4795
+  },
+  {
+   "name": "Dexmedetomidine",
+   "truth": [
+    "CHEMBL2095158"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL229",
+   "ranked": [
+    "CHEMBL229"
+   ],
+   "score": 0.4666
+  },
+  {
+   "name": "Dexmethylphenidate",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL238"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL238",
+   "ranked": [
+    "CHEMBL238",
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "score": 0.9048
+  },
+  {
+   "name": "Dexrazoxane",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1806"
+   ],
+   "score": null
+  },
+  {
+   "name": "Dextromoramide",
+   "truth": [
+    "CHEMBL2095181"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dezocine",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Diazepam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Diclofenac",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Didanosine",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Diflomotecan",
+   "truth": [
+    "CHEMBL1781"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Diflunisal",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "score": null
+  },
+  {
+   "name": "Digitoxin",
+   "truth": [
+    "CHEMBL2095186"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095186",
+   "ranked": [
+    "CHEMBL2095186"
+   ],
+   "score": 0.7805
+  },
+  {
+   "name": "Digoxin",
+   "truth": [
+    "CHEMBL2095186"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095186",
+   "ranked": [
+    "CHEMBL2095186"
+   ],
+   "score": 0.6615
+  },
+  {
+   "name": "Dihydrocodeine",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dihydroergotamine",
+   "truth": [
+    "CHEMBL1983"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL234",
+    "CHEMBL233"
+   ],
+   "score": 0.7028
+  },
+  {
+   "name": "Dilevalol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Diltiazem",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL4302"
+   ],
+   "score": null
+  },
+  {
+   "name": "Dimetindene",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211",
+    "CHEMBL231"
+   ],
+   "score": 0.9012
+  },
+  {
+   "name": "Dinaciclib",
+   "truth": [
+    "CHEMBL301",
+    "CHEMBL308"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL301",
+    "CHEMBL308"
+   ],
+   "score": 0.6928
+  },
+  {
+   "name": "Diphenhydramine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Diprophylline",
+   "truth": [
+    "CHEMBL2093863",
+    "CHEMBL241"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL226",
+    "CHEMBL251"
+   ],
+   "score": null
+  },
+  {
+   "name": "Dipyridamole",
+   "truth": [
+    "CHEMBL1997"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1997",
+   "ranked": [
+    "CHEMBL1997"
+   ],
+   "score": 0.9397
+  },
+  {
+   "name": "Distigmine",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dobutamine",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL287",
+    "CHEMBL213"
+   ],
+   "score": null
+  },
+  {
+   "name": "Docetaxel",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095182",
+   "ranked": [
+    "CHEMBL2095182",
+    "CHEMBL1293266"
+   ],
+   "score": 0.7609
+  },
+  {
+   "name": "Dofetilide",
+   "truth": [
+    "CHEMBL240"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dolasetron",
+   "truth": [
+    "CHEMBL1899"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": 0.5517
+  },
+  {
+   "name": "Domperidone",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Dopamine",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL234",
+   "ranked": [
+    "CHEMBL234"
+   ],
+   "score": 0.507
+  },
+  {
+   "name": "Doxapram",
+   "truth": [
+    "CHEMBL2321613"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Doxazosin",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL229",
+    "CHEMBL223"
+   ],
+   "score": 0.6922
+  },
+  {
+   "name": "Doxepin",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1833",
+   "ranked": [
+    "CHEMBL1833",
+    "CHEMBL231",
+    "CHEMBL4478"
+   ],
+   "score": 0.8005
+  },
+  {
+   "name": "Doxifluridine",
+   "truth": [
+    "CHEMBL1952"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Doxorubicin",
+   "truth": [
+    "CHEMBL1806"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1806",
+   "ranked": [
+    "CHEMBL1806"
+   ],
+   "score": 0.857
+  },
+  {
+   "name": "Doxycycline",
+   "truth": [
+    "CHEMBL2363135",
+    "CHEMBL4073"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL4073"
+   ],
+   "score": null
+  },
+  {
+   "name": "Dronedarone",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": null
+  },
+  {
+   "name": "Droperidol",
+   "truth": [
+    "CHEMBL224"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL234",
+    "CHEMBL224"
+   ],
+   "score": 0.4869
+  },
+  {
+   "name": "Drotaverine",
+   "truth": [
+    "CHEMBL2093863"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Duloxetine",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Edotecarin",
+   "truth": [
+    "CHEMBL1781"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Edoxaban",
+   "truth": [
+    "CHEMBL244"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL244",
+    "CHEMBL204"
+   ],
+   "score": null
+  },
+  {
+   "name": "Edrophonium",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": 0.5937
+  },
+  {
+   "name": "Eletriptan",
+   "truth": [
+    "CHEMBL1805",
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1898",
+    "CHEMBL1983",
+    "CHEMBL2093872"
+   ],
+   "score": 0.5843
+  },
+  {
+   "name": "Eliglustat",
+   "truth": [
+    "CHEMBL2063"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Enalaprilat",
+   "truth": [
+    "CHEMBL1808"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1808",
+   "ranked": [
+    "CHEMBL1808"
+   ],
+   "score": 0.7054
+  },
+  {
+   "name": "Enoximone",
+   "truth": [
+    "CHEMBL2094125"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2093863",
+    "CHEMBL2094125",
+    "CHEMBL3024"
+   ],
+   "score": null
+  },
+  {
+   "name": "Entacapone",
+   "truth": [
+    "CHEMBL2023"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2023",
+   "ranked": [
+    "CHEMBL2023"
+   ],
+   "score": 0.5657
+  },
+  {
+   "name": "Eprosartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL227",
+   "ranked": [
+    "CHEMBL227"
+   ],
+   "score": 0.7042
+  },
+  {
+   "name": "Eptifibatide",
+   "truth": [
+    "CHEMBL2093869"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Eravacycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2363135"
+   ],
+   "score": null
+  },
+  {
+   "name": "Ergotamine",
+   "truth": [
+    "CHEMBL1983"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL224",
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL217",
+    "CHEMBL234"
+   ],
+   "score": 0.6931
+  },
+  {
+   "name": "Eribulin",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Erlotinib",
+   "truth": [
+    "CHEMBL203"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL203",
+   "ranked": [
+    "CHEMBL203",
+    "CHEMBL325",
+    "CHEMBL1862"
+   ],
+   "score": 0.7603
+  },
+  {
+   "name": "Erythromycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Esmolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL287"
+   ],
+   "score": 0.6119
+  },
+  {
+   "name": "Esomeprazole",
+   "truth": [
+    "CHEMBL2095173"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Estramustine phosphate",
+   "truth": [
+    "CHEMBL242"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL206",
+   "ranked": [
+    "CHEMBL206",
+    "CHEMBL228",
+    "CHEMBL2034"
+   ],
+   "score": 0.5269
+  },
+  {
+   "name": "Ethinylestradiol",
+   "truth": [
+    "CHEMBL206"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Etomidate",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1980",
+    "CHEMBL240",
+    "CHEMBL205"
+   ],
+   "score": null
+  },
+  {
+   "name": "Etonogestrel",
+   "truth": [
+    "CHEMBL208"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Etoposide",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2094255"
+   ],
+   "score": null
+  },
+  {
+   "name": "Etoricoxib",
+   "truth": [
+    "CHEMBL230"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL221",
+   "ranked": [
+    "CHEMBL221",
+    "CHEMBL230"
+   ],
+   "score": 0.7283
+  },
+  {
+   "name": "Evacetrapib",
+   "truth": [
+    "CHEMBL3572"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL3572"
+   ],
+   "score": null
+  },
+  {
+   "name": "Famotidine",
+   "truth": [
+    "CHEMBL1941"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1941"
+   ],
+   "score": null
+  },
+  {
+   "name": "Fasudil",
+   "truth": [
+    "CHEMBL2111459"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2111459",
+   "ranked": [
+    "CHEMBL2111459"
+   ],
+   "score": 0.4549
+  },
+  {
+   "name": "Felodipine",
+   "truth": [
+    "CHEMBL1994",
+    "CHEMBL2095229"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": 0.4603
+  },
+  {
+   "name": "Fenoldopam",
+   "truth": [
+    "CHEMBL2056"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Fenoprofen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.5193
+  },
+  {
+   "name": "Fenoterol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210"
+   ],
+   "score": 0.8895
+  },
+  {
+   "name": "Fentanyl",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL287",
+    "CHEMBL224"
+   ],
+   "score": 0.7737
+  },
+  {
+   "name": "Fimasartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Finafloxacin",
+   "truth": [
+    "CHEMBL3038508"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Finasteride",
+   "truth": [
+    "CHEMBL1856"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1856",
+   "ranked": [
+    "CHEMBL1856"
+   ],
+   "score": 0.7086
+  },
+  {
+   "name": "Flavopiridol",
+   "truth": [
+    "CHEMBL301",
+    "CHEMBL308"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL301",
+   "ranked": [
+    "CHEMBL301",
+    "CHEMBL308"
+   ],
+   "score": 0.8356
+  },
+  {
+   "name": "Flecainide",
+   "truth": [
+    "CHEMBL1980"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL1980"
+   ],
+   "score": null
+  },
+  {
+   "name": "Flumazenil",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL4956"
+   ],
+   "score": null
+  },
+  {
+   "name": "Flunisolide",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Flunitrazepam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Fluorouracil, 5-",
+   "truth": [
+    "CHEMBL1952"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Fluphenazine",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL240",
+    "CHEMBL231"
+   ],
+   "score": 0.5744
+  },
+  {
+   "name": "Fluticasone furoate",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034",
+    "CHEMBL208"
+   ],
+   "score": 0.6446
+  },
+  {
+   "name": "Fluticasone propionate",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL234",
+   "ranked": [
+    "CHEMBL234",
+    "CHEMBL213"
+   ],
+   "score": 0.5621
+  },
+  {
+   "name": "Fluvastatin",
+   "truth": [
+    "CHEMBL402"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL402",
+   "ranked": [
+    "CHEMBL402"
+   ],
+   "score": 0.5832
+  },
+  {
+   "name": "Fluvoxamine",
+   "truth": [
+    "CHEMBL228"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL228"
+   ],
+   "score": null
+  },
+  {
+   "name": "Forodesine",
+   "truth": [
+    "CHEMBL4338"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4338",
+   "ranked": [
+    "CHEMBL4338"
+   ],
+   "score": 0.7464
+  },
+  {
+   "name": "Fosaprepitant",
+   "truth": [
+    "CHEMBL249"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL249",
+   "ranked": [
+    "CHEMBL249"
+   ],
+   "score": 0.8018
+  },
+  {
+   "name": "Fosfomycin",
+   "truth": [
+    "CHEMBL1984"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Frovatriptan",
+   "truth": [
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1898",
+   "ranked": [
+    "CHEMBL1898",
+    "CHEMBL214"
+   ],
+   "score": 0.5825
+  },
+  {
+   "name": "Fulvestrant",
+   "truth": [
+    "CHEMBL206"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Gabapentin",
+   "truth": [
+    "CHEMBL2363032"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Galanthamine",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": 0.762
+  },
+  {
+   "name": "Ganirelix",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Gefitinib",
+   "truth": [
+    "CHEMBL203"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL203",
+   "ranked": [
+    "CHEMBL203",
+    "CHEMBL5145",
+    "CHEMBL2093865"
+   ],
+   "score": 0.8375
+  },
+  {
+   "name": "Gemcitabine",
+   "truth": [
+    "CHEMBL2095215"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Gentamicin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Gestodene",
+   "truth": [
+    "CHEMBL208"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Gisadenafil",
+   "truth": [
+    "CHEMBL1827"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1827",
+   "ranked": [
+    "CHEMBL1827"
+   ],
+   "score": 0.87
+  },
+  {
+   "name": "Granisetron",
+   "truth": [
+    "CHEMBL1899"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1899",
+   "ranked": [
+    "CHEMBL1899",
+    "CHEMBL2094132"
+   ],
+   "score": 0.7336
+  },
+  {
+   "name": "GSK461364",
+   "truth": [
+    "CHEMBL3024"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3024",
+   "ranked": [
+    "CHEMBL3024"
+   ],
+   "score": 0.7095
+  },
+  {
+   "name": "Guanfacine",
+   "truth": [
+    "CHEMBL2095158"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2094132",
+    "CHEMBL1907598",
+    "CHEMBL223"
+   ],
+   "score": null
+  },
+  {
+   "name": "Haloperidol",
+   "truth": [
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL214",
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL1983",
+    "CHEMBL1898"
+   ],
+   "score": 0.6293
+  },
+  {
+   "name": "Hydrocortisone",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.6728
+  },
+  {
+   "name": "Hydromorphone",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Hydroxychloroquine",
+   "truth": [
+    "CHEMBL5936"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL287",
+    "CHEMBL211"
+   ],
+   "score": 0.519
+  },
+  {
+   "name": "Hydroxystaurosporine, 7-",
+   "truth": [
+    "CHEMBL301",
+    "CHEMBL4630"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Hydroxyurea",
+   "truth": [
+    "CHEMBL2095215"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.7395
+  },
+  {
+   "name": "Ibrutinib",
+   "truth": [
+    "CHEMBL5251"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL204",
+    "CHEMBL325"
+   ],
+   "score": 0.4679
+  },
+  {
+   "name": "Ibuprofen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.762
+  },
+  {
+   "name": "Ibutilide",
+   "truth": [
+    "CHEMBL240"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": null
+  },
+  {
+   "name": "Idarubicin",
+   "truth": [
+    "CHEMBL1806"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1806",
+   "ranked": [
+    "CHEMBL1806"
+   ],
+   "score": 0.5894
+  },
+  {
+   "name": "Idazoxan",
+   "truth": [
+    "CHEMBL2095158"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ilaprazole",
+   "truth": [
+    "CHEMBL2095173"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095173",
+    "CHEMBL2095186"
+   ],
+   "score": 0.6301
+  },
+  {
+   "name": "Iloprost",
+   "truth": [
+    "CHEMBL1995"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Imatinib",
+   "truth": [
+    "CHEMBL1862",
+    "CHEMBL1936"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1936",
+   "ranked": [
+    "CHEMBL1936",
+    "CHEMBL1862",
+    "CHEMBL2095189"
+   ],
+   "score": 0.8712
+  },
+  {
+   "name": "Imidafenacin",
+   "truth": [
+    "CHEMBL245"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Imipramine",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL231",
+   "ranked": [
+    "CHEMBL231",
+    "CHEMBL224",
+    "CHEMBL4478"
+   ],
+   "score": 0.64
+  },
+  {
+   "name": "Indacaterol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210"
+   ],
+   "score": 0.8429
+  },
+  {
+   "name": "Indomethacin",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL251"
+   ],
+   "score": 0.6031
+  },
+  {
+   "name": "Indoprofen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL301",
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": null
+  },
+  {
+   "name": "Ipratropium",
+   "truth": [
+    "CHEMBL245"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL211",
+   "ranked": [
+    "CHEMBL211",
+    "CHEMBL245",
+    "CHEMBL216"
+   ],
+   "score": 0.7454
+  },
+  {
+   "name": "Irbesartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220",
+    "CHEMBL227"
+   ],
+   "score": 0.6285
+  },
+  {
+   "name": "Irinotecan",
+   "truth": [
+    "CHEMBL1781"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL325",
+   "ranked": [
+    "CHEMBL325",
+    "CHEMBL2093865"
+   ],
+   "score": 0.7021
+  },
+  {
+   "name": "Isoniazide",
+   "truth": [
+    "CHEMBL1849"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL325",
+    "CHEMBL262",
+    "CHEMBL1801"
+   ],
+   "score": null
+  },
+  {
+   "name": "Isoxicam",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230"
+   ],
+   "score": 0.4796
+  },
+  {
+   "name": "Isradipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": null
+  },
+  {
+   "name": "Ixabepilone",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ixazomib",
+   "truth": [
+    "CHEMBL2364701"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Kanamycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ketamine",
+   "truth": [
+    "CHEMBL2094124"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1907603"
+   ],
+   "score": null
+  },
+  {
+   "name": "Ketoprofen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL221",
+    "CHEMBL230"
+   ],
+   "score": 0.6896
+  },
+  {
+   "name": "Ketorolac",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL1951"
+   ],
+   "score": 0.6401
+  },
+  {
+   "name": "Lamivudine",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Lanicemine",
+   "truth": [
+    "CHEMBL2094124"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Lanreotide",
+   "truth": [
+    "CHEMBL1792"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Lansoprazole",
+   "truth": [
+    "CHEMBL2095173"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095173",
+    "CHEMBL2095186",
+    "CHEMBL1949"
+   ],
+   "score": null
+  },
+  {
+   "name": "Laropiprant",
+   "truth": [
+    "CHEMBL4427"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1995",
+   "ranked": [
+    "CHEMBL1995",
+    "CHEMBL4427"
+   ],
+   "score": 0.485
+  },
+  {
+   "name": "Larotaxel",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Latanoprost",
+   "truth": [
+    "CHEMBL1987"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1987",
+   "ranked": [
+    "CHEMBL1987",
+    "CHEMBL1811"
+   ],
+   "score": 0.5128
+  },
+  {
+   "name": "Lefamulin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL4302"
+   ],
+   "score": null
+  },
+  {
+   "name": "Lesinurad",
+   "truth": [
+    "CHEMBL6120"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL6120",
+   "ranked": [
+    "CHEMBL6120"
+   ],
+   "score": 0.6654
+  },
+  {
+   "name": "Letrozole",
+   "truth": [
+    "CHEMBL1978"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1980",
+    "CHEMBL240",
+    "CHEMBL205"
+   ],
+   "score": null
+  },
+  {
+   "name": "Leuprolide",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1855",
+   "ranked": [
+    "CHEMBL1855"
+   ],
+   "score": 0.6546
+  },
+  {
+   "name": "Levetiracetam",
+   "truth": [
+    "CHEMBL4478"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.762
+  },
+  {
+   "name": "Levobupivacaine",
+   "truth": [
+    "CHEMBL2072"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Levocabastine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Levodopa",
+   "truth": [
+    "CHEMBL234"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL203"
+   ],
+   "score": null
+  },
+  {
+   "name": "Levonorgestrel",
+   "truth": [
+    "CHEMBL208"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Levorphanol",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Levosimendan",
+   "truth": [
+    "CHEMBL2094125"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Linagliptin",
+   "truth": [
+    "CHEMBL284"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3884",
+   "ranked": [
+    "CHEMBL3884"
+   ],
+   "score": 0.9016
+  },
+  {
+   "name": "Lincomycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Linezolid",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL262"
+   ],
+   "score": null
+  },
+  {
+   "name": "Liraglutide",
+   "truth": [
+    "CHEMBL1784"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Lisdexamfetamine",
+   "truth": [
+    "CHEMBL1893",
+    "CHEMBL222",
+    "CHEMBL238"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL1833"
+   ],
+   "score": null
+  },
+  {
+   "name": "Lisinopril",
+   "truth": [
+    "CHEMBL1808"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL246",
+    "CHEMBL234"
+   ],
+   "score": 0.8909
+  },
+  {
+   "name": "Lorazepam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Losartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Losmapimod",
+   "truth": [
+    "CHEMBL260"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL260",
+   "ranked": [
+    "CHEMBL260"
+   ],
+   "score": 0.7462
+  },
+  {
+   "name": "LY2090314",
+   "truth": [
+    "CHEMBL262"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL262",
+   "ranked": [
+    "CHEMBL262",
+    "CHEMBL301"
+   ],
+   "score": 0.7535
+  },
+  {
+   "name": "LY2140023",
+   "truth": [
+    "CHEMBL5137"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "LY404039",
+   "truth": [
+    "CHEMBL5137"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Maprotiline",
+   "truth": [
+    "CHEMBL222"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL231",
+    "CHEMBL222"
+   ],
+   "score": null
+  },
+  {
+   "name": "Maraviroc",
+   "truth": [
+    "CHEMBL274"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Maxipost",
+   "truth": [
+    "CHEMBL4304"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Melatonin",
+   "truth": [
+    "CHEMBL2094268"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2094268",
+   "ranked": [
+    "CHEMBL2094268",
+    "CHEMBL224",
+    "CHEMBL1833"
+   ],
+   "score": 0.7362
+  },
+  {
+   "name": "Meloxicam",
+   "truth": [
+    "CHEMBL230"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.5309
+  },
+  {
+   "name": "Meperidine",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL216",
+    "CHEMBL245"
+   ],
+   "score": 0.8079
+  },
+  {
+   "name": "Meprobamate",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Meptazinol",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": null
+  },
+  {
+   "name": "Metaproterenol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210"
+   ],
+   "score": 0.6251
+  },
+  {
+   "name": "Methadone",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1907603",
+   "ranked": [
+    "CHEMBL1907603"
+   ],
+   "score": 0.6857
+  },
+  {
+   "name": "Methimazole",
+   "truth": [
+    "CHEMBL1839"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Methohexital",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Methotrexate",
+   "truth": [
+    "CHEMBL202"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL202",
+   "ranked": [
+    "CHEMBL202",
+    "CHEMBL1952",
+    "CHEMBL1926"
+   ],
+   "score": 0.8135
+  },
+  {
+   "name": "Methylergometrine",
+   "truth": [
+    "CHEMBL1833",
+    "CHEMBL2056"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL1833",
+    "CHEMBL217"
+   ],
+   "score": 0.6868
+  },
+  {
+   "name": "Methyldopa",
+   "truth": [
+    "CHEMBL2095158"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL203"
+   ],
+   "score": null
+  },
+  {
+   "name": "Methylnaltrexone",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.7799
+  },
+  {
+   "name": "Methylphenidate",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL238"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL238",
+   "ranked": [
+    "CHEMBL238",
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "score": 0.9048
+  },
+  {
+   "name": "Methylprednisolone",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.5493
+  },
+  {
+   "name": "Metoclopramide",
+   "truth": [
+    "CHEMBL1875",
+    "CHEMBL1899",
+    "CHEMBL217"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1875",
+   "ranked": [
+    "CHEMBL1875",
+    "CHEMBL1899",
+    "CHEMBL217"
+   ],
+   "score": 0.5669
+  },
+  {
+   "name": "Metoprolol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL246",
+    "CHEMBL234"
+   ],
+   "score": 0.8909
+  },
+  {
+   "name": "Midazolam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Midodrine",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL261",
+    "CHEMBL220",
+    "CHEMBL205"
+   ],
+   "score": null
+  },
+  {
+   "name": "Mifamurtide",
+   "truth": [
+    "CHEMBL1293266"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Mifepristone",
+   "truth": [
+    "CHEMBL2034",
+    "CHEMBL208"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1849"
+   ],
+   "score": null
+  },
+  {
+   "name": "Miglitol",
+   "truth": [
+    "CHEMBL2074"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2063",
+   "ranked": [
+    "CHEMBL2063",
+    "CHEMBL2074"
+   ],
+   "score": 0.6362
+  },
+  {
+   "name": "Milnacipran",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL222",
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL228",
+    "CHEMBL238"
+   ],
+   "score": 0.8978
+  },
+  {
+   "name": "Milrinone",
+   "truth": [
+    "CHEMBL241"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2093863",
+    "CHEMBL1827"
+   ],
+   "score": null
+  },
+  {
+   "name": "Minocycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Mirabegron",
+   "truth": [
+    "CHEMBL246"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL213",
+   "ranked": [
+    "CHEMBL213"
+   ],
+   "score": 0.6654
+  },
+  {
+   "name": "Mirtazapine",
+   "truth": [
+    "CHEMBL2095158",
+    "CHEMBL224"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Mitoxantrone",
+   "truth": [
+    "CHEMBL1806"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Mizolastine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL231",
+   "ranked": [
+    "CHEMBL231",
+    "CHEMBL216",
+    "CHEMBL240"
+   ],
+   "score": 0.705
+  },
+  {
+   "name": "Moclobemide",
+   "truth": [
+    "CHEMBL1951"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL2093865",
+    "CHEMBL240"
+   ],
+   "score": null
+  },
+  {
+   "name": "Moexipril",
+   "truth": [
+    "CHEMBL1808"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1808",
+   "ranked": [
+    "CHEMBL1808"
+   ],
+   "score": 0.9184
+  },
+  {
+   "name": "Mometasone Furoate",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Montelukast",
+   "truth": [
+    "CHEMBL1798"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1798",
+   "ranked": [
+    "CHEMBL1798"
+   ],
+   "score": 0.8098
+  },
+  {
+   "name": "Morphine",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Moxonidine",
+   "truth": [
+    "CHEMBL3923"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095158"
+   ],
+   "score": null
+  },
+  {
+   "name": "Nadolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Nafarelin",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1855",
+   "ranked": [
+    "CHEMBL1855"
+   ],
+   "score": 0.735
+  },
+  {
+   "name": "Naftopidil",
+   "truth": [
+    "CHEMBL223"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "score": 0.5349
+  },
+  {
+   "name": "Nalbuphine",
+   "truth": [
+    "CHEMBL2095181"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL2095181"
+   ],
+   "score": 0.9079
+  },
+  {
+   "name": "Nalmefene",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.7007
+  },
+  {
+   "name": "Naloxone",
+   "truth": [
+    "CHEMBL2095181"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095181",
+   "ranked": [
+    "CHEMBL2095181"
+   ],
+   "score": 0.7797
+  },
+  {
+   "name": "Naltrexone",
+   "truth": [
+    "CHEMBL2095181"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095181",
+   "ranked": [
+    "CHEMBL2095181"
+   ],
+   "score": 0.7612
+  },
+  {
+   "name": "Naproxen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "score": 0.5814
+  },
+  {
+   "name": "Naratriptan",
+   "truth": [
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1898",
+    "CHEMBL1983",
+    "CHEMBL1805"
+   ],
+   "score": 0.5348
+  },
+  {
+   "name": "Nebivolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Nefazodone",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL224",
+    "CHEMBL228"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL234",
+    "CHEMBL231"
+   ],
+   "score": 0.6065
+  },
+  {
+   "name": "Neostigmine",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": 0.5891
+  },
+  {
+   "name": "Netilmicin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2363135",
+   "ranked": [
+    "CHEMBL2363135"
+   ],
+   "score": 0.7009
+  },
+  {
+   "name": "Netupitant",
+   "truth": [
+    "CHEMBL249"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL249",
+   "ranked": [
+    "CHEMBL249"
+   ],
+   "score": 0.6343
+  },
+  {
+   "name": "Nevirapine",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Nicardipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095229",
+    "CHEMBL223",
+    "CHEMBL229"
+   ],
+   "score": 0.5217
+  },
+  {
+   "name": "Nifedipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": 0.4544
+  },
+  {
+   "name": "Nimodipine",
+   "truth": [
+    "CHEMBL1994",
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL4478",
+    "CHEMBL2047",
+    "CHEMBL2363032"
+   ],
+   "score": null
+  },
+  {
+   "name": "Nintedanib",
+   "truth": [
+    "CHEMBL2095189"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1936",
+   "ranked": [
+    "CHEMBL1936"
+   ],
+   "score": 0.4667
+  },
+  {
+   "name": "Nisoldipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL226",
+    "CHEMBL251"
+   ],
+   "score": null
+  },
+  {
+   "name": "Nitrendipine",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095229",
+   "ranked": [
+    "CHEMBL2095229",
+    "CHEMBL223",
+    "CHEMBL229"
+   ],
+   "score": 0.5945
+  },
+  {
+   "name": "Nizatidine",
+   "truth": [
+    "CHEMBL1941"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL220",
+    "CHEMBL1941"
+   ],
+   "score": null
+  },
+  {
+   "name": "Nortriptyline",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL231",
+    "CHEMBL224",
+    "CHEMBL1833"
+   ],
+   "score": null
+  },
+  {
+   "name": "Odanacatib",
+   "truth": [
+    "CHEMBL268"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL268",
+   "ranked": [
+    "CHEMBL268"
+   ],
+   "score": 0.7811
+  },
+  {
+   "name": "Olcegepant",
+   "truth": [
+    "CHEMBL3798"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Oliceridine",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.5318
+  },
+  {
+   "name": "Olmesartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL227",
+   "ranked": [
+    "CHEMBL227"
+   ],
+   "score": 0.5529
+  },
+  {
+   "name": "Olodaterol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Olsalazine",
+   "truth": [
+    "CHEMBL2094253",
+    "CHEMBL215",
+    "CHEMBL235"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Omadacycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ombitasvir",
+   "truth": [
+    "CHEMBL3307224"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ombrabulin",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095182",
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": 0.5014
+  },
+  {
+   "name": "Omeprazole",
+   "truth": [
+    "CHEMBL2095173"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ondansetron",
+   "truth": [
+    "CHEMBL1899"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": 0.4614
+  },
+  {
+   "name": "Otamixaban",
+   "truth": [
+    "CHEMBL244"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL244",
+   "ranked": [
+    "CHEMBL244",
+    "CHEMBL204",
+    "CHEMBL1801"
+   ],
+   "score": 0.8207
+  },
+  {
+   "name": "Oxazepam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Oxprenolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL214"
+   ],
+   "score": 0.678
+  },
+  {
+   "name": "Oxybutynin",
+   "truth": [
+    "CHEMBL211",
+    "CHEMBL245"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL211",
+    "CHEMBL216",
+    "CHEMBL245"
+   ],
+   "score": 0.5037
+  },
+  {
+   "name": "Oxycodone",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261",
+    "CHEMBL1951"
+   ],
+   "score": 0.6401
+  },
+  {
+   "name": "Oxytetracycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Paclitaxel",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1293266",
+    "CHEMBL4302",
+    "CHEMBL1901"
+   ],
+   "score": null
+  },
+  {
+   "name": "Paliperidone",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL224",
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL217",
+    "CHEMBL214"
+   ],
+   "score": 0.5519
+  },
+  {
+   "name": "Palonosetron",
+   "truth": [
+    "CHEMBL1899"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1899",
+   "ranked": [
+    "CHEMBL1899"
+   ],
+   "score": 0.4982
+  },
+  {
+   "name": "Panobinostat",
+   "truth": [
+    "CHEMBL2093865"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL325",
+   "ranked": [
+    "CHEMBL325",
+    "CHEMBL2093865"
+   ],
+   "score": 0.6757
+  },
+  {
+   "name": "Pantoprazole",
+   "truth": [
+    "CHEMBL2095173"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Paricalcitol",
+   "truth": [
+    "CHEMBL1977"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1977",
+   "ranked": [
+    "CHEMBL1977"
+   ],
+   "score": 0.7427
+  },
+  {
+   "name": "Paritaprevir",
+   "truth": [
+    "CHEMBL2095231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Paroxetine",
+   "truth": [
+    "CHEMBL228"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL238",
+    "CHEMBL287"
+   ],
+   "score": null
+  },
+  {
+   "name": "Patupilone",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": null
+  },
+  {
+   "name": "Pazopanib",
+   "truth": [
+    "CHEMBL1844",
+    "CHEMBL1936",
+    "CHEMBL2095189"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Pazufloxacin",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095182",
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": 0.4774
+  },
+  {
+   "name": "Pemetrexed",
+   "truth": [
+    "CHEMBL1952",
+    "CHEMBL202"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1952",
+   "ranked": [
+    "CHEMBL1952",
+    "CHEMBL202"
+   ],
+   "score": 0.5639
+  },
+  {
+   "name": "Pentazocine",
+   "truth": [
+    "CHEMBL287"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL287"
+   ],
+   "score": 0.8917
+  },
+  {
+   "name": "Pentobarbital",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Pentostatin",
+   "truth": [
+    "CHEMBL1910"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Pentoxifylline",
+   "truth": [
+    "CHEMBL2094257"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": null
+  },
+  {
+   "name": "Perampanel",
+   "truth": [
+    "CHEMBL2096670"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Perphenazine",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL217",
+    "CHEMBL231"
+   ],
+   "score": 0.6718
+  },
+  {
+   "name": "Pevonedistat",
+   "truth": [
+    "CHEMBL3831283"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "PF-05212384",
+   "truth": [
+    "CHEMBL2842"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2842",
+    "CHEMBL4005"
+   ],
+   "score": 0.8077
+  },
+  {
+   "name": "Physostigmine",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": 0.9569
+  },
+  {
+   "name": "Pimasertib",
+   "truth": [
+    "CHEMBL3587"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3587",
+   "ranked": [
+    "CHEMBL3587"
+   ],
+   "score": 0.6496
+  },
+  {
+   "name": "Pindolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL214",
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "score": 0.7778
+  },
+  {
+   "name": "Pirenzepine",
+   "truth": [
+    "CHEMBL216"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL216",
+   "ranked": [
+    "CHEMBL216",
+    "CHEMBL211",
+    "CHEMBL245"
+   ],
+   "score": 0.6721
+  },
+  {
+   "name": "Pitavastatin",
+   "truth": [
+    "CHEMBL402"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL402",
+   "ranked": [
+    "CHEMBL402"
+   ],
+   "score": 0.616
+  },
+  {
+   "name": "Plazomicin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Plinabulin",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ponesimod",
+   "truth": [
+    "CHEMBL4333"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4333",
+   "ranked": [
+    "CHEMBL4333"
+   ],
+   "score": 0.709
+  },
+  {
+   "name": "Practolol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL287"
+   ],
+   "score": 0.5688
+  },
+  {
+   "name": "Pralidoxime",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Pravastatin",
+   "truth": [
+    "CHEMBL402"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL402",
+   "ranked": [
+    "CHEMBL402",
+    "CHEMBL325"
+   ],
+   "score": 0.5821
+  },
+  {
+   "name": "Prazosin",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL229",
+   "ranked": [
+    "CHEMBL229",
+    "CHEMBL223"
+   ],
+   "score": 0.7353
+  },
+  {
+   "name": "Prednisolone",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.643
+  },
+  {
+   "name": "Prednisone",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.5415
+  },
+  {
+   "name": "Prexasertib",
+   "truth": [
+    "CHEMBL4630"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4630",
+   "ranked": [
+    "CHEMBL4630"
+   ],
+   "score": 0.7363
+  },
+  {
+   "name": "Prochlorperazine",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL240",
+    "CHEMBL231"
+   ],
+   "score": 0.6283
+  },
+  {
+   "name": "Procyclidine",
+   "truth": [
+    "CHEMBL216"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL211",
+    "CHEMBL216",
+    "CHEMBL245"
+   ],
+   "score": 0.6395
+  },
+  {
+   "name": "Promazine",
+   "truth": [
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL287",
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL231",
+    "CHEMBL217"
+   ],
+   "score": 0.6358
+  },
+  {
+   "name": "Promethazine",
+   "truth": [
+    "CHEMBL231"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL287",
+    "CHEMBL220",
+    "CHEMBL230"
+   ],
+   "score": null
+  },
+  {
+   "name": "Propafenone",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240",
+    "CHEMBL4302"
+   ],
+   "score": 0.6133
+  },
+  {
+   "name": "Propofol",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Propoxyphene",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Propranolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL287"
+   ],
+   "score": 0.8593
+  },
+  {
+   "name": "Propylthiouracil",
+   "truth": [
+    "CHEMBL1839"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1839"
+   ],
+   "score": null
+  },
+  {
+   "name": "Prucalopride",
+   "truth": [
+    "CHEMBL1875"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2094132",
+    "CHEMBL1899"
+   ],
+   "score": null
+  },
+  {
+   "name": "Pyridostigmine",
+   "truth": [
+    "CHEMBL220"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": null
+  },
+  {
+   "name": "Pyrimethamine",
+   "truth": [
+    "CHEMBL1939"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1926",
+   "ranked": [
+    "CHEMBL1926"
+   ],
+   "score": 0.586
+  },
+  {
+   "name": "Quinupristin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Rabeprazole",
+   "truth": [
+    "CHEMBL2095173"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL234"
+   ],
+   "score": null
+  },
+  {
+   "name": "Raloxifene",
+   "truth": [
+    "CHEMBL206"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": 0.6917
+  },
+  {
+   "name": "Raltitrexed",
+   "truth": [
+    "CHEMBL1952"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ramelteon",
+   "truth": [
+    "CHEMBL2094268"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2094268",
+   "ranked": [
+    "CHEMBL2094268"
+   ],
+   "score": 0.9007
+  },
+  {
+   "name": "Ranitidine",
+   "truth": [
+    "CHEMBL1941"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL220",
+   "ranked": [
+    "CHEMBL220"
+   ],
+   "score": 0.604
+  },
+  {
+   "name": "Ranolazine",
+   "truth": [
+    "CHEMBL1980",
+    "CHEMBL2072"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Reboxetine",
+   "truth": [
+    "CHEMBL222"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL222",
+   "ranked": [
+    "CHEMBL222",
+    "CHEMBL231",
+    "CHEMBL228"
+   ],
+   "score": 0.6852
+  },
+  {
+   "name": "Regadenoson",
+   "truth": [
+    "CHEMBL251"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Remifentanil",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1980",
+    "CHEMBL240",
+    "CHEMBL205"
+   ],
+   "score": null
+  },
+  {
+   "name": "Remimazolam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Remoxipride",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL234",
+   "ranked": [
+    "CHEMBL234",
+    "CHEMBL217",
+    "CHEMBL287"
+   ],
+   "score": 0.6854
+  },
+  {
+   "name": "Repinotan",
+   "truth": [
+    "CHEMBL214"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL223",
+    "CHEMBL229",
+    "CHEMBL214"
+   ],
+   "score": null
+  },
+  {
+   "name": "RGB-286638",
+   "truth": [
+    "CHEMBL301",
+    "CHEMBL308"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL301",
+    "CHEMBL308"
+   ],
+   "score": null
+  },
+  {
+   "name": "Ribavirin",
+   "truth": [
+    "CHEMBL1822",
+    "CHEMBL4296320"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL226",
+    "CHEMBL1781"
+   ],
+   "score": null
+  },
+  {
+   "name": "Rilmenidine",
+   "truth": [
+    "CHEMBL3923"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL3923",
+    "CHEMBL229",
+    "CHEMBL2095158"
+   ],
+   "score": null
+  },
+  {
+   "name": "Risperidone",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL231",
+   "ranked": [
+    "CHEMBL231",
+    "CHEMBL240",
+    "CHEMBL234"
+   ],
+   "score": 0.4958
+  },
+  {
+   "name": "Ritodrine",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Rivaroxaban",
+   "truth": [
+    "CHEMBL244"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL244",
+   "ranked": [
+    "CHEMBL244",
+    "CHEMBL204"
+   ],
+   "score": 0.6606
+  },
+  {
+   "name": "Rizatriptan",
+   "truth": [
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1983",
+    "CHEMBL214",
+    "CHEMBL1898"
+   ],
+   "score": 0.5226
+  },
+  {
+   "name": "Rofecoxib",
+   "truth": [
+    "CHEMBL230"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Roflumilast",
+   "truth": [
+    "CHEMBL2093863"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2093863",
+   "ranked": [
+    "CHEMBL2093863"
+   ],
+   "score": 0.6422
+  },
+  {
+   "name": "Rolapitant",
+   "truth": [
+    "CHEMBL249"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Rolipram",
+   "truth": [
+    "CHEMBL2093863"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2093863",
+   "ranked": [
+    "CHEMBL2093863"
+   ],
+   "score": 0.5763
+  },
+  {
+   "name": "Rolofylline",
+   "truth": [
+    "CHEMBL226"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL226",
+    "CHEMBL251"
+   ],
+   "score": 0.6109
+  },
+  {
+   "name": "Romidepsin",
+   "truth": [
+    "CHEMBL2093865"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL4005"
+   ],
+   "score": null
+  },
+  {
+   "name": "Rosiglitazone",
+   "truth": [
+    "CHEMBL235"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL235",
+   "ranked": [
+    "CHEMBL235"
+   ],
+   "score": 0.7375
+  },
+  {
+   "name": "Rosuvastatin",
+   "truth": [
+    "CHEMBL402"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL402",
+   "ranked": [
+    "CHEMBL402"
+   ],
+   "score": 0.5181
+  },
+  {
+   "name": "Safinamide",
+   "truth": [
+    "CHEMBL2039"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2039",
+   "ranked": [
+    "CHEMBL2039",
+    "CHEMBL1951"
+   ],
+   "score": 0.7138
+  },
+  {
+   "name": "Saquinavir",
+   "truth": [
+    "CHEMBL243"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL243",
+   "ranked": [
+    "CHEMBL243"
+   ],
+   "score": 0.815
+  },
+  {
+   "name": "SAR 125844",
+   "truth": [
+    "CHEMBL3717"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1862",
+   "ranked": [
+    "CHEMBL1862"
+   ],
+   "score": 0.4948
+  },
+  {
+   "name": "Satavaptan",
+   "truth": [
+    "CHEMBL1790"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Scopolamine",
+   "truth": [
+    "CHEMBL216"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL249",
+   "ranked": [
+    "CHEMBL249"
+   ],
+   "score": 0.8018
+  },
+  {
+   "name": "Selegiline",
+   "truth": [
+    "CHEMBL2039"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2039",
+   "ranked": [
+    "CHEMBL2039",
+    "CHEMBL1951",
+    "CHEMBL287"
+   ],
+   "score": 0.8868
+  },
+  {
+   "name": "Semaxanib",
+   "truth": [
+    "CHEMBL1936"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4247",
+   "ranked": [
+    "CHEMBL4247",
+    "CHEMBL3024",
+    "CHEMBL203"
+   ],
+   "score": 0.6399
+  },
+  {
+   "name": "Silatecan",
+   "truth": [
+    "CHEMBL1781"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Sildenafil",
+   "truth": [
+    "CHEMBL1827"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1827",
+   "ranked": [
+    "CHEMBL1827",
+    "CHEMBL2094125"
+   ],
+   "score": 0.7479
+  },
+  {
+   "name": "Silodosin",
+   "truth": [
+    "CHEMBL229"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL223",
+    "CHEMBL229",
+    "CHEMBL214"
+   ],
+   "score": null
+  },
+  {
+   "name": "Sisomicin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2363135",
+   "ranked": [
+    "CHEMBL2363135"
+   ],
+   "score": 0.6278
+  },
+  {
+   "name": "Sitagliptin",
+   "truth": [
+    "CHEMBL284"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL284",
+   "ranked": [
+    "CHEMBL284"
+   ],
+   "score": 0.9423
+  },
+  {
+   "name": "SNS-032",
+   "truth": [
+    "CHEMBL301"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL301",
+   "ranked": [
+    "CHEMBL301",
+    "CHEMBL2093865"
+   ],
+   "score": 0.773
+  },
+  {
+   "name": "Soblidotin",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": null
+  },
+  {
+   "name": "Solifenacin",
+   "truth": [
+    "CHEMBL211",
+    "CHEMBL245"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL245",
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211",
+    "CHEMBL216"
+   ],
+   "score": 0.6717
+  },
+  {
+   "name": "Sotalol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL240"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL4581"
+   ],
+   "score": null
+  },
+  {
+   "name": "Spectinomycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Spiramycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Spirapril",
+   "truth": [
+    "CHEMBL1808"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1808",
+   "ranked": [
+    "CHEMBL1808"
+   ],
+   "score": 0.7002
+  },
+  {
+   "name": "Squalamine",
+   "truth": [
+    "CHEMBL3273"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Stavudine",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL247",
+   "ranked": [
+    "CHEMBL247"
+   ],
+   "score": 0.542
+  },
+  {
+   "name": "Streptomycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Sufentanil",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": 0.6104
+  },
+  {
+   "name": "Sulbactam",
+   "truth": [
+    "CHEMBL2364670"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2364670"
+   ],
+   "score": null
+  },
+  {
+   "name": "Sulfasalazine",
+   "truth": [
+    "CHEMBL2094253",
+    "CHEMBL215"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "score": null
+  },
+  {
+   "name": "Sulfinpyrazone",
+   "truth": [
+    "CHEMBL6120"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL221",
+    "CHEMBL6120"
+   ],
+   "score": null
+  },
+  {
+   "name": "Sulpiride",
+   "truth": [
+    "CHEMBL217"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL234",
+    "CHEMBL217",
+    "CHEMBL205"
+   ],
+   "score": 0.732
+  },
+  {
+   "name": "Sumatriptan",
+   "truth": [
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1983",
+    "CHEMBL214",
+    "CHEMBL1898"
+   ],
+   "score": 0.59
+  },
+  {
+   "name": "Suprofen",
+   "truth": [
+    "CHEMBL2094253"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221"
+   ],
+   "score": 0.52
+  },
+  {
+   "name": "Tacrolimus",
+   "truth": [
+    "CHEMBL1902"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1902",
+   "ranked": [
+    "CHEMBL1902",
+    "CHEMBL2842"
+   ],
+   "score": 0.5776
+  },
+  {
+   "name": "Tamsulosin",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL223",
+    "CHEMBL229"
+   ],
+   "score": 0.7194
+  },
+  {
+   "name": "Tanespimycin",
+   "truth": [
+    "CHEMBL2095165"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tapentadol",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL233"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL233"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tariquidar",
+   "truth": [
+    "CHEMBL4302"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4302",
+   "ranked": [
+    "CHEMBL4302"
+   ],
+   "score": 0.8193
+  },
+  {
+   "name": "TAS-106",
+   "truth": [
+    "CHEMBL3286067"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tasidotin",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tasimelteon",
+   "truth": [
+    "CHEMBL2094268"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tazobactam",
+   "truth": [
+    "CHEMBL2364670"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2364670"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tedizolid",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1951",
+    "CHEMBL2039"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tegafur",
+   "truth": [
+    "CHEMBL1952"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tegaserod",
+   "truth": [
+    "CHEMBL1875"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL214",
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL224",
+    "CHEMBL1983"
+   ],
+   "score": 0.511
+  },
+  {
+   "name": "Telcagepant",
+   "truth": [
+    "CHEMBL3798"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Telithromycin",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL240",
+   "ranked": [
+    "CHEMBL240"
+   ],
+   "score": 0.4937
+  },
+  {
+   "name": "Telmisartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL227",
+   "ranked": [
+    "CHEMBL227"
+   ],
+   "score": 0.664
+  },
+  {
+   "name": "Temsirolimus",
+   "truth": [
+    "CHEMBL1902"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Teniposide",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2094255"
+   ],
+   "score": null
+  },
+  {
+   "name": "Terazosin",
+   "truth": [
+    "CHEMBL2094251"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL229",
+   "ranked": [
+    "CHEMBL229",
+    "CHEMBL223"
+   ],
+   "score": 0.609
+  },
+  {
+   "name": "Terbutaline",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL210",
+   "ranked": [
+    "CHEMBL210"
+   ],
+   "score": 0.5186
+  },
+  {
+   "name": "Teriflunomide",
+   "truth": [
+    "CHEMBL1966"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1966",
+   "ranked": [
+    "CHEMBL1966"
+   ],
+   "score": 0.7041
+  },
+  {
+   "name": "Terlipressin",
+   "truth": [
+    "CHEMBL1790"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Terodiline",
+   "truth": [
+    "CHEMBL2094109",
+    "CHEMBL2363032"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL231",
+    "CHEMBL287"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tesaglitazar",
+   "truth": [
+    "CHEMBL235",
+    "CHEMBL239"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL235",
+    "CHEMBL239"
+   ],
+   "score": 0.4944
+  },
+  {
+   "name": "Testosterone",
+   "truth": [
+    "CHEMBL1871"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tetracycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tezosentan",
+   "truth": [
+    "CHEMBL252"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL252",
+   "ranked": [
+    "CHEMBL252"
+   ],
+   "score": 0.7027
+  },
+  {
+   "name": "Theophylline",
+   "truth": [
+    "CHEMBL2093863",
+    "CHEMBL2094125"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Thiopental",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Tiagabine",
+   "truth": [
+    "CHEMBL1903"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1903",
+   "ranked": [
+    "CHEMBL1903"
+   ],
+   "score": 0.7617
+  },
+  {
+   "name": "Tiapride",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL234"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ticagrelor",
+   "truth": [
+    "CHEMBL2001"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL228"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tigecycline",
+   "truth": [
+    "CHEMBL2363135"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Timolol",
+   "truth": [
+    "CHEMBL210",
+    "CHEMBL213"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL210",
+    "CHEMBL213",
+    "CHEMBL246"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tiotropium",
+   "truth": [
+    "CHEMBL245"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL245",
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211"
+   ],
+   "score": 0.8594
+  },
+  {
+   "name": "Tipifarnib",
+   "truth": [
+    "CHEMBL2094108"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2094108",
+   "ranked": [
+    "CHEMBL2094108"
+   ],
+   "score": 0.7574
+  },
+  {
+   "name": "Tirofiban",
+   "truth": [
+    "CHEMBL2093869"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1907598"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tizanidine",
+   "truth": [
+    "CHEMBL2095158"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL3923"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tofacitinib",
+   "truth": [
+    "CHEMBL2363062"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL2363062"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tofogliflozin",
+   "truth": [
+    "CHEMBL3884"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3884",
+   "ranked": [
+    "CHEMBL3884"
+   ],
+   "score": 0.856
+  },
+  {
+   "name": "Tolcapone",
+   "truth": [
+    "CHEMBL2023"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Toloxatone",
+   "truth": [
+    "CHEMBL1951"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1951"
+   ],
+   "score": null
+  },
+  {
+   "name": "Tolterodine",
+   "truth": [
+    "CHEMBL211",
+    "CHEMBL245"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL245",
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL231"
+   ],
+   "score": 0.5554
+  },
+  {
+   "name": "Tolvaptan",
+   "truth": [
+    "CHEMBL1790"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1790",
+   "ranked": [
+    "CHEMBL1790"
+   ],
+   "score": 0.6792
+  },
+  {
+   "name": "Tonapofylline",
+   "truth": [
+    "CHEMBL226"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL226",
+   "ranked": [
+    "CHEMBL226",
+    "CHEMBL251"
+   ],
+   "score": 0.6487
+  },
+  {
+   "name": "Topiramate",
+   "truth": [
+    "CHEMBL205",
+    "CHEMBL2093872",
+    "CHEMBL2096670"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL205",
+   "ranked": [
+    "CHEMBL205",
+    "CHEMBL261"
+   ],
+   "score": 0.7441
+  },
+  {
+   "name": "Topotecan",
+   "truth": [
+    "CHEMBL1781"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1781",
+   "ranked": [
+    "CHEMBL1781",
+    "CHEMBL2093865",
+    "CHEMBL325"
+   ],
+   "score": 0.8008
+  },
+  {
+   "name": "Tramadol",
+   "truth": [
+    "CHEMBL233"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL228",
+   "ranked": [
+    "CHEMBL228",
+    "CHEMBL222",
+    "CHEMBL233"
+   ],
+   "score": 0.7822
+  },
+  {
+   "name": "Trametinib",
+   "truth": [
+    "CHEMBL2111289"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL3587"
+   ],
+   "score": null
+  },
+  {
+   "name": "Trandolapril",
+   "truth": [
+    "CHEMBL1808"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1808",
+   "ranked": [
+    "CHEMBL1808"
+   ],
+   "score": 0.8584
+  },
+  {
+   "name": "Tranexamic acid",
+   "truth": [
+    "CHEMBL1801"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211",
+    "CHEMBL238"
+   ],
+   "score": null
+  },
+  {
+   "name": "Traxoprodil",
+   "truth": [
+    "CHEMBL1907603"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL233",
+   "ranked": [
+    "CHEMBL233",
+    "CHEMBL240"
+   ],
+   "score": 0.548
+  },
+  {
+   "name": "Trazodone",
+   "truth": [
+    "CHEMBL224",
+    "CHEMBL228"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL224",
+    "CHEMBL234"
+   ],
+   "score": 0.7553
+  },
+  {
+   "name": "Treprostinil",
+   "truth": [
+    "CHEMBL1995"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Triamcinolone Acetonide",
+   "truth": [
+    "CHEMBL2034"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2034",
+   "ranked": [
+    "CHEMBL2034"
+   ],
+   "score": 0.7886
+  },
+  {
+   "name": "Triapine",
+   "truth": [
+    "CHEMBL3301398"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Triazolam",
+   "truth": [
+    "CHEMBL2093872"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Trimetrexate",
+   "truth": [
+    "CHEMBL1926"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1926",
+   "ranked": [
+    "CHEMBL1926",
+    "CHEMBL202"
+   ],
+   "score": 0.6485
+  },
+  {
+   "name": "Trimipramine",
+   "truth": [
+    "CHEMBL2094251",
+    "CHEMBL217",
+    "CHEMBL222",
+    "CHEMBL224",
+    "CHEMBL231"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL231",
+   "ranked": [
+    "CHEMBL231"
+   ],
+   "score": 0.457
+  },
+  {
+   "name": "Triptorelin",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1855",
+   "ranked": [
+    "CHEMBL1855"
+   ],
+   "score": 0.8741
+  },
+  {
+   "name": "Tropisetron",
+   "truth": [
+    "CHEMBL2094132"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2094132",
+   "ranked": [
+    "CHEMBL2094132",
+    "CHEMBL240"
+   ],
+   "score": 0.596
+  },
+  {
+   "name": "Trospium",
+   "truth": [
+    "CHEMBL211",
+    "CHEMBL245"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL245",
+   "ranked": [
+    "CHEMBL245",
+    "CHEMBL211",
+    "CHEMBL216"
+   ],
+   "score": 0.6717
+  },
+  {
+   "name": "Umeclidinium",
+   "truth": [
+    "CHEMBL245"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL211",
+    "CHEMBL245",
+    "CHEMBL216"
+   ],
+   "score": 0.5459
+  },
+  {
+   "name": "Valbenazine",
+   "truth": [
+    "CHEMBL1893"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1893",
+   "ranked": [
+    "CHEMBL1893"
+   ],
+   "score": 0.6405
+  },
+  {
+   "name": "Valdecoxib",
+   "truth": [
+    "CHEMBL230"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL230",
+   "ranked": [
+    "CHEMBL230",
+    "CHEMBL221",
+    "CHEMBL261"
+   ],
+   "score": 0.7132
+  },
+  {
+   "name": "Valsartan",
+   "truth": [
+    "CHEMBL227"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL227",
+   "ranked": [
+    "CHEMBL227"
+   ],
+   "score": 0.8667
+  },
+  {
+   "name": "Valspodar",
+   "truth": [
+    "CHEMBL4302"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4302",
+   "ranked": [
+    "CHEMBL4302"
+   ],
+   "score": 0.7185
+  },
+  {
+   "name": "Vardenafil",
+   "truth": [
+    "CHEMBL1827"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1827",
+   "ranked": [
+    "CHEMBL1827"
+   ],
+   "score": 0.5795
+  },
+  {
+   "name": "Velcalcetide",
+   "truth": [
+    "CHEMBL1878"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Venlafaxine",
+   "truth": [
+    "CHEMBL222",
+    "CHEMBL228"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Verapamil",
+   "truth": [
+    "CHEMBL2095229"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL4302",
+   "ranked": [
+    "CHEMBL4302"
+   ],
+   "score": 0.8086
+  },
+  {
+   "name": "Vernakalant",
+   "truth": [
+    "CHEMBL1980",
+    "CHEMBL240",
+    "CHEMBL3038488"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1980",
+   "ranked": [
+    "CHEMBL1980"
+   ],
+   "score": 1.0
+  },
+  {
+   "name": "Vestipitant",
+   "truth": [
+    "CHEMBL249"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL249"
+   ],
+   "score": null
+  },
+  {
+   "name": "Vilanterol",
+   "truth": [
+    "CHEMBL210"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Vilazodone",
+   "truth": [
+    "CHEMBL214",
+    "CHEMBL228"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL214",
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL234",
+    "CHEMBL228"
+   ],
+   "score": 0.6921
+  },
+  {
+   "name": "Vildagliptin",
+   "truth": [
+    "CHEMBL284"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Viloxazine",
+   "truth": [
+    "CHEMBL222"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [
+    "CHEMBL203",
+    "CHEMBL217",
+    "CHEMBL234"
+   ],
+   "score": null
+  },
+  {
+   "name": "Vinblastine",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2095182",
+   "ranked": [
+    "CHEMBL2095182"
+   ],
+   "score": 0.6188
+  },
+  {
+   "name": "Vincristine",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Vinorelbine",
+   "truth": [
+    "CHEMBL2095182"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Vismodegib",
+   "truth": [
+    "CHEMBL5971"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Volasertib",
+   "truth": [
+    "CHEMBL3024"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Vorapaxar",
+   "truth": [
+    "CHEMBL3974"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL3974",
+   "ranked": [
+    "CHEMBL3974"
+   ],
+   "score": 0.7193
+  },
+  {
+   "name": "Vorinostat",
+   "truth": [
+    "CHEMBL325"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL325",
+    "CHEMBL2093865"
+   ],
+   "score": 0.7423
+  },
+  {
+   "name": "Vortioxetine",
+   "truth": [
+    "CHEMBL1899",
+    "CHEMBL214",
+    "CHEMBL228"
+   ],
+   "decision": "ambiguous",
+   "routed": null,
+   "ranked": [
+    "CHEMBL1899",
+    "CHEMBL214",
+    "CHEMBL224"
+   ],
+   "score": 0.8548
+  },
+  {
+   "name": "Vosaroxin",
+   "truth": [
+    "CHEMBL2094255"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Xamoterol",
+   "truth": [
+    "CHEMBL213"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "XG-102",
+   "truth": [
+    "CHEMBL2637"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Zalcitabine",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Zanamivir",
+   "truth": [
+    "CHEMBL2051"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2051",
+   "ranked": [
+    "CHEMBL2051"
+   ],
+   "score": 0.7636
+  },
+  {
+   "name": "Ziconotide",
+   "truth": [
+    "CHEMBL4478"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Zidovudine",
+   "truth": [
+    "CHEMBL247"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Ziprasidone",
+   "truth": [
+    "CHEMBL217",
+    "CHEMBL224"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL224",
+   "ranked": [
+    "CHEMBL224",
+    "CHEMBL217",
+    "CHEMBL214"
+   ],
+   "score": 0.558
+  },
+  {
+   "name": "Zoledronic Acid",
+   "truth": [
+    "CHEMBL1782"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL1782",
+   "ranked": [
+    "CHEMBL1782"
+   ],
+   "score": 0.5206
+  },
+  {
+   "name": "Zolmitriptan",
+   "truth": [
+    "CHEMBL1898",
+    "CHEMBL1983"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL214",
+   "ranked": [
+    "CHEMBL214",
+    "CHEMBL1983",
+    "CHEMBL1898"
+   ],
+   "score": 0.5229
+  },
+  {
+   "name": "Zonampanel",
+   "truth": [
+    "CHEMBL2096670"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Zoptarelin doxorubicin",
+   "truth": [
+    "CHEMBL1855"
+   ],
+   "decision": "abstain",
+   "routed": null,
+   "ranked": [],
+   "score": null
+  },
+  {
+   "name": "Zotarolimus",
+   "truth": [
+    "CHEMBL1902"
+   ],
+   "decision": "routed",
+   "routed": "CHEMBL2842",
+   "ranked": [
+    "CHEMBL2842"
+   ],
+   "score": 0.7612
+  }
+ ]
+}
