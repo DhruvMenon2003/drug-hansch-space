@@ -1,0 +1,2102 @@
+{
+ "acceptance": {
+  "fallback_nonlinear": {
+   "max_shuffled_q2": 0.1,
+   "min_q2_scaffold_grouped": 0.25
+  },
+  "series_hansch": {
+   "max_scramble_q2": 0.05,
+   "min_median_tanimoto": 0.55,
+   "min_n": 15,
+   "min_q2_loo": 0.5,
+   "min_r2": 0.6
+  }
+ },
+ "counts": {
+  "at least one side predicted": 337,
+  "both sides measured": 29,
+  "from a validated Hansch series model": 5,
+  "inside the applicability domain": 371,
+  "molecules in": 1345,
+  "ranked": 649
+ },
+ "descriptors": {
+  "declared_block": [
+   "mw",
+   "clogp",
+   "clogp_sq",
+   "mr",
+   "tpsa",
+   "hbd",
+   "hba",
+   "rotb",
+   "aromatic_rings",
+   "fsp3",
+   "formal_charge",
+   "n_basic_centres",
+   "n_acidic_centres",
+   "max_partial_charge",
+   "min_partial_charge",
+   "qed"
+  ],
+  "hansch_terms": [
+   "clogp",
+   "clogp_sq",
+   "mr",
+   "tpsa",
+   "hbd",
+   "hba"
+  ],
+  "measured_not_fitted": [
+   "measured_fu",
+   "measured_vdss_l_per_kg",
+   "measured_cl_ml_per_min_per_kg",
+   "measured_mrt_h",
+   "measured_t_half_h",
+   "measured_assay_hit_rate",
+   "measured_assays_active",
+   "measured_assays_tried"
+  ],
+  "note": "the measured_ columns are human measurements, carried through and never fitted against"
+ },
+ "endpoint": {
+  "definition": "p_activity(primary target) - p_toxicity(hERG, CHEMBL240), both -log10 mol/L",
+  "direction": "higher is a wider margin over the cardiac liability",
+  "is_not": "not LD50/ED50, not a clinical therapeutic index, not dose-aware, not safety evidence",
+  "name": "therapeutic_index",
+  "units": "log10 ratio"
+ },
+ "input_ledger": {
+  "  different (recorded per row, not silently merged)": 5,
+  "  from ChEMBL": 375,
+  "  from DrugBank export": 818,
+  "  from the datasets": 1,
+  "  same molecule": 795,
+  "FDA route legend entries": 112,
+  "dataset3 named rows": 1345,
+  "distinct primary targets": 287,
+  "matched in ChEMBL by exact name": 1198,
+  "matched to dataset1/dataset2 identity": 439,
+  "structures checked against ChEMBL's own": 800,
+  "with a measured VDss": 1306,
+  "with a measured assay hit rate": 304,
+  "with a measured fu": 912,
+  "with a measured half-life": 1326,
+  "with a primary target": 852,
+  "with a structure": 1194
+ },
+ "inputs": {
+  "dataset1.md": "ddd26e47e1275508",
+  "dataset2.md": "93cc1a7c04249e2b",
+  "dataset3.md": "8b2a95281521ba05"
+ },
+ "liability_target": "CHEMBL240",
+ "models": {
+  "CHEMBL1293266": {
+   "fallback_q2_scaffold_grouped": 0.2803,
+   "fallback_shuffled_q2": 0.0666,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 173,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1781": {
+   "fallback_q2_scaffold_grouped": 0.411,
+   "fallback_shuffled_q2": -0.1038,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 312,
+   "series_tried": 2,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1782": {
+   "fallback_q2_scaffold_grouped": -0.0184,
+   "fallback_shuffled_q2": -0.0627,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 283,
+   "series_tried": 4,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1784": {
+   "fallback_q2_scaffold_grouped": 0.1563,
+   "fallback_shuffled_q2": -0.4484,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 115,
+   "series_tried": 1,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1790": {
+   "fallback_q2_scaffold_grouped": 0.3872,
+   "fallback_shuffled_q2": -0.1218,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 383,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1792": {
+   "fallback_q2_scaffold_grouped": 0.3619,
+   "fallback_shuffled_q2": -0.1806,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 490,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1798": {
+   "fallback_q2_scaffold_grouped": 0.4631,
+   "fallback_shuffled_q2": -0.3926,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 45,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1801": {
+   "fallback_q2_scaffold_grouped": 0.6488,
+   "fallback_shuffled_q2": -0.1259,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 612,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1805": {
+   "fallback_q2_scaffold_grouped": -0.0023,
+   "fallback_shuffled_q2": -0.3615,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 113,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1806": {
+   "fallback_q2_scaffold_grouped": 0.156,
+   "fallback_shuffled_q2": -0.1613,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 362,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1808": {
+   "fallback_q2_scaffold_grouped": 0.39,
+   "fallback_shuffled_q2": -0.1584,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 486,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1811": {
+   "fallback_q2_scaffold_grouped": 0.1117,
+   "fallback_shuffled_q2": -0.1305,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 547,
+   "series_tried": 7,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1822": {
+   "fallback_q2_scaffold_grouped": 0.2432,
+   "fallback_shuffled_q2": -0.1469,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 117,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1827": {
+   "fallback_q2_scaffold_grouped": 0.5273,
+   "fallback_shuffled_q2": -0.0771,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2034,
+   "series_tried": 23,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1832": {
+   "fallback_q2_scaffold_grouped": 0.1238,
+   "fallback_shuffled_q2": -0.2285,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 124,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1833": {
+   "fallback_q2_scaffold_grouped": 0.1978,
+   "fallback_shuffled_q2": -0.0837,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 1579,
+   "series_tried": 18,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1839": {
+   "fallback_q2_scaffold_grouped": 0.0605,
+   "fallback_shuffled_q2": -0.3624,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 51,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1844": {
+   "fallback_q2_scaffold_grouped": 0.4192,
+   "fallback_shuffled_q2": -0.0723,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2163,
+   "series_tried": 19,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1849": {
+   "fallback_q2_scaffold_grouped": 0.4843,
+   "fallback_shuffled_q2": -0.1356,
+   "fallback_usable": true,
+   "organism": "Mycobacterium tuberculosis",
+   "rows": 337,
+   "series_tried": 6,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1855": {
+   "fallback_q2_scaffold_grouped": 0.6385,
+   "fallback_shuffled_q2": -0.1204,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 609,
+   "series_tried": 8,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1856": {
+   "fallback_q2_scaffold_grouped": 0.5968,
+   "fallback_shuffled_q2": -0.2007,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 323,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1862": {
+   "fallback_q2_scaffold_grouped": 0.6613,
+   "fallback_shuffled_q2": -0.0987,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2010,
+   "series_tried": 21,
+   "series_validated": 3,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1871": {
+   "fallback_q2_scaffold_grouped": 0.1594,
+   "fallback_shuffled_q2": -0.0986,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 1821,
+   "series_tried": 25,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1875": {
+   "fallback_q2_scaffold_grouped": 0.499,
+   "fallback_shuffled_q2": -0.0892,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 434,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1878": {
+   "fallback_q2_scaffold_grouped": 0.1345,
+   "fallback_shuffled_q2": -0.4792,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 58,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1893": {
+   "fallback_q2_scaffold_grouped": -0.0716,
+   "fallback_shuffled_q2": -0.0623,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 88,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1898": {
+   "fallback_q2_scaffold_grouped": 0.355,
+   "fallback_shuffled_q2": -0.1356,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 745,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1899": {
+   "fallback_q2_scaffold_grouped": 0.3269,
+   "fallback_shuffled_q2": -0.1188,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 578,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1901": {
+   "fallback_q2_scaffold_grouped": 0.3977,
+   "fallback_shuffled_q2": -0.2701,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 313,
+   "series_tried": 5,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1902": {
+   "fallback_q2_scaffold_grouped": 0.5982,
+   "fallback_shuffled_q2": -0.1173,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 370,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1903": {
+   "fallback_q2_scaffold_grouped": -0.1818,
+   "fallback_shuffled_q2": -0.0443,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 48,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1907598": {
+   "fallback_q2_scaffold_grouped": 0.3518,
+   "fallback_shuffled_q2": -0.0667,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1197,
+   "series_tried": 6,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1907603": {
+   "fallback_q2_scaffold_grouped": 0.1818,
+   "fallback_shuffled_q2": -0.138,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 1852,
+   "series_tried": 25,
+   "series_validated": 4,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1910": {
+   "fallback_q2_scaffold_grouped": 0.0305,
+   "fallback_shuffled_q2": -0.0878,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 192,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1926": {
+   "fallback_q2_scaffold_grouped": 0.23,
+   "fallback_shuffled_q2": -0.1291,
+   "fallback_usable": false,
+   "organism": "Pneumocystis carinii",
+   "rows": 542,
+   "series_tried": 9,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1929": {
+   "fallback_q2_scaffold_grouped": 0.5356,
+   "fallback_shuffled_q2": -0.1033,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 574,
+   "series_tried": 4,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1936": {
+   "fallback_q2_scaffold_grouped": 0.2918,
+   "fallback_shuffled_q2": -0.0793,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1608,
+   "series_tried": 16,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1939": {
+   "fallback_q2_scaffold_grouped": 0.603,
+   "fallback_shuffled_q2": -0.1876,
+   "fallback_usable": true,
+   "organism": "Plasmodium falciparum K1",
+   "rows": 47,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1941": {
+   "fallback_q2_scaffold_grouped": 0.5817,
+   "fallback_shuffled_q2": -0.0878,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 483,
+   "series_tried": 4,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1949": {
+   "fallback_q2_scaffold_grouped": 0.3231,
+   "fallback_shuffled_q2": -0.2897,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 132,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1951": {
+   "fallback_q2_scaffold_grouped": 0.2024,
+   "fallback_shuffled_q2": -0.0724,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 2701,
+   "series_tried": 23,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1952": {
+   "fallback_q2_scaffold_grouped": 0.381,
+   "fallback_shuffled_q2": -0.0383,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 384,
+   "series_tried": 5,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1966": {
+   "fallback_q2_scaffold_grouped": 0.4294,
+   "fallback_shuffled_q2": -0.0799,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1761,
+   "series_tried": 21,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1977": {
+   "fallback_q2_scaffold_grouped": 0.684,
+   "fallback_shuffled_q2": -0.1973,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 241,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1978": {
+   "fallback_q2_scaffold_grouped": 0.4015,
+   "fallback_shuffled_q2": -0.1267,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2697,
+   "series_tried": 27,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1980": {
+   "fallback_q2_scaffold_grouped": 0.3411,
+   "fallback_shuffled_q2": -0.1097,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1137,
+   "series_tried": 9,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1983": {
+   "fallback_q2_scaffold_grouped": 0.4381,
+   "fallback_shuffled_q2": -0.1297,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 909,
+   "series_tried": 8,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1984": {
+   "fallback_q2_scaffold_grouped": 0.2692,
+   "fallback_shuffled_q2": -0.2239,
+   "fallback_usable": true,
+   "organism": "Escherichia coli K-12",
+   "rows": 72,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1987": {
+   "fallback_q2_scaffold_grouped": 0.2961,
+   "fallback_shuffled_q2": -0.0606,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 427,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1992": {
+   "fallback_q2_scaffold_grouped": 0.3088,
+   "fallback_shuffled_q2": -0.4284,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 43,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1994": {
+   "fallback_q2_scaffold_grouped": 0.1206,
+   "fallback_shuffled_q2": -0.099,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 662,
+   "series_tried": 11,
+   "series_validated": 3,
+   "standard_type": "IC50"
+  },
+  "CHEMBL1995": {
+   "fallback_q2_scaffold_grouped": -0.1226,
+   "fallback_shuffled_q2": -0.2248,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 144,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL1997": {
+   "fallback_q2_scaffold_grouped": 0.0955,
+   "fallback_shuffled_q2": -0.2363,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 150,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2000": {
+   "fallback_q2_scaffold_grouped": 0.4943,
+   "fallback_shuffled_q2": -0.1073,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2482,
+   "series_tried": 21,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2001": {
+   "fallback_q2_scaffold_grouped": 0.5191,
+   "fallback_shuffled_q2": -0.1988,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 587,
+   "series_tried": 8,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL202": {
+   "fallback_q2_scaffold_grouped": 0.1245,
+   "fallback_shuffled_q2": -0.1271,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 815,
+   "series_tried": 13,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2023": {
+   "fallback_q2_scaffold_grouped": 0.2081,
+   "fallback_shuffled_q2": -0.0443,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 107,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL203": {
+   "fallback_q2_scaffold_grouped": 0.4015,
+   "fallback_shuffled_q2": -0.0646,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3983,
+   "series_tried": 40,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2034": {
+   "fallback_q2_scaffold_grouped": 0.4203,
+   "fallback_shuffled_q2": -0.084,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1753,
+   "series_tried": 22,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2039": {
+   "fallback_q2_scaffold_grouped": 0.3353,
+   "fallback_shuffled_q2": -0.0824,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4525,
+   "series_tried": 46,
+   "series_validated": 3,
+   "standard_type": "IC50"
+  },
+  "CHEMBL204": {
+   "fallback_q2_scaffold_grouped": 0.5148,
+   "fallback_shuffled_q2": -0.0866,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3536,
+   "series_tried": 28,
+   "series_validated": 3,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2047": {
+   "fallback_q2_scaffold_grouped": 0.4442,
+   "fallback_shuffled_q2": -0.1226,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 316,
+   "series_tried": 3,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL205": {
+   "fallback_q2_scaffold_grouped": 0.2827,
+   "fallback_shuffled_q2": -0.0702,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3639,
+   "series_tried": 33,
+   "series_validated": 4,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2051": {
+   "fallback_q2_scaffold_grouped": 0.233,
+   "fallback_shuffled_q2": -0.106,
+   "fallback_usable": false,
+   "organism": "Influenza A virus (A/Puerto Rico/8/1934(H1N1))",
+   "rows": 548,
+   "series_tried": 10,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2056": {
+   "fallback_q2_scaffold_grouped": 0.3722,
+   "fallback_shuffled_q2": -0.0558,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1233,
+   "series_tried": 10,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL206": {
+   "fallback_q2_scaffold_grouped": 0.6627,
+   "fallback_shuffled_q2": -0.0807,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2759,
+   "series_tried": 33,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2063": {
+   "fallback_q2_scaffold_grouped": 0.1172,
+   "fallback_shuffled_q2": -0.1816,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 250,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2072": {
+   "fallback_q2_scaffold_grouped": 0.3218,
+   "fallback_shuffled_q2": -0.134,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 224,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2074": {
+   "fallback_q2_scaffold_grouped": 0.3637,
+   "fallback_shuffled_q2": -0.1076,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 276,
+   "series_tried": 4,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL208": {
+   "fallback_q2_scaffold_grouped": 0.2535,
+   "fallback_shuffled_q2": -0.0936,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 890,
+   "series_tried": 8,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2093863": {
+   "fallback_q2_scaffold_grouped": 0.5318,
+   "fallback_shuffled_q2": -0.0462,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1448,
+   "series_tried": 9,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2093865": {
+   "fallback_q2_scaffold_grouped": 0.3536,
+   "fallback_shuffled_q2": -0.0915,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2379,
+   "series_tried": 21,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2093866": {
+   "fallback_q2_scaffold_grouped": -0.1414,
+   "fallback_shuffled_q2": -0.0738,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 61,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2093869": {
+   "fallback_q2_scaffold_grouped": 0.394,
+   "fallback_shuffled_q2": -0.0749,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1112,
+   "series_tried": 9,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2093872": {
+   "fallback_q2_scaffold_grouped": 0.0926,
+   "fallback_shuffled_q2": -0.0105,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 249,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2094108": {
+   "fallback_q2_scaffold_grouped": 0.4112,
+   "fallback_shuffled_q2": -0.1071,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1808,
+   "series_tried": 20,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2094109": {
+   "fallback_q2_scaffold_grouped": 0.1406,
+   "fallback_shuffled_q2": -0.1337,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 150,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2094124": {
+   "fallback_q2_scaffold_grouped": 0.1881,
+   "fallback_shuffled_q2": -0.1535,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 300,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2094125": {
+   "fallback_q2_scaffold_grouped": 0.6141,
+   "fallback_shuffled_q2": -0.1188,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 713,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2094132": {
+   "fallback_q2_scaffold_grouped": 0.5299,
+   "fallback_shuffled_q2": -0.1857,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 141,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2094251": {
+   "fallback_q2_scaffold_grouped": 0.4967,
+   "fallback_shuffled_q2": -0.1505,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 249,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2094253": {
+   "fallback_q2_scaffold_grouped": 0.2495,
+   "fallback_shuffled_q2": -0.0136,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 85,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2094255": {
+   "fallback_q2_scaffold_grouped": 0.1637,
+   "fallback_shuffled_q2": -0.0358,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 88,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2094257": {
+   "fallback_q2_scaffold_grouped": -0.1925,
+   "fallback_shuffled_q2": -0.1202,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 121,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2094268": {
+   "fallback_q2_scaffold_grouped": -0.0153,
+   "fallback_shuffled_q2": -0.2462,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 118,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2095158": {
+   "fallback_q2_scaffold_grouped": 0.0721,
+   "fallback_shuffled_q2": -0.1422,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 186,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2095165": {
+   "fallback_q2_scaffold_grouped": 0.6097,
+   "fallback_shuffled_q2": -0.1002,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 671,
+   "series_tried": 5,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095173": {
+   "fallback_q2_scaffold_grouped": -0.1916,
+   "fallback_shuffled_q2": -0.1876,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 177,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095181": {
+   "fallback_q2_scaffold_grouped": 0.2636,
+   "fallback_shuffled_q2": -0.103,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 85,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095182": {
+   "fallback_q2_scaffold_grouped": 0.0744,
+   "fallback_shuffled_q2": -0.0827,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 811,
+   "series_tried": 7,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095186": {
+   "fallback_q2_scaffold_grouped": 0.3114,
+   "fallback_shuffled_q2": -0.2788,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 237,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095189": {
+   "fallback_q2_scaffold_grouped": 0.0022,
+   "fallback_shuffled_q2": -0.146,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 265,
+   "series_tried": 4,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095215": {
+   "fallback_q2_scaffold_grouped": 0.1496,
+   "fallback_shuffled_q2": -0.091,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 67,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095229": {
+   "fallback_q2_scaffold_grouped": 0.2959,
+   "fallback_shuffled_q2": -0.129,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 69,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2095231": {
+   "fallback_q2_scaffold_grouped": 0.5746,
+   "fallback_shuffled_q2": -0.1112,
+   "fallback_usable": true,
+   "organism": "Hepatitis C virus",
+   "rows": 394,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2096670": {
+   "fallback_q2_scaffold_grouped": -0.1446,
+   "fallback_shuffled_q2": -0.2549,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 64,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL210": {
+   "fallback_q2_scaffold_grouped": 0.5709,
+   "fallback_shuffled_q2": -0.1001,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 597,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL211": {
+   "fallback_q2_scaffold_grouped": 0.5403,
+   "fallback_shuffled_q2": -0.0892,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1549,
+   "series_tried": 13,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2111289": {
+   "fallback_q2_scaffold_grouped": 0.2521,
+   "fallback_shuffled_q2": -0.2248,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 57,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2111459": {
+   "fallback_q2_scaffold_grouped": -0.1337,
+   "fallback_shuffled_q2": -0.2172,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 86,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL213": {
+   "fallback_q2_scaffold_grouped": 0.5051,
+   "fallback_shuffled_q2": -0.1129,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 508,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL214": {
+   "fallback_q2_scaffold_grouped": 0.3483,
+   "fallback_shuffled_q2": -0.0925,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4772,
+   "series_tried": 45,
+   "series_validated": 5,
+   "standard_type": "Ki"
+  },
+  "CHEMBL215": {
+   "fallback_q2_scaffold_grouped": 0.2839,
+   "fallback_shuffled_q2": -0.0815,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1815,
+   "series_tried": 14,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL216": {
+   "fallback_q2_scaffold_grouped": 0.4982,
+   "fallback_shuffled_q2": -0.0921,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1301,
+   "series_tried": 10,
+   "series_validated": 2,
+   "standard_type": "Ki"
+  },
+  "CHEMBL217": {
+   "fallback_q2_scaffold_grouped": 0.328,
+   "fallback_shuffled_q2": -0.0657,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4247,
+   "series_tried": 34,
+   "series_validated": 5,
+   "standard_type": "Ki"
+  },
+  "CHEMBL218": {
+   "fallback_q2_scaffold_grouped": 0.3676,
+   "fallback_shuffled_q2": -0.0771,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2930,
+   "series_tried": 29,
+   "series_validated": 3,
+   "standard_type": "Ki"
+  },
+  "CHEMBL220": {
+   "fallback_q2_scaffold_grouped": 0.4119,
+   "fallback_shuffled_q2": -0.0864,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4691,
+   "series_tried": 34,
+   "series_validated": 5,
+   "standard_type": "IC50"
+  },
+  "CHEMBL221": {
+   "fallback_q2_scaffold_grouped": 0.1241,
+   "fallback_shuffled_q2": -0.0832,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 1474,
+   "series_tried": 18,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL222": {
+   "fallback_q2_scaffold_grouped": 0.3419,
+   "fallback_shuffled_q2": -0.0906,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2006,
+   "series_tried": 25,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL223": {
+   "fallback_q2_scaffold_grouped": 0.3278,
+   "fallback_shuffled_q2": -0.0788,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1150,
+   "series_tried": 13,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL224": {
+   "fallback_q2_scaffold_grouped": 0.4063,
+   "fallback_shuffled_q2": -0.0709,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4456,
+   "series_tried": 43,
+   "series_validated": 2,
+   "standard_type": "Ki"
+  },
+  "CHEMBL226": {
+   "fallback_q2_scaffold_grouped": 0.3259,
+   "fallback_shuffled_q2": -0.0935,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4226,
+   "series_tried": 39,
+   "series_validated": 4,
+   "standard_type": "Ki"
+  },
+  "CHEMBL227": {
+   "fallback_q2_scaffold_grouped": 0.4103,
+   "fallback_shuffled_q2": -0.0898,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 620,
+   "series_tried": 5,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL228": {
+   "fallback_q2_scaffold_grouped": 0.2935,
+   "fallback_shuffled_q2": -0.0595,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2824,
+   "series_tried": 33,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL229": {
+   "fallback_q2_scaffold_grouped": 0.3801,
+   "fallback_shuffled_q2": -0.0929,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1341,
+   "series_tried": 14,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL230": {
+   "fallback_q2_scaffold_grouped": 0.211,
+   "fallback_shuffled_q2": -0.0744,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 4133,
+   "series_tried": 49,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL231": {
+   "fallback_q2_scaffold_grouped": 0.6018,
+   "fallback_shuffled_q2": -0.0378,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1164,
+   "series_tried": 11,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL2321613": {
+   "fallback_q2_scaffold_grouped": 0.2658,
+   "fallback_shuffled_q2": -0.1748,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 805,
+   "series_tried": 11,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL233": {
+   "fallback_q2_scaffold_grouped": 0.5065,
+   "fallback_shuffled_q2": -0.0731,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4961,
+   "series_tried": 55,
+   "series_validated": 7,
+   "standard_type": "Ki"
+  },
+  "CHEMBL234": {
+   "fallback_q2_scaffold_grouped": 0.4243,
+   "fallback_shuffled_q2": -0.0844,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4696,
+   "series_tried": 39,
+   "series_validated": 4,
+   "standard_type": "Ki"
+  },
+  "CHEMBL235": {
+   "fallback_q2_scaffold_grouped": 0.4043,
+   "fallback_shuffled_q2": -0.0873,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1478,
+   "series_tried": 15,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2363032": {
+   "fallback_q2_scaffold_grouped": 0.5537,
+   "fallback_shuffled_q2": -0.1818,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 73,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2363062": {
+   "fallback_q2_scaffold_grouped": 0.3938,
+   "fallback_shuffled_q2": -0.0533,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 92,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2363135": {
+   "fallback_q2_scaffold_grouped": -0.7027,
+   "fallback_shuffled_q2": -0.0608,
+   "fallback_usable": false,
+   "organism": "Bacteria",
+   "rows": 97,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2364670": {
+   "fallback_q2_scaffold_grouped": 0.2783,
+   "fallback_shuffled_q2": -0.122,
+   "fallback_usable": true,
+   "organism": "Bacteria",
+   "rows": 59,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2364701": {
+   "fallback_q2_scaffold_grouped": -0.6671,
+   "fallback_shuffled_q2": -0.1,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 20,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL238": {
+   "fallback_q2_scaffold_grouped": 0.4182,
+   "fallback_shuffled_q2": -0.0703,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1813,
+   "series_tried": 17,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL239": {
+   "fallback_q2_scaffold_grouped": 0.267,
+   "fallback_shuffled_q2": -0.1351,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 730,
+   "series_tried": 7,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL240": {
+   "fallback_q2_scaffold_grouped": 0.3188,
+   "fallback_shuffled_q2": -0.067,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 5039,
+   "series_tried": 23,
+   "series_validated": 4,
+   "standard_type": "IC50"
+  },
+  "CHEMBL241": {
+   "fallback_q2_scaffold_grouped": 0.5021,
+   "fallback_shuffled_q2": -0.1351,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 651,
+   "series_tried": 6,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL242": {
+   "fallback_q2_scaffold_grouped": 0.4232,
+   "fallback_shuffled_q2": -0.0957,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1548,
+   "series_tried": 17,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL243": {
+   "fallback_q2_scaffold_grouped": 0.4031,
+   "fallback_shuffled_q2": -0.0871,
+   "fallback_usable": true,
+   "organism": "Human immunodeficiency virus 1",
+   "rows": 2265,
+   "series_tried": 18,
+   "series_validated": 5,
+   "standard_type": "Ki"
+  },
+  "CHEMBL244": {
+   "fallback_q2_scaffold_grouped": 0.544,
+   "fallback_shuffled_q2": -0.0998,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3625,
+   "series_tried": 32,
+   "series_validated": 6,
+   "standard_type": "Ki"
+  },
+  "CHEMBL245": {
+   "fallback_q2_scaffold_grouped": 0.6799,
+   "fallback_shuffled_q2": -0.0871,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1721,
+   "series_tried": 13,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL246": {
+   "fallback_q2_scaffold_grouped": 0.3977,
+   "fallback_shuffled_q2": -0.1585,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 334,
+   "series_tried": 4,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL247": {
+   "fallback_q2_scaffold_grouped": 0.2783,
+   "fallback_shuffled_q2": -0.0718,
+   "fallback_usable": true,
+   "organism": "Human immunodeficiency virus 1",
+   "rows": 3125,
+   "series_tried": 40,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL249": {
+   "fallback_q2_scaffold_grouped": 0.4541,
+   "fallback_shuffled_q2": -0.1242,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1590,
+   "series_tried": 17,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL251": {
+   "fallback_q2_scaffold_grouped": 0.4667,
+   "fallback_shuffled_q2": -0.0823,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4880,
+   "series_tried": 52,
+   "series_validated": 2,
+   "standard_type": "Ki"
+  },
+  "CHEMBL252": {
+   "fallback_q2_scaffold_grouped": 0.4421,
+   "fallback_shuffled_q2": -0.0937,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1155,
+   "series_tried": 13,
+   "series_validated": 5,
+   "standard_type": "IC50"
+  },
+  "CHEMBL260": {
+   "fallback_q2_scaffold_grouped": 0.3636,
+   "fallback_shuffled_q2": -0.0574,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4293,
+   "series_tried": 41,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL261": {
+   "fallback_q2_scaffold_grouped": 0.2157,
+   "fallback_shuffled_q2": -0.0611,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 3782,
+   "series_tried": 37,
+   "series_validated": 4,
+   "standard_type": "Ki"
+  },
+  "CHEMBL262": {
+   "fallback_q2_scaffold_grouped": 0.4474,
+   "fallback_shuffled_q2": -0.069,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3127,
+   "series_tried": 26,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2637": {
+   "fallback_q2_scaffold_grouped": 0.485,
+   "fallback_shuffled_q2": -0.1421,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1467,
+   "series_tried": 9,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL268": {
+   "fallback_q2_scaffold_grouped": 0.494,
+   "fallback_shuffled_q2": -0.1067,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1559,
+   "series_tried": 8,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL274": {
+   "fallback_q2_scaffold_grouped": 0.467,
+   "fallback_shuffled_q2": -0.1316,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1591,
+   "series_tried": 14,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL284": {
+   "fallback_q2_scaffold_grouped": 0.3659,
+   "fallback_shuffled_q2": -0.102,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3811,
+   "series_tried": 36,
+   "series_validated": 4,
+   "standard_type": "IC50"
+  },
+  "CHEMBL2842": {
+   "fallback_q2_scaffold_grouped": 0.5606,
+   "fallback_shuffled_q2": -0.1128,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4277,
+   "series_tried": 29,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL287": {
+   "fallback_q2_scaffold_grouped": 0.4504,
+   "fallback_shuffled_q2": -0.0946,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2504,
+   "series_tried": 15,
+   "series_validated": 4,
+   "standard_type": "Ki"
+  },
+  "CHEMBL301": {
+   "fallback_q2_scaffold_grouped": 0.3338,
+   "fallback_shuffled_q2": -0.0824,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2002,
+   "series_tried": 17,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3024": {
+   "fallback_q2_scaffold_grouped": 0.6797,
+   "fallback_shuffled_q2": -0.1103,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1309,
+   "series_tried": 14,
+   "series_validated": 3,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3038488": {
+   "fallback_q2_scaffold_grouped": 0.4495,
+   "fallback_shuffled_q2": -0.14,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 191,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3038508": {
+   "fallback_q2_scaffold_grouped": 0.2778,
+   "fallback_shuffled_q2": -0.0993,
+   "fallback_usable": true,
+   "organism": "Staphylococcus aureus",
+   "rows": 196,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL308": {
+   "fallback_q2_scaffold_grouped": 0.2038,
+   "fallback_shuffled_q2": -0.075,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 1144,
+   "series_tried": 9,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3227": {
+   "fallback_q2_scaffold_grouped": 0.2878,
+   "fallback_shuffled_q2": -0.2076,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 474,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL325": {
+   "fallback_q2_scaffold_grouped": 0.399,
+   "fallback_shuffled_q2": -0.0714,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 4836,
+   "series_tried": 39,
+   "series_validated": 5,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3273": {
+   "fallback_q2_scaffold_grouped": 0.378,
+   "fallback_shuffled_q2": -0.1345,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 348,
+   "series_tried": 2,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3286067": {
+   "fallback_q2_scaffold_grouped": 0.3337,
+   "fallback_shuffled_q2": -0.2276,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 60,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3301398": {
+   "fallback_q2_scaffold_grouped": 0.303,
+   "fallback_shuffled_q2": -0.1579,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 264,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3307224": {
+   "fallback_q2_scaffold_grouped": 0.7052,
+   "fallback_shuffled_q2": -0.1786,
+   "fallback_usable": true,
+   "organism": "Hepatitis C virus",
+   "rows": 43,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3514": {
+   "fallback_q2_scaffold_grouped": 0.7247,
+   "fallback_shuffled_q2": -0.1513,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 420,
+   "series_tried": 5,
+   "series_validated": 4,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3572": {
+   "fallback_q2_scaffold_grouped": 0.4216,
+   "fallback_shuffled_q2": -0.1153,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1103,
+   "series_tried": 13,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3587": {
+   "fallback_q2_scaffold_grouped": 0.2493,
+   "fallback_shuffled_q2": -0.1225,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 849,
+   "series_tried": 11,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3717": {
+   "fallback_q2_scaffold_grouped": 0.398,
+   "fallback_shuffled_q2": -0.0611,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3711,
+   "series_tried": 31,
+   "series_validated": 6,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3798": {
+   "fallback_q2_scaffold_grouped": 0.5705,
+   "fallback_shuffled_q2": -0.0932,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 589,
+   "series_tried": 6,
+   "series_validated": 1,
+   "standard_type": "Ki"
+  },
+  "CHEMBL3831283": {
+   "fallback_q2_scaffold_grouped": 0.2515,
+   "fallback_shuffled_q2": -0.1931,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 125,
+   "series_tried": 0,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3884": {
+   "fallback_q2_scaffold_grouped": 0.4655,
+   "fallback_shuffled_q2": -0.0574,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1253,
+   "series_tried": 16,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3923": {
+   "fallback_q2_scaffold_grouped": 0.0221,
+   "fallback_shuffled_q2": -0.1873,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 154,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL3974": {
+   "fallback_q2_scaffold_grouped": 0.4997,
+   "fallback_shuffled_q2": -0.0952,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 667,
+   "series_tried": 10,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL3994": {
+   "fallback_q2_scaffold_grouped": 0.0899,
+   "fallback_shuffled_q2": -0.1073,
+   "fallback_usable": false,
+   "organism": "Staphylococcus aureus",
+   "rows": 350,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4005": {
+   "fallback_q2_scaffold_grouped": 0.4932,
+   "fallback_shuffled_q2": -0.0767,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 5157,
+   "series_tried": 39,
+   "series_validated": 4,
+   "standard_type": "IC50"
+  },
+  "CHEMBL402": {
+   "fallback_q2_scaffold_grouped": 0.4612,
+   "fallback_shuffled_q2": -0.0949,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 195,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4073": {
+   "fallback_q2_scaffold_grouped": 0.5349,
+   "fallback_shuffled_q2": -0.1164,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 444,
+   "series_tried": 4,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4247": {
+   "fallback_q2_scaffold_grouped": 0.5125,
+   "fallback_shuffled_q2": -0.085,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1975,
+   "series_tried": 14,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4296320": {
+   "fallback_q2_scaffold_grouped": 0.5066,
+   "fallback_shuffled_q2": -0.037,
+   "fallback_usable": true,
+   "organism": "Hepacivirus hominis",
+   "rows": 1165,
+   "series_tried": 17,
+   "series_validated": 3,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4302": {
+   "fallback_q2_scaffold_grouped": 0.4339,
+   "fallback_shuffled_q2": -0.1134,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 1178,
+   "series_tried": 14,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4304": {
+   "fallback_q2_scaffold_grouped": 0.2465,
+   "fallback_shuffled_q2": -0.227,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 67,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4333": {
+   "fallback_q2_scaffold_grouped": 0.5081,
+   "fallback_shuffled_q2": -0.106,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 836,
+   "series_tried": 8,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4338": {
+   "fallback_q2_scaffold_grouped": 0.3026,
+   "fallback_shuffled_q2": -0.0534,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 156,
+   "series_tried": 3,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL4427": {
+   "fallback_q2_scaffold_grouped": 0.2804,
+   "fallback_shuffled_q2": -0.233,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 187,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4478": {
+   "fallback_q2_scaffold_grouped": 0.6484,
+   "fallback_shuffled_q2": -0.1605,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 328,
+   "series_tried": 2,
+   "series_validated": 1,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4581": {
+   "fallback_q2_scaffold_grouped": 0.4557,
+   "fallback_shuffled_q2": -0.1444,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 783,
+   "series_tried": 11,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4630": {
+   "fallback_q2_scaffold_grouped": 0.548,
+   "fallback_shuffled_q2": -0.1444,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 2274,
+   "series_tried": 20,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL4956": {
+   "fallback_q2_scaffold_grouped": -0.0982,
+   "fallback_shuffled_q2": -0.07,
+   "fallback_usable": false,
+   "organism": "Homo sapiens",
+   "rows": 101,
+   "series_tried": 1,
+   "series_validated": 0,
+   "standard_type": "Ki"
+  },
+  "CHEMBL5137": {
+   "fallback_q2_scaffold_grouped": 0.5168,
+   "fallback_shuffled_q2": -0.1198,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 534,
+   "series_tried": 8,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL5145": {
+   "fallback_q2_scaffold_grouped": 0.5045,
+   "fallback_shuffled_q2": -0.0941,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3660,
+   "series_tried": 43,
+   "series_validated": 2,
+   "standard_type": "IC50"
+  },
+  "CHEMBL5251": {
+   "fallback_q2_scaffold_grouped": 0.3935,
+   "fallback_shuffled_q2": -0.0863,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3815,
+   "series_tried": 36,
+   "series_validated": 4,
+   "standard_type": "IC50"
+  },
+  "CHEMBL5936": {
+   "fallback_q2_scaffold_grouped": 0.636,
+   "fallback_shuffled_q2": -0.1001,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 3268,
+   "series_tried": 23,
+   "series_validated": 3,
+   "standard_type": "IC50"
+  },
+  "CHEMBL5971": {
+   "fallback_q2_scaffold_grouped": 0.3347,
+   "fallback_shuffled_q2": -0.1247,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 577,
+   "series_tried": 8,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  },
+  "CHEMBL6120": {
+   "fallback_q2_scaffold_grouped": 0.3348,
+   "fallback_shuffled_q2": -0.0959,
+   "fallback_usable": true,
+   "organism": "Homo sapiens",
+   "rows": 822,
+   "series_tried": 6,
+   "series_validated": 0,
+   "standard_type": "IC50"
+  }
+ },
+ "not_ranked": {
+  "no usable structure: RDKit could not parse the SMILES": 1,
+  "no usable structure: contains Gd, which the Crippen parameters do not cover": 2,
+  "no usable structure: contains Pt, which the Crippen parameters do not cover": 3,
+  "no usable structure: no SMILES": 151,
+  "no validated series model and the fallback is below q2=0.25": 167,
+  "the router abstained: closest local model scored 0.17, below the scope floor of 0.45": 2,
+  "the router abstained: closest local model scored 0.18, below the scope floor of 0.45": 3,
+  "the router abstained: closest local model scored 0.19, below the scope floor of 0.45": 6,
+  "the router abstained: closest local model scored 0.20, below the scope floor of 0.45": 8,
+  "the router abstained: closest local model scored 0.21, below the scope floor of 0.45": 20,
+  "the router abstained: closest local model scored 0.22, below the scope floor of 0.45": 13,
+  "the router abstained: closest local model scored 0.23, below the scope floor of 0.45": 21,
+  "the router abstained: closest local model scored 0.24, below the scope floor of 0.45": 19,
+  "the router abstained: closest local model scored 0.25, below the scope floor of 0.45": 15,
+  "the router abstained: closest local model scored 0.26, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.27, below the scope floor of 0.45": 16,
+  "the router abstained: closest local model scored 0.28, below the scope floor of 0.45": 17,
+  "the router abstained: closest local model scored 0.29, below the scope floor of 0.45": 14,
+  "the router abstained: closest local model scored 0.30, below the scope floor of 0.45": 11,
+  "the router abstained: closest local model scored 0.31, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.32, below the scope floor of 0.45": 18,
+  "the router abstained: closest local model scored 0.33, below the scope floor of 0.45": 7,
+  "the router abstained: closest local model scored 0.34, below the scope floor of 0.45": 17,
+  "the router abstained: closest local model scored 0.35, below the scope floor of 0.45": 13,
+  "the router abstained: closest local model scored 0.36, below the scope floor of 0.45": 16,
+  "the router abstained: closest local model scored 0.37, below the scope floor of 0.45": 14,
+  "the router abstained: closest local model scored 0.38, below the scope floor of 0.45": 14,
+  "the router abstained: closest local model scored 0.39, below the scope floor of 0.45": 11,
+  "the router abstained: closest local model scored 0.40, below the scope floor of 0.45": 11,
+  "the router abstained: closest local model scored 0.41, below the scope floor of 0.45": 17,
+  "the router abstained: closest local model scored 0.42, below the scope floor of 0.45": 11,
+  "the router abstained: closest local model scored 0.43, below the scope floor of 0.45": 12,
+  "the router abstained: closest local model scored 0.44, below the scope floor of 0.45": 13,
+  "the router abstained: closest local model scored 0.45, below the scope floor of 0.45": 9
+ },
+ "ranking_rule": "ranked within each target, never across them: rank_in_target 1 is the widest margin among the molecules routed to that same local model",
+ "registry": {
+  "eligible_local_models": 189,
+  "fingerprint": {
+   "bits": 2048,
+   "kind": "Morgan",
+   "radius": 2
+  },
+  "min_support": 20,
+  "refused_for_low_support": 98,
+  "training_compounds_in_the_bank": 236374
+ },
+ "routing": {
+  "basis": "Morgan r=2 top-5 mean Tanimoto against each local model's training set",
+  "decisions": {
+   "": 157,
+   "abstain": 372,
+   "ambiguous": 23,
+   "mechanism": 581,
+   "routed": 212
+  },
+  "is_not": "a measured target assignment; a routed target is an inference from structure",
+  "largest_group": 25,
+  "targets_with_a_ranked_group": 170,
+  "thresholds": {
+   "margin": 0.01,
+   "scope_floor": 0.4536
+  }
+ },
+ "routing_rule": "activity only from a model fitted on the molecule's own target; no pooling across targets. The target comes from ChEMBL's mechanism table where one is recorded, otherwise from ti/router.py on structure alone, and target_source says which.",
+ "software": {
+  "numpy": "2.5.3",
+  "python": "3.13.16",
+  "rdkit": "2026.09.1",
+  "scikit-learn": "1.9.1"
+ },
+ "source_exclusions": [
+  {
+   "reason": "table exported without its header row; the cells hold several molecules' values run together and cannot be split without guessing which value belongs to which molecule",
+   "row": "\u03b1-hANP (-)dOTC (+)dOTC | 0.20 1.18 0.84 | 25.40 3.00 3.90 | N.F. N.F. N.F. | 0.13 6.5 3.6 | 0.22 19.2 8.92",
+   "stage": "dataset3 parse"
+  },
+  {
+   "reason": "the target schema's measurement columns are blank in the source (9060 non-empty cells across all rows and columns, mostly identity and ATC); no Activity, Toxicity or Therapeutic Index value can be read from it",
+   "row": "1294 rows",
+   "stage": "dataset2 wide worksheet"
+  }
+ ],
+ "structure_disagreements": [
+  {
+   "chembl_id": "CHEMBL404271",
+   "chembl_smiles": "C[C@H]1O[C@H](O[C@H]2[C@H](O)[C@@H](O)[C@@H](O[C@H]3[C@H](O)[C@@H](O)C(O)O[C@@H]3CO)O[C@@H]2CO)[C@H](O)[C@@H](O)[C@@H]1N[C@H]1C=C(CO)[C@@H](O)[C@H](O)[C@H]1O",
+   "drugbank_smiles": "[H][C@@](O)(CO)[C@@]([H])(O[C@@]1([H])O[C@]([H])(CO)[C@@]([H])(O[C@@]2([H])O[C@]([H])(C)[C@@]([H])(N[C@@]3([H])C=C(CO)[C@@]([H])(O)[C@]([H])(O)[C@@]3([H])O)[C@]([H])(O)[C@@]2([H])O)[C@]([H])(O)[C@@]1([H])O)[C@]([H])(O)[C@@]([H])(O)C=O",
+   "name": "Acarbose"
+  },
+  {
+   "chembl_id": "CHEMBL5095173",
+   "chembl_smiles": "COc1cccc2c1C(=N)c1c(O)c3c(c(O)c1C2=O)C[C@@](O)(CCO)C[C@@H]3O[C@H]1C[C@H](N)[C@H](O)[C@H](C)O1",
+   "drugbank_smiles": "COC1=C2C(=N)C3=C(O)C4=C(C[C@](O)(C[C@@H]4O[C@H]4C[C@H](N)[C@H](O)[C@H](C)O4)C(=O)CO)C(O)=C3C(=O)C2=CC=C1",
+   "name": "GPX-150"
+  },
+  {
+   "chembl_id": "CHEMBL2107354",
+   "chembl_smiles": "CCCCCCCCCCCCCCCC(=O)OC[C@H](COP(=O)([O-])OCCNC(=O)[C@H](C)NC(=O)CC[C@@H](NC(=O)[C@H](C)NC(=O)[C@@H](C)O[C@H]1[C@H](O)[C@@H](CO)OC(O)[C@@H]1NC(C)=O)C(N)=O)OC(=O)CCCCCCCCCCCCCCC.O.[Na+]",
+   "drugbank_smiles": "O.[Na+].CCCCCCCCCCCCCCCC(=O)OC[C@H](COP([O-])(=O)OCCNC(=O)[C@H](C)NC(=O)CC[C@@H](NC(=O)[C@H](C)NC(=O)[C@@H](C)O[C@@H]([C@H](O)[C@H](O)CO)[C@@H](NC(C)=O)C=O)C(N)=O)OC(=O)CCCCCCCCCCCCCCC",
+   "name": "Mifamurtide"
+  },
+  {
+   "chembl_id": "CHEMBL2219536",
+   "chembl_smiles": "COCCO[C@@H]1[C@H](SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)[C@H](OCCOC)[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)[C@H](OCCOC)[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(N)ncnc43)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(=O)[nH]c(N)nc43)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(=O)[nH]c(N)nc43)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(=O)[nH]c3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cc(C)c(N)nc3=O)C[C@@H]2SP(=O)(O)OC[C@H]2O[C@@H](n3cnc4c(=O)[nH]c(N)nc43)[C@H](OCCOC)[C@@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cc(C)c(N)nc3=O)[C@@H](OCCOC)[C@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cnc4c(N)ncnc43)[C@@H](OCCOC)[C@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cc(C)c(N)nc3=O)[C@@H](OCCOC)[C@H]2SP(=O)(O)OC[C@@H]2O[C@H](n3cc(C)c(N)nc3=O)[C@@H](OCCOC)[C@H]2O)[C@@H](COP(=O)(O)S[C@H]2[C@@H](OCCOC)[C@H](n3cc(C)c(N)nc3=O)O[C@@H]2COP(=O)(O)S[C@H]2[C@@H](OCCOC)[C@H](n3cnc4c(=O)[nH]c(N)nc43)O[C@@H]2CO)O[C@H]1n1cc(C)c(N)nc1=O",
+   "drugbank_smiles": "[H]C1(CC([H])(OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(CC2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=NC4=C3NC(=N)N=C4O)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=C(C)C(=N)N=C3O)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=NC4=C(N)N=CN=C34)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=C(C)C(=N)N=C3O)C([H])(OCCOC)C2([H])OP(O)(=S)OCC2([H])OC([H])(N3C=C(C)C(=N)N=C3O)C([H])(OCCOC)C2([H])O)N2C=C(C)C(=N)N=C2O)N2C=C(C)C(O)=NC2=O)N2C=C(C)C(O)=NC2=O)N2C=C(C)C(=N)N=C2O)N2C=NC3=C2NC(=N)N=C3O)N2C=C(C)C(O)=NC2=O)N2C=C(C)C(=N)N=C2O)N2C=C(C)C(O)=NC2=O)C([H])(COP(O)(=S)OC2([H])CC([H])(OC2([H])COP(O)(=S)OC2([H])C([H])(COP(O)(=S)OC3([H])C([H])(COP(O)(=S)OC4([H])C([H])(COP(O)(=S)OC5([H])C([H])(COP(O)(=S)OC6([H])C([H])(CO)OC([H])(N7C=NC8=C7NC(=N)N=C8O)C6([H])OCCOC)OC([H])(N6C=C(C)C(=N)N=C6O)C5([H])OCCOC)OC([H])(N5C=C(C)C(=N)N=C5O)C4([H])OCCOC)OC([H])(N4C=C(C)C(O)=NC4=O)C3([H])OCCOC)OC([H])(N3C=C(C)C(=N)N=C3O)C2([H])OCCOC)N2C=NC3=C(N)N=CN=C23)O1)N1C=NC2=C1NC(=N)N=C2O",
+   "name": "Mipomersen"
+  },
+  {
+   "chembl_id": "CHEMBL1201309",
+   "chembl_smiles": "CC(C)C[C@H](NC(=O)[C@@H](Cc1cccc2ccccc12)NC(=O)[C@H](Cc1ccc(O)cc1)NC(=O)[C@H](CO)NC(=O)[C@H](Cc1c[nH]c2ccccc12)NC(=O)[C@H](Cc1cnc[nH]1)NC(=O)[C@@H]1CCC(=O)N1)C(=O)N[C@@H](CCCNC(=N)N)C(=O)N1CCC[C@H]1C(=O)NCC(N)=O",
+   "drugbank_smiles": "CC(C)C[C@H](NC(=O)[C@@H](CC1=CC2=CC=CC=C2C=C1)NC(=O)[C@H](CC1=CC=C(O)C=C1)NC(=O)[C@H](CO)NC(=O)[C@H](CC1=CNC2=CC=CC=C12)NC(=O)[C@H](CC1=CN=CN1)NC(=O)[C@@H]1CCC(=O)N1)C(=O)N[C@@H](CCCN=C(N)N)C(=O)N1CCC[C@H]1C(=O)NCC(N)=O",
+   "name": "Nafarelin"
+  }
+ ]
+}

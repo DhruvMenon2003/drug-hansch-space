@@ -1,0 +1,3915 @@
+{
+ "fingerprint": {
+  "kind": "Morgan",
+  "radius": 2,
+  "bits": 2048
+ },
+ "min_support": 20,
+ "counts": {
+  "targets seen": 287,
+  "eligible local models": 189,
+  "refused for low support": 98,
+  "training compounds in the bank": 236374
+ },
+ "models": [
+  {
+   "model_id": "CHEMBL1250417:unfit",
+   "target_chembl_id": "CHEMBL1250417",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1293266:p_activity",
+   "target_chembl_id": "CHEMBL1293266",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 173,
+   "dataset_sha256": "261456e81678f1208585de42797700c896b2760bce15ca8cb82178d15f7d4d1b",
+   "activity_min": 4.26,
+   "activity_max": 9.0,
+   "activity_median": 5.76,
+   "bank_slice": [
+    0,
+    173
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1641347:unfit",
+   "target_chembl_id": "CHEMBL1641347",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1777:unfit",
+   "target_chembl_id": "CHEMBL1777",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1780:unfit",
+   "target_chembl_id": "CHEMBL1780",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1781:p_activity",
+   "target_chembl_id": "CHEMBL1781",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 312,
+   "dataset_sha256": "ff52bd7986737790a07ac779f4b819335abe05a2fe1f6e8f70b4689f757b5134",
+   "activity_min": 4.04,
+   "activity_max": 7.96,
+   "activity_median": 5.135,
+   "bank_slice": [
+    173,
+    485
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1782:p_activity",
+   "target_chembl_id": "CHEMBL1782",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 283,
+   "dataset_sha256": "d190e71ad111bf7e8f64e2fef39848cabbddc9457c826fed95f734d72fa3be36",
+   "activity_min": 4.0,
+   "activity_max": 8.52,
+   "activity_median": 5.85,
+   "bank_slice": [
+    485,
+    768
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1784:p_activity",
+   "target_chembl_id": "CHEMBL1784",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 115,
+   "dataset_sha256": "51d689c05bdcfb5dcb0f69f6c2e2be0d0e98ed030e8a591d07014121426ab4cd",
+   "activity_min": 4.0,
+   "activity_max": 10.09,
+   "activity_median": 7.06,
+   "bank_slice": [
+    768,
+    883
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1790:p_activity",
+   "target_chembl_id": "CHEMBL1790",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 383,
+   "dataset_sha256": "b8533159c9004c12b10e023f4e6fe12e893d27c9674cf181741893ca511e6a41",
+   "activity_min": 4.35,
+   "activity_max": 9.33,
+   "activity_median": 7.17,
+   "bank_slice": [
+    883,
+    1266
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1792:p_activity",
+   "target_chembl_id": "CHEMBL1792",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 490,
+   "dataset_sha256": "894f8637528318bd4fe9ba0e349b6c333ceeb20a11ee78a4f4896d3324492b17",
+   "activity_min": 4.55,
+   "activity_max": 9.89,
+   "activity_median": 7.55,
+   "bank_slice": [
+    1266,
+    1756
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1793:unfit",
+   "target_chembl_id": "CHEMBL1793",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1795122:unfit",
+   "target_chembl_id": "CHEMBL1795122",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1798:p_activity",
+   "target_chembl_id": "CHEMBL1798",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 45,
+   "dataset_sha256": "bdffca88e159b919721610bab077645852103301b9271b85ea5b9bd63d17c230",
+   "activity_min": 4.48,
+   "activity_max": 9.6,
+   "activity_median": 8.7,
+   "bank_slice": [
+    1756,
+    1801
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1801:p_activity",
+   "target_chembl_id": "CHEMBL1801",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 612,
+   "dataset_sha256": "6c8fa2e831a2f22ad5deb9fdf4d7ecfa56137d453f26c3cc0f66bad3a657da81",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 5.635,
+   "bank_slice": [
+    1801,
+    2413
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1805:p_activity",
+   "target_chembl_id": "CHEMBL1805",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 113,
+   "dataset_sha256": "d3a4697386ea0476f4eaa1693b4af44c9c6d8df4c16396e967a49ed71b806954",
+   "activity_min": 5.14,
+   "activity_max": 8.8,
+   "activity_median": 7.89,
+   "bank_slice": [
+    2413,
+    2526
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1806:p_activity",
+   "target_chembl_id": "CHEMBL1806",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 362,
+   "dataset_sha256": "8fc39f769672cfa087a7dc50101c1b679077ba155f2d089f2848c8439dd87be2",
+   "activity_min": 4.0,
+   "activity_max": 9.68,
+   "activity_median": 4.88,
+   "bank_slice": [
+    2526,
+    2888
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1808:p_activity",
+   "target_chembl_id": "CHEMBL1808",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 486,
+   "dataset_sha256": "c7b54214c599298bb80ddc0f6d42087f19a32b766a06c3e3aeb5a3ade733733d",
+   "activity_min": 4.0,
+   "activity_max": 10.54,
+   "activity_median": 6.755,
+   "bank_slice": [
+    2888,
+    3374
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1811:p_activity",
+   "target_chembl_id": "CHEMBL1811",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 547,
+   "dataset_sha256": "756541bf36349f65297a65192e8a25443c620b8a0536379091b2aa2e06d4c66f",
+   "activity_min": 4.73,
+   "activity_max": 9.89,
+   "activity_median": 7.4,
+   "bank_slice": [
+    3374,
+    3921
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1822:p_activity",
+   "target_chembl_id": "CHEMBL1822",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 117,
+   "dataset_sha256": "a80cffce06d6a678aebe66548933905df53430fe5287bef48f1472eabae54878",
+   "activity_min": 4.01,
+   "activity_max": 9.22,
+   "activity_median": 6.45,
+   "bank_slice": [
+    3921,
+    4038
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1827:p_activity",
+   "target_chembl_id": "CHEMBL1827",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2034,
+   "dataset_sha256": "3ce84d87288645c2b0e3ae78bef2a2ec357aad5f12dbd0a4f9e0ea517e163819",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 7.12,
+   "bank_slice": [
+    4038,
+    6072
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1832:p_activity",
+   "target_chembl_id": "CHEMBL1832",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 124,
+   "dataset_sha256": "9492b39aa44f2b31384527a752c18af559d7e3e8fcdd44ab7a5b015e2988ab1a",
+   "activity_min": 6.2,
+   "activity_max": 11.0,
+   "activity_median": 9.13,
+   "bank_slice": [
+    6072,
+    6196
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1833:p_activity",
+   "target_chembl_id": "CHEMBL1833",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1579,
+   "dataset_sha256": "c0884880b68b4bb3cc20ed5f37686af4b3a03103eae1056770b9e6205417c866",
+   "activity_min": 4.63,
+   "activity_max": 9.96,
+   "activity_median": 6.72,
+   "bank_slice": [
+    6196,
+    7775
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1839:p_activity",
+   "target_chembl_id": "CHEMBL1839",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 51,
+   "dataset_sha256": "03c2649e16eb108f5afe5b1e454a01def9dec71f84fb17a887e20d4f22d586e8",
+   "activity_min": 4.23,
+   "activity_max": 6.23,
+   "activity_median": 5.38,
+   "bank_slice": [
+    7775,
+    7826
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1844:p_activity",
+   "target_chembl_id": "CHEMBL1844",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2163,
+   "dataset_sha256": "a4a024fc02f702ff7f39fa82290d005da55d5ae2bbc4bba773cf706c8381a1b2",
+   "activity_min": 4.24,
+   "activity_max": 9.7,
+   "activity_median": 7.57,
+   "bank_slice": [
+    7826,
+    9989
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1846:unfit",
+   "target_chembl_id": "CHEMBL1846",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1849:p_activity",
+   "target_chembl_id": "CHEMBL1849",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 337,
+   "dataset_sha256": "82fedd0000e3897a458f456e35189f8b5ded9a02299e37abc23c1c54d13d04b8",
+   "activity_min": 3.4,
+   "activity_max": 8.7,
+   "activity_median": 5.51,
+   "bank_slice": [
+    9989,
+    10326
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1855:p_activity",
+   "target_chembl_id": "CHEMBL1855",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 609,
+   "dataset_sha256": "a94645bfcb0b200f37219b7c934a60ac83cef51db5fd8e5030f89444682d6c93",
+   "activity_min": 4.75,
+   "activity_max": 10.22,
+   "activity_median": 7.85,
+   "bank_slice": [
+    10326,
+    10935
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1856:p_activity",
+   "target_chembl_id": "CHEMBL1856",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 323,
+   "dataset_sha256": "942623a177c754dac0425de26abff2025fd9064ed92d0953a8db0d728b8ac739",
+   "activity_min": 4.0,
+   "activity_max": 10.4,
+   "activity_median": 7.81,
+   "bank_slice": [
+    10935,
+    11258
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1862:p_activity",
+   "target_chembl_id": "CHEMBL1862",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2010,
+   "dataset_sha256": "c1cee57e7db0c5b2dec43592ae99bdba702350879d4985464e7def5741cdc583",
+   "activity_min": 4.0,
+   "activity_max": 10.82,
+   "activity_median": 7.26,
+   "bank_slice": [
+    11258,
+    13268
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1871:p_activity",
+   "target_chembl_id": "CHEMBL1871",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1821,
+   "dataset_sha256": "76462198f139efba7cf2921faefd627ff8279eed943632bae09ba2acbb77e9bd",
+   "activity_min": 4.08,
+   "activity_max": 10.0,
+   "activity_median": 6.47,
+   "bank_slice": [
+    13268,
+    15089
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1872:unfit",
+   "target_chembl_id": "CHEMBL1872",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1874:unfit",
+   "target_chembl_id": "CHEMBL1874",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1875:p_activity",
+   "target_chembl_id": "CHEMBL1875",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 434,
+   "dataset_sha256": "e50528ffe800db9413ac96f8cc980818fa11616a082cb08d3af1f8633dc27510",
+   "activity_min": 4.6,
+   "activity_max": 10.8,
+   "activity_median": 7.9,
+   "bank_slice": [
+    15089,
+    15523
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1876:unfit",
+   "target_chembl_id": "CHEMBL1876",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1877:unfit",
+   "target_chembl_id": "CHEMBL1877",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1878:p_activity",
+   "target_chembl_id": "CHEMBL1878",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 58,
+   "dataset_sha256": "5b55786eddb5195ccf2f0f4301f438e7d6282402b53a4397177cc4635efc1f3d",
+   "activity_min": 4.5,
+   "activity_max": 10.66,
+   "activity_median": 6.52,
+   "bank_slice": [
+    15523,
+    15581
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1886:unfit",
+   "target_chembl_id": "CHEMBL1886",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1893:p_activity",
+   "target_chembl_id": "CHEMBL1893",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 88,
+   "dataset_sha256": "cf95f71fc33c4be9098b109a9a4c367a8645cef703387b46a2100d617e09d754",
+   "activity_min": 4.9,
+   "activity_max": 10.0,
+   "activity_median": 6.58,
+   "bank_slice": [
+    15581,
+    15669
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1898:p_activity",
+   "target_chembl_id": "CHEMBL1898",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 745,
+   "dataset_sha256": "5fb37284c08a05f29180e9b8ecf4470201aabeb28360b62c1f82b4ecb488d2de",
+   "activity_min": 4.99,
+   "activity_max": 10.0,
+   "activity_median": 7.0,
+   "bank_slice": [
+    15669,
+    16414
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1899:p_activity",
+   "target_chembl_id": "CHEMBL1899",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 578,
+   "dataset_sha256": "7bd62c944b28ac0515f39b9cd227d38d9720f3229488ac4a0e22b56949d563d5",
+   "activity_min": 4.0,
+   "activity_max": 10.5,
+   "activity_median": 6.605,
+   "bank_slice": [
+    16414,
+    16992
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1901:p_activity",
+   "target_chembl_id": "CHEMBL1901",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 313,
+   "dataset_sha256": "76a787bd1f692c622667d25c8069a9cb1a56aa6673b656703b9a0a0d31f2d668",
+   "activity_min": 4.45,
+   "activity_max": 11.0,
+   "activity_median": 7.6,
+   "bank_slice": [
+    16992,
+    17305
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1902:p_activity",
+   "target_chembl_id": "CHEMBL1902",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 370,
+   "dataset_sha256": "a5f8db602257d9a8bd6d5833d068ec08785e3e83eb988d28870fe491c22ccb2a",
+   "activity_min": 4.08,
+   "activity_max": 9.52,
+   "activity_median": 6.66,
+   "bank_slice": [
+    17305,
+    17675
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1903:p_activity",
+   "target_chembl_id": "CHEMBL1903",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 48,
+   "dataset_sha256": "52ce635cb1d21f7916319979dfc3b775a958542762ede7f21b213f5762d2ebbf",
+   "activity_min": 4.005,
+   "activity_max": 7.31,
+   "activity_median": 5.37,
+   "bank_slice": [
+    17675,
+    17723
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1907598:p_activity",
+   "target_chembl_id": "CHEMBL1907598",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1197,
+   "dataset_sha256": "e1349b5ba16e6b205c46861160c3e626aa6098a8ae731d80624d243fab2ae087",
+   "activity_min": 4.0,
+   "activity_max": 10.52,
+   "activity_median": 7.89,
+   "bank_slice": [
+    17723,
+    18920
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1907603:p_activity",
+   "target_chembl_id": "CHEMBL1907603",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1852,
+   "dataset_sha256": "958e52c3457eff1f05a3f3ee79fc0a528aca1f2d9865ad312f585bdff51fea23",
+   "activity_min": 4.0,
+   "activity_max": 9.15,
+   "activity_median": 6.88,
+   "bank_slice": [
+    18920,
+    20772
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1910:p_activity",
+   "target_chembl_id": "CHEMBL1910",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 192,
+   "dataset_sha256": "78e26358200dd9604915e0a51d8af0402434a46e56d7858a2fd0bb6e8ada768b",
+   "activity_min": 5.43,
+   "activity_max": 9.4,
+   "activity_median": 8.075,
+   "bank_slice": [
+    20772,
+    20964
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1911:unfit",
+   "target_chembl_id": "CHEMBL1911",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1925:unfit",
+   "target_chembl_id": "CHEMBL1925",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1926:p_activity",
+   "target_chembl_id": "CHEMBL1926",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 542,
+   "dataset_sha256": "b4c1bbd6ca4c36077ce02221acad02974b2049d0cfdef71a5a2c3b24eb222c8d",
+   "activity_min": 4.01,
+   "activity_max": 10.01,
+   "activity_median": 6.0,
+   "bank_slice": [
+    20964,
+    21506
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1929:p_activity",
+   "target_chembl_id": "CHEMBL1929",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 574,
+   "dataset_sha256": "764422de955bd6937886271a3578282ac4beebaf613a6c3b4af6b291f9a60d32",
+   "activity_min": 4.01,
+   "activity_max": 10.82,
+   "activity_median": 6.205,
+   "bank_slice": [
+    21506,
+    22080
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1930:unfit",
+   "target_chembl_id": "CHEMBL1930",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1936:p_activity",
+   "target_chembl_id": "CHEMBL1936",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1608,
+   "dataset_sha256": "5ae85f79da63cc39aa990ff44fdac569c5e3a86eebfab18d6cdb723f2eb6d37f",
+   "activity_min": 4.0,
+   "activity_max": 9.74,
+   "activity_median": 7.08,
+   "bank_slice": [
+    22080,
+    23688
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1939:p_activity",
+   "target_chembl_id": "CHEMBL1939",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 47,
+   "dataset_sha256": "4a9239cfceaa996c22079303eb787823a8a511c5457baf6e4a3de42c3750836d",
+   "activity_min": 4.53,
+   "activity_max": 10.87,
+   "activity_median": 8.8,
+   "bank_slice": [
+    23688,
+    23735
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1941:p_activity",
+   "target_chembl_id": "CHEMBL1941",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 483,
+   "dataset_sha256": "b3ea8a763375f4cbde622b28d5d6802e211098ebdbe3c62836827830255faafd",
+   "activity_min": 4.0,
+   "activity_max": 8.77,
+   "activity_median": 5.55,
+   "bank_slice": [
+    23735,
+    24218
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1949:p_activity",
+   "target_chembl_id": "CHEMBL1949",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 132,
+   "dataset_sha256": "c00d5d40cc47f9525d7482cb7e98eab69bf512129cdd385f8cfbd890eaa8abb4",
+   "activity_min": 4.05,
+   "activity_max": 9.51,
+   "activity_median": 6.425,
+   "bank_slice": [
+    24218,
+    24350
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1950:unfit",
+   "target_chembl_id": "CHEMBL1950",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1951:p_activity",
+   "target_chembl_id": "CHEMBL1951",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2701,
+   "dataset_sha256": "0fdb051f9b17e6fbccd1df5f896a0036ff1a02aa872e54f602407cd8fc6888ab",
+   "activity_min": 3.51,
+   "activity_max": 10.0,
+   "activity_median": 5.14,
+   "bank_slice": [
+    24350,
+    27051
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1952:p_activity",
+   "target_chembl_id": "CHEMBL1952",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 384,
+   "dataset_sha256": "824bb45c5097a9961f2a9a166ed9801c3bc776d702c09faab034b48c1c9e9240",
+   "activity_min": 4.0,
+   "activity_max": 8.92,
+   "activity_median": 6.09,
+   "bank_slice": [
+    27051,
+    27435
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1966:p_activity",
+   "target_chembl_id": "CHEMBL1966",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1761,
+   "dataset_sha256": "522e0ff184d4f78405e85e55cde7b023273b518828a45d8c5735f7382a3be4d5",
+   "activity_min": 4.0,
+   "activity_max": 9.92,
+   "activity_median": 7.02,
+   "bank_slice": [
+    27435,
+    29196
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1977:p_activity",
+   "target_chembl_id": "CHEMBL1977",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 241,
+   "dataset_sha256": "f2c360f9abf6aa4bf941607624f166507770933d8b10bb73c15763badb28ae65",
+   "activity_min": 4.17,
+   "activity_max": 10.54,
+   "activity_median": 5.61,
+   "bank_slice": [
+    29196,
+    29437
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1978:p_activity",
+   "target_chembl_id": "CHEMBL1978",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2697,
+   "dataset_sha256": "b259859be84855f8ba6a9f4337c7f80ce41c935a706dd68f83a986ffb4ca7c77",
+   "activity_min": 4.0,
+   "activity_max": 10.82,
+   "activity_median": 6.04,
+   "bank_slice": [
+    29437,
+    32134
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1980:p_activity",
+   "target_chembl_id": "CHEMBL1980",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1137,
+   "dataset_sha256": "c69ab0255526b443d0dd0624a511b32d2e91f1da70ac4d2e3b28e2a3a3e0ea92",
+   "activity_min": 4.02,
+   "activity_max": 9.55,
+   "activity_median": 5.11,
+   "bank_slice": [
+    32134,
+    33271
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1983:p_activity",
+   "target_chembl_id": "CHEMBL1983",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 909,
+   "dataset_sha256": "73994f0d92dfb86c3237711145004cc1f9f5d3992e0147c0d2e30d10ae8141a4",
+   "activity_min": 4.29,
+   "activity_max": 10.0,
+   "activity_median": 7.27,
+   "bank_slice": [
+    33271,
+    34180
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1984:p_activity",
+   "target_chembl_id": "CHEMBL1984",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 72,
+   "dataset_sha256": "46bea18924ea5f2201ac11bf1598cf9beaf88c3264c4e42345a0a3cb2fcbbb76",
+   "activity_min": 3.41,
+   "activity_max": 5.33,
+   "activity_median": 4.66,
+   "bank_slice": [
+    34180,
+    34252
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1987:p_activity",
+   "target_chembl_id": "CHEMBL1987",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 427,
+   "dataset_sha256": "9a4d8198e8d8bc33292bffb8bb3228ab07ce30db5c1e3a942c659ae6e99c097a",
+   "activity_min": 4.56,
+   "activity_max": 8.92,
+   "activity_median": 7.03,
+   "bank_slice": [
+    34252,
+    34679
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1988:unfit",
+   "target_chembl_id": "CHEMBL1988",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1989:unfit",
+   "target_chembl_id": "CHEMBL1989",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL1992:p_activity",
+   "target_chembl_id": "CHEMBL1992",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 43,
+   "dataset_sha256": "24ac479c111923cab54242ad68df29b74df07e5d1025ea4b898f810bb76026d5",
+   "activity_min": 4.13,
+   "activity_max": 6.52,
+   "activity_median": 4.96,
+   "bank_slice": [
+    34679,
+    34722
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1994:p_activity",
+   "target_chembl_id": "CHEMBL1994",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 662,
+   "dataset_sha256": "98c4996bd5468c80267608dd00cc65113bfed9c17e6a769f0d40315c5af75be2",
+   "activity_min": 4.43,
+   "activity_max": 9.52,
+   "activity_median": 6.5,
+   "bank_slice": [
+    34722,
+    35384
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1995:p_activity",
+   "target_chembl_id": "CHEMBL1995",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 144,
+   "dataset_sha256": "c8d933593ad8dd834878ab4c0da3dcbd68b99ddb745dfa0b4acc37b2f2276d45",
+   "activity_min": 4.28,
+   "activity_max": 8.52,
+   "activity_median": 6.24,
+   "bank_slice": [
+    35384,
+    35528
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1997:p_activity",
+   "target_chembl_id": "CHEMBL1997",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 150,
+   "dataset_sha256": "c2986675299318bf513d8dead2a3db4c744b87afe2d9b6a05f019ff6d8802b47",
+   "activity_min": 5.0,
+   "activity_max": 10.74,
+   "activity_median": 7.035,
+   "bank_slice": [
+    35528,
+    35678
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL1998:unfit",
+   "target_chembl_id": "CHEMBL1998",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2000:p_activity",
+   "target_chembl_id": "CHEMBL2000",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2482,
+   "dataset_sha256": "7848546a4c72db17f26b07cc1b9ea1642ed36a27613e6b0aba3df6fc337a4ab0",
+   "activity_min": 4.0,
+   "activity_max": 10.65,
+   "activity_median": 6.68,
+   "bank_slice": [
+    35678,
+    38160
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2001:p_activity",
+   "target_chembl_id": "CHEMBL2001",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 587,
+   "dataset_sha256": "4a86d653cbbe53bd3b501f41aa7558e12dcd8c38fdb37adfca3b03f89b1794ac",
+   "activity_min": 4.44,
+   "activity_max": 9.6,
+   "activity_median": 7.96,
+   "bank_slice": [
+    38160,
+    38747
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL202:p_activity",
+   "target_chembl_id": "CHEMBL202",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 815,
+   "dataset_sha256": "5cc3c827d012845af33b724ce5b51d7ac7d3e02ebce746fcc36a1b5be2f751c0",
+   "activity_min": 4.0,
+   "activity_max": 9.41,
+   "activity_median": 6.16,
+   "bank_slice": [
+    38747,
+    39562
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2023:p_activity",
+   "target_chembl_id": "CHEMBL2023",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 107,
+   "dataset_sha256": "143190b4211c37786b07b6443fabea220e3de0001f2804086f38ec58d4882f03",
+   "activity_min": 3.89,
+   "activity_max": 8.5,
+   "activity_median": 6.23,
+   "bank_slice": [
+    39562,
+    39669
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL203:p_activity",
+   "target_chembl_id": "CHEMBL203",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3983,
+   "dataset_sha256": "e9cddd36e93dc092ca0b51b682d92ee517cf8286ceef998da8e12ee8c025761a",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 6.3,
+   "bank_slice": [
+    39669,
+    43652
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2032:unfit",
+   "target_chembl_id": "CHEMBL2032",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2034:p_activity",
+   "target_chembl_id": "CHEMBL2034",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1753,
+   "dataset_sha256": "6a8f04fe01723f1ffdf89c4a02e13e61b85121b89e74b4a0adc0363a11082f50",
+   "activity_min": 4.05,
+   "activity_max": 10.52,
+   "activity_median": 7.33,
+   "bank_slice": [
+    43652,
+    45405
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2039:p_activity",
+   "target_chembl_id": "CHEMBL2039",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4525,
+   "dataset_sha256": "4a482b9c71597ab5cc34b1eccd41ca5f01e943f5d07ec42e9af73f03ea4816b0",
+   "activity_min": 3.4,
+   "activity_max": 10.85,
+   "activity_median": 5.84,
+   "bank_slice": [
+    45405,
+    49930
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL204:p_activity",
+   "target_chembl_id": "CHEMBL204",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3536,
+   "dataset_sha256": "8f396f0b8e6b3dabc0de971e6790bf76be26d124a1279aff6ecd9639b7832dc7",
+   "activity_min": 2.61,
+   "activity_max": 11.0,
+   "activity_median": 6.52,
+   "bank_slice": [
+    49930,
+    53466
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2045:unfit",
+   "target_chembl_id": "CHEMBL2045",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2047:p_activity",
+   "target_chembl_id": "CHEMBL2047",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 316,
+   "dataset_sha256": "ca0cb319293d890390c0d237f71cc24cc455ff6e57a41bc4f4c9952c0139c4ff",
+   "activity_min": 4.01,
+   "activity_max": 9.96,
+   "activity_median": 5.43,
+   "bank_slice": [
+    53466,
+    53782
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL205:p_activity",
+   "target_chembl_id": "CHEMBL205",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3639,
+   "dataset_sha256": "c6b30ac80c4b5555989afe68f4099963fdc591befd6ce43f545f78277e5f3234",
+   "activity_min": 1.105,
+   "activity_max": 9.85,
+   "activity_median": 7.32,
+   "bank_slice": [
+    53782,
+    57421
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2051:p_activity",
+   "target_chembl_id": "CHEMBL2051",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 548,
+   "dataset_sha256": "e94f925d2739659e88634a4a66116672447229e3441d08c798be10b5013d9ed4",
+   "activity_min": 4.0,
+   "activity_max": 9.52,
+   "activity_median": 6.09,
+   "bank_slice": [
+    57421,
+    57969
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2056:p_activity",
+   "target_chembl_id": "CHEMBL2056",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1233,
+   "dataset_sha256": "d4015ed1540148ba575e79f2925a4e3d43675e448fe743d99e5e55462478af98",
+   "activity_min": 4.31,
+   "activity_max": 9.98,
+   "activity_median": 6.7,
+   "bank_slice": [
+    57969,
+    59202
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL206:p_activity",
+   "target_chembl_id": "CHEMBL206",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2759,
+   "dataset_sha256": "7b9067f9476d5698b0681fea5dba82e77f1eada33e1661539f045b145c3f7e7f",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 7.0,
+   "bank_slice": [
+    59202,
+    61961
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2063:p_activity",
+   "target_chembl_id": "CHEMBL2063",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 250,
+   "dataset_sha256": "b47fbadade9750872b59557347c21a4fa8a484e91bd5dcab4f088c983a1273f2",
+   "activity_min": 4.64,
+   "activity_max": 9.26,
+   "activity_median": 7.4,
+   "bank_slice": [
+    61961,
+    62211
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2072:p_activity",
+   "target_chembl_id": "CHEMBL2072",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 224,
+   "dataset_sha256": "4a451be1d740ab691a53674b4607a83653cfd399f9b67d2fa9bb22553535ddae",
+   "activity_min": 4.0,
+   "activity_max": 10.21,
+   "activity_median": 5.76,
+   "bank_slice": [
+    62211,
+    62435
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2074:p_activity",
+   "target_chembl_id": "CHEMBL2074",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 276,
+   "dataset_sha256": "23711390d25886f59a5b2f0dc132bb669ab3bef80ef04c3dad67a2f246910eae",
+   "activity_min": 4.0,
+   "activity_max": 8.31,
+   "activity_median": 5.09,
+   "bank_slice": [
+    62435,
+    62711
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL208:p_activity",
+   "target_chembl_id": "CHEMBL208",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 890,
+   "dataset_sha256": "d4b22045e61b7c241dbcecc9a0e5148fd4959f26d08d4b62fe364fcb3cb2d990",
+   "activity_min": 4.3,
+   "activity_max": 9.77,
+   "activity_median": 6.51,
+   "bank_slice": [
+    62711,
+    63601
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2093863:p_activity",
+   "target_chembl_id": "CHEMBL2093863",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1448,
+   "dataset_sha256": "1ef36bece5a9a31db469552ebf4940e7c681c5717d6fa07dc6a7464df7864ab2",
+   "activity_min": 4.0,
+   "activity_max": 10.52,
+   "activity_median": 6.32,
+   "bank_slice": [
+    63601,
+    65049
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2093865:p_activity",
+   "target_chembl_id": "CHEMBL2093865",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2379,
+   "dataset_sha256": "4712531413f8f72454a7647e87ad5c2db541e302a37efcb4073470645e481be6",
+   "activity_min": 4.0,
+   "activity_max": 9.77,
+   "activity_median": 6.56,
+   "bank_slice": [
+    65049,
+    67428
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2093866:p_activity",
+   "target_chembl_id": "CHEMBL2093866",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 61,
+   "dataset_sha256": "292eb8b176edf59d6a5a204df2c689dcd73db8afe6c3bbf109451ea3701812bf",
+   "activity_min": 4.75,
+   "activity_max": 9.05,
+   "activity_median": 6.9,
+   "bank_slice": [
+    67428,
+    67489
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2093869:p_activity",
+   "target_chembl_id": "CHEMBL2093869",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1112,
+   "dataset_sha256": "46b6295e4ebdea3e3d7172d2f18a285a828eead213769ece0ef25797aa374d6b",
+   "activity_min": 4.0,
+   "activity_max": 10.14,
+   "activity_median": 6.92,
+   "bank_slice": [
+    67489,
+    68601
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2093872:p_activity",
+   "target_chembl_id": "CHEMBL2093872",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 249,
+   "dataset_sha256": "c34cebe02b7fa05f0dad072cefe4a746592aaf7a435f78b8d83f32d14093b1c1",
+   "activity_min": 4.07,
+   "activity_max": 10.0,
+   "activity_median": 6.98,
+   "bank_slice": [
+    68601,
+    68850
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094108:p_activity",
+   "target_chembl_id": "CHEMBL2094108",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1808,
+   "dataset_sha256": "baf5dbad9825dd3d1afaa1d1dadb5273e3b9d0d8d9a9ecc15fbe1072bf576eb2",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 6.842,
+   "bank_slice": [
+    68850,
+    70658
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094109:p_activity",
+   "target_chembl_id": "CHEMBL2094109",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 150,
+   "dataset_sha256": "bf7cd5aaec59c897638b6a665da9c31b0c1552de09dda5cfe6b3ce6391730351",
+   "activity_min": 4.12,
+   "activity_max": 9.7,
+   "activity_median": 6.157,
+   "bank_slice": [
+    70658,
+    70808
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094118:unfit",
+   "target_chembl_id": "CHEMBL2094118",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2094124:p_activity",
+   "target_chembl_id": "CHEMBL2094124",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 300,
+   "dataset_sha256": "e07484ed045f3197d4f61662e38e0c808984c7149a4f756489a320b2aab976a9",
+   "activity_min": 4.02,
+   "activity_max": 9.3,
+   "activity_median": 5.75,
+   "bank_slice": [
+    70808,
+    71108
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094125:p_activity",
+   "target_chembl_id": "CHEMBL2094125",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 713,
+   "dataset_sha256": "b511e3b72888d30a829b2daf6f8bbac1393a32b2618bdb49c47926c5afd3c422",
+   "activity_min": 4.0,
+   "activity_max": 10.52,
+   "activity_median": 5.73,
+   "bank_slice": [
+    71108,
+    71821
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094132:p_activity",
+   "target_chembl_id": "CHEMBL2094132",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 141,
+   "dataset_sha256": "dad7e6f7c79eb8c8339ddad420c536f183594e8d2e4ef30582347f743fabc18a",
+   "activity_min": 4.15,
+   "activity_max": 10.15,
+   "activity_median": 7.22,
+   "bank_slice": [
+    71821,
+    71962
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094251:p_activity",
+   "target_chembl_id": "CHEMBL2094251",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 249,
+   "dataset_sha256": "63cc47d72b4d0fc706c236381544acecc9f95703e3c283eb8fa2f72fe063b392",
+   "activity_min": 4.0,
+   "activity_max": 10.235,
+   "activity_median": 7.13,
+   "bank_slice": [
+    71962,
+    72211
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094253:p_activity",
+   "target_chembl_id": "CHEMBL2094253",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 85,
+   "dataset_sha256": "db92605a5e2850bf9fb02c613d692d6adc31eed1ccf9899867e5f9ff28b7df8f",
+   "activity_min": 4.03,
+   "activity_max": 8.7,
+   "activity_median": 5.89,
+   "bank_slice": [
+    72211,
+    72296
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094255:p_activity",
+   "target_chembl_id": "CHEMBL2094255",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 88,
+   "dataset_sha256": "adf907211f207acf627d67f3da7aa6062def6c0bb52cb04c1a15db8c56f42b4f",
+   "activity_min": 4.08,
+   "activity_max": 8.05,
+   "activity_median": 4.94,
+   "bank_slice": [
+    72296,
+    72384
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094257:p_activity",
+   "target_chembl_id": "CHEMBL2094257",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 121,
+   "dataset_sha256": "e2707463d84cfc5b22ee2342fff9e17a11d52fc9018fc9c59e54f22d5721d604",
+   "activity_min": 4.04,
+   "activity_max": 8.24,
+   "activity_median": 5.72,
+   "bank_slice": [
+    72384,
+    72505
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2094268:p_activity",
+   "target_chembl_id": "CHEMBL2094268",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 118,
+   "dataset_sha256": "bfd7a553e190fa08135ce86e839de264236b4ad21cd4d2cdcbda21529f9ae69c",
+   "activity_min": 5.04,
+   "activity_max": 10.91,
+   "activity_median": 8.38,
+   "bank_slice": [
+    72505,
+    72623
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095158:p_activity",
+   "target_chembl_id": "CHEMBL2095158",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 186,
+   "dataset_sha256": "e5a40092db037fe07d07566412f997eae68add88c4958440ca888f0ea6571f07",
+   "activity_min": 4.0,
+   "activity_max": 9.6,
+   "activity_median": 6.383,
+   "bank_slice": [
+    72623,
+    72809
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095165:p_activity",
+   "target_chembl_id": "CHEMBL2095165",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 671,
+   "dataset_sha256": "44434eca5bab204a0c7ad787a0c509b360e21a57b07d145aec7a81f6fdf88d98",
+   "activity_min": 2.82,
+   "activity_max": 9.89,
+   "activity_median": 6.385,
+   "bank_slice": [
+    72809,
+    73480
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095173:p_activity",
+   "target_chembl_id": "CHEMBL2095173",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 177,
+   "dataset_sha256": "6da12df2be0118ee1bfe4117040acd201a9b1ec0fec17cc9749c50d02f58b894",
+   "activity_min": 4.0,
+   "activity_max": 7.19,
+   "activity_median": 5.24,
+   "bank_slice": [
+    73480,
+    73657
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095181:p_activity",
+   "target_chembl_id": "CHEMBL2095181",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 85,
+   "dataset_sha256": "1841147f0dbaeb3cf01b3ec906be9f9a22acb361d919fe42bf139401768bc286",
+   "activity_min": 4.07,
+   "activity_max": 9.62,
+   "activity_median": 7.72,
+   "bank_slice": [
+    73657,
+    73742
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095182:p_activity",
+   "target_chembl_id": "CHEMBL2095182",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 811,
+   "dataset_sha256": "e107432d56b3ce89f89fa932cbe38ae2f7ec77871fd8636af0a67a026df1565b",
+   "activity_min": 4.0,
+   "activity_max": 10.26,
+   "activity_median": 5.68,
+   "bank_slice": [
+    73742,
+    74553
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095186:p_activity",
+   "target_chembl_id": "CHEMBL2095186",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 237,
+   "dataset_sha256": "b0c828b2b8f5ae9067f259ce75d2843b5806a360c48ef3233923a1d7076c6343",
+   "activity_min": 4.0,
+   "activity_max": 8.52,
+   "activity_median": 5.8,
+   "bank_slice": [
+    74553,
+    74790
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095189:p_activity",
+   "target_chembl_id": "CHEMBL2095189",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 265,
+   "dataset_sha256": "30473126041b6e252afc87db0d08524f0ec3958d761db95278e95b79fb3ffc65",
+   "activity_min": 4.28,
+   "activity_max": 8.7,
+   "activity_median": 6.26,
+   "bank_slice": [
+    74790,
+    75055
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095198:unfit",
+   "target_chembl_id": "CHEMBL2095198",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2095203:unfit",
+   "target_chembl_id": "CHEMBL2095203",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2095215:p_activity",
+   "target_chembl_id": "CHEMBL2095215",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 67,
+   "dataset_sha256": "d7d7daf5168e8043454bb5d38065f25341b62d4c119d17593c5dfcd7c16e6cb4",
+   "activity_min": 4.0,
+   "activity_max": 9.22,
+   "activity_median": 5.62,
+   "bank_slice": [
+    75055,
+    75122
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095227:unfit",
+   "target_chembl_id": "CHEMBL2095227",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2095229:p_activity",
+   "target_chembl_id": "CHEMBL2095229",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 69,
+   "dataset_sha256": "051d06ad33d1ede67aa4b47c0f6868682698c8d5dbd775741edecea5084fca09",
+   "activity_min": 4.04,
+   "activity_max": 11.0,
+   "activity_median": 5.97,
+   "bank_slice": [
+    75122,
+    75191
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095231:p_activity",
+   "target_chembl_id": "CHEMBL2095231",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 394,
+   "dataset_sha256": "a691182729238922207e13653dcfa34171973c85065ffeaff11f87e51e3a6e4c",
+   "activity_min": 4.1,
+   "activity_max": 11.0,
+   "activity_median": 8.058,
+   "bank_slice": [
+    75191,
+    75585
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2095233:unfit",
+   "target_chembl_id": "CHEMBL2095233",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2096670:p_activity",
+   "target_chembl_id": "CHEMBL2096670",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 64,
+   "dataset_sha256": "fab68be1c91cafe8ffbe9093c9aa83fcc817d30f464ad6350285c5b7c8696249",
+   "activity_min": 4.035,
+   "activity_max": 7.52,
+   "activity_median": 5.595,
+   "bank_slice": [
+    75585,
+    75649
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2096678:unfit",
+   "target_chembl_id": "CHEMBL2096678",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2096904:unfit",
+   "target_chembl_id": "CHEMBL2096904",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2096972:unfit",
+   "target_chembl_id": "CHEMBL2096972",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL210:p_activity",
+   "target_chembl_id": "CHEMBL210",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 597,
+   "dataset_sha256": "84982f6c501a301d42d969ffde24367b192da107bdbb848d963c6743acbaf242",
+   "activity_min": 3.845,
+   "activity_max": 10.92,
+   "activity_median": 7.35,
+   "bank_slice": [
+    75649,
+    76246
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2107836:unfit",
+   "target_chembl_id": "CHEMBL2107836",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2109244:unfit",
+   "target_chembl_id": "CHEMBL2109244",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL211:p_activity",
+   "target_chembl_id": "CHEMBL211",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1549,
+   "dataset_sha256": "4d764e5b88da521b4a8ada57237754ea51ef4178ee165651e448ebea4267ddd8",
+   "activity_min": 4.02,
+   "activity_max": 11.0,
+   "activity_median": 6.83,
+   "bank_slice": [
+    76246,
+    77795
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2111189:unfit",
+   "target_chembl_id": "CHEMBL2111189",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111289:p_activity",
+   "target_chembl_id": "CHEMBL2111289",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 57,
+   "dataset_sha256": "7302dbca23e188085b3bbb2d3bf638b6141427c0a80852bb41205dfd787c5b77",
+   "activity_min": 4.21,
+   "activity_max": 9.7,
+   "activity_median": 7.29,
+   "bank_slice": [
+    77795,
+    77852
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2111329:unfit",
+   "target_chembl_id": "CHEMBL2111329",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111348:unfit",
+   "target_chembl_id": "CHEMBL2111348",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111369:unfit",
+   "target_chembl_id": "CHEMBL2111369",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111392:unfit",
+   "target_chembl_id": "CHEMBL2111392",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111436:unfit",
+   "target_chembl_id": "CHEMBL2111436",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111456:unfit",
+   "target_chembl_id": "CHEMBL2111456",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2111459:p_activity",
+   "target_chembl_id": "CHEMBL2111459",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 86,
+   "dataset_sha256": "717dca038ddd79549e58b0d76657cc114d478c2b42c32e5ae60c1e1d0dbddab5",
+   "activity_min": 4.3,
+   "activity_max": 8.82,
+   "activity_median": 6.86,
+   "bank_slice": [
+    77852,
+    77938
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2111463:unfit",
+   "target_chembl_id": "CHEMBL2111463",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2120:unfit",
+   "target_chembl_id": "CHEMBL2120",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL213:p_activity",
+   "target_chembl_id": "CHEMBL213",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 508,
+   "dataset_sha256": "fa01d6a59eeabead57193e77652bf41481790a1b9d221a0ff22d110c09fbef4c",
+   "activity_min": 4.0,
+   "activity_max": 10.4,
+   "activity_median": 5.71,
+   "bank_slice": [
+    77938,
+    78446
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL214:p_activity",
+   "target_chembl_id": "CHEMBL214",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4772,
+   "dataset_sha256": "c9f6a4d61c718a9b4e122b6429fe3c2569ea41fd50f7b089653f1dea31c12b4a",
+   "activity_min": 4.06,
+   "activity_max": 11.0,
+   "activity_median": 7.4,
+   "bank_slice": [
+    78446,
+    83218
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL215:p_activity",
+   "target_chembl_id": "CHEMBL215",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1815,
+   "dataset_sha256": "71a5ef3cefb75ec0318fc3796e71e88f7b01ea06512a8c144a2ce2b4856eb2d4",
+   "activity_min": 4.0,
+   "activity_max": 8.41,
+   "activity_median": 6.0,
+   "bank_slice": [
+    83218,
+    85033
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL216:p_activity",
+   "target_chembl_id": "CHEMBL216",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1301,
+   "dataset_sha256": "23dda08a0bb8e30535e037ff041c821bec789e768e2304ca00f9d897550c19ea",
+   "activity_min": 4.0,
+   "activity_max": 10.45,
+   "activity_median": 6.52,
+   "bank_slice": [
+    85033,
+    86334
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL217:p_activity",
+   "target_chembl_id": "CHEMBL217",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4247,
+   "dataset_sha256": "9a4308cf8554caae4a4a827420876824633542be3befd6ff32bd400f0b23b401",
+   "activity_min": 4.06,
+   "activity_max": 10.4,
+   "activity_median": 6.8,
+   "bank_slice": [
+    86334,
+    90581
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL218:p_activity",
+   "target_chembl_id": "CHEMBL218",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2930,
+   "dataset_sha256": "e1441c2b81f8cbca1be92e63788503d34ffdad70f1d0d46591ad6950afa4a541",
+   "activity_min": 4.0,
+   "activity_max": 10.785,
+   "activity_median": 6.8,
+   "bank_slice": [
+    90581,
+    93511
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL220:p_activity",
+   "target_chembl_id": "CHEMBL220",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4691,
+   "dataset_sha256": "37bafbd79f240547623c5f386b6b04cfea30e967ecf91f8ff3ad239e6c257aae",
+   "activity_min": 4.0,
+   "activity_max": 10.96,
+   "activity_median": 6.0,
+   "bank_slice": [
+    93511,
+    98202
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL221:p_activity",
+   "target_chembl_id": "CHEMBL221",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1474,
+   "dataset_sha256": "4bb1b7cf5f56bb06371339c5d41144bf022f2c211f5839941c9da4234fe2f3b8",
+   "activity_min": 4.0,
+   "activity_max": 9.0,
+   "activity_median": 5.14,
+   "bank_slice": [
+    98202,
+    99676
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL222:p_activity",
+   "target_chembl_id": "CHEMBL222",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2006,
+   "dataset_sha256": "8ecface53ec7df9aff667a65d6f0760d3f0c3641250f6c504320a09acf426607",
+   "activity_min": 4.05,
+   "activity_max": 10.19,
+   "activity_median": 6.65,
+   "bank_slice": [
+    99676,
+    101682
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL223:p_activity",
+   "target_chembl_id": "CHEMBL223",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1150,
+   "dataset_sha256": "68902a2445dc746fa8bd32ec8ff8221429a73fc15341cc5e12fecd47ff72568d",
+   "activity_min": 4.38,
+   "activity_max": 10.5,
+   "activity_median": 7.27,
+   "bank_slice": [
+    101682,
+    102832
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL224:p_activity",
+   "target_chembl_id": "CHEMBL224",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4456,
+   "dataset_sha256": "1b22ecc7cce966cd15476ed0850924bf8e07429d362f1210e4234a7a50290bc6",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 7.35,
+   "bank_slice": [
+    102832,
+    107288
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL226:p_activity",
+   "target_chembl_id": "CHEMBL226",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4226,
+   "dataset_sha256": "8cbdf0d267fe7da309cdab477b221a6128248dc47361e0b27c691e66eeb45fbf",
+   "activity_min": 4.12,
+   "activity_max": 10.52,
+   "activity_median": 6.54,
+   "bank_slice": [
+    107288,
+    111514
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL227:p_activity",
+   "target_chembl_id": "CHEMBL227",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 620,
+   "dataset_sha256": "a391906fe4298db095ac82c262956ffa3d6dbd2f0c10363753cdad1c691a9428",
+   "activity_min": 4.1,
+   "activity_max": 10.3,
+   "activity_median": 8.065,
+   "bank_slice": [
+    111514,
+    112134
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL228:p_activity",
+   "target_chembl_id": "CHEMBL228",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2824,
+   "dataset_sha256": "83b72b90d6fe047cd8c1f6deb7cb5733fb65968049c9d8573c152b4da8ae8fa9",
+   "activity_min": 4.0,
+   "activity_max": 10.06,
+   "activity_median": 6.918,
+   "bank_slice": [
+    112134,
+    114958
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL229:p_activity",
+   "target_chembl_id": "CHEMBL229",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1341,
+   "dataset_sha256": "4f84e192246a53096076a0c39b223a90c9141f8e522f5feb7dccbb58a5242afa",
+   "activity_min": 4.04,
+   "activity_max": 11.0,
+   "activity_median": 7.83,
+   "bank_slice": [
+    114958,
+    116299
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL230:p_activity",
+   "target_chembl_id": "CHEMBL230",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4133,
+   "dataset_sha256": "907bc4b2d28b86325b9684b7ae715091f2a8f6407bd4ed25b95569e115555c8b",
+   "activity_min": 4.0,
+   "activity_max": 10.7,
+   "activity_median": 6.17,
+   "bank_slice": [
+    116299,
+    120432
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL231:p_activity",
+   "target_chembl_id": "CHEMBL231",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1164,
+   "dataset_sha256": "a6063e365cfbb43d7d657e943637e0bbbb300f76eb37a02270b146b1d9b9d6e8",
+   "activity_min": 4.0,
+   "activity_max": 10.31,
+   "activity_median": 6.68,
+   "bank_slice": [
+    120432,
+    121596
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2311221:unfit",
+   "target_chembl_id": "CHEMBL2311221",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2311222:unfit",
+   "target_chembl_id": "CHEMBL2311222",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2311224:unfit",
+   "target_chembl_id": "CHEMBL2311224",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2311225:unfit",
+   "target_chembl_id": "CHEMBL2311225",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2321613:p_activity",
+   "target_chembl_id": "CHEMBL2321613",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 805,
+   "dataset_sha256": "6e1379f9f8254f506131b53c92800ae3da0da367ae3ee40fc00f94fb52a324f9",
+   "activity_min": 4.01,
+   "activity_max": 9.0,
+   "activity_median": 6.3,
+   "bank_slice": [
+    121596,
+    122401
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL233:p_activity",
+   "target_chembl_id": "CHEMBL233",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4961,
+   "dataset_sha256": "93fcc73a2a25480507eea71a0fa7358c4878890aaface65fd899e01e12424c1e",
+   "activity_min": 4.11,
+   "activity_max": 11.0,
+   "activity_median": 7.19,
+   "bank_slice": [
+    122401,
+    127362
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2331043:unfit",
+   "target_chembl_id": "CHEMBL2331043",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2331074:unfit",
+   "target_chembl_id": "CHEMBL2331074",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2331075:unfit",
+   "target_chembl_id": "CHEMBL2331075",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL234:p_activity",
+   "target_chembl_id": "CHEMBL234",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4696,
+   "dataset_sha256": "0dfbdd4ddca5f37431cf7c1a3925b7827a272f118b942e07752b41b6409a3513",
+   "activity_min": 4.07,
+   "activity_max": 10.7,
+   "activity_median": 7.5,
+   "bank_slice": [
+    127362,
+    132058
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL235:p_activity",
+   "target_chembl_id": "CHEMBL235",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1478,
+   "dataset_sha256": "3ec176a38df6b2d99eed895c85a3a1d508b4fedf1ca6994a8c7749c718a61225",
+   "activity_min": 4.08,
+   "activity_max": 10.22,
+   "activity_median": 6.52,
+   "bank_slice": [
+    132058,
+    133536
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2354204:unfit",
+   "target_chembl_id": "CHEMBL2354204",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2354313:unfit",
+   "target_chembl_id": "CHEMBL2354313",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362972:unfit",
+   "target_chembl_id": "CHEMBL2362972",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362987:unfit",
+   "target_chembl_id": "CHEMBL2362987",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362993:unfit",
+   "target_chembl_id": "CHEMBL2362993",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362994:unfit",
+   "target_chembl_id": "CHEMBL2362994",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362995:unfit",
+   "target_chembl_id": "CHEMBL2362995",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362996:unfit",
+   "target_chembl_id": "CHEMBL2362996",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2362997:unfit",
+   "target_chembl_id": "CHEMBL2362997",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363020:unfit",
+   "target_chembl_id": "CHEMBL2363020",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363021:unfit",
+   "target_chembl_id": "CHEMBL2363021",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363032:p_activity",
+   "target_chembl_id": "CHEMBL2363032",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 73,
+   "dataset_sha256": "375bceb23eb3bdc4f91686eaa493f754ce2f38a86b5505ed9ede3978ccd5509e",
+   "activity_min": 4.42,
+   "activity_max": 8.72,
+   "activity_median": 7.3,
+   "bank_slice": [
+    133536,
+    133609
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2363041:unfit",
+   "target_chembl_id": "CHEMBL2363041",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363042:unfit",
+   "target_chembl_id": "CHEMBL2363042",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363044:unfit",
+   "target_chembl_id": "CHEMBL2363044",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363057:unfit",
+   "target_chembl_id": "CHEMBL2363057",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363058:unfit",
+   "target_chembl_id": "CHEMBL2363058",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363062:p_activity",
+   "target_chembl_id": "CHEMBL2363062",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 92,
+   "dataset_sha256": "56b95da1124625fa4819a004940995f1e42750e4666a8209e946bb40c0404da8",
+   "activity_min": 4.6,
+   "activity_max": 8.55,
+   "activity_median": 7.295,
+   "bank_slice": [
+    133609,
+    133701
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2363063:unfit",
+   "target_chembl_id": "CHEMBL2363063",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363064:unfit",
+   "target_chembl_id": "CHEMBL2363064",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363065:unfit",
+   "target_chembl_id": "CHEMBL2363065",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363069:unfit",
+   "target_chembl_id": "CHEMBL2363069",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363076:unfit",
+   "target_chembl_id": "CHEMBL2363076",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363077:unfit",
+   "target_chembl_id": "CHEMBL2363077",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363078:unfit",
+   "target_chembl_id": "CHEMBL2363078",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2363135:p_activity",
+   "target_chembl_id": "CHEMBL2363135",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 97,
+   "dataset_sha256": "63fde7e397c9e2e9474ede2923fd5bffa59813c01ca53f79e7787cf7b57947c1",
+   "activity_min": 4.0,
+   "activity_max": 8.05,
+   "activity_median": 5.77,
+   "bank_slice": [
+    133701,
+    133798
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2364022:unfit",
+   "target_chembl_id": "CHEMBL2364022",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364028:unfit",
+   "target_chembl_id": "CHEMBL2364028",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364031:unfit",
+   "target_chembl_id": "CHEMBL2364031",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364032:unfit",
+   "target_chembl_id": "CHEMBL2364032",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364041:unfit",
+   "target_chembl_id": "CHEMBL2364041",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364185:unfit",
+   "target_chembl_id": "CHEMBL2364185",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364668:unfit",
+   "target_chembl_id": "CHEMBL2364668",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364669:unfit",
+   "target_chembl_id": "CHEMBL2364669",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364670:p_activity",
+   "target_chembl_id": "CHEMBL2364670",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 59,
+   "dataset_sha256": "ee60295828c599f291c3298e3c5af9c1786ed6e1f016df4148a000e4a614cc29",
+   "activity_min": 4.05,
+   "activity_max": 9.235,
+   "activity_median": 6.06,
+   "bank_slice": [
+    133798,
+    133857
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2364672:unfit",
+   "target_chembl_id": "CHEMBL2364672",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364673:unfit",
+   "target_chembl_id": "CHEMBL2364673",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364681:unfit",
+   "target_chembl_id": "CHEMBL2364681",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2364701:p_activity",
+   "target_chembl_id": "CHEMBL2364701",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 20,
+   "dataset_sha256": "d1fac686b7cfb0ac052b5d34b44e081f2b7cbf0e152e3c6fb5447c8d39a0cb22",
+   "activity_min": 5.24,
+   "activity_max": 8.47,
+   "activity_median": 6.565,
+   "bank_slice": [
+    133857,
+    133877
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2364704:unfit",
+   "target_chembl_id": "CHEMBL2364704",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2366045:unfit",
+   "target_chembl_id": "CHEMBL2366045",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2366046:unfit",
+   "target_chembl_id": "CHEMBL2366046",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL2366048:unfit",
+   "target_chembl_id": "CHEMBL2366048",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL238:p_activity",
+   "target_chembl_id": "CHEMBL238",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1813,
+   "dataset_sha256": "5d056939af16e8b19195b122f0509a5d2cbd54704cbfe55174bfd2689391df1e",
+   "activity_min": 4.04,
+   "activity_max": 9.64,
+   "activity_median": 6.45,
+   "bank_slice": [
+    133877,
+    135690
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL239:p_activity",
+   "target_chembl_id": "CHEMBL239",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 730,
+   "dataset_sha256": "fe3cc6560d5f9d0ce7c25327e37b81738fbd8a5a2d9841831868c0b11ab9a01c",
+   "activity_min": 4.05,
+   "activity_max": 8.7,
+   "activity_median": 6.078,
+   "bank_slice": [
+    135690,
+    136420
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL240:p_activity",
+   "target_chembl_id": "CHEMBL240",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 5039,
+   "dataset_sha256": "227b0a4ed32e6ddff755c650eb3f9817fed7d7341b0238a74459f5e78a81ce13",
+   "activity_min": 4.0,
+   "activity_max": 9.85,
+   "activity_median": 5.3,
+   "bank_slice": [
+    136420,
+    141459
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL241:p_activity",
+   "target_chembl_id": "CHEMBL241",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 651,
+   "dataset_sha256": "1db6390dcdebca7178db84281ce1d7df698690ff61c49ea82461d4640dcdec57",
+   "activity_min": 4.03,
+   "activity_max": 9.96,
+   "activity_median": 6.72,
+   "bank_slice": [
+    141459,
+    142110
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL242:p_activity",
+   "target_chembl_id": "CHEMBL242",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1548,
+   "dataset_sha256": "c223d29bd7c26bb0dd45e05ee9d6db93310656679bfb17e651866fe2587cacbb",
+   "activity_min": 4.0,
+   "activity_max": 9.52,
+   "activity_median": 6.9,
+   "bank_slice": [
+    142110,
+    143658
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL243:p_activity",
+   "target_chembl_id": "CHEMBL243",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2265,
+   "dataset_sha256": "c9d3f7229fff7f0508310c9cd85b2de7282008ca83c2101c31f71c0d6b2ffd70",
+   "activity_min": 4.04,
+   "activity_max": 11.0,
+   "activity_median": 8.13,
+   "bank_slice": [
+    143658,
+    145923
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL244:p_activity",
+   "target_chembl_id": "CHEMBL244",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3625,
+   "dataset_sha256": "2254cda67226e86599712cf3ea52661e4d7c9bdfcd17e00ba98fe7bee9e9bd48",
+   "activity_min": 3.17,
+   "activity_max": 11.0,
+   "activity_median": 7.09,
+   "bank_slice": [
+    145923,
+    149548
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL245:p_activity",
+   "target_chembl_id": "CHEMBL245",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1721,
+   "dataset_sha256": "33b97002e7295bdd809f6434eff1d03e6c7e6c06d1c48baf8520efd91c6da0ee",
+   "activity_min": 4.01,
+   "activity_max": 11.0,
+   "activity_median": 7.55,
+   "bank_slice": [
+    149548,
+    151269
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL246:p_activity",
+   "target_chembl_id": "CHEMBL246",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 334,
+   "dataset_sha256": "6588d8fde8f09e02be638c4e46a094d77eceac24691a58d4163c31683593dca9",
+   "activity_min": 4.03,
+   "activity_max": 9.0,
+   "activity_median": 6.315,
+   "bank_slice": [
+    151269,
+    151603
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL247:p_activity",
+   "target_chembl_id": "CHEMBL247",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3125,
+   "dataset_sha256": "3f27f38bf8af98eea77b3d435a9b9893133c4f958eebd83655c5519d2b3239e3",
+   "activity_min": 3.22,
+   "activity_max": 10.8,
+   "activity_median": 6.0,
+   "bank_slice": [
+    151603,
+    154728
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL249:p_activity",
+   "target_chembl_id": "CHEMBL249",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1590,
+   "dataset_sha256": "fcaf972be9744e86188990b57751d0025dd0faab8e8ace80131a79f3f1c2f926",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 7.96,
+   "bank_slice": [
+    154728,
+    156318
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL251:p_activity",
+   "target_chembl_id": "CHEMBL251",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4880,
+   "dataset_sha256": "493cdf453f3e705eabb05fb78458088d13c5d0ad84497224227d37b9a7f3a54b",
+   "activity_min": 4.0,
+   "activity_max": 11.0,
+   "activity_median": 6.88,
+   "bank_slice": [
+    156318,
+    161198
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL252:p_activity",
+   "target_chembl_id": "CHEMBL252",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1155,
+   "dataset_sha256": "5b0b4b18e98234be44caab421e6319c676968e0d1a6c3cbde802b09bd65ede1e",
+   "activity_min": 4.05,
+   "activity_max": 10.85,
+   "activity_median": 7.2,
+   "bank_slice": [
+    161198,
+    162353
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL260:p_activity",
+   "target_chembl_id": "CHEMBL260",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4293,
+   "dataset_sha256": "a9c9c84ba075b54d5064f56e357ad1f95f52f75ead0ead2c46a8dc9ac1ff276a",
+   "activity_min": 4.0,
+   "activity_max": 10.52,
+   "activity_median": 7.06,
+   "bank_slice": [
+    162353,
+    166646
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL261:p_activity",
+   "target_chembl_id": "CHEMBL261",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3782,
+   "dataset_sha256": "61a98773cb0678f54464a54776366cb4bb2be81975f932469de962074efd8e12",
+   "activity_min": 1.87,
+   "activity_max": 11.0,
+   "activity_median": 6.28,
+   "bank_slice": [
+    166646,
+    170428
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL262:p_activity",
+   "target_chembl_id": "CHEMBL262",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3127,
+   "dataset_sha256": "631c1e4194f00186d8faf59e202d5e7cb75ffbd1d7685b65fbb04b899fc40b1c",
+   "activity_min": 3.38,
+   "activity_max": 10.89,
+   "activity_median": 6.48,
+   "bank_slice": [
+    170428,
+    173555
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2637:p_activity",
+   "target_chembl_id": "CHEMBL2637",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1467,
+   "dataset_sha256": "5e0b70e6c63269bff41a38e765b7c961fd1e4cd7e93f1f1d28b486298151deb6",
+   "activity_min": 4.04,
+   "activity_max": 9.97,
+   "activity_median": 6.42,
+   "bank_slice": [
+    173555,
+    175022
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL268:p_activity",
+   "target_chembl_id": "CHEMBL268",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1559,
+   "dataset_sha256": "24b1d414a709d64d66e7fd4e7ca6fc1271a7f8f3bf5a43af70bcf0bc36aabb77",
+   "activity_min": 4.02,
+   "activity_max": 11.0,
+   "activity_median": 7.0,
+   "bank_slice": [
+    175022,
+    176581
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL274:p_activity",
+   "target_chembl_id": "CHEMBL274",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1591,
+   "dataset_sha256": "7743fe9862a3ceed5e748a9a99ac51bd7f115ca4d766c2c818c3530651c66a1a",
+   "activity_min": 4.06,
+   "activity_max": 11.0,
+   "activity_median": 7.685,
+   "bank_slice": [
+    176581,
+    178172
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL284:p_activity",
+   "target_chembl_id": "CHEMBL284",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3811,
+   "dataset_sha256": "b2c3decaa14c8b612ff2d89d47afcaeab9652ff4ff77c293a4d587b649512d1e",
+   "activity_min": 4.0,
+   "activity_max": 10.1,
+   "activity_median": 7.2,
+   "bank_slice": [
+    178172,
+    181983
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL2842:p_activity",
+   "target_chembl_id": "CHEMBL2842",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4277,
+   "dataset_sha256": "742dd4cf19d4914da84c1d863185d94c69f417e357385cc1aa9ffe8fd3aaa3ef",
+   "activity_min": 4.0,
+   "activity_max": 10.15,
+   "activity_median": 7.27,
+   "bank_slice": [
+    181983,
+    186260
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL287:p_activity",
+   "target_chembl_id": "CHEMBL287",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2504,
+   "dataset_sha256": "d5508ba98b9c936891a1257377b88fddd951c1960330910606e73e3dd8478844",
+   "activity_min": 4.33,
+   "activity_max": 10.89,
+   "activity_median": 7.33,
+   "bank_slice": [
+    186260,
+    188764
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL301:p_activity",
+   "target_chembl_id": "CHEMBL301",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2002,
+   "dataset_sha256": "3852d4179dd3092548a7fc979a455d3600b4bf6d593273b34baa5969054ad3c0",
+   "activity_min": 3.46,
+   "activity_max": 9.52,
+   "activity_median": 6.6,
+   "bank_slice": [
+    188764,
+    190766
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3024:p_activity",
+   "target_chembl_id": "CHEMBL3024",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1309,
+   "dataset_sha256": "3399be0b37a068284a09c92f22c7667715011c74ff8acc30e210f56b980550b4",
+   "activity_min": 3.22,
+   "activity_max": 9.92,
+   "activity_median": 6.6,
+   "bank_slice": [
+    190766,
+    192075
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3038488:p_activity",
+   "target_chembl_id": "CHEMBL3038488",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 191,
+   "dataset_sha256": "ee42c731cd7e0e0e0cc259a3dfe04515f08279fc7c630afcc84dd58125ae41a2",
+   "activity_min": 4.52,
+   "activity_max": 8.7,
+   "activity_median": 6.54,
+   "bank_slice": [
+    192075,
+    192266
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3038508:p_activity",
+   "target_chembl_id": "CHEMBL3038508",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 196,
+   "dataset_sha256": "a5008d188f49a1558018da8c0a0b2d745d262f10d9716c42ec99cc9f203eef1c",
+   "activity_min": 4.0,
+   "activity_max": 8.1,
+   "activity_median": 5.71,
+   "bank_slice": [
+    192266,
+    192462
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3038512:unfit",
+   "target_chembl_id": "CHEMBL3038512",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3041361:unfit",
+   "target_chembl_id": "CHEMBL3041361",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL308:p_activity",
+   "target_chembl_id": "CHEMBL308",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1144,
+   "dataset_sha256": "20177f11c84243970091c8291acf86e84fbaf4f991056dbe53f0efbafb9d1798",
+   "activity_min": 4.0,
+   "activity_max": 10.0,
+   "activity_median": 6.565,
+   "bank_slice": [
+    192462,
+    193606
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3227:p_activity",
+   "target_chembl_id": "CHEMBL3227",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 474,
+   "dataset_sha256": "e63ef7d2a2da9f56520fb2f2c38e87fc6064caaa8c464dca7c1537d0a8d21b2d",
+   "activity_min": 4.06,
+   "activity_max": 9.3,
+   "activity_median": 6.955,
+   "bank_slice": [
+    193606,
+    194080
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL325:p_activity",
+   "target_chembl_id": "CHEMBL325",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 4836,
+   "dataset_sha256": "5592b798121003bce84783f23eb3a87532d53acef0276a1bfb52f9e8158d62a1",
+   "activity_min": 4.01,
+   "activity_max": 10.3,
+   "activity_median": 6.67,
+   "bank_slice": [
+    194080,
+    198916
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3273:p_activity",
+   "target_chembl_id": "CHEMBL3273",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 348,
+   "dataset_sha256": "4981f93c4f00e4c4dd19145c6956a352c4303695b169ae3821ceea7090669679",
+   "activity_min": 4.0,
+   "activity_max": 9.7,
+   "activity_median": 7.4,
+   "bank_slice": [
+    198916,
+    199264
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3286067:p_activity",
+   "target_chembl_id": "CHEMBL3286067",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 60,
+   "dataset_sha256": "6050535ed03167e109b0edfc995763667694d94d06486cbd7e29ae9624287ce8",
+   "activity_min": 4.29,
+   "activity_max": 7.4,
+   "activity_median": 5.95,
+   "bank_slice": [
+    199264,
+    199324
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3301398:p_activity",
+   "target_chembl_id": "CHEMBL3301398",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 264,
+   "dataset_sha256": "12df90316cbabba5be9116876a1d32778c4055340546a6943477901589ed36c6",
+   "activity_min": 4.72,
+   "activity_max": 7.7,
+   "activity_median": 6.66,
+   "bank_slice": [
+    199324,
+    199588
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3307224:p_activity",
+   "target_chembl_id": "CHEMBL3307224",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 43,
+   "dataset_sha256": "22abd3216c38112ce3eb4a58277daf0e17d7d2bc9a55c12bd7dd17f9c9a11bfe",
+   "activity_min": 5.5,
+   "activity_max": 10.925,
+   "activity_median": 8.415,
+   "bank_slice": [
+    199588,
+    199631
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3307226:unfit",
+   "target_chembl_id": "CHEMBL3307226",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3390820:unfit",
+   "target_chembl_id": "CHEMBL3390820",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3430911:unfit",
+   "target_chembl_id": "CHEMBL3430911",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3512:unfit",
+   "target_chembl_id": "CHEMBL3512",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3514:p_activity",
+   "target_chembl_id": "CHEMBL3514",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 420,
+   "dataset_sha256": "56d4db47e6b258fce9f085c7a5709f91d66b86c280aa1631ee26bc285a93fb4e",
+   "activity_min": 2.77,
+   "activity_max": 10.0,
+   "activity_median": 7.315,
+   "bank_slice": [
+    199631,
+    200051
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3559390:unfit",
+   "target_chembl_id": "CHEMBL3559390",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3572:p_activity",
+   "target_chembl_id": "CHEMBL3572",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1103,
+   "dataset_sha256": "3b30d99c35559d373cec4fe257a14e42ede3cd32514e16e237e3bf0f7a52fbf8",
+   "activity_min": 4.0,
+   "activity_max": 8.82,
+   "activity_median": 6.65,
+   "bank_slice": [
+    200051,
+    201154
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3587:p_activity",
+   "target_chembl_id": "CHEMBL3587",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 849,
+   "dataset_sha256": "0d1e174c2276ccd4dbd2ac9955a3f75b1c4bf09bacb0b1fb35490eba3557f048",
+   "activity_min": 3.31,
+   "activity_max": 10.72,
+   "activity_median": 7.22,
+   "bank_slice": [
+    201154,
+    202003
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3717:p_activity",
+   "target_chembl_id": "CHEMBL3717",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3711,
+   "dataset_sha256": "9e6f558320bcab25cf202b2cdcd05ccb966e014f4e039ebaab1155a1eff38d26",
+   "activity_min": 4.0,
+   "activity_max": 10.72,
+   "activity_median": 7.35,
+   "bank_slice": [
+    202003,
+    205714
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3798:p_activity",
+   "target_chembl_id": "CHEMBL3798",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 589,
+   "dataset_sha256": "34595c00bf3624ccc5d010460f1974a28a7964ef895fc50703ae7f7036e57942",
+   "activity_min": 4.7,
+   "activity_max": 11.0,
+   "activity_median": 8.68,
+   "bank_slice": [
+    205714,
+    206303
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3831283:p_activity",
+   "target_chembl_id": "CHEMBL3831283",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 125,
+   "dataset_sha256": "be581ee44ad1e59c262745d5b1b1854a04c8ec88b2b7c98564f71a80387f805d",
+   "activity_min": 4.5,
+   "activity_max": 10.7,
+   "activity_median": 6.62,
+   "bank_slice": [
+    206303,
+    206428
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3833061:unfit",
+   "target_chembl_id": "CHEMBL3833061",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL3884:p_activity",
+   "target_chembl_id": "CHEMBL3884",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1253,
+   "dataset_sha256": "2c92f1902bfc6b38b603080e74ac6c5c52074b3a04ded3fbd2828fe31ad575bb",
+   "activity_min": 4.11,
+   "activity_max": 9.52,
+   "activity_median": 7.73,
+   "bank_slice": [
+    206428,
+    207681
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3923:p_activity",
+   "target_chembl_id": "CHEMBL3923",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 154,
+   "dataset_sha256": "f89a742f616ae9ac6ce99b3cca41784cfda54ec582ec1cb990f489314dd06999",
+   "activity_min": 4.75,
+   "activity_max": 9.66,
+   "activity_median": 7.1,
+   "bank_slice": [
+    207681,
+    207835
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3974:p_activity",
+   "target_chembl_id": "CHEMBL3974",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 667,
+   "dataset_sha256": "a5f35b27423c859c5159b483de4bbc43971381d19e30905b928b2a1dd320614f",
+   "activity_min": 4.0,
+   "activity_max": 9.05,
+   "activity_median": 6.74,
+   "bank_slice": [
+    207835,
+    208502
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL3994:p_activity",
+   "target_chembl_id": "CHEMBL3994",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 350,
+   "dataset_sha256": "cf7eeeb246c9f1762b3f094b8fcdd3177e7eb3b7fa0d7612bf3d318a1576fc1c",
+   "activity_min": 4.03,
+   "activity_max": 8.1,
+   "activity_median": 5.84,
+   "bank_slice": [
+    208502,
+    208852
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4005:p_activity",
+   "target_chembl_id": "CHEMBL4005",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 5157,
+   "dataset_sha256": "245d1c98830ca4a1ecf2117b74e4b1b7443a633f3f48f65123b51bc6a47cbcc9",
+   "activity_min": 3.55,
+   "activity_max": 10.22,
+   "activity_median": 6.72,
+   "bank_slice": [
+    208852,
+    214009
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL402:p_activity",
+   "target_chembl_id": "CHEMBL402",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 195,
+   "dataset_sha256": "7a7ab7d26362228baf2cb99aea0e9f32fdf50ec39b023772f85deb13731f7cff",
+   "activity_min": 4.05,
+   "activity_max": 10.85,
+   "activity_median": 7.88,
+   "bank_slice": [
+    214009,
+    214204
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4073:p_activity",
+   "target_chembl_id": "CHEMBL4073",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 444,
+   "dataset_sha256": "5c85e5cfe77354f8043fcbd365c7a3b6738bfe64be9939cf795f2fd9275eba18",
+   "activity_min": 4.0,
+   "activity_max": 10.22,
+   "activity_median": 6.0,
+   "bank_slice": [
+    214204,
+    214648
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4247:p_activity",
+   "target_chembl_id": "CHEMBL4247",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1975,
+   "dataset_sha256": "254d11f6046125855bf60f6a16b99fcdf9d03f255c7fea25f2324df6f7594395",
+   "activity_min": 3.66,
+   "activity_max": 10.0,
+   "activity_median": 7.47,
+   "bank_slice": [
+    214648,
+    216623
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4296320:p_activity",
+   "target_chembl_id": "CHEMBL4296320",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1165,
+   "dataset_sha256": "838f536912ab7a5931627bbb6e37e5d3e0066bb4a4b21f41c49ced30c36b4180",
+   "activity_min": 4.03,
+   "activity_max": 8.85,
+   "activity_median": 6.035,
+   "bank_slice": [
+    216623,
+    217788
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4302:p_activity",
+   "target_chembl_id": "CHEMBL4302",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 1178,
+   "dataset_sha256": "21563de90b0de7ea38b3900b83a4439254e685b539b15f87c9a6b82eb65ebe33",
+   "activity_min": 4.0,
+   "activity_max": 8.9,
+   "activity_median": 5.62,
+   "bank_slice": [
+    217788,
+    218966
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4304:p_activity",
+   "target_chembl_id": "CHEMBL4304",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 67,
+   "dataset_sha256": "2eb070ca6cb6fb7516f22af3162be85e269a76aee774cfd352ad8af30b7662e2",
+   "activity_min": 4.03,
+   "activity_max": 8.49,
+   "activity_median": 5.03,
+   "bank_slice": [
+    218966,
+    219033
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4333:p_activity",
+   "target_chembl_id": "CHEMBL4333",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 836,
+   "dataset_sha256": "20592835860ba11d141014d531b22d85e2d788bed6a202fbc3d4a5f4e6eeaf96",
+   "activity_min": 4.39,
+   "activity_max": 11.0,
+   "activity_median": 7.26,
+   "bank_slice": [
+    219033,
+    219869
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4338:p_activity",
+   "target_chembl_id": "CHEMBL4338",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 156,
+   "dataset_sha256": "a65f57ad2d79b6db9c8e6e71d080b2c7d37628e31f14345ae1e716ac583814a4",
+   "activity_min": 4.0,
+   "activity_max": 10.055,
+   "activity_median": 7.23,
+   "bank_slice": [
+    219869,
+    220025
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4427:p_activity",
+   "target_chembl_id": "CHEMBL4427",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 187,
+   "dataset_sha256": "b5952d9fac893b3369eab06c568a3bc2892c245d3d27dcc863a678748d8fe630",
+   "activity_min": 4.0,
+   "activity_max": 9.57,
+   "activity_median": 6.39,
+   "bank_slice": [
+    220025,
+    220212
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4478:p_activity",
+   "target_chembl_id": "CHEMBL4478",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 328,
+   "dataset_sha256": "4378b3edce1d64a220b478d31bd636369351c88d5a955837cf64c68ece7712cd",
+   "activity_min": 4.0,
+   "activity_max": 8.52,
+   "activity_median": 5.685,
+   "bank_slice": [
+    220212,
+    220540
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4581:p_activity",
+   "target_chembl_id": "CHEMBL4581",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 783,
+   "dataset_sha256": "8ed6253eb8893ac350e8e55740f7307873a48da5c745901114faaf2f25a9a6d4",
+   "activity_min": 4.05,
+   "activity_max": 9.7,
+   "activity_median": 6.54,
+   "bank_slice": [
+    220540,
+    221323
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4630:p_activity",
+   "target_chembl_id": "CHEMBL4630",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 2274,
+   "dataset_sha256": "45a18ab6f54161034f3646f55038cde75b1746d5649c8daa5e6249adc3948101",
+   "activity_min": 4.02,
+   "activity_max": 10.92,
+   "activity_median": 7.52,
+   "bank_slice": [
+    221323,
+    223597
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL4662935:unfit",
+   "target_chembl_id": "CHEMBL4662935",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL4665:unfit",
+   "target_chembl_id": "CHEMBL4665",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL4665583:unfit",
+   "target_chembl_id": "CHEMBL4665583",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL4956:p_activity",
+   "target_chembl_id": "CHEMBL4956",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 101,
+   "dataset_sha256": "4efb2174a0f1cf70ff19d2d608c413b88376f87e00eea33357b720b304878e5d",
+   "activity_min": 4.52,
+   "activity_max": 9.52,
+   "activity_median": 7.62,
+   "bank_slice": [
+    223597,
+    223698
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL5137:p_activity",
+   "target_chembl_id": "CHEMBL5137",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 534,
+   "dataset_sha256": "de8da0ef58ae3c0fbe740d5299eea620a0ce24158e399580b06f6a242f27636f",
+   "activity_min": 4.01,
+   "activity_max": 8.46,
+   "activity_median": 7.185,
+   "bank_slice": [
+    223698,
+    224232
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL5145:p_activity",
+   "target_chembl_id": "CHEMBL5145",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3660,
+   "dataset_sha256": "2b635839b7d8a73b18aa0c9b5d7a08c8e0f4ad2aa4e2d5fea0d37e8e9600d312",
+   "activity_min": 4.0,
+   "activity_max": 10.7,
+   "activity_median": 7.46,
+   "bank_slice": [
+    224232,
+    227892
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL5251:p_activity",
+   "target_chembl_id": "CHEMBL5251",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3815,
+   "dataset_sha256": "71cf1e826dcb5b070889057ed0570b1bac4abd536904a581944ed0109aecd192",
+   "activity_min": 3.07,
+   "activity_max": 10.54,
+   "activity_median": 7.77,
+   "bank_slice": [
+    227892,
+    231707
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL5936:p_activity",
+   "target_chembl_id": "CHEMBL5936",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 3268,
+   "dataset_sha256": "09b12602ba8e0b8b668fd7b49b6ded2f09f56ce9c7904d33e11e95a79e89c93d",
+   "activity_min": 4.08,
+   "activity_max": 10.0,
+   "activity_median": 8.19,
+   "bank_slice": [
+    231707,
+    234975
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL5971:p_activity",
+   "target_chembl_id": "CHEMBL5971",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 577,
+   "dataset_sha256": "48dcf6454a17e83f10ff1e704899b8cdc290e30fd40d076afabf9e95c180e4d5",
+   "activity_min": 4.82,
+   "activity_max": 10.1,
+   "activity_median": 6.95,
+   "bank_slice": [
+    234975,
+    235552
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL6120:p_activity",
+   "target_chembl_id": "CHEMBL6120",
+   "endpoint": "p_activity",
+   "units": "-log10(M)",
+   "assay_scope": "one standard_type per target, binding assays, exact relations, duplicates merged by median, >1 log unit spread dropped",
+   "n": 822,
+   "dataset_sha256": "2bffb4bfa85e1b097822000e2e2669fe5a8a675876b4ea3404deedacbb6b341e",
+   "activity_min": 4.0,
+   "activity_max": 9.0,
+   "activity_median": 6.26,
+   "bank_slice": [
+    235552,
+    236374
+   ],
+   "eligible": true
+  },
+  {
+   "model_id": "CHEMBL6132:unfit",
+   "target_chembl_id": "CHEMBL6132",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  },
+  {
+   "model_id": "CHEMBL613897:unfit",
+   "target_chembl_id": "CHEMBL613897",
+   "n": 0,
+   "eligible": false,
+   "reason": "only 0 training compounds, below the support floor of 20"
+  }
+ ]
+}
