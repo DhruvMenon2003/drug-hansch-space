@@ -656,6 +656,7 @@
       <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
       <button type="button" role="tab" id="ti-t-decide" aria-controls="ti-p-decide" aria-selected="false">Decisions</button>
       <button type="button" role="tab" id="ti-t-expose" aria-controls="ti-p-expose" aria-selected="false">Exposure</button>
+      <button type="button" role="tab" id="ti-t-search" aria-controls="ti-p-search" aria-selected="false">Model search</button>
       <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
     </div>
 
@@ -737,6 +738,15 @@
       <div id="ti-exp-body" hidden>
         <div class="controls" id="ti-exp-controls"></div>
         <div id="ti-exp-out"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-search" aria-labelledby="ti-t-search" hidden>
+      <div id="ti-search-intro"></div>
+      <p id="ti-search-status" class="small" hidden></p>
+      <div id="ti-search-body" hidden>
+        <div class="controls" id="ti-search-controls"></div>
+        <div id="ti-search-out"></div>
       </div>
     </section>
 

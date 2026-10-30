@@ -50,6 +50,7 @@
     "js/boot-core.js": 4,
     "js/boot-gl.js": 4,
     "js/gl/binding.js": 4,
-    "js/main.js": 5
+    "js/main.js": 5,
+    "js/ti-search.js": 3
   }
 }

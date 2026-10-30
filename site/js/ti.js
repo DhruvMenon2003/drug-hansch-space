@@ -4,9 +4,10 @@
 import { $, esc, getSide } from './kernel.js';
 
 const URL = 'data/ti/summary.json';
-const TABS = ['rank', 'route', 'series', 'decide', 'expose', 'oecd'];
+const TABS = ['rank', 'route', 'series', 'decide', 'expose', 'search', 'oecd'];
 const DECIDE_MOD = 'ti-decide.js';   // variable specifiers: the workbench, its whole-batch file and the exposure
 const EXPOSE_MOD = 'ti-exposure.js'; // arithmetic all arrive on first use, never on the way to anything else
+const SEARCH_MOD = 'ti-search.js';   // and so does the recorded model search, which is the largest file of the three
 const SOURCES = {
   measured: 'ChEMBL holds a binding measurement for this molecule at this target, so no model was used',
   series_hansch: 'a readable Hansch equation on this molecule’s own congeneric series, past every gate',
@@ -42,6 +43,10 @@ function wire() {
   $('#ti-t-expose')?.addEventListener('click', () => import(`./${EXPOSE_MOD}`).then(m => m.initExposure()).catch(() => {
     const status = $('#ti-exp-status');
     if (status) { status.hidden = false; status.textContent = 'The exposure panel could not load. Close it and try again.'; }
+  }), { once: true });
+  $('#ti-t-search')?.addEventListener('click', () => import(`./${SEARCH_MOD}`).then(m => m.initSearch()).catch(() => {
+    const status = $('#ti-search-status');
+    if (status) { status.hidden = false; status.textContent = 'The recorded model search could not load. Close it and try again.'; }
   }), { once: true });
 }
 
