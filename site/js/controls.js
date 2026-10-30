@@ -20,6 +20,34 @@ export function syncControls() {
   $('#h-group').value = v.group && app.groups.has(v.group) ? v.group : $('#h-group').value;
 }
 
+/**
+ * Fill the three axis selects. An axis whose data arrives later carries `needs` (AX.ti needs the ranked
+ * therapeutic-index file) and is offered only once that data is in, so the list never holds an axis that would empty
+ * the plot. The X axis takes no pseudo-axis.
+ */
+export function fillAxisSelects() {
+  for (const a of ['x', 'y', 'z']) {
+    const sel = $('#ax-' + a);
+    if (!sel) continue;
+    const keep = sel.value;
+    sel.innerHTML = Object.entries(AX)
+      .filter(([k, o]) => (a === 'x' ? !o.pseudo : true) && (!o.needs || (o.needs === 'ti' ? app.tiReady : false)))
+      .map(([k, o]) => `<option value="${k}" title="${esc(o.long || o.label)}">${esc(o.label)}</option>`).join('');
+    sel.value = keep || app.view[a];
+  }
+}
+
+/** Offer the therapeutic index as a colour mode. Called when its file lands; adding the option twice is a no-op. */
+function addTiColour() {
+  const sel = $('#color-by');
+  if (!sel || sel.querySelector('option[value="ti"]')) return;
+  const opt = document.createElement('option');
+  opt.value = 'ti';
+  opt.textContent = 'Therapeutic index';
+  opt.title = 'Activity minus hERG, both as pChEMBL; grey where the batch has no index';
+  sel.append(opt);
+}
+
 /** Fill the three ATC filter selects with the codes that occur, narrowed by the levels above. */
 export function fillAtcSelects() {
   const v = app.view, names = app.meta.atc_names, codes = new Set();
@@ -34,12 +62,13 @@ export function fillAtcSelects() {
 /** Build the controls and bind their listeners. Needs the data. */
 export function initControls() {
   bus.on('view:patched', syncControls);
+  fillAxisSelects();
   for (const a of ['x', 'y', 'z']) {
     const sel = $('#ax-' + a);
-    sel.innerHTML = Object.entries(AX).filter(([k]) => a === 'x' ? !AX[k].pseudo : true)
-      .map(([k, o]) => `<option value="${k}" title="${esc(o.long || o.label)}">${esc(o.label)}</option>`).join('');
     sel.addEventListener('change', () => setView({ [a]: sel.value, group: null, veber: false }));
   }
+  // the ranked therapeutic index arrives after the first paint (js/ti-live.js): add its axis and its colour mode then
+  bus.on('ti:ready', () => { fillAxisSelects(); addTiColour(); syncControls(); });
   $('#color-by').addEventListener('change', e => setView({ color: e.target.value }));
   // ATC chips: L1 groups by drug count; colours follow the slot a group was given, never its rank
   const count = new Map();

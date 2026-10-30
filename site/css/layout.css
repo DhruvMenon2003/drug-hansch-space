@@ -149,7 +149,7 @@ select { text-overflow: ellipsis; }
   .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
   .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
   .stage-status { bottom: 6px; }
-  .tooltip { display: none; }
+  .tooltip, .ti-live { display: none; }     /* a 44 px toolbar row has no space for either; the drug panel carries the index here */
   .show3d { position: absolute; top: 6px; right: max(8px, var(--inset-r)); }
 }
 

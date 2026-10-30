@@ -21,6 +21,9 @@ export const AX = {
   arom: { label: 'Aromatic rings', get: d => d.d.arom, dec: 0 },
   fsp3: { label: 'Fsp3', get: d => d.d.fsp3, dec: 2, long: 'Fraction of sp3 carbons' },
   cx: { label: 'Complexity', get: d => d.d.cx, dec: 0, long: 'PubChem complexity' },
+  // The ranked batch covers 278 of these drugs, and its file (data/ti/live.json) arrives after the first paint, so the
+  // axis is offered only once that file is in: `needs` keeps it out of the three selects until then (js/controls.js).
+  ti: { label: 'Therapeutic index', get: d => d.ti?.ti, dec: 2, needs: 'ti', long: 'Therapeutic index: activity minus hERG, both as pChEMBL (log ratio)' },
   none: { label: 'Flat (no axis)', pseudo: true },
   jitter: { label: 'Random spread (no meaning)', pseudo: true, get: d => d._jit },
 };
@@ -63,6 +66,14 @@ export function passes(d, axes = true, ignoreSize = false) {
 
 // ---------------------------------------------------------------- colour modes (at most three categorical hues)
 export const ACT_EDGES = [6, 7, 8, 9];
+/**
+ * Band edges on the therapeutic index, fixed for the whole ranked batch (tools/build_ti_live.py writes the same list into
+ * data/ti/live.json as `meta.breaks`). Fixed, not per view: a filter must not re-colour the plot under the reader, and 0
+ * keeps its own meaning — at or below it the hERG number is not under the activity.
+ */
+export const TI_EDGES = [0, 1, 2, 3];
+/** Band 1 to 5 of index `ti` (1 = narrowest margin), or 0 when there is no index. */
+export const tiBand = (ti, edges = TI_EDGES) => (fin(ti) ? 1 + edges.filter(e => ti >= e).length : 0);
 export function l1sOf(d) { return [...new Set(d.atc.map(a => a.code[0]))]; }
 /** Token colour of drug `d` under the current colour mode. */
 export function colorOf(d) {
@@ -83,6 +94,7 @@ export function colorOf(d) {
       return T['q' + (1 + ACT_EDGES.filter(e => d.act.p >= e).length)];
     }
     case 'ro5': return d.d.ro5 == null ? T.point : T[['q2', 'q4', 'q5'][Math.min(2, d.d.ro5)]];
+    case 'ti': { const b = tiBand(d.ti?.ti); return b ? T['q' + b] : T.point; }   // no index: the same grey as any other absent value
     default: return T.s1;
   }
 }

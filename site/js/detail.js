@@ -195,6 +195,37 @@ function showBox(d) {
     : '';
 }
 
+/**
+ * The therapeutic-index row: the number, the two halves it is made of with where each came from, the rank at its own
+ * target and the domain word. This is the accessible copy of the stage readout (js/ti-live.js), which is aria-hidden;
+ * the data is hung on the drug as `d.ti` by that module, so an empty row only means the file has not landed yet.
+ */
+function showTi(d) {
+  const box = $('#d-ti');
+  if (!box) return;
+  const t = d.ti, word = s => ({ measured: 'measured', series_hansch: 'from a validated Hansch series model',
+    fallback_nonlinear: 'modelled by the target\'s fallback' }[s] || s || 'unknown');
+  if (!t) {
+    box.innerHTML = app.tiReady
+      ? '<div class="act-box">No therapeutic index: this drug is not in the ranked batch, because no model validated at '
+        + 'its target, its structure could not be used, or the router would not place it. The Therapeutic index panel '
+        + 'lists every reason with its count.</div>'
+      : '';
+    return;
+  }
+  const ord = t.rank === 1 ? '1st' : t.rank === 2 ? '2nd' : t.rank === 3 ? '3rd' : `${t.rank}th`;
+  const dom = { measured: 'Both sides are laboratory measurements.', inside: 'Inside the applicability domain.',
+    outside: 'Outside the applicability domain: the model is answering about a molecule unlike its training set.' }[t.ad] || '';
+  box.innerHTML = `<div class="act-box"><span class="big">${fx(t.ti, 2)}</span> therapeutic index`
+    + ` <small>(activity − hERG, both pChEMBL)</small><br>`
+    + `activity ${fx(t.act, 2)} <small>${esc(word(t.asrc))}${t.aq ? `, ${esc(t.aq)}` : ''}</small>`
+    + ` − hERG ${fx(t.herg, 2)} <small>${esc(word(t.hsrc))}${t.hq ? `, ${esc(t.hq)}` : ''}</small><br>`
+    + `${ord} of ${t.n} at <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(t.tid)}/" target="_blank" rel="noopener noreferrer">${esc(t.tid)}</a> ${esc(t.tname)}`
+    + ` <small>${esc(t.tsrc === 'chembl_mechanism' ? 'target recorded in ChEMBL' : 'target inferred from structure')}`
+    + `${t.rdec === 'ambiguous' ? ', and the router\'s best matches were tied, so the target is a guess' : ''}</small><br>`
+    + `<small>${esc(dom)} A margin over the cardiac channel: not LD50 over ED50, not a clinical therapeutic index, not dose-aware.</small></div>`;
+}
+
 function showDetail({ index }) {
   const d = app.drugs[index];
   $('#detail-empty').hidden = true;
@@ -221,6 +252,7 @@ function showDetail({ index }) {
       `at <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(a.target)}/" target="_blank" rel="noopener noreferrer">${esc(a.target)}</a> ${esc(a.tname || '')}` +
       `<br><small>Median of ${esc(a.types || 'IC50/Ki/EC50/Kd')} values from ${a.ndoc ?? '≥2'} ChEMBL documents.</small></div>`
     : `<div class="act-box">No activity value: fewer than two ChEMBL documents agreed on a pChEMBL at the mechanism target.</div>`;
+  showTi(d);
   const names = app.meta.atc_names;
   $('#d-atc').innerHTML = d.atc.map(e => {
     const path = [e.code[0], e.code.slice(0, 3), e.code.slice(0, 4), e.code.slice(0, 5)].filter(c => names[c]).map(c => cap(names[c])).join(' › ');
@@ -236,6 +268,7 @@ function showDetail({ index }) {
 /** Show the panel on `selection`; redraw the depiction when the theme changes. */
 export function initDetail() {
   bus.on('selection', showDetail);
+  bus.on('ti:ready', () => { if (app.selected >= 0) showTi(app.drugs[app.selected]); });   // the index file lands after the first pick
   bus.on('layout', updateViewNote, ORDER.UI);
   bus.on('theme', () => { if (app.selected >= 0) drawDepiction(app.drugs[app.selected], { wait: false }); });
 }

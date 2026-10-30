@@ -152,6 +152,7 @@ function setHover(i) {
   if (i === app.hover) return;
   app.hover = i;
   stage.dirty.inst = true;
+  bus.emit('hover', { index: i, cid: i >= 0 ? app.drugs[i]?.cid : null });   // the live index readout follows the pointer (js/ti-live.js)
   wake();
 }
 /** Forget the hovered drug and hide its tooltip (a layout moves every sphere, so the old pick is stale). */

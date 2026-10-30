@@ -145,6 +145,31 @@ main[tabindex="-1"]:focus { outline: none; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: var(--font-display); font-size: 13px; color: var(--ink-2); }
 .legend .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
 .legend .ramp { display: inline-block; width: 90px; height: 8px; border-radius: 4px; margin: 0 6px; vertical-align: 0; background: linear-gradient(90deg, var(--q1), var(--q2), var(--q3), var(--q4), var(--q5)); }
+/* The live therapeutic index on the stage (js/ti-live.js): the drug under the pointer, where it sits in the whole ranked
+   batch, and the distribution of the drugs the filters leave in view. The strip is decorative (the card is aria-hidden):
+   <i> is one bucket of that distribution, <u> the batch median, <b> the picked drug's own place. */
+.ti-live {
+  pointer-events: none; width: min(300px, 100%); padding: 9px 11px; display: flex; flex-direction: column; gap: 4px;
+  border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px;
+  background: color-mix(in oklab, var(--panel) 88%, transparent); backdrop-filter: blur(8px);   /* the same veil the HUD uses: the stage stays felt, nothing behind stays legible */
+  font-family: var(--font-display); font-size: 13px; color: var(--ink-2);
+}
+.ti-live > p { margin: 0; }
+.til-head { font: 500 0.72rem/1.4 var(--font-display); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.til-name { color: var(--ink); font-weight: 700; text-transform: capitalize; }
+.til-big { display: flex; align-items: baseline; gap: 6px; }
+.til-n { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: 1.7rem; font-weight: 700; line-height: 1.05; color: var(--ink); }
+.til-u, .til-dim, .til-foot { color: var(--muted); }
+.til-row, .til-none { font-family: var(--font-data); font-size: 12px; }
+.til-row strong { color: var(--ink); }
+.til-foot { font-size: 11px; }
+.til-strip { position: relative; display: flex; align-items: flex-end; gap: 1px; height: 26px; margin-top: 2px; }
+.til-strip i { flex: 1 1 0; min-width: 0; border-radius: 1px; }
+.til-strip .til-med { position: absolute; top: -2px; bottom: -2px; width: 1px; background: var(--muted); }
+.til-strip .til-dot { position: absolute; top: -4px; bottom: -4px; width: 3px; margin-left: -1px; border-radius: 2px; background: var(--mark); transition: left 160ms ease; }
+.til-ends { display: flex; justify-content: space-between; font-family: var(--font-data); font-size: 10px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .til-strip .til-dot { transition: none; } }
+
 .stage-status { position: absolute; right: max(16px, var(--inset-r)); bottom: 54px; display: flex; align-items: center; gap: 8px; font-family: var(--font-data); font-size: 12px; color: var(--muted); }
 .stage-status progress { width: 96px; height: 6px; accent-color: var(--accent); }
 .stage-tools { position: absolute; right: max(16px, var(--inset-r)); top: 12px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; max-width: calc(100% - 32px); }   /* top right: the axis titles land along the bottom edge */

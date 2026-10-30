@@ -62,7 +62,8 @@ CAPS_KB = {
 DEFAULT_CAP_KB = 100
 FIRST_LOAD_KB = {"js": 300, "css": 20, "html": 20, "data": 150, "non_fonts": 450}
 TARGET_TOTAL_KB = 450          # first load including fonts: the aim; a warning when missed (fonts are not re-subsettable, SPEC-B B1.4)
-SITE_RAW_MB = 10               # 8 MB + ~1.7 MB of per-target QSAR sets (site/data/qsar), fetched only when the builder opens one
+SITE_RAW_MB = 12               # 8 MB + ~1.7 MB of per-target QSAR sets (site/data/qsar) + the therapeutic-index files
+                               # (site/data/ti), each fetched only when the panel or the live readout asks for it
 
 
 # ---------------------------------------------------------------------------------------------------------------- report

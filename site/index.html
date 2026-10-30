@@ -139,6 +139,9 @@
         <div class="hud">
           <div class="axis-key" id="axis-key"></div>
           <div class="legend" id="legend"></div>
+          <!-- The live therapeutic index (js/ti-live.js) fills this once data/ti/live.json is in. It is aria-hidden
+               because it repeats, for whatever the pointer is over, what the drug panel's own index row says in full. -->
+          <div class="ti-live" id="ti-live" aria-hidden="true" hidden></div>
         </div>
         <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
         <div class="stage-status" id="stage-status" role="status"><progress id="load-progress" max="4" value="0" aria-label="Loading data and 3D scene"></progress><span class="status-text">Loading data…</span></div>
@@ -315,6 +318,7 @@
           <p class="small" id="d-domain"></p>
           <p class="small" id="d-hbond-method">These Lipinski counts use RDKit <code>CalcNumLipinskiHBD</code> (N/O-bound hydrogens) and <code>CalcNumLipinskiHBA</code> (N + O atoms). The frozen DRD2 QSAR uses <code>NumHDonors</code> → <code>CalcNumHBD</code> and <code>NumHAcceptors</code> → <code>CalcNumHBA</code>, which count hydrogen-bond donor and acceptor sites. These definitions differ: amisulpride is 3/7 here and 2/6 in the QSAR. Both stored datasets are unchanged.</p>
           <div id="d-act"></div>
+          <div id="d-ti"></div>
           <p class="small" id="d-qsar" hidden></p>
           <div id="d-bench"><button type="button" id="d-bench-open" class="ghost">Edit PK values</button></div>
           <h4>ATC codes and routes</h4>

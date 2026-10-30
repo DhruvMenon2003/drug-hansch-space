@@ -14,6 +14,7 @@ export function renderLegend() {
   } else if (v.color === 'oral') h = sw(T.s1, 'Oral route') + sw(T.s2, 'No oral route') + sw(T.point, 'No route listed');
   else if (v.color === 'act') h = `<span>pChEMBL &lt;6<span class="ramp"></span>≥9</span>` + sw(T.point, 'No activity value');
   else if (v.color === 'ro5') h = sw(T.q2, '0 rule-of-five violations') + sw(T.q4, '1') + sw(T.q5, '2 or more');
+  else if (v.color === 'ti') h = `<span>Index &lt;0<span class="ramp"></span>≥3</span>` + sw(T.point, 'Not in the ranked batch');
   else h = `<span>Each sphere is one drug</span>`;
   $('#legend').innerHTML = h;
   // chips mirror the slots
