@@ -655,6 +655,7 @@
       <button type="button" role="tab" id="ti-t-route" aria-controls="ti-p-route" aria-selected="false">Routing</button>
       <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
       <button type="button" role="tab" id="ti-t-decide" aria-controls="ti-p-decide" aria-selected="false">Decisions</button>
+      <button type="button" role="tab" id="ti-t-expose" aria-controls="ti-p-expose" aria-selected="false">Exposure</button>
       <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
     </div>
 
@@ -727,6 +728,15 @@
         <div id="ti-decide-out"></div>
         <p id="ti-decide-say" class="small"></p>
         <div id="ti-decide-tables"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-expose" aria-labelledby="ti-t-expose" hidden>
+      <div id="ti-exp-intro"></div>
+      <p id="ti-exp-status" class="small" hidden></p>
+      <div id="ti-exp-body" hidden>
+        <div class="controls" id="ti-exp-controls"></div>
+        <div id="ti-exp-out"></div>
       </div>
     </section>
 

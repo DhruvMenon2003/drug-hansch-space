@@ -251,7 +251,8 @@ select, input[type="search"] { font: 400 0.95rem var(--font-display); color: var
 .kv dt { font-family: var(--font-display); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 .kv dd { margin: 2px 0 0; font-family: var(--font-data); font-size: 0.95rem; font-variant-numeric: tabular-nums; }
 .kv dd small { color: var(--muted); font-size: 0.75rem; }
-#ti-decide-rules { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }   /* these option labels are sentences, not words */
+#ti-decide-rules { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.tix-f { width: 5.5em; display: inline-block; }   /* a percentage, not a paragraph: keep the table narrow enough to read */   /* these option labels are sentences, not words */
 .decide-figs { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 14px 0 6px; }
 .decide-figs dd strong { font-size: 1.25rem; }
 .act-box { border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 0.95rem; }

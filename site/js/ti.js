@@ -4,8 +4,9 @@
 import { $, esc, getSide } from './kernel.js';
 
 const URL = 'data/ti/summary.json';
-const TABS = ['rank', 'route', 'series', 'decide', 'oecd'];
-const DECIDE_MOD = 'ti-decide.js';   // a variable specifier: the workbench and its whole-batch file arrive on first use
+const TABS = ['rank', 'route', 'series', 'decide', 'expose', 'oecd'];
+const DECIDE_MOD = 'ti-decide.js';   // variable specifiers: the workbench, its whole-batch file and the exposure
+const EXPOSE_MOD = 'ti-exposure.js'; // arithmetic all arrive on first use, never on the way to anything else
 const SOURCES = {
   measured: 'ChEMBL holds a binding measurement for this molecule at this target, so no model was used',
   series_hansch: 'a readable Hansch equation on this molecule’s own congeneric series, past every gate',
@@ -37,6 +38,10 @@ function wire() {
   $('#ti-t-decide')?.addEventListener('click', () => import(`./${DECIDE_MOD}`).then(m => m.initDecide()).catch(() => {
     const status = $('#ti-decide-status');
     if (status) { status.hidden = false; status.textContent = 'The decision workbench could not load. Close the panel and try again.'; }
+  }), { once: true });
+  $('#ti-t-expose')?.addEventListener('click', () => import(`./${EXPOSE_MOD}`).then(m => m.initExposure()).catch(() => {
+    const status = $('#ti-exp-status');
+    if (status) { status.hidden = false; status.textContent = 'The exposure panel could not load. Close it and try again.'; }
   }), { once: true });
 }
 

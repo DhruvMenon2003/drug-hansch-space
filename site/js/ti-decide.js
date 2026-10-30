@@ -154,13 +154,13 @@ function tables() {
     <p class="small">In the order the rules are applied, so each row counts only what was still left to it. The order
       decides the attribution, never the result: the surviving set is the same whichever order the rules run in.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="What each decision removed">
-      <table class="stats"><thead><tr><th scope="col">Decision</th><th scope="col">Set to</th>
+      <table class="stats sources-table"><thead><tr><th scope="col">Decision</th><th scope="col">Set to</th>
         <th scope="col">Removed</th><th scope="col">Left</th></tr></thead>
       <tbody id="ti-decide-steps"></tbody></table>
     </div>
     <h3>The widest margins under these rules</h3>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Widest margins under these rules">
-      <table class="stats"><thead><tr><th scope="col">Molecule</th><th scope="col">Target</th>
+      <table class="stats sources-table"><thead><tr><th scope="col">Molecule</th><th scope="col">Target</th>
         <th scope="col">Rank</th><th scope="col">Index</th></tr></thead>
       <tbody id="ti-decide-top"></tbody></table>
     </div>`;
