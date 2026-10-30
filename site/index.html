@@ -654,6 +654,7 @@
       <button type="button" role="tab" id="ti-t-rank" aria-controls="ti-p-rank" aria-selected="true">Ranked batch</button>
       <button type="button" role="tab" id="ti-t-route" aria-controls="ti-p-route" aria-selected="false">Routing</button>
       <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
+      <button type="button" role="tab" id="ti-t-decide" aria-controls="ti-p-decide" aria-selected="false">Decisions</button>
       <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
     </div>
 
@@ -714,6 +715,18 @@
           <th scope="col">Similarity</th><th scope="col">Terms</th><th scope="col">r²</th>
           <th scope="col">q² (leave one out)</th><th scope="col">log P optimum</th></tr></thead>
         <tbody id="ti-series"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-decide" aria-labelledby="ti-t-decide" hidden>
+      <div id="ti-decide-intro"></div>
+      <p id="ti-decide-status" class="small">Loading the whole ranked batch…</p>
+      <div id="ti-decide-body" hidden>
+        <div class="controls" id="ti-decide-rules"></div>
+        <p><button type="button" id="ti-decide-reset" class="ghost">Back to the published rules</button></p>
+        <div id="ti-decide-out"></div>
+        <p id="ti-decide-say" class="small"></p>
+        <div id="ti-decide-tables"></div>
       </div>
     </section>
 

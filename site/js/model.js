@@ -94,7 +94,13 @@ export function colorOf(d) {
       return T['q' + (1 + ACT_EDGES.filter(e => d.act.p >= e).length)];
     }
     case 'ro5': return d.d.ro5 == null ? T.point : T[['q2', 'q4', 'q5'][Math.min(2, d.d.ro5)]];
-    case 'ti': { const b = tiBand(d.ti?.ti); return b ? T['q' + b] : T.point; }   // no index: the same grey as any other absent value
+    // No index, or the reader's own inclusion rules threw this molecule out of the ranking: the same grey as any
+    // other absent value, because under those rules the drug has no index to show.
+    case 'ti': {
+      if (app.tiKeep && !app.tiKeep.has(d.cid)) return T.point;
+      const b = tiBand(d.ti?.ti);
+      return b ? T['q' + b] : T.point;
+    }
     default: return T.s1;
   }
 }

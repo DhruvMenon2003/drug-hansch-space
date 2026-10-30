@@ -26,6 +26,7 @@ CSV_PATH = ROOT / "ti" / "out" / "therapeutic_index.csv"
 AUDIT_PATH = ROOT / "ti" / "out" / "audit.json"
 DRUGS_PATH = ROOT / "site" / "data" / "drugs.json"
 OUT_PATH = ROOT / "site" / "data" / "ti" / "live.json"
+BATCH_PATH = ROOT / "site" / "data" / "ti" / "batch.json"
 
 # Colour and band edges on the index, fixed for the whole batch so that a filter never re-colours the plot under
 # the reader. The quartiles of the 649 ranked molecules are 0.89 / 1.81 / 2.92, so these five bands split them
@@ -132,29 +133,111 @@ def build(csv_path=CSV_PATH, drugs_path=DRUGS_PATH, audit_path=AUDIT_PATH):
     }
 
 
+# The decision workbench (site/js/ti-decide.js) re-derives the ranking under the reader's own inclusion rules, so it
+# needs every ranked molecule, not only the ones the explorer draws: a rank within a target is wrong if some of that
+# target's molecules are missing from the file. Hence a second, compact output. Target names are interned because 649
+# rows share 170 of them. No number is recomputed here either; only membership and rank move, and they move in the
+# browser, from these same values.
+BATCH_FIELDS = {
+    "name": "molecule name", "m": "molecule ChEMBL id", "t": "index into targets[]", "ts": "target source",
+    "rd": "routing decision", "a": "p_activity", "as": "where p_activity came from", "h": "p_toxicity at hERG",
+    "hs": "where that came from", "ad": "applicability domain", "ti": "therapeutic index",
+    "cid": "PubChem CID when this molecule is also a drug on the page, else absent",
+}
+
+
+def build_batch(csv_path=CSV_PATH, drugs_path=DRUGS_PATH, audit_path=AUDIT_PATH):
+    rows = load_rows(csv_path)
+    ranked = [r for r in rows if r.get("status") == "ranked"]
+    drugs = json.loads(drugs_path.read_text(encoding="utf-8"))["drugs"]
+    by_ik, by_chembl = {}, {}
+    for d in drugs:
+        if d.get("ik"):
+            by_ik.setdefault(d["ik"], []).append(d["cid"])
+        if d.get("chembl"):
+            by_chembl.setdefault(d["chembl"], []).append(d["cid"])
+
+    order, targets, mols = {}, [], []
+    for r in ranked:
+        tid = r["target_chembl_id"]
+        if tid not in order:
+            order[tid] = len(targets)
+            targets.append({"id": tid, "name": r["target_name"] or tid})
+        rec = {
+            "name": r["name"], "m": r["molecule_chembl_id"], "t": order[tid],
+            "ts": r["target_source"], "rd": r["routing_decision"],
+            "a": num(r["p_activity"]), "as": r["p_activity_source"],
+            "h": num(r["p_toxicity_herg"]), "hs": r["p_toxicity_source"],
+            "ad": r["applicability_domain"], "ti": num(r["therapeutic_index"]),
+        }
+        cids = by_ik.get(r["inchikey"]) or by_chembl.get(r["molecule_chembl_id"])
+        if cids:
+            rec["cids"] = sorted(cids)
+        mols.append(rec)
+
+    counted = {}
+    for m in mols:
+        counted[m["t"]] = counted.get(m["t"], 0) + 1
+    for i, t in enumerate(targets):
+        t["n"] = counted.get(i, 0)
+
+    audit = json.loads(audit_path.read_text(encoding="utf-8")) if audit_path.exists() else {}
+    vocab = lambda key: sorted({m[key] for m in mols})
+    return {
+        "meta": {
+            "endpoint": audit.get("endpoint", {}),
+            "liability_target": audit.get("liability_target", "CHEMBL240"),
+            "breaks": BREAKS,
+            "fields": BATCH_FIELDS,
+            "vocabulary": {k: vocab(k) for k in ("as", "hs", "ad", "ts", "rd")},
+            "counts": {
+                "molecules in the run": len(rows),
+                "ranked in the run": len(ranked),
+                "targets": len(targets),
+                "also drugs on this page": sum(len(m.get("cids", ())) for m in mols),
+                "targets with one molecule": sum(1 for t in targets if t["n"] == 1),
+            },
+            "source": {
+                "csv": str(csv_path.relative_to(ROOT)),
+                "csv_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
+                "built_by": "tools/build_ti_live.py",
+            },
+            "note": "Inclusion rules in the browser re-derive membership and rank from these fixed numbers. "
+                    "Nothing here is refitted on the page; a decision that would need a refit is a recorded run.",
+        },
+        "targets": targets,
+        "molecules": mols,
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--csv", type=Path, default=CSV_PATH)
     ap.add_argument("--drugs", type=Path, default=DRUGS_PATH)
     ap.add_argument("--out", type=Path, default=OUT_PATH)
+    ap.add_argument("--batch", type=Path, default=BATCH_PATH)
     ap.add_argument("--check", action="store_true", help="compare with the file on disk instead of writing it")
     args = ap.parse_args()
 
-    data = build(args.csv, args.drugs)
-    text = json.dumps(data, indent=0, sort_keys=True) + "\n"
+    wanted = {args.out: build(args.csv, args.drugs), args.batch: build_batch(args.csv, args.drugs)}
+    texts = {p: json.dumps(d, indent=0, sort_keys=True) + "\n" for p, d in wanted.items()}
     if args.check:
-        if not args.out.exists():
-            print(f"{args.out} does not exist", file=sys.stderr)
-            return 1
-        same = args.out.read_text(encoding="utf-8") == text
-        print(f"{args.out.name}: {'up to date' if same else 'OUT OF DATE, run tools/build_ti_live.py'}")
-        return 0 if same else 1
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(text, encoding="utf-8")
+        stale = [p for p, t in texts.items() if not p.exists() or p.read_text(encoding="utf-8") != t]
+        for p in texts:
+            print(f"{p.name}: {'OUT OF DATE, run tools/build_ti_live.py' if p in stale else 'up to date'}")
+        return 1 if stale else 0
+    for p, t in texts.items():
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(t, encoding="utf-8")
+    data = wanted[args.out]
     c = data["meta"]["counts"]
     print(f"{args.out.relative_to(ROOT)}: {c['drugs on this page with an index']} of {c['drugs on this page']} drugs "
           f"carry an index ({c['matched by InChIKey']} by InChIKey, {c['matched by ChEMBL id']} by ChEMBL id); "
           f"{c['ranked but not a drug on this page']} ranked molecules are not drugs on this page")
+    b = wanted[args.batch]["meta"]["counts"]
+    print(f"{args.batch.relative_to(ROOT)}: the whole ranked batch for the decision workbench, "
+          f"{b['ranked in the run']} molecules at {b['targets']} targets "
+          f"({b['targets with one molecule']} targets hold a single molecule)")
     return 0
 
 

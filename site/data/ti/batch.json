@@ -1,0 +1,10193 @@
+{
+"meta": {
+"breaks": [
+0.0,
+1.0,
+2.0,
+3.0
+],
+"counts": {
+"also drugs on this page": 278,
+"molecules in the run": 1345,
+"ranked in the run": 649,
+"targets": 170,
+"targets with one molecule": 61
+},
+"endpoint": {
+"definition": "p_activity(primary target) - p_toxicity(hERG, CHEMBL240), both -log10 mol/L",
+"direction": "higher is a wider margin over the cardiac liability",
+"is_not": "not LD50/ED50, not a clinical therapeutic index, not dose-aware, not safety evidence",
+"name": "therapeutic_index",
+"units": "log10 ratio"
+},
+"fields": {
+"a": "p_activity",
+"ad": "applicability domain",
+"as": "where p_activity came from",
+"cid": "PubChem CID when this molecule is also a drug on the page, else absent",
+"h": "p_toxicity at hERG",
+"hs": "where that came from",
+"m": "molecule ChEMBL id",
+"name": "molecule name",
+"rd": "routing decision",
+"t": "index into targets[]",
+"ti": "therapeutic index",
+"ts": "target source"
+},
+"liability_target": "CHEMBL240",
+"note": "Inclusion rules in the browser re-derive membership and rank from these fixed numbers. Nothing here is refitted on the page; a decision that would need a refit is a recorded run.",
+"source": {
+"built_by": "tools/build_ti_live.py",
+"csv": "ti/out/therapeutic_index.csv",
+"csv_sha256": "5279ddaae0258339982a21a14fc349430376b50db44d2f9adee26cfa4c303c74"
+},
+"vocabulary": {
+"ad": [
+"inside",
+"measured",
+"outside"
+],
+"as": [
+"fallback_nonlinear",
+"measured",
+"series_hansch"
+],
+"hs": [
+"fallback_nonlinear",
+"measured"
+],
+"rd": [
+"ambiguous",
+"mechanism",
+"routed"
+],
+"ts": [
+"chembl_mechanism",
+"structure_router"
+]
+}
+},
+"molecules": [
+{
+"a": 9.55,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5284570
+],
+"h": 4.745,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL398707",
+"name": "Hydromorphone",
+"rd": "mechanism",
+"t": 0,
+"ti": 4.805,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.36,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5284594
+],
+"h": 5.075,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL982",
+"name": "Nalmefene",
+"rd": "mechanism",
+"t": 0,
+"ti": 4.285,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.68,
+"ad": "outside",
+"as": "measured",
+"h": 5.434,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL592",
+"name": "Levorphanol",
+"rd": "mechanism",
+"t": 0,
+"ti": 4.246,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.72,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5361092
+],
+"h": 5.81,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL33986",
+"name": "Butorphanol",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.91,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.689,
+"ad": "outside",
+"as": "series_hansch",
+"cids": [
+5288826
+],
+"h": 4.791,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL70",
+"name": "Morphine",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.898,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.33,
+"ad": "inside",
+"as": "measured",
+"h": 5.438,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL270190",
+"name": "Alvimopan",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.892,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.99,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+6321408
+],
+"h": 5.11,
+"hs": "measured",
+"m": "CHEMBL511142",
+"name": "Buprenorphine",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.88,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.27,
+"ad": "outside",
+"as": "measured",
+"h": 5.467,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1685",
+"name": "Dezocine",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.803,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.1,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5361917
+],
+"h": 4.823,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1186579",
+"name": "Methylnaltrexone",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.277,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.36,
+"ad": "measured",
+"as": "measured",
+"h": 5.21,
+"hs": "measured",
+"m": "CHEMBL2443262",
+"name": "Oliceridine",
+"rd": "mechanism",
+"t": 0,
+"ti": 3.15,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.89,
+"ad": "measured",
+"as": "measured",
+"h": 5.01,
+"hs": "measured",
+"m": "CHEMBL651",
+"name": "Methadone",
+"rd": "mechanism",
+"t": 0,
+"ti": 2.88,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.545,
+"ad": "outside",
+"as": "measured",
+"h": 4.783,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1330",
+"name": "Morphine-6-Glucuronide",
+"rd": "routed",
+"t": 0,
+"ti": 2.762,
+"ts": "structure_router"
+},
+{
+"a": 7.291,
+"ad": "inside",
+"as": "series_hansch",
+"cids": [
+5284543
+],
+"h": 4.779,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1595",
+"name": "Dihydrocodeine",
+"rd": "mechanism",
+"t": 0,
+"ti": 2.512,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.745,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+41693
+],
+"h": 5.543,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL658",
+"name": "Sufentanil",
+"rd": "mechanism",
+"t": 0,
+"ti": 2.202,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.66,
+"ad": "inside",
+"as": "measured",
+"h": 5.537,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2104504",
+"name": "Sameridine",
+"rd": "routed",
+"t": 0,
+"ti": 2.123,
+"ts": "structure_router"
+},
+{
+"a": 7.5,
+"ad": "inside",
+"as": "measured",
+"h": 5.49,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL314437",
+"name": "Meptazinol",
+"rd": "mechanism",
+"t": 0,
+"ti": 2.01,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.678,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5284603
+],
+"h": 4.722,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL656",
+"name": "Oxycodone",
+"rd": "mechanism",
+"t": 0,
+"ti": 1.956,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.501,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.633,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1213351",
+"name": "Propoxyphene",
+"rd": "mechanism",
+"t": 0,
+"ti": 1.868,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.516,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3345
+],
+"h": 5.74,
+"hs": "measured",
+"m": "CHEMBL596",
+"name": "Fentanyl",
+"rd": "mechanism",
+"t": 0,
+"ti": 1.776,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.719,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+51263
+],
+"h": 4.965,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL634",
+"name": "Alfentanil",
+"rd": "mechanism",
+"t": 0,
+"ti": 1.754,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.68,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60814
+],
+"h": 5.377,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1005",
+"name": "Remifentanil",
+"rd": "mechanism",
+"t": 0,
+"ti": 1.303,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.443,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.166,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL47072",
+"name": "Ketobemidone",
+"rd": "routed",
+"t": 0,
+"ti": 1.277,
+"ts": "structure_router"
+},
+{
+"a": 6.8,
+"ad": "inside",
+"as": "measured",
+"cids": [
+9838021
+],
+"h": 5.576,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201776",
+"name": "Tapentadol",
+"rd": "mechanism",
+"t": 0,
+"ti": 1.224,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.834,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.204,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL607",
+"name": "Meperidine",
+"rd": "mechanism",
+"t": 0,
+"ti": 0.63,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.8,
+"ad": "inside",
+"as": "measured",
+"cids": [
+33741
+],
+"h": 5.553,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1237044",
+"name": "Tramadol",
+"rd": "mechanism",
+"t": 0,
+"ti": 0.247,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.96,
+"ad": "inside",
+"as": "measured",
+"h": 4.972,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL266195",
+"name": "Alprenolol",
+"rd": "routed",
+"t": 1,
+"ti": 3.988,
+"ts": "structure_router"
+},
+{
+"a": 9.75,
+"ad": "inside",
+"as": "measured",
+"cids": [
+2585
+],
+"h": 5.835,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL723",
+"name": "Carvedilol",
+"rd": "routed",
+"t": 1,
+"ti": 3.915,
+"ts": "structure_router"
+},
+{
+"a": 8.409,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.935,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL65717",
+"name": "Mepindolol",
+"rd": "ambiguous",
+"t": 1,
+"ti": 3.474,
+"ts": "structure_router"
+},
+{
+"a": 7.96,
+"ad": "inside",
+"as": "measured",
+"cids": [
+3869
+],
+"h": 5.184,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL429",
+"name": "Labetalol",
+"rd": "routed",
+"t": 1,
+"ti": 2.776,
+"ts": "structure_router"
+},
+{
+"a": 7.364,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.671,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL839",
+"name": "Carteolol",
+"rd": "routed",
+"t": 1,
+"ti": 2.693,
+"ts": "structure_router"
+},
+{
+"a": 7.196,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.184,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL27193",
+"name": "Dilevalol",
+"rd": "routed",
+"t": 1,
+"ti": 2.012,
+"ts": "structure_router"
+},
+{
+"a": 7.405,
+"ad": "inside",
+"as": "measured",
+"cids": [
+6918554
+],
+"h": 5.596,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1095777",
+"name": "Indacaterol",
+"rd": "mechanism",
+"t": 1,
+"ti": 1.809,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.888,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.15,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL521589",
+"name": "Bambuterol",
+"rd": "mechanism",
+"t": 1,
+"ti": 1.738,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.743,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.07,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL434",
+"name": "Isoproterenol",
+"rd": "routed",
+"t": 1,
+"ti": 1.673,
+"ts": "structure_router"
+},
+{
+"a": 6.9,
+"ad": "outside",
+"as": "measured",
+"h": 5.264,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL32800",
+"name": "Fenoterol",
+"rd": "mechanism",
+"t": 1,
+"ti": 1.636,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.973,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.57,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL314010",
+"name": "Bevantolol",
+"rd": "routed",
+"t": 1,
+"ti": 1.403,
+"ts": "structure_router"
+},
+{
+"a": 6.656,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.286,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL113278",
+"name": "Medroxalol",
+"rd": "routed",
+"t": 1,
+"ti": 1.37,
+"ts": "structure_router"
+},
+{
+"a": 6.551,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+11504294
+],
+"h": 5.462,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL605846",
+"name": "Olodaterol",
+"rd": "mechanism",
+"t": 1,
+"ti": 1.089,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.534,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.007,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1160714",
+"name": "Prenalterol",
+"rd": "routed",
+"t": 1,
+"ti": 0.527,
+"ts": "structure_router"
+},
+{
+"a": 5.838,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.519,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL418192",
+"name": "Tolamolol",
+"rd": "routed",
+"t": 1,
+"ti": 0.319,
+"ts": "structure_router"
+},
+{
+"a": 5.444,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.168,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL83063",
+"name": "Ritodrine",
+"rd": "mechanism",
+"t": 1,
+"ti": 0.276,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.407,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+4086
+],
+"h": 5.156,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL776",
+"name": "Metaproterenol",
+"rd": "mechanism",
+"t": 1,
+"ti": 0.251,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.244,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5403
+],
+"h": 5.112,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1760",
+"name": "Terbutaline",
+"rd": "mechanism",
+"t": 1,
+"ti": 0.132,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.153,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 6.069,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1198857",
+"name": "Vilanterol",
+"rd": "mechanism",
+"t": 1,
+"ti": 0.084,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.04,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4828
+],
+"h": 4.82,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL500",
+"name": "Pindolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 4.22,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.59,
+"ad": "outside",
+"as": "measured",
+"cids": [
+33624
+],
+"h": 4.772,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL499",
+"name": "Timolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 3.818,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.175,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4946
+],
+"h": 5.366,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL27",
+"name": "Propranolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 2.809,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.498,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.1,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL75753",
+"name": "Xamoterol",
+"rd": "mechanism",
+"t": 2,
+"ti": 2.398,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.75,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4171
+],
+"h": 4.735,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL13",
+"name": "Metoprolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 2.015,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.71,
+"ad": "inside",
+"as": "measured",
+"cids": [
+59768
+],
+"h": 4.877,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL768",
+"name": "Esmolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.833,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.652,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+39147
+],
+"h": 4.852,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL521606",
+"name": "Nadolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.8,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.43,
+"ad": "outside",
+"as": "measured",
+"cids": [
+2369
+],
+"h": 5.662,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL423",
+"name": "Betaxolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.768,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.488,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.083,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL546",
+"name": "Oxprenolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.405,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.012,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.611,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6995",
+"name": "Practolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.401,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.983,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2405
+],
+"h": 5.628,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL645",
+"name": "Bisoprolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.355,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.211,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.999,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL59",
+"name": "Dopamine",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.212,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.361,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+71301
+],
+"h": 5.174,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL434394",
+"name": "Nebivolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.187,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.901,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2249
+],
+"h": 4.756,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL24",
+"name": "Atenolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 1.145,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.45,
+"ad": "measured",
+"as": "measured",
+"cids": [
+4932
+],
+"h": 5.82,
+"hs": "measured",
+"m": "CHEMBL631",
+"name": "Propafenone",
+"rd": "mechanism",
+"t": 2,
+"ti": 0.63,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.247,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.665,
+"hs": "fallback_nonlinear",
+"m": "",
+"name": "Chlorophenylpiperazine, m-",
+"rd": "routed",
+"t": 2,
+"ti": 0.582,
+"ts": "structure_router"
+},
+{
+"a": 5.05,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5253
+],
+"h": 4.553,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL471",
+"name": "Sotalol",
+"rd": "mechanism",
+"t": 2,
+"ti": 0.497,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.14,
+"ad": "inside",
+"as": "measured",
+"cids": [
+1978
+],
+"h": 5.779,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL642",
+"name": "Acebutolol",
+"rd": "mechanism",
+"t": 2,
+"ti": 0.361,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.71,
+"ad": "inside",
+"as": "measured",
+"h": 5.359,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL926",
+"name": "Dobutamine",
+"rd": "mechanism",
+"t": 2,
+"ti": 0.351,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.055,
+"ad": "measured",
+"as": "measured",
+"h": 5.24,
+"hs": "measured",
+"m": "CHEMBL726",
+"name": "Fluphenazine",
+"rd": "mechanism",
+"t": 3,
+"ti": 3.815,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.53,
+"ad": "inside",
+"as": "measured",
+"h": 5.585,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL908",
+"name": "Chlorprothixene",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.945,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.44,
+"ad": "measured",
+"as": "measured",
+"h": 5.73,
+"hs": "measured",
+"m": "CHEMBL728",
+"name": "Prochlorperazine",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.71,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.314,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.671,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL26",
+"name": "Sulpiride",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.643,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.194,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.711,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL290194",
+"name": "Alizapride",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.483,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.576,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.125,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL22242",
+"name": "Remoxipride",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.451,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.05,
+"ad": "measured",
+"as": "measured",
+"h": 6.79,
+"hs": "measured",
+"m": "CHEMBL219916",
+"name": "Domperidone",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.26,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.38,
+"ad": "inside",
+"as": "measured",
+"h": 5.139,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL86",
+"name": "Metoclopramide",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.241,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.99,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60795
+],
+"h": 5.805,
+"hs": "measured",
+"m": "CHEMBL1112",
+"name": "Aripiprazole",
+"rd": "mechanism",
+"t": 3,
+"ti": 2.185,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.3,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.385,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL399510",
+"name": "Bromopride",
+"rd": "mechanism",
+"t": 3,
+"ti": 1.915,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.765,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.868,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2104024",
+"name": "Alpiropride",
+"rd": "ambiguous",
+"t": 3,
+"ti": 1.897,
+"ts": "structure_router"
+},
+{
+"a": 7.156,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.467,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL297302",
+"name": "Benperidol",
+"rd": "mechanism",
+"t": 3,
+"ti": 1.689,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.758,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 6.123,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2105760",
+"name": "Brexpiprazole",
+"rd": "mechanism",
+"t": 3,
+"ti": 1.635,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.62,
+"ad": "inside",
+"as": "measured",
+"h": 5.235,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL51",
+"name": "Ketanserin",
+"rd": "routed",
+"t": 3,
+"ti": 1.385,
+"ts": "structure_router"
+},
+{
+"a": 6.765,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.38,
+"hs": "measured",
+"m": "CHEMBL567",
+"name": "Perphenazine",
+"rd": "mechanism",
+"t": 3,
+"ti": 1.385,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.164,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+115237
+],
+"h": 5.89,
+"hs": "measured",
+"m": "CHEMBL1621",
+"name": "Paliperidone",
+"rd": "mechanism",
+"t": 3,
+"ti": 1.274,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.75,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+163091
+],
+"h": 5.504,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3187365",
+"name": "Asenapine",
+"rd": "mechanism",
+"t": 3,
+"ti": 1.246,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.26,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.335,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1531134",
+"name": "Melperone",
+"rd": "ambiguous",
+"t": 3,
+"ti": 0.925,
+"ts": "structure_router"
+},
+{
+"a": 9.1,
+"ad": "inside",
+"as": "measured",
+"cids": [
+9854489
+],
+"h": 5.32,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1676",
+"name": "Fluticasone furoate",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.78,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.8,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5281004
+],
+"h": 5.166,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1370",
+"name": "Budesonide",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.634,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.7,
+"ad": "outside",
+"as": "measured",
+"cids": [
+6918155
+],
+"h": 5.326,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2040682",
+"name": "Ciclesonide",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.374,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.153,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5743
+],
+"h": 4.886,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL384467",
+"name": "Dexamethasone",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.267,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.36,
+"ad": "inside",
+"as": "measured",
+"h": 5.101,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1504",
+"name": "Triamcinolone Acetonide",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.259,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.27,
+"ad": "inside",
+"as": "measured",
+"cids": [
+82153
+],
+"h": 5.028,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1512",
+"name": "Flunisolide",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.242,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.11,
+"ad": "outside",
+"as": "measured",
+"h": 4.886,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL632",
+"name": "Betamethasone",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.224,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.96,
+"ad": "outside",
+"as": "measured",
+"h": 4.768,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL650",
+"name": "Methylprednisolone",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.192,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.03,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.962,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1200500",
+"name": "Beclomethasone dipropionate",
+"rd": "mechanism",
+"t": 4,
+"ti": 3.068,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.175,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.125,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL251634",
+"name": "Fluocortolone",
+"rd": "routed",
+"t": 4,
+"ti": 3.05,
+"ts": "structure_router"
+},
+{
+"a": 7.58,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5754
+],
+"h": 4.699,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL389621",
+"name": "Hydrocortisone",
+"rd": "mechanism",
+"t": 4,
+"ti": 2.881,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.939,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.242,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1473",
+"name": "Fluticasone propionate",
+"rd": "mechanism",
+"t": 4,
+"ti": 2.697,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.207,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.688,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL131",
+"name": "Prednisolone",
+"rd": "mechanism",
+"t": 4,
+"ti": 2.519,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.658,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.319,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1161",
+"name": "Mometasone Furoate",
+"rd": "mechanism",
+"t": 4,
+"ti": 2.339,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.593,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+55245
+],
+"h": 5.811,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1276308",
+"name": "Mifepristone",
+"rd": "mechanism",
+"t": 4,
+"ti": 1.782,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.581,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.377,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201864",
+"name": "Dienogest",
+"rd": "routed",
+"t": 4,
+"ti": 1.204,
+"ts": "structure_router"
+},
+{
+"a": 5.94,
+"ad": "inside",
+"as": "measured",
+"h": 4.752,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL635",
+"name": "Prednisone",
+"rd": "mechanism",
+"t": 4,
+"ti": 1.188,
+"ts": "chembl_mechanism"
+},
+{
+"a": 10.06,
+"ad": "inside",
+"as": "measured",
+"cids": [
+2801
+],
+"h": 5.728,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL415",
+"name": "Clomipramine",
+"rd": "mechanism",
+"t": 5,
+"ti": 4.332,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.4,
+"ad": "inside",
+"as": "measured",
+"cids": [
+6918313
+],
+"h": 5.132,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL439849",
+"name": "Vilazodone",
+"rd": "mechanism",
+"t": 5,
+"ti": 4.268,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.42,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5324345
+],
+"h": 5.538,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL814",
+"name": "Fluvoxamine",
+"rd": "mechanism",
+"t": 5,
+"ti": 2.882,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.89,
+"ad": "inside",
+"as": "measured",
+"h": 5.317,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL445",
+"name": "Nortriptyline",
+"rd": "mechanism",
+"t": 5,
+"ti": 2.573,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.105,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.0,
+"hs": "measured",
+"m": "CHEMBL629",
+"name": "Amitriptyline",
+"rd": "mechanism",
+"t": 5,
+"ti": 2.105,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.525,
+"ad": "inside",
+"as": "measured",
+"cids": [
+125017
+],
+"h": 5.442,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1118",
+"name": "Desvenlafaxine",
+"rd": "mechanism",
+"t": 5,
+"ti": 2.083,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.964,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60834
+],
+"h": 5.895,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1175",
+"name": "Duloxetine",
+"rd": "mechanism",
+"t": 5,
+"ti": 2.069,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.274,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5656
+],
+"h": 5.483,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL637",
+"name": "Venlafaxine",
+"rd": "mechanism",
+"t": 5,
+"ti": 1.791,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.23,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.548,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL259209",
+"name": "Milnacipran",
+"rd": "mechanism",
+"t": 5,
+"ti": 1.682,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.13,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3696
+],
+"h": 5.47,
+"hs": "measured",
+"m": "CHEMBL11",
+"name": "Imipramine",
+"rd": "mechanism",
+"t": 5,
+"ti": 1.66,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.535,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+43815
+],
+"h": 4.98,
+"hs": "measured",
+"m": "CHEMBL490",
+"name": "Paroxetine",
+"rd": "mechanism",
+"t": 5,
+"ti": 1.555,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.72,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5533
+],
+"h": 5.318,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL621",
+"name": "Trazodone",
+"rd": "mechanism",
+"t": 5,
+"ti": 1.402,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.034,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4449
+],
+"h": 5.67,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL623",
+"name": "Nefazodone",
+"rd": "mechanism",
+"t": 5,
+"ti": 1.364,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.835,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.715,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL539456",
+"name": "Hydroxyimipramine, 2-",
+"rd": "ambiguous",
+"t": 5,
+"ti": 1.12,
+"ts": "structure_router"
+},
+{
+"a": 6.769,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+2771
+],
+"h": 5.898,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL549",
+"name": "Citalopram",
+"rd": "mechanism",
+"t": 5,
+"ti": 0.871,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.424,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5757
+],
+"h": 5.281,
+"hs": "fallback_nonlinear",
+"m": "",
+"name": "Estradiol",
+"rd": "routed",
+"t": 5,
+"ti": 0.143,
+"ts": "structure_router"
+},
+{
+"a": 8.578,
+"ad": "outside",
+"as": "series_hansch",
+"h": 5.149,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1997373",
+"name": "Cositecan",
+"rd": "routed",
+"t": 6,
+"ti": 3.429,
+"ts": "structure_router"
+},
+{
+"a": 6.96,
+"ad": "inside",
+"as": "measured",
+"h": 5.079,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL273862",
+"name": "Hydroxycamptothecin, 10-",
+"rd": "routed",
+"t": 6,
+"ti": 1.881,
+"ts": "structure_router"
+},
+{
+"a": 6.465,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.137,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL274070",
+"name": "Aminocamptothecin, 9-",
+"rd": "mechanism",
+"t": 6,
+"ti": 1.328,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.257,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.023,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL305666",
+"name": "Lurtotecan",
+"rd": "routed",
+"t": 6,
+"ti": 1.234,
+"ts": "structure_router"
+},
+{
+"a": 5.987,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60699
+],
+"h": 5.125,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL84",
+"name": "Topotecan",
+"rd": "mechanism",
+"t": 6,
+"ti": 0.862,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.808,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.053,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL412309",
+"name": "Silatecan",
+"rd": "mechanism",
+"t": 6,
+"ti": 0.755,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.809,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.937,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6273",
+"name": "Fleroxacin",
+"rd": "routed",
+"t": 6,
+"ti": -0.128,
+"ts": "structure_router"
+},
+{
+"a": 4.76,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5379
+],
+"h": 5.031,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL31",
+"name": "Gatifloxacin",
+"rd": "routed",
+"t": 6,
+"ti": -0.271,
+"ts": "structure_router"
+},
+{
+"a": 4.968,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60837
+],
+"h": 5.244,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL481",
+"name": "Irinotecan",
+"rd": "mechanism",
+"t": 6,
+"ti": -0.276,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.96,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.293,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107313",
+"name": "Becatecarin",
+"rd": "mechanism",
+"t": 6,
+"ti": -0.333,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.738,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.083,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL306280",
+"name": "Diflomotecan",
+"rd": "mechanism",
+"t": 6,
+"ti": -0.345,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.042,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.518,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL435191",
+"name": "Edotecarin",
+"rd": "mechanism",
+"t": 6,
+"ti": -0.476,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.555,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.414,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL507233",
+"name": "Escin Ia",
+"rd": "routed",
+"t": 6,
+"ti": -0.859,
+"ts": "structure_router"
+},
+{
+"a": 4.555,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.414,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL505939",
+"name": "Escin Ib",
+"rd": "routed",
+"t": 6,
+"ti": -0.859,
+"ts": "structure_router"
+},
+{
+"a": 9.75,
+"ad": "inside",
+"as": "measured",
+"cids": [
+3158
+],
+"h": 5.479,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1628227",
+"name": "Doxepin",
+"rd": "mechanism",
+"t": 7,
+"ti": 4.271,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.48,
+"ad": "inside",
+"as": "measured",
+"h": 5.511,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL643",
+"name": "Promethazine",
+"rd": "mechanism",
+"t": 7,
+"ti": 3.969,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.16,
+"ad": "inside",
+"as": "measured",
+"h": 5.943,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL22108",
+"name": "Dimetindene",
+"rd": "mechanism",
+"t": 7,
+"ti": 3.217,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.35,
+"ad": "inside",
+"as": "measured",
+"h": 5.3,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL648",
+"name": "Cyclizine",
+"rd": "mechanism",
+"t": 7,
+"ti": 3.05,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.08,
+"ad": "inside",
+"as": "measured",
+"h": 5.243,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL398615",
+"name": "Metopimazine",
+"rd": "routed",
+"t": 7,
+"ti": 2.837,
+"ts": "structure_router"
+},
+{
+"a": 8.401,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.736,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL644",
+"name": "Trimipramine",
+"rd": "mechanism",
+"t": 7,
+"ti": 2.665,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.35,
+"ad": "inside",
+"as": "measured",
+"h": 5.775,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL505",
+"name": "Chlorpheniramine",
+"rd": "mechanism",
+"t": 7,
+"ti": 2.575,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.57,
+"ad": "measured",
+"as": "measured",
+"h": 6.36,
+"hs": "measured",
+"m": "CHEMBL94454",
+"name": "Mizolastine",
+"rd": "mechanism",
+"t": 7,
+"ti": 2.21,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.765,
+"ad": "inside",
+"as": "measured",
+"h": 5.662,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL657",
+"name": "Diphenhydramine",
+"rd": "mechanism",
+"t": 7,
+"ti": 2.103,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.362,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.334,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1615438",
+"name": "Levocabastine",
+"rd": "mechanism",
+"t": 7,
+"ti": 2.028,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.9,
+"ad": "measured",
+"as": "measured",
+"cids": [
+2267
+],
+"h": 7.0,
+"hs": "measured",
+"m": "CHEMBL639",
+"name": "Azelastine",
+"rd": "mechanism",
+"t": 7,
+"ti": 1.9,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.872,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.048,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1305",
+"name": "Antazoline",
+"rd": "mechanism",
+"t": 7,
+"ti": 1.824,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.304,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.509,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL67654",
+"name": "Carebastine",
+"rd": "routed",
+"t": 7,
+"ti": 1.795,
+"ts": "structure_router"
+},
+{
+"a": 7.132,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.473,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1742423",
+"name": "Bilastine",
+"rd": "mechanism",
+"t": 7,
+"ti": 1.659,
+"ts": "chembl_mechanism"
+},
+{
+"a": 10.5,
+"ad": "outside",
+"as": "measured",
+"cids": [
+60830
+],
+"h": 5.352,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1900528",
+"name": "Tiotropium",
+"rd": "mechanism",
+"t": 8,
+"ti": 5.148,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.28,
+"ad": "inside",
+"as": "measured",
+"h": 5.055,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL517712",
+"name": "Atropine",
+"rd": "mechanism",
+"t": 8,
+"ti": 4.225,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.7,
+"ad": "outside",
+"as": "measured",
+"h": 5.869,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL551466",
+"name": "Aclidinium bromide",
+"rd": "mechanism",
+"t": 8,
+"ti": 3.831,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.1,
+"ad": "outside",
+"as": "measured",
+"h": 5.287,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1621597",
+"name": "Ipratropium",
+"rd": "mechanism",
+"t": 8,
+"ti": 3.813,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.0,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4634
+],
+"h": 5.2,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1231",
+"name": "Oxybutynin",
+"rd": "mechanism",
+"t": 8,
+"ti": 3.8,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.83,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.192,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2110773",
+"name": "Cimetropium",
+"rd": "routed",
+"t": 8,
+"ti": 3.638,
+"ts": "structure_router"
+},
+{
+"a": 9.08,
+"ad": "inside",
+"as": "measured",
+"cids": [
+444030
+],
+"h": 5.514,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1346",
+"name": "Darifenacin",
+"rd": "mechanism",
+"t": 8,
+"ti": 3.566,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.511,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5596
+],
+"h": 5.382,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1888176",
+"name": "Trospium",
+"rd": "mechanism",
+"t": 8,
+"ti": 3.129,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.88,
+"ad": "inside",
+"as": "measured",
+"cids": [
+154058
+],
+"h": 5.491,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1734",
+"name": "Solifenacin",
+"rd": "mechanism",
+"t": 8,
+"ti": 2.389,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.259,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+11519069
+],
+"h": 6.615,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1187833",
+"name": "Umeclidinium",
+"rd": "mechanism",
+"t": 8,
+"ti": 1.644,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.707,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.582,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1078261",
+"name": "Propiverine",
+"rd": "routed",
+"t": 8,
+"ti": 1.125,
+"ts": "structure_router"
+},
+{
+"a": 6.39,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.69,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL315838",
+"name": "Encainide",
+"rd": "routed",
+"t": 8,
+"ti": 0.7,
+"ts": "structure_router"
+},
+{
+"a": 8.44,
+"ad": "measured",
+"as": "measured",
+"cids": [
+60774
+],
+"h": 7.77,
+"hs": "measured",
+"m": "CHEMBL1382",
+"name": "Tolterodine",
+"rd": "mechanism",
+"t": 8,
+"ti": 0.67,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.393,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.116,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL53366",
+"name": "Imidafenacin",
+"rd": "mechanism",
+"t": 8,
+"ti": 0.277,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.3,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5073
+],
+"h": 5.332,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL85",
+"name": "Risperidone",
+"rd": "mechanism",
+"t": 9,
+"ti": 3.968,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.13,
+"ad": "inside",
+"as": "measured",
+"h": 5.491,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1108",
+"name": "Droperidol",
+"rd": "mechanism",
+"t": 9,
+"ti": 3.639,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.675,
+"ad": "inside",
+"as": "measured",
+"h": 5.091,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL157138",
+"name": "Lisuride",
+"rd": "routed",
+"t": 9,
+"ti": 3.584,
+"ts": "structure_router"
+},
+{
+"a": 9.09,
+"ad": "inside",
+"as": "measured",
+"h": 5.771,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL267777",
+"name": "Ritanserin",
+"rd": "routed",
+"t": 9,
+"ti": 3.319,
+"ts": "structure_router"
+},
+{
+"a": 7.8,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.926,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL252922",
+"name": "Dihydroergosine",
+"rd": "ambiguous",
+"t": 9,
+"ti": 2.874,
+"ts": "structure_router"
+},
+{
+"a": 7.625,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4205
+],
+"h": 4.931,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL654",
+"name": "Mirtazapine",
+"rd": "mechanism",
+"t": 9,
+"ti": 2.694,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.17,
+"ad": "inside",
+"as": "measured",
+"h": 5.576,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL564",
+"name": "Promazine",
+"rd": "mechanism",
+"t": 9,
+"ti": 2.594,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.094,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60853
+],
+"h": 6.9,
+"hs": "measured",
+"m": "CHEMBL708",
+"name": "Ziprasidone",
+"rd": "mechanism",
+"t": 9,
+"ti": 2.194,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.754,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.83,
+"hs": "measured",
+"m": "CHEMBL71",
+"name": "Chlorpromazine",
+"rd": "mechanism",
+"t": 9,
+"ti": 1.924,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.506,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.712,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL42",
+"name": "Clozapine",
+"rd": "mechanism",
+"t": 9,
+"ti": 1.794,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.183,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3559
+],
+"h": 5.528,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL54",
+"name": "Haloperidol",
+"rd": "mechanism",
+"t": 9,
+"ti": 1.655,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.65,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.495,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1614644",
+"name": "Imipramine N-oxide",
+"rd": "routed",
+"t": 9,
+"ti": 1.155,
+"ts": "structure_router"
+},
+{
+"a": 6.393,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 7.0,
+"hs": "measured",
+"m": "CHEMBL305187",
+"name": "Ifenprodil",
+"rd": "ambiguous",
+"t": 9,
+"ti": -0.607,
+"ts": "structure_router"
+},
+{
+"a": 8.63,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.785,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2104578",
+"name": "Cilazaprilat",
+"rd": "routed",
+"t": 10,
+"ti": 3.845,
+"ts": "structure_router"
+},
+{
+"a": 9.03,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5484727
+],
+"h": 5.373,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1519",
+"name": "Trandolapril",
+"rd": "mechanism",
+"t": 10,
+"ti": 3.657,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.198,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.874,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1733",
+"name": "Quinaprilat",
+"rd": "routed",
+"t": 10,
+"ti": 3.324,
+"ts": "structure_router"
+},
+{
+"a": 8.15,
+"ad": "outside",
+"as": "measured",
+"h": 4.893,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL430554",
+"name": "Libenzapril",
+"rd": "routed",
+"t": 10,
+"ti": 3.257,
+"ts": "structure_router"
+},
+{
+"a": 7.664,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.851,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3989406",
+"name": "Enalaprilat",
+"rd": "mechanism",
+"t": 10,
+"ti": 2.813,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.146,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5362118
+],
+"h": 5.367,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL419213",
+"name": "Lisinopril",
+"rd": "mechanism",
+"t": 10,
+"ti": 2.779,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.238,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.861,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201368",
+"name": "Perindoprilat",
+"rd": "routed",
+"t": 10,
+"ti": 2.377,
+"ts": "structure_router"
+},
+{
+"a": 7.118,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.069,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1560",
+"name": "Captopril",
+"rd": "mechanism",
+"t": 10,
+"ti": 2.049,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.774,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.097,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL431",
+"name": "Spirapril",
+"rd": "mechanism",
+"t": 10,
+"ti": 1.677,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.839,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.338,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL581",
+"name": "Fosinoprilat",
+"rd": "routed",
+"t": 10,
+"ti": 1.501,
+"ts": "structure_router"
+},
+{
+"a": 6.656,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.49,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL420741",
+"name": "Seraspenide",
+"rd": "routed",
+"t": 10,
+"ti": 1.166,
+"ts": "structure_router"
+},
+{
+"a": 5.41,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.303,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1165",
+"name": "Moexipril",
+"rd": "mechanism",
+"t": 10,
+"ti": 0.107,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.0,
+"ad": "measured",
+"as": "measured",
+"cids": [
+2156
+],
+"h": 5.0,
+"hs": "measured",
+"m": "CHEMBL633",
+"name": "Amiodarone",
+"rd": "mechanism",
+"t": 11,
+"ti": 0.0,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.603,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.603,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL682",
+"name": "Amodiaquine",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 4.676,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.676,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1870919",
+"name": "Bumecaine",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 5.299,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.299,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL348763",
+"name": "Clentiazem",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 5.586,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.586,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL608806",
+"name": "Cocaethylene",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 6.23,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 6.23,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL441809",
+"name": "Diprafenone",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 5.631,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+71329
+],
+"h": 5.631,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL473",
+"name": "Dofetilide",
+"rd": "mechanism",
+"t": 11,
+"ti": 0.0,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.0,
+"ad": "measured",
+"as": "measured",
+"cids": [
+60752
+],
+"h": 8.0,
+"hs": "measured",
+"m": "CHEMBL533",
+"name": "Ibutilide",
+"rd": "mechanism",
+"t": 11,
+"ti": 0.0,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.848,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.848,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1087",
+"name": "Mepivacaine",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 5.85,
+"ad": "measured",
+"as": "measured",
+"h": 5.85,
+"hs": "measured",
+"m": "CHEMBL45816",
+"name": "Mibefradil",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 5.0,
+"ad": "measured",
+"as": "measured",
+"h": 5.0,
+"hs": "measured",
+"m": "CHEMBL360861",
+"name": "Nifekalant",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 4.814,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+175804
+],
+"h": 4.814,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1077896",
+"name": "Ropivacaine",
+"rd": "routed",
+"t": 11,
+"ti": 0.0,
+"ts": "structure_router"
+},
+{
+"a": 7.571,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.003,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL439",
+"name": "Sulfadiazine",
+"rd": "routed",
+"t": 12,
+"ti": 2.568,
+"ts": "structure_router"
+},
+{
+"a": 7.013,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.828,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL498",
+"name": "Chlorpropamide",
+"rd": "ambiguous",
+"t": 12,
+"ti": 2.185,
+"ts": "structure_router"
+},
+{
+"a": 7.19,
+"ad": "outside",
+"as": "measured",
+"cids": [
+3440
+],
+"h": 5.033,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL35",
+"name": "Furosemide",
+"rd": "ambiguous",
+"t": 12,
+"ti": 2.157,
+"ts": "structure_router"
+},
+{
+"a": 7.162,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.093,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1763",
+"name": "Hydroflumethiazide",
+"rd": "routed",
+"t": 12,
+"ti": 2.069,
+"ts": "structure_router"
+},
+{
+"a": 6.992,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+2955
+],
+"h": 4.929,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1043",
+"name": "Dapsone",
+"rd": "ambiguous",
+"t": 12,
+"ti": 2.063,
+"ts": "structure_router"
+},
+{
+"a": 6.48,
+"ad": "outside",
+"as": "measured",
+"cids": [
+219078
+],
+"h": 4.657,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL58323",
+"name": "Lacosamide",
+"rd": "ambiguous",
+"t": 12,
+"ti": 1.823,
+"ts": "structure_router"
+},
+{
+"a": 6.86,
+"ad": "outside",
+"as": "measured",
+"cids": [
+2732
+],
+"h": 5.199,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1055",
+"name": "Chlorthalidone",
+"rd": "ambiguous",
+"t": 12,
+"ti": 1.661,
+"ts": "structure_router"
+},
+{
+"a": 6.188,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5284627
+],
+"h": 5.11,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL220492",
+"name": "Topiramate",
+"rd": "mechanism",
+"t": 12,
+"ti": 1.078,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.005,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.069,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL37681",
+"name": "Sparfosic acid",
+"rd": "routed",
+"t": 12,
+"ti": 0.936,
+"ts": "structure_router"
+},
+{
+"a": 5.715,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.84,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL16073",
+"name": "Phenacetin",
+"rd": "ambiguous",
+"t": 12,
+"ti": 0.875,
+"ts": "structure_router"
+},
+{
+"a": 4.199,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+3121
+],
+"h": 5.296,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL109",
+"name": "Valproic Acid",
+"rd": "routed",
+"t": 12,
+"ti": -1.097,
+"ts": "structure_router"
+},
+{
+"a": 6.561,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.303,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL31400",
+"name": "Elinafide",
+"rd": "routed",
+"t": 13,
+"ti": 1.258,
+"ts": "structure_router"
+},
+{
+"a": 6.659,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.481,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1199307",
+"name": "Distigmine",
+"rd": "mechanism",
+"t": 13,
+"ti": 1.178,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.737,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.939,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL94",
+"name": "Physostigmine",
+"rd": "mechanism",
+"t": 13,
+"ti": 0.798,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.892,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.109,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1104",
+"name": "Edrophonium",
+"rd": "mechanism",
+"t": 13,
+"ti": 0.783,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.62,
+"ad": "outside",
+"as": "measured",
+"h": 4.952,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL278020",
+"name": "Neostigmine",
+"rd": "mechanism",
+"t": 13,
+"ti": 0.668,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.736,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+4991
+],
+"h": 5.136,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1115",
+"name": "Pyridostigmine",
+"rd": "mechanism",
+"t": 13,
+"ti": 0.6,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.818,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.219,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL95",
+"name": "Tacrine",
+"rd": "routed",
+"t": 13,
+"ti": 0.599,
+"ts": "structure_router"
+},
+{
+"a": 5.313,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+9651
+],
+"h": 4.793,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL659",
+"name": "Galanthamine",
+"rd": "mechanism",
+"t": 13,
+"ti": 0.52,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.89,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+77990
+],
+"h": 5.105,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL636",
+"name": "Rivastigmine",
+"rd": "routed",
+"t": 13,
+"ti": -0.215,
+"ts": "structure_router"
+},
+{
+"a": 5.688,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 6.05,
+"hs": "measured",
+"m": "CHEMBL123558",
+"name": "Azimilide",
+"rd": "routed",
+"t": 13,
+"ti": -0.362,
+"ts": "structure_router"
+},
+{
+"a": 4.585,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.288,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1420",
+"name": "Pralidoxime",
+"rd": "mechanism",
+"t": 13,
+"ti": -0.703,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.82,
+"ad": "measured",
+"as": "measured",
+"h": 5.0,
+"hs": "measured",
+"m": "CHEMBL475534",
+"name": "Nitrendipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 4.82,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.754,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4485
+],
+"h": 4.3,
+"hs": "measured",
+"m": "CHEMBL193",
+"name": "Nifedipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 4.454,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.392,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3784
+],
+"h": 4.3,
+"hs": "measured",
+"m": "CHEMBL1648",
+"name": "Isradipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 4.092,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.236,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+2162
+],
+"h": 5.314,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1491",
+"name": "Amlodipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 2.922,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.98,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4499
+],
+"h": 4.64,
+"hs": "measured",
+"m": "CHEMBL1726",
+"name": "Nisoldipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 2.34,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.725,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.206,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1484",
+"name": "Nicardipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 1.519,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.018,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+39186
+],
+"h": 4.76,
+"hs": "measured",
+"m": "CHEMBL23",
+"name": "Diltiazem",
+"rd": "mechanism",
+"t": 14,
+"ti": 1.258,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.438,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+153994
+],
+"h": 5.574,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1237132",
+"name": "Clevidipine",
+"rd": "mechanism",
+"t": 14,
+"ti": 0.864,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.971,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+2520
+],
+"h": 6.251,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6966",
+"name": "Verapamil",
+"rd": "mechanism",
+"t": 14,
+"ti": -0.28,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.56,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+208898
+],
+"h": 6.01,
+"hs": "measured",
+"m": "CHEMBL184412",
+"name": "Dronedarone",
+"rd": "mechanism",
+"t": 14,
+"ti": -0.45,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.89,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5273759
+],
+"h": 4.551,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1380",
+"name": "Abacavir",
+"rd": "mechanism",
+"t": 15,
+"ti": 2.339,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.425,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4463
+],
+"h": 4.735,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL57",
+"name": "Nevirapine",
+"rd": "mechanism",
+"t": 15,
+"ti": 1.69,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.097,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+35370
+],
+"h": 4.986,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL129",
+"name": "Zidovudine",
+"rd": "mechanism",
+"t": 15,
+"ti": 1.111,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.914,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.827,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL853",
+"name": "Zalcitabine",
+"rd": "mechanism",
+"t": 15,
+"ti": 1.087,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.868,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+60825
+],
+"h": 4.794,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL141",
+"name": "Lamivudine",
+"rd": "mechanism",
+"t": 15,
+"ti": 1.074,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.08,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.06,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3989702",
+"name": "Tenofovir",
+"rd": "routed",
+"t": 15,
+"ti": 1.02,
+"ts": "structure_router"
+},
+{
+"a": 6.071,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.179,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL484",
+"name": "Adefovir",
+"rd": "routed",
+"t": 15,
+"ti": 0.892,
+"ts": "structure_router"
+},
+{
+"a": 5.719,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+50599
+],
+"h": 4.833,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1460",
+"name": "Didanosine",
+"rd": "mechanism",
+"t": 15,
+"ti": 0.886,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.767,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+18283
+],
+"h": 5.029,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL991",
+"name": "Stavudine",
+"rd": "mechanism",
+"t": 15,
+"ti": 0.738,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.925,
+"ad": "outside",
+"as": "measured",
+"h": 5.64,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL265502",
+"name": "Suramin",
+"rd": "routed",
+"t": 15,
+"ti": -0.715,
+"ts": "structure_router"
+},
+{
+"a": 8.89,
+"ad": "outside",
+"as": "measured",
+"h": 5.302,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL350221",
+"name": "L-5-hydroxytryptophan",
+"rd": "routed",
+"t": 16,
+"ti": 3.588,
+"ts": "structure_router"
+},
+{
+"a": 8.77,
+"ad": "inside",
+"as": "measured",
+"h": 5.584,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL10085",
+"name": "Mazapertine",
+"rd": "routed",
+"t": 16,
+"ti": 3.186,
+"ts": "structure_router"
+},
+{
+"a": 7.502,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.894,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2110755",
+"name": "Avitriptan",
+"rd": "routed",
+"t": 16,
+"ti": 2.608,
+"ts": "structure_router"
+},
+{
+"a": 8.02,
+"ad": "inside",
+"as": "measured",
+"cids": [
+9966051
+],
+"h": 5.5,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2104993",
+"name": "Vortioxetine",
+"rd": "mechanism",
+"t": 16,
+"ti": 2.52,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.591,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.295,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1614652",
+"name": "Repinotan",
+"rd": "mechanism",
+"t": 16,
+"ti": 2.296,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.921,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.846,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL282614",
+"name": "Eltoprazine",
+"rd": "routed",
+"t": 16,
+"ti": 2.075,
+"ts": "structure_router"
+},
+{
+"a": 6.67,
+"ad": "inside",
+"as": "measured",
+"h": 4.896,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL279229",
+"name": "Urapidil",
+"rd": "routed",
+"t": 16,
+"ti": 1.774,
+"ts": "structure_router"
+},
+{
+"a": 6.53,
+"ad": "measured",
+"as": "measured",
+"cids": [
+6005
+],
+"h": 5.62,
+"hs": "measured",
+"m": "CHEMBL53",
+"name": "Apomorphine",
+"rd": "routed",
+"t": 16,
+"ti": 0.91,
+"ts": "structure_router"
+},
+{
+"a": 5.77,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5095
+],
+"h": 5.11,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL589",
+"name": "Ropinirole",
+"rd": "routed",
+"t": 16,
+"ti": 0.66,
+"ts": "structure_router"
+},
+{
+"a": 8.62,
+"ad": "inside",
+"as": "measured",
+"h": 5.307,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL598797",
+"name": "CUDC-101",
+"rd": "mechanism",
+"t": 17,
+"ti": 3.313,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.514,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+176870
+],
+"h": 5.546,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL553",
+"name": "Erlotinib",
+"rd": "mechanism",
+"t": 17,
+"ti": 1.968,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.074,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.3,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL572878",
+"name": "Tozasertib",
+"rd": "routed",
+"t": 17,
+"ti": 1.774,
+"ts": "structure_router"
+},
+{
+"a": 7.293,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+123631
+],
+"h": 5.775,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL939",
+"name": "Gefitinib",
+"rd": "mechanism",
+"t": 17,
+"ti": 1.518,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.104,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.512,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL44793",
+"name": "Gavestinel",
+"rd": "routed",
+"t": 17,
+"ti": 0.592,
+"ts": "structure_router"
+},
+{
+"a": 5.081,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.842,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL102358",
+"name": "Idrocilamide",
+"rd": "routed",
+"t": 17,
+"ti": 0.239,
+"ts": "structure_router"
+},
+{
+"a": 4.852,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+460612
+],
+"h": 4.831,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL852",
+"name": "Melphalan",
+"rd": "routed",
+"t": 17,
+"ti": 0.021,
+"ts": "structure_router"
+},
+{
+"a": 4.706,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2708
+],
+"h": 5.219,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL515",
+"name": "Chlorambucil",
+"rd": "routed",
+"t": 17,
+"ti": -0.513,
+"ts": "structure_router"
+},
+{
+"a": 8.422,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+158781
+],
+"h": 5.1,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1516",
+"name": "Olmesartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 3.322,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.42,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5281037
+],
+"h": 5.199,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL813",
+"name": "Eprosartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 3.221,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.35,
+"ad": "inside",
+"as": "measured",
+"cids": [
+60846
+],
+"h": 5.183,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1069",
+"name": "Valsartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 3.167,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.741,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2541
+],
+"h": 5.041,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1016",
+"name": "Candesartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 2.7,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.677,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.118,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1951143",
+"name": "Fimasartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 2.559,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.68,
+"ad": "inside",
+"as": "measured",
+"cids": [
+3749
+],
+"h": 5.57,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1513",
+"name": "Irbesartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 2.11,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.154,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3961
+],
+"h": 5.281,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL191",
+"name": "Losartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 1.873,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.201,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+65999
+],
+"h": 5.58,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1017",
+"name": "Telmisartan",
+"rd": "mechanism",
+"t": 18,
+"ti": 1.621,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.52,
+"ad": "outside",
+"as": "measured",
+"cids": [
+657180
+],
+"h": 5.594,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201199",
+"name": "Leuprolide",
+"rd": "mechanism",
+"t": 19,
+"ti": 3.926,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.55,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+16136245
+],
+"h": 5.337,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL415606",
+"name": "Degarelix",
+"rd": "mechanism",
+"t": 19,
+"ti": 3.213,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.083,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.485,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2103735",
+"name": "Cetrorelix",
+"rd": "mechanism",
+"t": 19,
+"ti": 2.598,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.0,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+25077649
+],
+"h": 5.439,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201309",
+"name": "Nafarelin",
+"rd": "mechanism",
+"t": 19,
+"ti": 2.561,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.015,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+16130965
+],
+"h": 5.557,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1251",
+"name": "Ganirelix",
+"rd": "mechanism",
+"t": 19,
+"ti": 2.458,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.008,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+25074470
+],
+"h": 5.562,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201334",
+"name": "Triptorelin",
+"rd": "mechanism",
+"t": 19,
+"ti": 2.446,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.838,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.593,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3544954",
+"name": "Zoptarelin doxorubicin",
+"rd": "mechanism",
+"t": 19,
+"ti": 2.245,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.671,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+16129704
+],
+"h": 5.58,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL5314348",
+"name": "Bivalirudin",
+"rd": "mechanism",
+"t": 20,
+"ti": 4.091,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.795,
+"ad": "outside",
+"as": "measured",
+"h": 4.802,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL266349",
+"name": "Melagatran",
+"rd": "routed",
+"t": 20,
+"ti": 3.993,
+"ts": "structure_router"
+},
+{
+"a": 8.748,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.142,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3989664",
+"name": "Napsagatran",
+"rd": "routed",
+"t": 20,
+"ti": 3.606,
+"ts": "structure_router"
+},
+{
+"a": 8.35,
+"ad": "outside",
+"as": "measured",
+"h": 5.019,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL48361",
+"name": "Dabigatran",
+"rd": "mechanism",
+"t": 20,
+"ti": 3.331,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.72,
+"ad": "outside",
+"as": "measured",
+"cids": [
+92721
+],
+"h": 4.758,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1166",
+"name": "Argatroban",
+"rd": "mechanism",
+"t": 20,
+"ti": 2.962,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.82,
+"ad": "outside",
+"as": "measured",
+"h": 5.493,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL114715",
+"name": "Inogatran",
+"rd": "routed",
+"t": 20,
+"ti": 2.327,
+"ts": "structure_router"
+},
+{
+"a": 5.937,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4735
+],
+"h": 4.8,
+"hs": "measured",
+"m": "CHEMBL55",
+"name": "Pentamidine",
+"rd": "routed",
+"t": 20,
+"ti": 1.137,
+"ts": "structure_router"
+},
+{
+"a": 9.1,
+"ad": "inside",
+"as": "measured",
+"cids": [
+449193
+],
+"h": 5.303,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL193240",
+"name": "Roflumilast",
+"rd": "mechanism",
+"t": 21,
+"ti": 3.797,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.13,
+"ad": "inside",
+"as": "measured",
+"cids": [
+11561674
+],
+"h": 4.802,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL514800",
+"name": "Apremilast",
+"rd": "mechanism",
+"t": 21,
+"ti": 2.328,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.11,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.464,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL511115",
+"name": "Cilomilast",
+"rd": "mechanism",
+"t": 21,
+"ti": 1.646,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.761,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.007,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL63",
+"name": "Rolipram",
+"rd": "mechanism",
+"t": 21,
+"ti": 0.754,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.44,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.758,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL551978",
+"name": "Drotaverine",
+"rd": "mechanism",
+"t": 21,
+"ti": 0.682,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.2,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.122,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1752",
+"name": "Diprophylline",
+"rd": "mechanism",
+"t": 21,
+"ti": 0.078,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.195,
+"ad": "outside",
+"as": "measured",
+"cids": [
+2153,
+9433
+],
+"h": 5.359,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1355736",
+"name": "Theophylline",
+"rd": "mechanism",
+"t": 21,
+"ti": -1.164,
+"ts": "chembl_mechanism"
+},
+{
+"a": 10.235,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4893
+],
+"h": 5.016,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2",
+"name": "Prazosin",
+"rd": "mechanism",
+"t": 22,
+"ti": 5.219,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.942,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5401
+],
+"h": 4.75,
+"hs": "measured",
+"m": "CHEMBL611",
+"name": "Terazosin",
+"rd": "mechanism",
+"t": 22,
+"ti": 3.192,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.843,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2092
+],
+"h": 4.749,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL709",
+"name": "Alfuzosin",
+"rd": "mechanism",
+"t": 22,
+"ti": 3.094,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.58,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+3157
+],
+"h": 5.945,
+"hs": "measured",
+"m": "CHEMBL707",
+"name": "Doxazosin",
+"rd": "mechanism",
+"t": 22,
+"ti": 2.635,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.41,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.833,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL188185",
+"name": "Bunazosin",
+"rd": "mechanism",
+"t": 22,
+"ti": 2.577,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.003,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+129211
+],
+"h": 5.588,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL836",
+"name": "Tamsulosin",
+"rd": "mechanism",
+"t": 22,
+"ti": 1.415,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.426,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+4195
+],
+"h": 4.817,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201212",
+"name": "Midodrine",
+"rd": "mechanism",
+"t": 22,
+"ti": 0.609,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.75,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.173,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4594416",
+"name": "Penehyclidine",
+"rd": "routed",
+"t": 23,
+"ti": 1.577,
+"ts": "structure_router"
+},
+{
+"a": 7.158,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.762,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2110883",
+"name": "Ciclotropium",
+"rd": "routed",
+"t": 23,
+"ti": 1.396,
+"ts": "structure_router"
+},
+{
+"a": 6.575,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.864,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL87543",
+"name": "Lorcainide",
+"rd": "ambiguous",
+"t": 23,
+"ti": 0.711,
+"ts": "structure_router"
+},
+{
+"a": 5.635,
+"ad": "inside",
+"as": "measured",
+"h": 5.244,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1535",
+"name": "Hydroxychloroquine",
+"rd": "ambiguous",
+"t": 23,
+"ti": 0.391,
+"ts": "structure_router"
+},
+{
+"a": 6.339,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 6.178,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3305985",
+"name": "Alcuronium",
+"rd": "mechanism",
+"t": 23,
+"ti": 0.161,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.46,
+"ad": "inside",
+"as": "measured",
+"h": 6.596,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL7568",
+"name": "Quinacrine",
+"rd": "ambiguous",
+"t": 23,
+"ti": -0.136,
+"ts": "structure_router"
+},
+{
+"a": 5.33,
+"ad": "measured",
+"as": "measured",
+"h": 5.6,
+"hs": "measured",
+"m": "CHEMBL76",
+"name": "Chloroquine",
+"rd": "ambiguous",
+"t": 23,
+"ti": -0.27,
+"ts": "structure_router"
+},
+{
+"a": 8.47,
+"ad": "inside",
+"as": "measured",
+"h": 5.512,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL72",
+"name": "Desipramine",
+"rd": "mechanism",
+"t": 24,
+"ti": 2.958,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.49,
+"ad": "inside",
+"as": "measured",
+"h": 5.564,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL14370",
+"name": "Reboxetine",
+"rd": "mechanism",
+"t": 24,
+"ti": 2.926,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.3,
+"ad": "measured",
+"as": "measured",
+"cids": [
+54840
+],
+"h": 5.68,
+"hs": "measured",
+"m": "CHEMBL641",
+"name": "Atomoxetine",
+"rd": "mechanism",
+"t": 24,
+"ti": 2.62,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.52,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4011
+],
+"h": 5.295,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL21731",
+"name": "Maprotiline",
+"rd": "mechanism",
+"t": 24,
+"ti": 2.225,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.277,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.798,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL306700",
+"name": "Viloxazine",
+"rd": "mechanism",
+"t": 24,
+"ti": 1.479,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.2,
+"ad": "inside",
+"as": "measured",
+"h": 4.982,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL273575",
+"name": "Nomifensine",
+"rd": "ambiguous",
+"t": 24,
+"ti": 1.218,
+"ts": "structure_router"
+},
+{
+"a": 5.53,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4189
+],
+"h": 6.579,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL91",
+"name": "Miconazole",
+"rd": "ambiguous",
+"t": 24,
+"ti": -1.049,
+"ts": "structure_router"
+},
+{
+"a": 9.193,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+213039
+],
+"h": 5.244,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1323",
+"name": "Darunavir",
+"rd": "mechanism",
+"t": 25,
+"ti": 3.949,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.749,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5362440
+],
+"h": 4.976,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL5483011",
+"name": "Indinavir",
+"rd": "routed",
+"t": 25,
+"ti": 3.773,
+"ts": "structure_router"
+},
+{
+"a": 8.864,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+60934
+],
+"h": 5.1,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL114",
+"name": "Saquinavir",
+"rd": "mechanism",
+"t": 25,
+"ti": 3.764,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.647,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.116,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL31601",
+"name": "Remikiren",
+"rd": "routed",
+"t": 25,
+"ti": 2.531,
+"ts": "structure_router"
+},
+{
+"a": 6.771,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.059,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1464",
+"name": "Warfarin",
+"rd": "routed",
+"t": 25,
+"ti": 1.712,
+"ts": "structure_router"
+},
+{
+"a": 7.324,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.645,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL300337",
+"name": "Enalkiren",
+"rd": "routed",
+"t": 25,
+"ti": 1.679,
+"ts": "structure_router"
+},
+{
+"a": 6.0,
+"ad": "inside",
+"as": "measured",
+"h": 4.983,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1465",
+"name": "Phenprocoumon",
+"rd": "routed",
+"t": 25,
+"ti": 1.017,
+"ts": "structure_router"
+},
+{
+"a": 7.059,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.732,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL350775",
+"name": "Biricodar",
+"rd": "mechanism",
+"t": 26,
+"ti": 1.327,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.3,
+"ad": "outside",
+"as": "measured",
+"h": 5.275,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1086218",
+"name": "Valspodar",
+"rd": "mechanism",
+"t": 26,
+"ti": 1.025,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.276,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.67,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL348475",
+"name": "Tariquidar",
+"rd": "mechanism",
+"t": 26,
+"ti": 0.606,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.758,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.698,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2092739",
+"name": "Dihydroquinidine",
+"rd": "ambiguous",
+"t": 26,
+"ti": 0.06,
+"ts": "structure_router"
+},
+{
+"a": 6.123,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 6.087,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL51149",
+"name": "Gallopamil",
+"rd": "routed",
+"t": 26,
+"ti": 0.036,
+"ts": "structure_router"
+},
+{
+"a": 5.77,
+"ad": "inside",
+"as": "measured",
+"h": 6.044,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL170",
+"name": "Quinine",
+"rd": "routed",
+"t": 26,
+"ti": -0.274,
+"ts": "structure_router"
+},
+{
+"a": 5.914,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5768
+],
+"h": 6.49,
+"hs": "measured",
+"m": "CHEMBL1294",
+"name": "Quinidine",
+"rd": "routed",
+"t": 26,
+"ti": -0.576,
+"ts": "structure_router"
+},
+{
+"a": 8.82,
+"ad": "outside",
+"as": "measured",
+"h": 5.006,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1232279",
+"name": "Nemorubicin",
+"rd": "routed",
+"t": 27,
+"ti": 3.814,
+"ts": "structure_router"
+},
+{
+"a": 8.59,
+"ad": "outside",
+"as": "measured",
+"cids": [
+42890
+],
+"h": 4.858,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1117",
+"name": "Idarubicin",
+"rd": "mechanism",
+"t": 27,
+"ti": 3.732,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.52,
+"ad": "outside",
+"as": "measured",
+"cids": [
+41867
+],
+"h": 4.859,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL417",
+"name": "Epirubicin",
+"rd": "routed",
+"t": 27,
+"ti": 3.661,
+"ts": "structure_router"
+},
+{
+"a": 8.0,
+"ad": "outside",
+"as": "measured",
+"cids": [
+30323
+],
+"h": 4.796,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL178",
+"name": "Daunorubicin",
+"rd": "routed",
+"t": 27,
+"ti": 3.204,
+"ts": "structure_router"
+},
+{
+"a": 5.28,
+"ad": "measured",
+"as": "measured",
+"cids": [
+4212
+],
+"h": 5.45,
+"hs": "measured",
+"m": "CHEMBL58",
+"name": "Mitoxantrone",
+"rd": "mechanism",
+"t": 27,
+"ti": -0.17,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.4,
+"ad": "outside",
+"as": "measured",
+"cids": [
+71384
+],
+"h": 6.077,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1738",
+"name": "Dexrazoxane",
+"rd": "routed",
+"t": 27,
+"ti": -1.677,
+"ts": "structure_router"
+},
+{
+"a": 10.5,
+"ad": "inside",
+"as": "measured",
+"cids": [
+6337614
+],
+"h": 4.81,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1189679",
+"name": "Palonosetron",
+"rd": "mechanism",
+"t": 28,
+"ti": 5.69,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.3,
+"ad": "measured",
+"as": "measured",
+"cids": [
+2099
+],
+"h": 5.495,
+"hs": "measured",
+"m": "CHEMBL1110",
+"name": "Alosetron",
+"rd": "mechanism",
+"t": 28,
+"ti": 3.805,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.84,
+"ad": "measured",
+"as": "measured",
+"h": 5.42,
+"hs": "measured",
+"m": "CHEMBL289469",
+"name": "Granisetron",
+"rd": "mechanism",
+"t": 28,
+"ti": 3.42,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.971,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+14476155
+],
+"h": 4.92,
+"hs": "measured",
+"m": "CHEMBL2368925",
+"name": "Dolasetron",
+"rd": "mechanism",
+"t": 28,
+"ti": 2.051,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.135,
+"ad": "measured",
+"as": "measured",
+"cids": [
+4595
+],
+"h": 6.09,
+"hs": "measured",
+"m": "CHEMBL46",
+"name": "Ondansetron",
+"rd": "mechanism",
+"t": 28,
+"ti": 2.045,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.193,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.366,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107188",
+"name": "Pancopride",
+"rd": "routed",
+"t": 28,
+"ti": 1.827,
+"ts": "structure_router"
+},
+{
+"a": 7.485,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5352062
+],
+"h": 4.72,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL343448",
+"name": "Romidepsin",
+"rd": "mechanism",
+"t": 29,
+"ti": 2.765,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.468,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.172,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2103863",
+"name": "Abexinostat",
+"rd": "mechanism",
+"t": 29,
+"ti": 2.296,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.57,
+"ad": "outside",
+"as": "measured",
+"cids": [
+6918638
+],
+"h": 5.454,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL408513",
+"name": "Belinostat",
+"rd": "mechanism",
+"t": 29,
+"ti": 2.116,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.615,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.585,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL640",
+"name": "Procainamide",
+"rd": "routed",
+"t": 29,
+"ti": 1.03,
+"ts": "structure_router"
+},
+{
+"a": 5.207,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.887,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1231530",
+"name": "Betamipron",
+"rd": "routed",
+"t": 29,
+"ti": 0.32,
+"ts": "structure_router"
+},
+{
+"a": 6.145,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.877,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL483254",
+"name": "Panobinostat",
+"rd": "mechanism",
+"t": 29,
+"ti": 0.268,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.1,
+"ad": "outside",
+"as": "measured",
+"cids": [
+3033825
+],
+"h": 5.367,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2051955",
+"name": "Levosimendan",
+"rd": "mechanism",
+"t": 30,
+"ti": 2.733,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.99,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.102,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL24646",
+"name": "Pimobendan",
+"rd": "routed",
+"t": 30,
+"ti": -0.112,
+"ts": "structure_router"
+},
+{
+"a": 4.85,
+"ad": "inside",
+"as": "measured",
+"h": 5.015,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL249856",
+"name": "Enoximone",
+"rd": "mechanism",
+"t": 30,
+"ti": -0.165,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.07,
+"ad": "inside",
+"as": "measured",
+"h": 5.274,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL58355",
+"name": "Piroximone",
+"rd": "routed",
+"t": 30,
+"ti": -0.204,
+"ts": "structure_router"
+},
+{
+"a": 4.44,
+"ad": "inside",
+"as": "measured",
+"h": 4.965,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2110680",
+"name": "Isomazole",
+"rd": "routed",
+"t": 30,
+"ti": -0.525,
+"ts": "structure_router"
+},
+{
+"a": 4.3,
+"ad": "inside",
+"as": "measured",
+"h": 4.964,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL286020",
+"name": "Sulmazole",
+"rd": "routed",
+"t": 30,
+"ti": -0.664,
+"ts": "structure_router"
+},
+{
+"a": 8.483,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.779,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL895",
+"name": "Nalbuphine",
+"rd": "mechanism",
+"t": 31,
+"ti": 3.704,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.33,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5360515
+],
+"h": 4.724,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL19019",
+"name": "Naltrexone",
+"rd": "mechanism",
+"t": 31,
+"ti": 3.606,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.029,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.709,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL80",
+"name": "Naloxone",
+"rd": "mechanism",
+"t": 31,
+"ti": 3.32,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.399,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.692,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL485",
+"name": "Codeine",
+"rd": "mechanism",
+"t": 31,
+"ti": 2.707,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.186,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.524,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2105385",
+"name": "Phenoperidine",
+"rd": "routed",
+"t": 31,
+"ti": 1.662,
+"ts": "structure_router"
+},
+{
+"a": 7.046,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.525,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3833389",
+"name": "Dextromoramide",
+"rd": "mechanism",
+"t": 31,
+"ti": 1.521,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.678,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+119569
+],
+"h": 4.683,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL301265",
+"name": "Pramipexole",
+"rd": "routed",
+"t": 32,
+"ti": 3.995,
+"ts": "structure_router"
+},
+{
+"a": 8.4,
+"ad": "inside",
+"as": "measured",
+"cids": [
+59226
+],
+"h": 5.986,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1303",
+"name": "Rotigotine",
+"rd": "routed",
+"t": 32,
+"ti": 2.414,
+"ts": "structure_router"
+},
+{
+"a": 7.87,
+"ad": "inside",
+"as": "measured",
+"h": 5.521,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL8809",
+"name": "Raclopride",
+"rd": "routed",
+"t": 32,
+"ti": 2.349,
+"ts": "structure_router"
+},
+{
+"a": 6.41,
+"ad": "inside",
+"as": "measured",
+"h": 4.811,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL84158",
+"name": "Tiapride",
+"rd": "mechanism",
+"t": 32,
+"ti": 1.599,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.437,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.2,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1009",
+"name": "Levodopa",
+"rd": "mechanism",
+"t": 32,
+"ti": 1.237,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.55,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4184
+],
+"h": 5.059,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6437",
+"name": "Mianserin",
+"rd": "routed",
+"t": 32,
+"ti": 0.491,
+"ts": "structure_router"
+},
+{
+"a": 10.05,
+"ad": "inside",
+"as": "measured",
+"cids": [
+151165
+],
+"h": 5.533,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1471",
+"name": "Aprepitant",
+"rd": "mechanism",
+"t": 33,
+"ti": 4.517,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.352,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.238,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1199324",
+"name": "Fosaprepitant",
+"rd": "mechanism",
+"t": 33,
+"ti": 4.114,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.6,
+"ad": "inside",
+"as": "measured",
+"h": 6.249,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL522987",
+"name": "Vestipitant",
+"rd": "mechanism",
+"t": 33,
+"ti": 3.351,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.404,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 6.091,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1672054",
+"name": "Casopitant",
+"rd": "mechanism",
+"t": 33,
+"ti": 3.313,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.932,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.796,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3707331",
+"name": "Rolapitant",
+"rd": "mechanism",
+"t": 33,
+"ti": 3.136,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.02,
+"ad": "inside",
+"as": "measured",
+"h": 6.186,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL206253",
+"name": "Netupitant",
+"rd": "mechanism",
+"t": 33,
+"ti": 2.834,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.293,
+"ad": "outside",
+"as": "series_hansch",
+"cids": [
+10096344
+],
+"h": 5.0,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL237500",
+"name": "Linagliptin",
+"rd": "mechanism",
+"t": 34,
+"ti": 3.293,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.827,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+6918537
+],
+"h": 4.576,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL142703",
+"name": "Vildagliptin",
+"rd": "mechanism",
+"t": 34,
+"ti": 3.251,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.281,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4369359
+],
+"h": 4.799,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1422",
+"name": "Sitagliptin",
+"rd": "mechanism",
+"t": 34,
+"ti": 2.482,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.201,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+62959
+],
+"h": 4.897,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL428",
+"name": "Trovafloxacin",
+"rd": "routed",
+"t": 34,
+"ti": 2.304,
+"ts": "structure_router"
+},
+{
+"a": 6.648,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.502,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2103745",
+"name": "Saxagliptin",
+"rd": "routed",
+"t": 34,
+"ti": 2.146,
+"ts": "structure_router"
+},
+{
+"a": 5.57,
+"ad": "inside",
+"as": "measured",
+"cids": [
+9571107
+],
+"h": 4.728,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL430",
+"name": "Gemifloxacin",
+"rd": "routed",
+"t": 34,
+"ti": 0.842,
+"ts": "structure_router"
+},
+{
+"a": 8.125,
+"ad": "inside",
+"as": "measured",
+"h": 5.759,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL100116",
+"name": "Pentazocine",
+"rd": "mechanism",
+"t": 35,
+"ti": 2.366,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.66,
+"ad": "inside",
+"as": "measured",
+"h": 5.054,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL248702",
+"name": "Dexfenfluramine",
+"rd": "routed",
+"t": 35,
+"ti": 1.606,
+"ts": "structure_router"
+},
+{
+"a": 6.297,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.919,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL576127",
+"name": "Fenspiride",
+"rd": "routed",
+"t": 35,
+"ti": 1.378,
+"ts": "structure_router"
+},
+{
+"a": 5.855,
+"ad": "inside",
+"as": "measured",
+"h": 5.257,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL275528",
+"name": "Phencyclidine",
+"rd": "routed",
+"t": 35,
+"ti": 0.598,
+"ts": "structure_router"
+},
+{
+"a": 5.965,
+"ad": "inside",
+"as": "measured",
+"h": 5.448,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL188921",
+"name": "Buflomedil",
+"rd": "routed",
+"t": 35,
+"ti": 0.517,
+"ts": "structure_router"
+},
+{
+"a": 5.08,
+"ad": "inside",
+"as": "measured",
+"h": 4.65,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201201",
+"name": "Methamphetamine",
+"rd": "routed",
+"t": 35,
+"ti": 0.43,
+"ts": "structure_router"
+},
+{
+"a": 5.524,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.573,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3317856",
+"name": "GSK2140944",
+"rd": "routed",
+"t": 36,
+"ti": 0.951,
+"ts": "structure_router"
+},
+{
+"a": 5.125,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.832,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1908370",
+"name": "Finafloxacin",
+"rd": "mechanism",
+"t": 36,
+"ti": 0.293,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.097,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2764
+],
+"h": 4.872,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL8",
+"name": "Ciprofloxacin",
+"rd": "routed",
+"t": 36,
+"ti": 0.225,
+"ts": "structure_router"
+},
+{
+"a": 5.101,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.881,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6231",
+"name": "Amifloxacin",
+"rd": "routed",
+"t": 36,
+"ti": 0.22,
+"ts": "structure_router"
+},
+{
+"a": 5.101,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.025,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL267648",
+"name": "Pefloxacin",
+"rd": "routed",
+"t": 36,
+"ti": 0.076,
+"ts": "structure_router"
+},
+{
+"a": 4.9,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4539
+],
+"h": 4.892,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL9",
+"name": "Norfloxacine",
+"rd": "routed",
+"t": 36,
+"ti": 0.008,
+"ts": "structure_router"
+},
+{
+"a": 8.495,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.259,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2220442",
+"name": "Fluvastatin",
+"rd": "mechanism",
+"t": 37,
+"ti": 3.236,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.35,
+"ad": "inside",
+"as": "measured",
+"cids": [
+446157
+],
+"h": 5.305,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1496",
+"name": "Rosuvastatin",
+"rd": "mechanism",
+"t": 37,
+"ti": 3.045,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.382,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+446156
+],
+"h": 5.376,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1477",
+"name": "Cerivastatin",
+"rd": "mechanism",
+"t": 37,
+"ti": 3.006,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.184,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.175,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201373",
+"name": "Lovastatin (acid)",
+"rd": "routed",
+"t": 37,
+"ti": 2.009,
+"ts": "structure_router"
+},
+{
+"a": 7.075,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.293,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201753",
+"name": "Pitavastatin",
+"rd": "mechanism",
+"t": 37,
+"ti": 1.782,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.352,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+54687
+],
+"h": 5.556,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1144",
+"name": "Pravastatin",
+"rd": "mechanism",
+"t": 37,
+"ti": 0.796,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.33,
+"ad": "inside",
+"as": "measured",
+"cids": [
+151171
+],
+"h": 5.5,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1755",
+"name": "Conivaptan",
+"rd": "mechanism",
+"t": 38,
+"ti": 3.83,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.0,
+"ad": "inside",
+"as": "measured",
+"cids": [
+216237
+],
+"h": 5.326,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL344159",
+"name": "Tolvaptan",
+"rd": "mechanism",
+"t": 38,
+"ti": 3.674,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.965,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5311065
+],
+"h": 5.514,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1429",
+"name": "Desmopressin",
+"rd": "routed",
+"t": 38,
+"ti": 2.451,
+"ts": "structure_router"
+},
+{
+"a": 6.597,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.048,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107777",
+"name": "Satavaptan",
+"rd": "mechanism",
+"t": 38,
+"ti": 1.549,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.433,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.703,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2135460",
+"name": "Terlipressin",
+"rd": "routed",
+"t": 38,
+"ti": 0.73,
+"ts": "structure_router"
+},
+{
+"a": 8.65,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4440
+],
+"h": 4.916,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1278",
+"name": "Naratriptan",
+"rd": "mechanism",
+"t": 39,
+"ti": 3.734,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.26,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5078
+],
+"h": 4.754,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL905",
+"name": "Rizatriptan",
+"rd": "mechanism",
+"t": 39,
+"ti": 3.506,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.175,
+"ad": "outside",
+"as": "measured",
+"cids": [
+77992
+],
+"h": 4.76,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1279",
+"name": "Frovatriptan",
+"rd": "mechanism",
+"t": 39,
+"ti": 3.415,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.256,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5358
+],
+"h": 4.53,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL128",
+"name": "Sumatriptan",
+"rd": "mechanism",
+"t": 39,
+"ti": 2.726,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.964,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60857
+],
+"h": 5.06,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1185",
+"name": "Zolmitriptan",
+"rd": "mechanism",
+"t": 39,
+"ti": 1.904,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.211,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+6918289
+],
+"h": 5.027,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201182",
+"name": "Temsirolimus",
+"rd": "mechanism",
+"t": 40,
+"ti": 3.184,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.0,
+"ad": "outside",
+"as": "measured",
+"cids": [
+445643
+],
+"h": 4.842,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3989887",
+"name": "Tacrolimus",
+"rd": "mechanism",
+"t": 40,
+"ti": 3.158,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.198,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.148,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107380",
+"name": "Biolimus A9",
+"rd": "routed",
+"t": 40,
+"ti": 3.05,
+"ts": "structure_router"
+},
+{
+"a": 7.943,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.927,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL219410",
+"name": "Zotarolimus",
+"rd": "mechanism",
+"t": 40,
+"ti": 3.016,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.333,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.55,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL269259",
+"name": "Rimiducid",
+"rd": "routed",
+"t": 40,
+"ti": 1.783,
+"ts": "structure_router"
+},
+{
+"a": 7.7,
+"ad": "outside",
+"as": "measured",
+"h": 5.35,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1572",
+"name": "Netilmicin",
+"rd": "mechanism",
+"t": 41,
+"ti": 2.35,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.52,
+"ad": "inside",
+"as": "measured",
+"cids": [
+447043
+],
+"h": 5.226,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL529",
+"name": "Azithromycin",
+"rd": "mechanism",
+"t": 41,
+"ti": 1.294,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.37,
+"ad": "outside",
+"as": "measured",
+"h": 5.219,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL130",
+"name": "Chloramphenicol",
+"rd": "mechanism",
+"t": 41,
+"ti": 1.151,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.21,
+"ad": "outside",
+"as": "measured",
+"h": 5.076,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1951095",
+"name": "Eravacycline",
+"rd": "mechanism",
+"t": 41,
+"ti": 1.134,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.34,
+"ad": "outside",
+"as": "measured",
+"h": 5.078,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1440",
+"name": "Tetracycline",
+"rd": "mechanism",
+"t": 41,
+"ti": 0.262,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.68,
+"ad": "inside",
+"as": "measured",
+"h": 4.977,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3989834",
+"name": "Avosentan",
+"rd": "mechanism",
+"t": 42,
+"ti": 3.703,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.77,
+"ad": "outside",
+"as": "measured",
+"h": 5.228,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL109648",
+"name": "Clazosentan",
+"rd": "mechanism",
+"t": 42,
+"ti": 3.542,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.695,
+"ad": "outside",
+"as": "measured",
+"h": 5.267,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL61780",
+"name": "Tezosentan",
+"rd": "mechanism",
+"t": 42,
+"ti": 2.428,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.705,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+104865
+],
+"h": 5.253,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL957",
+"name": "Bosentan",
+"rd": "routed",
+"t": 42,
+"ti": 1.452,
+"ts": "structure_router"
+},
+{
+"a": 4.799,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.93,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL453",
+"name": "Sulfisoxazole",
+"rd": "routed",
+"t": 42,
+"ti": -0.131,
+"ts": "structure_router"
+},
+{
+"a": 8.21,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5212
+],
+"h": 4.739,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL192",
+"name": "Sildenafil",
+"rd": "mechanism",
+"t": 43,
+"ti": 3.471,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.91,
+"ad": "inside",
+"as": "measured",
+"h": 5.786,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1928262",
+"name": "Gisadenafil",
+"rd": "mechanism",
+"t": 43,
+"ti": 3.124,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.798,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+110634
+],
+"h": 5.135,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1520",
+"name": "Vardenafil",
+"rd": "mechanism",
+"t": 43,
+"ti": 2.663,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.707,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+11304743
+],
+"h": 5.07,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107834",
+"name": "Riociguat",
+"rd": "routed",
+"t": 43,
+"ti": 1.637,
+"ts": "structure_router"
+},
+{
+"a": 7.39,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5702160
+],
+"h": 5.116,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL902",
+"name": "Famotidine",
+"rd": "mechanism",
+"t": 44,
+"ti": 2.274,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.05,
+"ad": "outside",
+"as": "measured",
+"h": 5.684,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1790041",
+"name": "Ranitidine",
+"rd": "mechanism",
+"t": 44,
+"ti": 1.366,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.209,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+3033637
+],
+"h": 5.616,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3183075",
+"name": "Nizatidine",
+"rd": "mechanism",
+"t": 44,
+"ti": 0.593,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.148,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2756
+],
+"h": 4.977,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL30",
+"name": "Cimetidine",
+"rd": "mechanism",
+"t": 44,
+"ti": 0.171,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.115,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+28417
+],
+"h": 5.314,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1479",
+"name": "Danazol",
+"rd": "mechanism",
+"t": 45,
+"ti": 1.801,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.088,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+13109
+],
+"h": 5.366,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1389",
+"name": "Levonorgestrel",
+"rd": "mechanism",
+"t": 45,
+"ti": 1.722,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.916,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.537,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1213583",
+"name": "Gestodene",
+"rd": "mechanism",
+"t": 45,
+"ti": 1.379,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.818,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+6917715
+],
+"h": 5.536,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1531",
+"name": "Etonogestrel",
+"rd": "mechanism",
+"t": 45,
+"ti": 1.282,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.05,
+"ad": "inside",
+"as": "measured",
+"h": 5.612,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL289228",
+"name": "Tipifarnib",
+"rd": "mechanism",
+"t": 46,
+"ti": 3.438,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.447,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.068,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL351706",
+"name": "BMS-214662",
+"rd": "routed",
+"t": 46,
+"ti": 3.379,
+"ts": "structure_router"
+},
+{
+"a": 5.448,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2284
+],
+"h": 4.866,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL701",
+"name": "Baclofen",
+"rd": "routed",
+"t": 46,
+"ti": 0.582,
+"ts": "structure_router"
+},
+{
+"a": 5.44,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.422,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4297396",
+"name": "L-778,123",
+"rd": "routed",
+"t": 46,
+"ti": 0.018,
+"ts": "structure_router"
+},
+{
+"a": 5.98,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5462337
+],
+"h": 5.229,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL425",
+"name": "Olsalazine",
+"rd": "mechanism",
+"t": 47,
+"ti": 0.751,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.731,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.294,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL421",
+"name": "Sulfasalazine",
+"rd": "mechanism",
+"t": 47,
+"ti": 0.437,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.812,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.539,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL441687",
+"name": "Glycyrrhizin",
+"rd": "routed",
+"t": 47,
+"ti": 0.273,
+"ts": "structure_router"
+},
+{
+"a": 5.52,
+"ad": "outside",
+"as": "measured",
+"h": 5.661,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL13878",
+"name": "Tebufelone",
+"rd": "ambiguous",
+"t": 47,
+"ti": -0.141,
+"ts": "structure_router"
+},
+{
+"a": 8.63,
+"ad": "inside",
+"as": "measured",
+"h": 5.429,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1101",
+"name": "Biperiden",
+"rd": "mechanism",
+"t": 48,
+"ti": 3.201,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.12,
+"ad": "inside",
+"as": "measured",
+"h": 5.005,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL569713",
+"name": "Scopolamine",
+"rd": "mechanism",
+"t": 48,
+"ti": 3.115,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.8,
+"ad": "inside",
+"as": "measured",
+"h": 5.072,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL9967",
+"name": "Pirenzepine",
+"rd": "mechanism",
+"t": 48,
+"ti": 2.728,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.329,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.2,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL86715",
+"name": "Procyclidine",
+"rd": "mechanism",
+"t": 48,
+"ti": 2.129,
+"ts": "chembl_mechanism"
+},
+{
+"a": 10.4,
+"ad": "inside",
+"as": "measured",
+"h": 5.236,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL324090",
+"name": "Abanoquil",
+"rd": "ambiguous",
+"t": 49,
+"ti": 5.164,
+"ts": "structure_router"
+},
+{
+"a": 8.92,
+"ad": "inside",
+"as": "measured",
+"h": 5.635,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL142635",
+"name": "Naftopidil",
+"rd": "mechanism",
+"t": 49,
+"ti": 3.285,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.96,
+"ad": "measured",
+"as": "measured",
+"cids": [
+5775
+],
+"h": 4.7,
+"hs": "measured",
+"m": "CHEMBL597",
+"name": "Phentolamine",
+"rd": "routed",
+"t": 49,
+"ti": 3.26,
+"ts": "structure_router"
+},
+{
+"a": 7.0,
+"ad": "outside",
+"as": "measured",
+"h": 5.757,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2051956",
+"name": "Dexniguldipine",
+"rd": "routed",
+"t": 49,
+"ti": 1.243,
+"ts": "structure_router"
+},
+{
+"a": 9.14,
+"ad": "inside",
+"as": "measured",
+"h": 4.999,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL52333",
+"name": "Rolofylline",
+"rd": "mechanism",
+"t": 50,
+"ti": 4.141,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.14,
+"ad": "outside",
+"as": "measured",
+"h": 5.171,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL414157",
+"name": "Tonapofylline",
+"rd": "mechanism",
+"t": 50,
+"ti": 2.969,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.808,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+3011155
+],
+"h": 4.98,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201112",
+"name": "Nelarabine",
+"rd": "routed",
+"t": 50,
+"ti": 1.828,
+"ts": "structure_router"
+},
+{
+"a": 6.169,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.916,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3545163",
+"name": "AMP579",
+"rd": "mechanism",
+"t": 50,
+"ti": 1.253,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.72,
+"ad": "outside",
+"as": "measured",
+"h": 5.143,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1689063",
+"name": "Avibactam",
+"rd": "mechanism",
+"t": 51,
+"ti": 3.577,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.76,
+"ad": "outside",
+"as": "measured",
+"h": 4.889,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL404",
+"name": "Tazobactam",
+"rd": "mechanism",
+"t": 51,
+"ti": 2.871,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.53,
+"ad": "outside",
+"as": "measured",
+"h": 4.946,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL777",
+"name": "Clavulanic Acid",
+"rd": "mechanism",
+"t": 51,
+"ti": 2.584,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.97,
+"ad": "outside",
+"as": "measured",
+"h": 5.001,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL403",
+"name": "Sulbactam",
+"rd": "mechanism",
+"t": 51,
+"ti": 0.969,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.435,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4158
+],
+"h": 5.071,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL796",
+"name": "Methylphenidate",
+"rd": "mechanism",
+"t": 52,
+"ti": 2.364,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.935,
+"ad": "inside",
+"as": "measured",
+"cids": [
+154100
+],
+"h": 5.071,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL827",
+"name": "Dexmethylphenidate",
+"rd": "mechanism",
+"t": 52,
+"ti": 1.864,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.968,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.14,
+"hs": "measured",
+"m": "CHEMBL370805",
+"name": "Cocaine",
+"rd": "routed",
+"t": 52,
+"ti": 1.828,
+"ts": "structure_router"
+},
+{
+"a": 5.647,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+11597697
+],
+"h": 4.931,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201222",
+"name": "Lisdexamfetamine",
+"rd": "mechanism",
+"t": 52,
+"ti": 0.716,
+"ts": "chembl_mechanism"
+},
+{
+"a": 10.1,
+"ad": "inside",
+"as": "measured",
+"cids": [
+10182969
+],
+"h": 4.965,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL231779",
+"name": "Apixaban",
+"rd": "mechanism",
+"t": 53,
+"ti": 5.135,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.25,
+"ad": "inside",
+"as": "measured",
+"h": 4.711,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1269025",
+"name": "Edoxaban",
+"rd": "mechanism",
+"t": 53,
+"ti": 4.539,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.35,
+"ad": "outside",
+"as": "measured",
+"h": 4.957,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL46618",
+"name": "Otamixaban",
+"rd": "mechanism",
+"t": 53,
+"ti": 4.393,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.4,
+"ad": "inside",
+"as": "measured",
+"cids": [
+9875401
+],
+"h": 5.026,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL198362",
+"name": "Rivaroxaban",
+"rd": "mechanism",
+"t": 53,
+"ti": 4.374,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.57,
+"ad": "outside",
+"as": "measured",
+"h": 4.818,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1950554",
+"name": "Binodenoson",
+"rd": "mechanism",
+"t": 54,
+"ti": 1.752,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.519,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+20279
+],
+"h": 4.804,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1619",
+"name": "Cladribine",
+"rd": "routed",
+"t": 54,
+"ti": 1.715,
+"ts": "structure_router"
+},
+{
+"a": 6.513,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+219024
+],
+"h": 5.157,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3989695",
+"name": "Regadenoson",
+"rd": "mechanism",
+"t": 54,
+"ti": 1.356,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.192,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+657237
+],
+"h": 5.121,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1568",
+"name": "Fludarabine",
+"rd": "routed",
+"t": 54,
+"ti": 1.071,
+"ts": "structure_router"
+},
+{
+"a": 9.06,
+"ad": "outside",
+"as": "measured",
+"h": 5.021,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1233528",
+"name": "Volasertib",
+"rd": "mechanism",
+"t": 55,
+"ti": 4.039,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.935,
+"ad": "outside",
+"as": "measured",
+"h": 4.999,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1241855",
+"name": "Rigosertib",
+"rd": "routed",
+"t": 55,
+"ti": 2.936,
+"ts": "structure_router"
+},
+{
+"a": 7.662,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.576,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL513909",
+"name": "BI2536",
+"rd": "mechanism",
+"t": 55,
+"ti": 2.086,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.448,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.506,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1908394",
+"name": "GSK461364",
+"rd": "mechanism",
+"t": 55,
+"ti": 1.942,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.1,
+"ad": "measured",
+"as": "measured",
+"h": 4.99,
+"hs": "measured",
+"m": "CHEMBL356066",
+"name": "Dacinostat",
+"rd": "routed",
+"t": 56,
+"ti": 3.11,
+"ts": "structure_router"
+},
+{
+"a": 7.77,
+"ad": "outside",
+"as": "measured",
+"cids": [
+65628
+],
+"h": 5.184,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL487253",
+"name": "Bendamustine",
+"rd": "routed",
+"t": 56,
+"ti": 2.586,
+"ts": "structure_router"
+},
+{
+"a": 6.999,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.218,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL98",
+"name": "Vorinostat",
+"rd": "mechanism",
+"t": 56,
+"ti": 1.781,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.849,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.526,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2105666",
+"name": "Tenifatecan",
+"rd": "routed",
+"t": 56,
+"ti": 1.323,
+"ts": "structure_router"
+},
+{
+"a": 7.661,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.616,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4297617",
+"name": "Mibenratide",
+"rd": "routed",
+"t": 57,
+"ti": 2.045,
+"ts": "structure_router"
+},
+{
+"a": 6.39,
+"ad": "outside",
+"as": "measured",
+"h": 5.192,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL273264",
+"name": "Nafamostat",
+"rd": "routed",
+"t": 57,
+"ti": 1.198,
+"ts": "structure_router"
+},
+{
+"a": 4.628,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.129,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL877",
+"name": "Tranexamic acid",
+"rd": "mechanism",
+"t": 57,
+"ti": -0.501,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.4,
+"ad": "outside",
+"as": "measured",
+"h": 5.271,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL76370",
+"name": "Tegaserod",
+"rd": "mechanism",
+"t": 58,
+"ti": 3.129,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.787,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3052762
+],
+"h": 5.009,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL117287",
+"name": "Prucalopride",
+"rd": "mechanism",
+"t": 58,
+"ti": 2.778,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.0,
+"ad": "inside",
+"as": "measured",
+"h": 5.497,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1729",
+"name": "Cisapride",
+"rd": "mechanism",
+"t": 58,
+"ti": 1.503,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.894,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.212,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL126648",
+"name": "ZD-9331",
+"rd": "routed",
+"t": 59,
+"ti": 1.682,
+"ts": "structure_router"
+},
+{
+"a": 6.156,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+104758
+],
+"h": 5.028,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL225071",
+"name": "Raltitrexed",
+"rd": "mechanism",
+"t": 59,
+"ti": 1.128,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.601,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+3385
+],
+"h": 5.456,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL185",
+"name": "Fluorouracil, 5-",
+"rd": "mechanism",
+"t": 59,
+"ti": 0.145,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.299,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5281104
+],
+"h": 6.109,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1200622",
+"name": "Paricalcitol",
+"rd": "mechanism",
+"t": 60,
+"ti": 2.19,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.264,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5280453
+],
+"h": 6.113,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL846",
+"name": "Calcitriol",
+"rd": "mechanism",
+"t": 60,
+"ti": 2.151,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.407,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 6.239,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1601669",
+"name": "Alfacalcidol",
+"rd": "mechanism",
+"t": 60,
+"ti": 1.168,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.219,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+4178
+],
+"h": 5.0,
+"hs": "measured",
+"m": "CHEMBL558",
+"name": "Mexiletine",
+"rd": "routed",
+"t": 61,
+"ti": 0.219,
+"ts": "structure_router"
+},
+{
+"a": 5.165,
+"ad": "inside",
+"as": "measured",
+"cids": [
+56959
+],
+"h": 5.061,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1404",
+"name": "Ranolazine",
+"rd": "mechanism",
+"t": 61,
+"ti": 0.104,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.19,
+"ad": "measured",
+"as": "measured",
+"cids": [
+3355
+],
+"h": 5.41,
+"hs": "measured",
+"m": "CHEMBL652",
+"name": "Flecainide",
+"rd": "mechanism",
+"t": 61,
+"ti": -0.22,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.13,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5311027
+],
+"h": 5.313,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1200963",
+"name": "Bimatoprost",
+"rd": "mechanism",
+"t": 62,
+"ti": 1.817,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.013,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5311221
+],
+"h": 5.45,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1051",
+"name": "Latanoprost",
+"rd": "mechanism",
+"t": 62,
+"ti": 1.563,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.022,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.71,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2106816",
+"name": "Nocloprost",
+"rd": "routed",
+"t": 62,
+"ti": 1.312,
+"ts": "structure_router"
+},
+{
+"a": 8.055,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.199,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL334966",
+"name": "Cangrelor",
+"rd": "mechanism",
+"t": 63,
+"ti": 2.856,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.37,
+"ad": "outside",
+"as": "measured",
+"cids": [
+9871419
+],
+"h": 5.517,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL398435",
+"name": "Ticagrelor",
+"rd": "mechanism",
+"t": 63,
+"ti": 2.853,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.635,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+60606
+],
+"h": 5.339,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1771",
+"name": "Clopidogrel",
+"rd": "mechanism",
+"t": 63,
+"ti": 0.296,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.784,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+26757
+],
+"h": 5.631,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL972",
+"name": "Selegiline",
+"rd": "mechanism",
+"t": 64,
+"ti": 2.153,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.886,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.904,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL396778",
+"name": "Safinamide",
+"rd": "mechanism",
+"t": 64,
+"ti": 1.982,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.309,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 6.157,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2106970",
+"name": "Picumast",
+"rd": "routed",
+"t": 64,
+"ti": 0.152,
+"ts": "structure_router"
+},
+{
+"a": 9.523,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5035
+],
+"h": 6.112,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL81",
+"name": "Raloxifene",
+"rd": "mechanism",
+"t": 65,
+"ti": 3.411,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.498,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+104741
+],
+"h": 6.155,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1358",
+"name": "Fulvestrant",
+"rd": "mechanism",
+"t": 65,
+"ti": 2.343,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.553,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.598,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL691",
+"name": "Ethinylestradiol",
+"rd": "mechanism",
+"t": 65,
+"ti": 0.955,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.383,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+2474
+],
+"h": 4.611,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1098",
+"name": "Bupivacaine",
+"rd": "mechanism",
+"t": 66,
+"ti": 0.772,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.383,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+92253
+],
+"h": 4.68,
+"hs": "measured",
+"m": "CHEMBL1201193",
+"name": "Levobupivacaine",
+"rd": "mechanism",
+"t": 66,
+"ti": 0.703,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.245,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5070
+],
+"h": 4.962,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL744",
+"name": "Riluzole",
+"rd": "routed",
+"t": 66,
+"ti": -0.717,
+"ts": "structure_router"
+},
+{
+"a": 8.85,
+"ad": "outside",
+"as": "measured",
+"h": 5.227,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL108111",
+"name": "Lamifiban",
+"rd": "routed",
+"t": 67,
+"ti": 3.623,
+"ts": "structure_router"
+},
+{
+"a": 7.417,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+448812
+],
+"h": 5.565,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1174",
+"name": "Eptifibatide",
+"rd": "mechanism",
+"t": 67,
+"ti": 1.852,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.975,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+60946
+],
+"h": 5.581,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL916",
+"name": "Tirofiban",
+"rd": "mechanism",
+"t": 67,
+"ti": 1.394,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.36,
+"ad": "outside",
+"as": "measured",
+"cids": [
+36462
+],
+"h": 4.943,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL44657",
+"name": "Etoposide",
+"rd": "mechanism",
+"t": 68,
+"ti": -0.583,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.0,
+"ad": "measured",
+"as": "measured",
+"cids": [
+2179
+],
+"h": 6.68,
+"hs": "measured",
+"m": "CHEMBL43",
+"name": "Amsacrine",
+"rd": "mechanism",
+"t": 68,
+"ti": -0.68,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.2,
+"ad": "outside",
+"as": "measured",
+"cids": [
+452548
+],
+"h": 5.186,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL452231",
+"name": "Teniposide",
+"rd": "mechanism",
+"t": 68,
+"ti": -0.986,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.6,
+"ad": "outside",
+"as": "measured",
+"h": 5.579,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL94657",
+"name": "Patupilone",
+"rd": "mechanism",
+"t": 69,
+"ti": 3.021,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.3,
+"ad": "outside",
+"as": "measured",
+"h": 4.948,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3545252",
+"name": "Docetaxel",
+"rd": "mechanism",
+"t": 69,
+"ti": 1.352,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.95,
+"ad": "inside",
+"as": "measured",
+"cids": [
+149096
+],
+"h": 4.967,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL5315124",
+"name": "Levofloxacin",
+"rd": "routed",
+"t": 69,
+"ti": -0.017,
+"ts": "structure_router"
+},
+{
+"a": 9.7,
+"ad": "outside",
+"as": "measured",
+"h": 4.913,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL258734",
+"name": "Danoprevir",
+"rd": "mechanism",
+"t": 70,
+"ti": 4.787,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.0,
+"ad": "outside",
+"as": "measured",
+"h": 5.051,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2105735",
+"name": "Asunaprevir",
+"rd": "mechanism",
+"t": 70,
+"ti": 3.949,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.893,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.105,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3391662",
+"name": "Paritaprevir",
+"rd": "mechanism",
+"t": 70,
+"ti": 2.788,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.725,
+"ad": "outside",
+"as": "measured",
+"h": 6.332,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL334533",
+"name": "Dexanabinol",
+"rd": "routed",
+"t": 71,
+"ti": 1.393,
+"ts": "structure_router"
+},
+{
+"a": 7.084,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.933,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL74415",
+"name": "Cannabinol",
+"rd": "routed",
+"t": 71,
+"ti": 1.151,
+"ts": "structure_router"
+},
+{
+"a": 6.324,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 6.015,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL190461",
+"name": "Cannabidiol",
+"rd": "mechanism",
+"t": 71,
+"ti": 0.309,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.415,
+"ad": "inside",
+"as": "measured",
+"h": 5.431,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL279516",
+"name": "Indoramin",
+"rd": "ambiguous",
+"t": 72,
+"ti": 2.984,
+"ts": "structure_router"
+},
+{
+"a": 8.446,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5312125
+],
+"h": 5.538,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL24778",
+"name": "Silodosin",
+"rd": "mechanism",
+"t": 72,
+"ti": 2.908,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.34,
+"ad": "inside",
+"as": "measured",
+"h": 5.146,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL15245",
+"name": "Yohimbine",
+"rd": "routed",
+"t": 72,
+"ti": 1.194,
+"ts": "structure_router"
+},
+{
+"a": 5.62,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.13,
+"hs": "measured",
+"m": "CHEMBL472",
+"name": "Glyburide",
+"rd": "routed",
+"t": 73,
+"ti": 1.49,
+"ts": "structure_router"
+},
+{
+"a": 5.86,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+77998
+],
+"h": 5.118,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL121",
+"name": "Rosiglitazone",
+"rd": "mechanism",
+"t": 73,
+"ti": 0.742,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.449,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3478
+],
+"h": 4.965,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1073",
+"name": "Glipizide",
+"rd": "routed",
+"t": 73,
+"ti": 0.484,
+"ts": "structure_router"
+},
+{
+"a": 6.331,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.976,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL12856",
+"name": "Amrinone",
+"rd": "mechanism",
+"t": 74,
+"ti": 1.355,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.29,
+"ad": "measured",
+"as": "measured",
+"h": 5.14,
+"hs": "measured",
+"m": "CHEMBL19224",
+"name": "Papaverine",
+"rd": "routed",
+"t": 74,
+"ti": 1.15,
+"ts": "structure_router"
+},
+{
+"a": 5.781,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.887,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL189",
+"name": "Milrinone",
+"rd": "mechanism",
+"t": 74,
+"ti": 0.894,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.52,
+"ad": "inside",
+"as": "measured",
+"h": 5.829,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL574737",
+"name": "Hydroxystaurosporine, 7-",
+"rd": "mechanism",
+"t": 75,
+"ti": 1.691,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.245,
+"ad": "inside",
+"as": "measured",
+"h": 5.726,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL296468",
+"name": "SNS-032",
+"rd": "mechanism",
+"t": 75,
+"ti": 1.519,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.493,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.581,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL428690",
+"name": "Flavopiridol",
+"rd": "mechanism",
+"t": 75,
+"ti": 0.912,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.54,
+"ad": "inside",
+"as": "measured",
+"h": 4.868,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2105711",
+"name": "Tofogliflozin",
+"rd": "mechanism",
+"t": 76,
+"ti": 3.672,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.364,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+9887712
+],
+"h": 4.941,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL429910",
+"name": "Dapagliflozin",
+"rd": "mechanism",
+"t": 76,
+"ti": 3.423,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.305,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+24812758
+],
+"h": 5.135,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4594217",
+"name": "Canagliflozin",
+"rd": "mechanism",
+"t": 76,
+"ti": 3.17,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.21,
+"ad": "measured",
+"as": "measured",
+"h": 4.61,
+"hs": "measured",
+"m": "CHEMBL4105584",
+"name": "Beclabuvir",
+"rd": "mechanism",
+"t": 77,
+"ti": 2.6,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.625,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.077,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3137312",
+"name": "Dasabuvir",
+"rd": "mechanism",
+"t": 77,
+"ti": 1.548,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.701,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+6252
+],
+"h": 5.209,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL803",
+"name": "Cytarabine",
+"rd": "routed",
+"t": 77,
+"ti": -0.508,
+"ts": "structure_router"
+},
+{
+"a": 7.66,
+"ad": "outside",
+"as": "measured",
+"cids": [
+54373
+],
+"h": 5.291,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1680",
+"name": "Octreotide",
+"rd": "routed",
+"t": 78,
+"ti": 2.369,
+"ts": "structure_router"
+},
+{
+"a": 6.83,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+71348
+],
+"h": 5.441,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201185",
+"name": "Lanreotide",
+"rd": "mechanism",
+"t": 78,
+"ti": 1.389,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.875,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5281040
+],
+"h": 5.778,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL787",
+"name": "Montelukast",
+"rd": "mechanism",
+"t": 79,
+"ti": 3.097,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.1,
+"ad": "inside",
+"as": "measured",
+"h": 5.607,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL280481",
+"name": "Verlukast",
+"rd": "routed",
+"t": 79,
+"ti": 2.493,
+"ts": "structure_router"
+},
+{
+"a": 9.06,
+"ad": "inside",
+"as": "measured",
+"h": 4.885,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201356",
+"name": "Methylergometrine",
+"rd": "mechanism",
+"t": 80,
+"ti": 4.175,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.55,
+"ad": "inside",
+"as": "measured",
+"h": 5.378,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL19215",
+"name": "Metergoline",
+"rd": "routed",
+"t": 80,
+"ti": 4.172,
+"ts": "structure_router"
+},
+{
+"a": 7.11,
+"ad": "inside",
+"as": "measured",
+"cids": [
+6450551
+],
+"h": 5.492,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1289926",
+"name": "Axitinib",
+"rd": "ambiguous",
+"t": 81,
+"ti": 1.618,
+"ts": "structure_router"
+},
+{
+"a": 6.7,
+"ad": "inside",
+"as": "measured",
+"cids": [
+10113978
+],
+"h": 5.178,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL477772",
+"name": "Pazopanib",
+"rd": "mechanism",
+"t": 81,
+"ti": 1.522,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.779,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+57363
+],
+"h": 5.196,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL710",
+"name": "Finasteride",
+"rd": "mechanism",
+"t": 82,
+"ti": 2.583,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.484,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.354,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL138225",
+"name": "Epristeride",
+"rd": "routed",
+"t": 82,
+"ti": 2.13,
+"ts": "structure_router"
+},
+{
+"a": 7.02,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+5291
+],
+"h": 5.208,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL941",
+"name": "Imatinib",
+"rd": "mechanism",
+"t": 83,
+"ti": 1.812,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.3,
+"ad": "inside",
+"as": "measured",
+"h": 5.087,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL685",
+"name": "Mebendazole",
+"rd": "routed",
+"t": 83,
+"ti": 0.213,
+"ts": "structure_router"
+},
+{
+"a": 7.019,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.35,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL550781",
+"name": "Dexloxiglumide",
+"rd": "mechanism",
+"t": 84,
+"ti": 1.669,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.71,
+"ad": "outside",
+"as": "measured",
+"h": 5.35,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL206025",
+"name": "Loxiglumide",
+"rd": "routed",
+"t": 84,
+"ti": 1.36,
+"ts": "structure_router"
+},
+{
+"a": 4.993,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.132,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL487805",
+"name": "Scutellarin",
+"rd": "routed",
+"t": 85,
+"ti": -0.139,
+"ts": "structure_router"
+},
+{
+"a": 4.939,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2094
+],
+"h": 5.445,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1467",
+"name": "Allopurinol",
+"rd": "mechanism",
+"t": 85,
+"ti": -0.506,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.39,
+"ad": "inside",
+"as": "measured",
+"h": 5.148,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL402548",
+"name": "Danusertib",
+"rd": "routed",
+"t": 86,
+"ti": 1.242,
+"ts": "structure_router"
+},
+{
+"a": 5.812,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+5329098
+],
+"h": 4.842,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL276711",
+"name": "Semaxanib",
+"rd": "mechanism",
+"t": 86,
+"ti": 0.97,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.586,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.165,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL160",
+"name": "Cyclosporine",
+"rd": "mechanism",
+"t": 87,
+"ti": 3.421,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.823,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.994,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL443",
+"name": "Sulfamethoxazole",
+"rd": "routed",
+"t": 87,
+"ti": 0.829,
+"ts": "structure_router"
+},
+{
+"a": 5.555,
+"ad": "outside",
+"as": "measured",
+"h": 4.984,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL18116",
+"name": "Toloxatone",
+"rd": "mechanism",
+"t": 88,
+"ti": 0.571,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.55,
+"ad": "outside",
+"as": "measured",
+"h": 5.274,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL50",
+"name": "Quercetin",
+"rd": "routed",
+"t": 88,
+"ti": 0.276,
+"ts": "structure_router"
+},
+{
+"a": 6.451,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+54684141
+],
+"h": 5.018,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL973",
+"name": "Teriflunomide",
+"rd": "mechanism",
+"t": 89,
+"ti": 1.433,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.84,
+"ad": "inside",
+"as": "measured",
+"cids": [
+74989
+],
+"h": 5.499,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1450",
+"name": "Atovaquone",
+"rd": "routed",
+"t": 89,
+"ti": -0.659,
+"ts": "structure_router"
+},
+{
+"a": 7.189,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+3902
+],
+"h": 5.068,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1444",
+"name": "Letrozole",
+"rd": "mechanism",
+"t": 90,
+"ti": 2.121,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.05,
+"ad": "inside",
+"as": "measured",
+"h": 4.891,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL399910",
+"name": "Pinocembrin",
+"rd": "routed",
+"t": 90,
+"ti": 1.159,
+"ts": "structure_router"
+},
+{
+"a": 8.398,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+10531
+],
+"h": 5.301,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1732",
+"name": "Dihydroergotamine",
+"rd": "mechanism",
+"t": 91,
+"ti": 3.097,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.58,
+"ad": "inside",
+"as": "measured",
+"h": 5.496,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL442",
+"name": "Ergotamine",
+"rd": "mechanism",
+"t": 91,
+"ti": 3.084,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.815,
+"ad": "outside",
+"as": "measured",
+"cids": [
+5281081
+],
+"h": 5.13,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL953",
+"name": "Entacapone",
+"rd": "mechanism",
+"t": 92,
+"ti": 1.685,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.9,
+"ad": "outside",
+"as": "measured",
+"cids": [
+4659569
+],
+"h": 5.261,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1324",
+"name": "Tolcapone",
+"rd": "mechanism",
+"t": 92,
+"ti": 1.639,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.43,
+"ad": "outside",
+"as": "measured",
+"h": 5.444,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1561",
+"name": "Miglitol",
+"rd": "mechanism",
+"t": 93,
+"ti": -0.014,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.315,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.583,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL404271",
+"name": "Acarbose",
+"rd": "routed",
+"t": 93,
+"ti": -0.268,
+"ts": "structure_router"
+},
+{
+"a": 8.0,
+"ad": "outside",
+"as": "measured",
+"cids": [
+3715
+],
+"h": 5.078,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6",
+"name": "Indomethacin",
+"rd": "mechanism",
+"t": 94,
+"ti": 2.922,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.82,
+"ad": "outside",
+"as": "measured",
+"h": 5.139,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL25",
+"name": "Acetylsalicylic Acid",
+"rd": "mechanism",
+"t": 94,
+"ti": -0.319,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.52,
+"ad": "outside",
+"as": "measured",
+"cids": [
+2519
+],
+"h": 5.362,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL113",
+"name": "Caffeine",
+"rd": "routed",
+"t": 95,
+"ti": -0.842,
+"ts": "structure_router"
+},
+{
+"a": 4.04,
+"ad": "outside",
+"as": "measured",
+"h": 5.168,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL279898",
+"name": "Enprofylline",
+"rd": "routed",
+"t": 95,
+"ti": -1.128,
+"ts": "structure_router"
+},
+{
+"a": 6.535,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.361,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL109480",
+"name": "Tanespimycin",
+"rd": "mechanism",
+"t": 96,
+"ti": 1.174,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.039,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.484,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL506",
+"name": "Primaquine",
+"rd": "routed",
+"t": 96,
+"ti": -0.445,
+"ts": "structure_router"
+},
+{
+"a": 6.4,
+"ad": "inside",
+"as": "measured",
+"cids": [
+3883
+],
+"h": 5.083,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL480",
+"name": "Lansoprazole",
+"rd": "mechanism",
+"t": 97,
+"ti": 1.317,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.0,
+"ad": "inside",
+"as": "measured",
+"cids": [
+4679
+],
+"h": 4.957,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1502",
+"name": "Pantoprazole",
+"rd": "mechanism",
+"t": 97,
+"ti": 1.043,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.1,
+"ad": "inside",
+"as": "measured",
+"h": 4.902,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL254219",
+"name": "Digitoxin",
+"rd": "mechanism",
+"t": 98,
+"ti": 3.198,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.57,
+"ad": "inside",
+"as": "measured",
+"cids": [
+2724385
+],
+"h": 5.376,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1751",
+"name": "Digoxin",
+"rd": "mechanism",
+"t": 98,
+"ti": 1.194,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.865,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+2351
+],
+"h": 5.723,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1008",
+"name": "Bepridil",
+"rd": "mechanism",
+"t": 99,
+"ti": 0.142,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.129,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+3446
+],
+"h": 5.023,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL940",
+"name": "Gabapentin",
+"rd": "mechanism",
+"t": 99,
+"ti": 0.106,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.51,
+"ad": "inside",
+"as": "measured",
+"h": 5.082,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL77517",
+"name": "Indisulam",
+"rd": "routed",
+"t": 100,
+"ti": 2.428,
+"ts": "structure_router"
+},
+{
+"a": 5.51,
+"ad": "outside",
+"as": "measured",
+"h": 5.141,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL6466",
+"name": "Coumarin",
+"rd": "routed",
+"t": 100,
+"ti": 0.369,
+"ts": "structure_router"
+},
+{
+"a": 8.96,
+"ad": "inside",
+"as": "measured",
+"h": 5.078,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL362558",
+"name": "LY2090314",
+"rd": "mechanism",
+"t": 101,
+"ti": 3.882,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.215,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+60464
+],
+"h": 4.66,
+"hs": "measured",
+"m": "CHEMBL850",
+"name": "Sparfloxacin",
+"rd": "routed",
+"t": 101,
+"ti": 1.555,
+"ts": "structure_router"
+},
+{
+"a": 10.64,
+"ad": "measured",
+"as": "measured",
+"h": 4.54,
+"hs": "measured",
+"m": "CHEMBL2023898",
+"name": "Daclatasvir",
+"rd": "mechanism",
+"t": 102,
+"ti": 6.1,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.414,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.026,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3127326",
+"name": "Ombitasvir",
+"rd": "mechanism",
+"t": 102,
+"ti": 4.388,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.27,
+"ad": "outside",
+"as": "measured",
+"h": 5.266,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2017179",
+"name": "Evacetrapib",
+"rd": "mechanism",
+"t": 103,
+"ti": 2.004,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.33,
+"ad": "outside",
+"as": "measured",
+"h": 6.064,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL169",
+"name": "Ursolic acid",
+"rd": "routed",
+"t": 103,
+"ti": -1.734,
+"ts": "structure_router"
+},
+{
+"a": 7.254,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.224,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4461070",
+"name": "SAR 125844",
+"rd": "mechanism",
+"t": 104,
+"ti": 2.03,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.701,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+11626560
+],
+"h": 5.697,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL601719",
+"name": "Crizotinib",
+"rd": "mechanism",
+"t": 104,
+"ti": 2.004,
+"ts": "chembl_mechanism"
+},
+{
+"a": 11.0,
+"ad": "outside",
+"as": "measured",
+"h": 5.576,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL207197",
+"name": "Olcegepant",
+"rd": "mechanism",
+"t": 105,
+"ti": 5.424,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.11,
+"ad": "inside",
+"as": "measured",
+"h": 5.507,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL236593",
+"name": "Telcagepant",
+"rd": "mechanism",
+"t": 105,
+"ti": 3.603,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.846,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.976,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1096146",
+"name": "Ponesimod",
+"rd": "mechanism",
+"t": 106,
+"ti": 2.87,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.15,
+"ad": "outside",
+"as": "measured",
+"cids": [
+107969
+],
+"h": 5.73,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL314854",
+"name": "Fingolimod",
+"rd": "routed",
+"t": 106,
+"ti": 0.42,
+"ts": "structure_router"
+},
+{
+"a": 7.793,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.158,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL375611",
+"name": "LY404039",
+"rd": "mechanism",
+"t": 107,
+"ti": 2.635,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.913,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 4.98,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2110730",
+"name": "LY2140023",
+"rd": "mechanism",
+"t": 107,
+"ti": 1.933,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.32,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.194,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2105720",
+"name": "Lesinurad",
+"rd": "mechanism",
+"t": 108,
+"ti": 1.126,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.0,
+"ad": "inside",
+"as": "measured",
+"h": 5.445,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL832",
+"name": "Sulfinpyrazone",
+"rd": "mechanism",
+"t": 108,
+"ti": -1.445,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.906,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.211,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107354",
+"name": "Mifamurtide",
+"rd": "mechanism",
+"t": 109,
+"ti": 0.695,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.596,
+"ad": "outside",
+"as": "series_hansch",
+"cids": [
+16134956
+],
+"h": 5.547,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4084119",
+"name": "Liraglutide",
+"rd": "mechanism",
+"t": 110,
+"ti": 3.049,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.4,
+"ad": "outside",
+"as": "measured",
+"cids": [
+446541
+],
+"h": 5.159,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL866",
+"name": "Mycophenolic acid",
+"rd": "routed",
+"t": 111,
+"ti": 2.241,
+"ts": "structure_router"
+},
+{
+"a": 8.83,
+"ad": "outside",
+"as": "measured",
+"h": 5.747,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2103758",
+"name": "Pramlintide",
+"rd": "routed",
+"t": 112,
+"ti": 3.083,
+"ts": "structure_router"
+},
+{
+"a": 5.47,
+"ad": "outside",
+"as": "measured",
+"h": 4.966,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1518",
+"name": "Propylthiouracil",
+"rd": "mechanism",
+"t": 113,
+"ti": 0.504,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.08,
+"ad": "outside",
+"as": "measured",
+"h": 5.353,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL64",
+"name": "Isoniazide",
+"rd": "mechanism",
+"t": 114,
+"ti": -0.273,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.55,
+"ad": "inside",
+"as": "measured",
+"cids": [
+156418
+],
+"h": 6.18,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201284",
+"name": "Cinacalcet",
+"rd": "mechanism",
+"t": 115,
+"ti": -0.63,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.68,
+"ad": "inside",
+"as": "measured",
+"cids": [
+60648
+],
+"h": 5.355,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1027",
+"name": "Tiagabine",
+"rd": "mechanism",
+"t": 116,
+"ti": 1.325,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.97,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.237,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL429876",
+"name": "Cilengitide",
+"rd": "mechanism",
+"t": 117,
+"ti": 2.733,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.52,
+"ad": "measured",
+"as": "measured",
+"h": 5.0,
+"hs": "measured",
+"m": "CHEMBL17350",
+"name": "Traxoprodil",
+"rd": "mechanism",
+"t": 118,
+"ti": 2.52,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.38,
+"ad": "inside",
+"as": "measured",
+"cids": [
+5582
+],
+"h": 4.956,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL119",
+"name": "Trimetrexate",
+"rd": "mechanism",
+"t": 119,
+"ti": 2.424,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.094,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.842,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL36",
+"name": "Pyrimethamine",
+"rd": "mechanism",
+"t": 120,
+"ti": 2.252,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.534,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+73491
+],
+"h": 5.568,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1757",
+"name": "Fosfomycin",
+"rd": "mechanism",
+"t": 121,
+"ti": -1.034,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.986,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+451668
+],
+"h": 5.114,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1201129",
+"name": "Decitabine",
+"rd": "mechanism",
+"t": 122,
+"ti": -0.128,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.19,
+"ad": "outside",
+"as": "measured",
+"cids": [
+6435378
+],
+"h": 5.519,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL494",
+"name": "Iloprost",
+"rd": "mechanism",
+"t": 123,
+"ti": 2.671,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.075,
+"ad": "outside",
+"as": "measured",
+"cids": [
+3108
+],
+"h": 5.389,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL932",
+"name": "Dipyridamole",
+"rd": "mechanism",
+"t": 124,
+"ti": 2.686,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.7,
+"ad": "inside",
+"as": "measured",
+"h": 4.97,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL280378",
+"name": "Epiroprim",
+"rd": "routed",
+"t": 125,
+"ti": 1.73,
+"ts": "structure_router"
+},
+{
+"a": 5.49,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.503,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL240597",
+"name": "Chenodeoxycholic acid",
+"rd": "mechanism",
+"t": 126,
+"ti": -0.013,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.4,
+"ad": "inside",
+"as": "measured",
+"h": 4.989,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL588",
+"name": "Fenoldopam",
+"rd": "mechanism",
+"t": 127,
+"ti": 2.411,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.8,
+"ad": "inside",
+"as": "measured",
+"cids": [
+23652731
+],
+"h": 5.925,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2110588",
+"name": "Eliglustat",
+"rd": "mechanism",
+"t": 128,
+"ti": 1.875,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.88,
+"ad": "inside",
+"as": "measured",
+"cids": [
+72165
+],
+"h": 5.216,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL56564",
+"name": "Tropisetron",
+"rd": "mechanism",
+"t": 129,
+"ti": 2.664,
+"ts": "chembl_mechanism"
+},
+{
+"a": 10.86,
+"ad": "inside",
+"as": "measured",
+"cids": [
+208902
+],
+"h": 5.348,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1218",
+"name": "Ramelteon",
+"rd": "mechanism",
+"t": 130,
+"ti": 5.512,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.68,
+"ad": "inside",
+"as": "measured",
+"cids": [
+2803
+],
+"h": 4.62,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL134",
+"name": "Clonidine",
+"rd": "mechanism",
+"t": 131,
+"ti": 3.06,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.027,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+11707110
+],
+"h": 5.218,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2103875",
+"name": "Trametinib",
+"rd": "mechanism",
+"t": 132,
+"ti": 1.809,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.75,
+"ad": "inside",
+"as": "measured",
+"h": 4.956,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL38380",
+"name": "Fasudil",
+"rd": "mechanism",
+"t": 133,
+"ti": 1.794,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.94,
+"ad": "inside",
+"as": "measured",
+"h": 5.022,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL302795",
+"name": "Tenoxicam",
+"rd": "routed",
+"t": 134,
+"ti": 0.918,
+"ts": "structure_router"
+},
+{
+"a": 6.06,
+"ad": "outside",
+"as": "measured",
+"h": 4.838,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL121626",
+"name": "Tolfenamic acid",
+"rd": "routed",
+"t": 135,
+"ti": 1.222,
+"ts": "structure_router"
+},
+{
+"a": 5.218,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.361,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1754",
+"name": "Doxapram",
+"rd": "mechanism",
+"t": 136,
+"ti": -0.143,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.08,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+9926791
+],
+"h": 4.73,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL221959",
+"name": "Tofacitinib",
+"rd": "mechanism",
+"t": 137,
+"ti": 2.35,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.07,
+"ad": "outside",
+"as": "measured",
+"cids": [
+11556711
+],
+"h": 5.318,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL451887",
+"name": "Carfilzomib",
+"rd": "mechanism",
+"t": 138,
+"ti": 2.752,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.42,
+"ad": "outside",
+"as": "measured",
+"h": 5.299,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL282686",
+"name": "Tesaglitazar",
+"rd": "mechanism",
+"t": 139,
+"ti": 0.121,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.764,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.268,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1756",
+"name": "Estramustine phosphate",
+"rd": "mechanism",
+"t": 140,
+"ti": 1.496,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.101,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+9865528
+],
+"h": 5.219,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2095212",
+"name": "Mirabegron",
+"rd": "mechanism",
+"t": 141,
+"ti": 0.882,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.377,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.201,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1088752",
+"name": "Losmapimod",
+"rd": "mechanism",
+"t": 142,
+"ti": 2.176,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.153,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.539,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4297650",
+"name": "XG-102",
+"rd": "mechanism",
+"t": 143,
+"ti": 0.614,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.7,
+"ad": "inside",
+"as": "measured",
+"h": 5.406,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL481611",
+"name": "Odanacatib",
+"rd": "mechanism",
+"t": 144,
+"ti": 4.294,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.545,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.538,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL256907",
+"name": "Maraviroc",
+"rd": "mechanism",
+"t": 145,
+"ti": 3.007,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.8,
+"ad": "inside",
+"as": "measured",
+"h": 5.062,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL592445",
+"name": "PF-05212384",
+"rd": "mechanism",
+"t": 146,
+"ti": 3.738,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.927,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+9930048
+],
+"h": 5.33,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2111112",
+"name": "Vernakalant",
+"rd": "mechanism",
+"t": 147,
+"ti": 1.597,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.7,
+"ad": "inside",
+"as": "measured",
+"h": 5.257,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3545083",
+"name": "RGB-286638",
+"rd": "mechanism",
+"t": 148,
+"ti": 3.443,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.776,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.15,
+"hs": "measured",
+"m": "CHEMBL3301626",
+"name": "Basimglurant",
+"rd": "mechanism",
+"t": 149,
+"ti": 1.626,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.205,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.576,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL444929",
+"name": "Squalamine",
+"rd": "mechanism",
+"t": 150,
+"ti": 1.629,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.303,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.225,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL573352",
+"name": "TAS-106",
+"rd": "mechanism",
+"t": 151,
+"ti": 0.078,
+"ts": "chembl_mechanism"
+},
+{
+"a": 5.92,
+"ad": "outside",
+"as": "measured",
+"h": 5.147,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL231616",
+"name": "Triapine",
+"rd": "mechanism",
+"t": 152,
+"ti": 0.773,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.237,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 6.344,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL204021",
+"name": "Darapladib",
+"rd": "mechanism",
+"t": 153,
+"ti": 2.893,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.605,
+"ad": "inside",
+"as": "measured",
+"h": 4.986,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2107832",
+"name": "Pimasertib",
+"rd": "mechanism",
+"t": 154,
+"ti": 3.619,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.548,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.943,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1231160",
+"name": "Pevonedistat",
+"rd": "mechanism",
+"t": 155,
+"ti": 1.605,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.23,
+"ad": "outside",
+"as": "measured",
+"h": 5.021,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL289480",
+"name": "Rilmenidine",
+"rd": "mechanism",
+"t": 156,
+"ti": 2.209,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.006,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+10077129
+],
+"h": 5.343,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL493982",
+"name": "Vorapaxar",
+"rd": "mechanism",
+"t": 157,
+"ti": 1.663,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.346,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 4.6,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3218576",
+"name": "Copanlisib",
+"rd": "mechanism",
+"t": 158,
+"ti": 2.746,
+"ts": "chembl_mechanism"
+},
+{
+"a": 4.55,
+"ad": "outside",
+"as": "measured",
+"h": 5.08,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1200699",
+"name": "Doxycycline",
+"rd": "mechanism",
+"t": 159,
+"ti": -0.53,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.051,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.517,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1738797",
+"name": "Alectinib",
+"rd": "mechanism",
+"t": 160,
+"ti": 2.534,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.262,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.367,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL218291",
+"name": "Forodesine",
+"rd": "mechanism",
+"t": 161,
+"ti": 2.895,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.85,
+"ad": "inside",
+"as": "measured",
+"h": 5.201,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL426559",
+"name": "Laropiprant",
+"rd": "mechanism",
+"t": 162,
+"ti": 3.649,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.431,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"cids": [
+16129690
+],
+"h": 5.586,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL4594214",
+"name": "Ziconotide",
+"rd": "mechanism",
+"t": 163,
+"ti": 1.845,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.902,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"h": 5.346,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1829433",
+"name": "AZD4877",
+"rd": "mechanism",
+"t": 164,
+"ti": 1.556,
+"ts": "chembl_mechanism"
+},
+{
+"a": 9.25,
+"ad": "inside",
+"as": "measured",
+"h": 4.82,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL3544911",
+"name": "Prexasertib",
+"rd": "mechanism",
+"t": 165,
+"ti": 4.43,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.359,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+44462760
+],
+"h": 5.398,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL2028663",
+"name": "Dabrafenib",
+"rd": "mechanism",
+"t": 166,
+"ti": 2.961,
+"ts": "chembl_mechanism"
+},
+{
+"a": 8.626,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+24821094
+],
+"h": 5.108,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL1873475",
+"name": "Ibrutinib",
+"rd": "mechanism",
+"t": 167,
+"ti": 3.518,
+"ts": "chembl_mechanism"
+},
+{
+"a": 7.47,
+"ad": "outside",
+"as": "fallback_nonlinear",
+"h": 5.012,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL549344",
+"name": "852A",
+"rd": "mechanism",
+"t": 168,
+"ti": 2.458,
+"ts": "chembl_mechanism"
+},
+{
+"a": 6.754,
+"ad": "inside",
+"as": "fallback_nonlinear",
+"cids": [
+24776445
+],
+"h": 5.164,
+"hs": "fallback_nonlinear",
+"m": "CHEMBL473417",
+"name": "Vismodegib",
+"rd": "mechanism",
+"t": 169,
+"ti": 1.59,
+"ts": "chembl_mechanism"
+}
+],
+"targets": [
+{
+"id": "CHEMBL233",
+"n": 25,
+"name": "Mu opioid receptor agonist"
+},
+{
+"id": "CHEMBL210",
+"n": 19,
+"name": "CHEMBL210"
+},
+{
+"id": "CHEMBL213",
+"n": 19,
+"name": "Beta-1 adrenergic receptor partial agonist"
+},
+{
+"id": "CHEMBL217",
+"n": 18,
+"name": "Dopamine D2 receptor antagonist"
+},
+{
+"id": "CHEMBL2034",
+"n": 17,
+"name": "Glucocorticoid receptor agonist"
+},
+{
+"id": "CHEMBL228",
+"n": 16,
+"name": "Serotonin transporter inhibitor"
+},
+{
+"id": "CHEMBL1781",
+"n": 14,
+"name": "CHEMBL1781"
+},
+{
+"id": "CHEMBL231",
+"n": 14,
+"name": "Histamine H1 receptor antagonist"
+},
+{
+"id": "CHEMBL245",
+"n": 14,
+"name": "Muscarinic acetylcholine receptor M3 antagonist"
+},
+{
+"id": "CHEMBL224",
+"n": 13,
+"name": "Serotonin 2a (5-HT2a) receptor antagonist"
+},
+{
+"id": "CHEMBL1808",
+"n": 12,
+"name": "CHEMBL1808"
+},
+{
+"id": "CHEMBL240",
+"n": 12,
+"name": "HERG blocker"
+},
+{
+"id": "CHEMBL205",
+"n": 11,
+"name": "Bacterial dihydropteroate synthase inhibitor"
+},
+{
+"id": "CHEMBL220",
+"n": 11,
+"name": "CHEMBL220"
+},
+{
+"id": "CHEMBL2095229",
+"n": 10,
+"name": "Voltage-gated L-type calcium channel blocker"
+},
+{
+"id": "CHEMBL247",
+"n": 10,
+"name": "Human immunodeficiency virus type 1 reverse transcriptase inhibitor"
+},
+{
+"id": "CHEMBL214",
+"n": 9,
+"name": "CHEMBL214"
+},
+{
+"id": "CHEMBL203",
+"n": 8,
+"name": "Epidermal growth factor receptor erbB1 inhibitor"
+},
+{
+"id": "CHEMBL227",
+"n": 8,
+"name": "Type-1 angiotensin II receptor antagonist"
+},
+{
+"id": "CHEMBL1855",
+"n": 7,
+"name": "Gonadotropin-releasing hormone receptor agonist"
+},
+{
+"id": "CHEMBL204",
+"n": 7,
+"name": "Thrombin inhibitor"
+},
+{
+"id": "CHEMBL2093863",
+"n": 7,
+"name": "Phosphodiesterase 4 inhibitor"
+},
+{
+"id": "CHEMBL2094251",
+"n": 7,
+"name": "Adrenergic receptor alpha-1 antagonist"
+},
+{
+"id": "CHEMBL211",
+"n": 7,
+"name": "CHEMBL211"
+},
+{
+"id": "CHEMBL222",
+"n": 7,
+"name": "Norepinephrine transporter inhibitor"
+},
+{
+"id": "CHEMBL243",
+"n": 7,
+"name": "Human immunodeficiency virus type 1 protease inhibitor"
+},
+{
+"id": "CHEMBL4302",
+"n": 7,
+"name": "P-glycoprotein 1 inhibitor"
+},
+{
+"id": "CHEMBL1806",
+"n": 6,
+"name": "CHEMBL1806"
+},
+{
+"id": "CHEMBL1899",
+"n": 6,
+"name": "Serotonin 3a (5-HT3a) receptor antagonist"
+},
+{
+"id": "CHEMBL2093865",
+"n": 6,
+"name": "Histone deacetylase inhibitor"
+},
+{
+"id": "CHEMBL2094125",
+"n": 6,
+"name": "Phosphodiesterase 3 inhibitor"
+},
+{
+"id": "CHEMBL2095181",
+"n": 6,
+"name": "Opioid receptors; mu/kappa/delta agonist"
+},
+{
+"id": "CHEMBL234",
+"n": 6,
+"name": "D2-like dopamine receptor agonist"
+},
+{
+"id": "CHEMBL249",
+"n": 6,
+"name": "Neurokinin 1 receptor antagonist"
+},
+{
+"id": "CHEMBL284",
+"n": 6,
+"name": "Dipeptidyl peptidase IV inhibitor"
+},
+{
+"id": "CHEMBL287",
+"n": 6,
+"name": "Sigma opioid receptor modulator"
+},
+{
+"id": "CHEMBL3038508",
+"n": 6,
+"name": "Topoisomerase IV inhibitor"
+},
+{
+"id": "CHEMBL402",
+"n": 6,
+"name": "HMG-CoA reductase inhibitor"
+},
+{
+"id": "CHEMBL1790",
+"n": 5,
+"name": "Vasopressin V2 receptor antagonist"
+},
+{
+"id": "CHEMBL1898",
+"n": 5,
+"name": "Serotonin 1b (5-HT1b) receptor agonist"
+},
+{
+"id": "CHEMBL1902",
+"n": 5,
+"name": "FK506-binding protein 1A inhibitor"
+},
+{
+"id": "CHEMBL2363135",
+"n": 5,
+"name": "Bacterial 70S ribosome inhibitor"
+},
+{
+"id": "CHEMBL252",
+"n": 5,
+"name": "Endothelin receptor ET-A antagonist"
+},
+{
+"id": "CHEMBL1827",
+"n": 4,
+"name": "Phosphodiesterase 5A inhibitor"
+},
+{
+"id": "CHEMBL1941",
+"n": 4,
+"name": "Histamine H2 receptor antagonist"
+},
+{
+"id": "CHEMBL208",
+"n": 4,
+"name": "Progesterone receptor agonist"
+},
+{
+"id": "CHEMBL2094108",
+"n": 4,
+"name": "Protein farnesyltransferase inhibitor"
+},
+{
+"id": "CHEMBL215",
+"n": 4,
+"name": "Arachidonate 5-lipoxygenase inhibitor"
+},
+{
+"id": "CHEMBL216",
+"n": 4,
+"name": "Muscarinic acetylcholine receptor M1 antagonist"
+},
+{
+"id": "CHEMBL223",
+"n": 4,
+"name": "CHEMBL223"
+},
+{
+"id": "CHEMBL226",
+"n": 4,
+"name": "Adenosine A1 receptor antagonist"
+},
+{
+"id": "CHEMBL2364670",
+"n": 4,
+"name": "Bacterial beta-lactamase TEM inhibitor"
+},
+{
+"id": "CHEMBL238",
+"n": 4,
+"name": "Dopamine transporter inhibitor"
+},
+{
+"id": "CHEMBL244",
+"n": 4,
+"name": "Coagulation factor X inhibitor"
+},
+{
+"id": "CHEMBL251",
+"n": 4,
+"name": "Adenosine A2a receptor agonist"
+},
+{
+"id": "CHEMBL3024",
+"n": 4,
+"name": "Serine/threonine-protein kinase PLK1 inhibitor"
+},
+{
+"id": "CHEMBL325",
+"n": 4,
+"name": "CHEMBL325"
+},
+{
+"id": "CHEMBL1801",
+"n": 3,
+"name": "CHEMBL1801"
+},
+{
+"id": "CHEMBL1875",
+"n": 3,
+"name": "Serotonin 4 (5-HT4) receptor partial agonist"
+},
+{
+"id": "CHEMBL1952",
+"n": 3,
+"name": "CHEMBL1952"
+},
+{
+"id": "CHEMBL1977",
+"n": 3,
+"name": "Vitamin D receptor agonist"
+},
+{
+"id": "CHEMBL1980",
+"n": 3,
+"name": "Sodium channel alpha subunit blocker"
+},
+{
+"id": "CHEMBL1987",
+"n": 3,
+"name": "Prostanoid FP receptor agonist"
+},
+{
+"id": "CHEMBL2001",
+"n": 3,
+"name": "Purinergic receptor P2Y12 inhibitor"
+},
+{
+"id": "CHEMBL2039",
+"n": 3,
+"name": "Monoamine oxidase B inhibitor"
+},
+{
+"id": "CHEMBL206",
+"n": 3,
+"name": "Estrogen receptor modulator"
+},
+{
+"id": "CHEMBL2072",
+"n": 3,
+"name": "Sodium channel protein type IV alpha subunit blocker"
+},
+{
+"id": "CHEMBL2093869",
+"n": 3,
+"name": "CHEMBL2093869"
+},
+{
+"id": "CHEMBL2094255",
+"n": 3,
+"name": "DNA topoisomerase II inhibitor"
+},
+{
+"id": "CHEMBL2095182",
+"n": 3,
+"name": "Tubulin stabiliser"
+},
+{
+"id": "CHEMBL2095231",
+"n": 3,
+"name": "Hepatitis C virus serine protease, NS3/NS4A inhibitor"
+},
+{
+"id": "CHEMBL218",
+"n": 3,
+"name": "CHEMBL218"
+},
+{
+"id": "CHEMBL229",
+"n": 3,
+"name": "CHEMBL229"
+},
+{
+"id": "CHEMBL235",
+"n": 3,
+"name": "Sulfonylurea receptor 1, Kir6.2 blocker"
+},
+{
+"id": "CHEMBL241",
+"n": 3,
+"name": "Phosphodiesterase 3A inhibitor"
+},
+{
+"id": "CHEMBL301",
+"n": 3,
+"name": "Cyclin-dependent kinase 2 inhibitor"
+},
+{
+"id": "CHEMBL3884",
+"n": 3,
+"name": "Sodium/glucose cotransporter 2 inhibitor"
+},
+{
+"id": "CHEMBL4296320",
+"n": 3,
+"name": "RNA-directed RNA polymerase negative allosteric modulator"
+},
+{
+"id": "CHEMBL1792",
+"n": 2,
+"name": "Somatostatin receptor agonist"
+},
+{
+"id": "CHEMBL1798",
+"n": 2,
+"name": "Cysteinyl leukotriene receptor 1 antagonist"
+},
+{
+"id": "CHEMBL1833",
+"n": 2,
+"name": "Serotonin 2b (5-HT2b) receptor partial agonist"
+},
+{
+"id": "CHEMBL1844",
+"n": 2,
+"name": "Vascular endothelial growth factor receptor inhibitor"
+},
+{
+"id": "CHEMBL1856",
+"n": 2,
+"name": "Steroid 5-alpha-reductase 2 inhibitor"
+},
+{
+"id": "CHEMBL1862",
+"n": 2,
+"name": "Tyrosine-protein kinase ABL inhibitor"
+},
+{
+"id": "CHEMBL1901",
+"n": 2,
+"name": "Cholecystokinin A receptor antagonist"
+},
+{
+"id": "CHEMBL1929",
+"n": 2,
+"name": "CHEMBL1929"
+},
+{
+"id": "CHEMBL1936",
+"n": 2,
+"name": "Serine/threonine-protein kinase Aurora inhibitor"
+},
+{
+"id": "CHEMBL1949",
+"n": 2,
+"name": "Cyclophilin A modulator"
+},
+{
+"id": "CHEMBL1951",
+"n": 2,
+"name": "Monoamine oxidase A inhibitor"
+},
+{
+"id": "CHEMBL1966",
+"n": 2,
+"name": "Dihydroorotate dehydrogenase inhibitor"
+},
+{
+"id": "CHEMBL1978",
+"n": 2,
+"name": "Cytochrome P450 19A1 inhibitor"
+},
+{
+"id": "CHEMBL1983",
+"n": 2,
+"name": "Serotonin 1d (5-HT1d) receptor agonist"
+},
+{
+"id": "CHEMBL2023",
+"n": 2,
+"name": "Catechol O-methyltransferase inhibitor"
+},
+{
+"id": "CHEMBL2074",
+"n": 2,
+"name": "Maltase-glucoamylase inhibitor"
+},
+{
+"id": "CHEMBL2094253",
+"n": 2,
+"name": "Cyclooxygenase inhibitor"
+},
+{
+"id": "CHEMBL2094257",
+"n": 2,
+"name": "Adenosine receptor antagonist"
+},
+{
+"id": "CHEMBL2095165",
+"n": 2,
+"name": "Heat shock protein HSP90 inhibitor"
+},
+{
+"id": "CHEMBL2095173",
+"n": 2,
+"name": "Potassium-transporting ATPase inhibitor"
+},
+{
+"id": "CHEMBL2095186",
+"n": 2,
+"name": "Sodium/potassium-transporting ATPase inhibitor"
+},
+{
+"id": "CHEMBL2363032",
+"n": 2,
+"name": "Voltage-gated calcium channel blocker"
+},
+{
+"id": "CHEMBL261",
+"n": 2,
+"name": "CHEMBL261"
+},
+{
+"id": "CHEMBL262",
+"n": 2,
+"name": "Glycogen synthase kinase-3 beta inhibitor"
+},
+{
+"id": "CHEMBL3307224",
+"n": 2,
+"name": "Nonstructural protein 5A inhibitor"
+},
+{
+"id": "CHEMBL3572",
+"n": 2,
+"name": "Cholesteryl ester transfer protein inhibitor"
+},
+{
+"id": "CHEMBL3717",
+"n": 2,
+"name": "Hepatocyte growth factor receptor inhibitor"
+},
+{
+"id": "CHEMBL3798",
+"n": 2,
+"name": "Calcitonin gene-related peptide type 1 receptor antagonist"
+},
+{
+"id": "CHEMBL4333",
+"n": 2,
+"name": "Sphingosine 1-phosphate receptor Edg-1 agonist"
+},
+{
+"id": "CHEMBL5137",
+"n": 2,
+"name": "Metabotropic glutamate receptor 2 agonist"
+},
+{
+"id": "CHEMBL6120",
+"n": 2,
+"name": "Solute carrier family 22 member 12 inhibitor"
+},
+{
+"id": "CHEMBL1293266",
+"n": 1,
+"name": "Nucleotide-binding oligomerization domain-containing protein 2 other"
+},
+{
+"id": "CHEMBL1784",
+"n": 1,
+"name": "Glucagon-like peptide 1 receptor agonist"
+},
+{
+"id": "CHEMBL1822",
+"n": 1,
+"name": "Inosine-5'-monophosphate dehydrogenase (IMPDH) inhibitor"
+},
+{
+"id": "CHEMBL1832",
+"n": 1,
+"name": "Amylin receptor AMY1, CALCR/RAMP1 agonist"
+},
+{
+"id": "CHEMBL1839",
+"n": 1,
+"name": "Thyroid peroxidase inhibitor"
+},
+{
+"id": "CHEMBL1849",
+"n": 1,
+"name": "Enoyl-[acyl-carrier-protein] reductase inhibitor"
+},
+{
+"id": "CHEMBL1878",
+"n": 1,
+"name": "Calcium sensing receptor positive allosteric modulator"
+},
+{
+"id": "CHEMBL1903",
+"n": 1,
+"name": "GABA transporter 1 inhibitor"
+},
+{
+"id": "CHEMBL1907598",
+"n": 1,
+"name": "Integrin alpha-V/beta-3 antagonist"
+},
+{
+"id": "CHEMBL1907603",
+"n": 1,
+"name": "Glutamate NMDA receptor; GRIN1/GRIN2B antagonist"
+},
+{
+"id": "CHEMBL1926",
+"n": 1,
+"name": "Dihydrofolate reductase inhibitor"
+},
+{
+"id": "CHEMBL1939",
+"n": 1,
+"name": "Dihydrofolate reductase inhibitor"
+},
+{
+"id": "CHEMBL1984",
+"n": 1,
+"name": "UDP-N-acetylglucosamine 1-carboxyvinyltransferase inhibitor"
+},
+{
+"id": "CHEMBL1992",
+"n": 1,
+"name": "DNA (cytosine-5)-methyltransferase 3A inhibitor"
+},
+{
+"id": "CHEMBL1995",
+"n": 1,
+"name": "Prostanoid IP receptor agonist"
+},
+{
+"id": "CHEMBL1997",
+"n": 1,
+"name": "Equilibrative nucleoside transporter 1 inhibitor"
+},
+{
+"id": "CHEMBL202",
+"n": 1,
+"name": "CHEMBL202"
+},
+{
+"id": "CHEMBL2047",
+"n": 1,
+"name": "Bile acid receptor FXR agonist"
+},
+{
+"id": "CHEMBL2056",
+"n": 1,
+"name": "Dopamine D1 receptor agonist"
+},
+{
+"id": "CHEMBL2063",
+"n": 1,
+"name": "Ceramide glucosyltransferase inhibitor"
+},
+{
+"id": "CHEMBL2094132",
+"n": 1,
+"name": "Serotonin 3 (5-HT3) receptor antagonist"
+},
+{
+"id": "CHEMBL2094268",
+"n": 1,
+"name": "Melatonin receptor agonist"
+},
+{
+"id": "CHEMBL2095158",
+"n": 1,
+"name": "Adrenergic receptor alpha-2 agonist"
+},
+{
+"id": "CHEMBL2111289",
+"n": 1,
+"name": "Dual specificity mitogen-activated protein kinase kinase; MEK1/2 inhibitor"
+},
+{
+"id": "CHEMBL2111459",
+"n": 1,
+"name": "Rho-associated protein kinase inhibitor"
+},
+{
+"id": "CHEMBL221",
+"n": 1,
+"name": "CHEMBL221"
+},
+{
+"id": "CHEMBL230",
+"n": 1,
+"name": "CHEMBL230"
+},
+{
+"id": "CHEMBL2321613",
+"n": 1,
+"name": "Potassium channel subfamily K member 3 blocker"
+},
+{
+"id": "CHEMBL2363062",
+"n": 1,
+"name": "Janus Kinase (JAK) inhibitor"
+},
+{
+"id": "CHEMBL2364701",
+"n": 1,
+"name": "26S proteasome inhibitor"
+},
+{
+"id": "CHEMBL239",
+"n": 1,
+"name": "Peroxisome proliferator-activated receptor alpha agonist"
+},
+{
+"id": "CHEMBL242",
+"n": 1,
+"name": "Estrogen receptor beta modulator"
+},
+{
+"id": "CHEMBL246",
+"n": 1,
+"name": "Beta-3 adrenergic receptor agonist"
+},
+{
+"id": "CHEMBL260",
+"n": 1,
+"name": "MAP kinase p38 alpha inhibitor"
+},
+{
+"id": "CHEMBL2637",
+"n": 1,
+"name": "c-Jun N-terminal kinase 3 inhibitor"
+},
+{
+"id": "CHEMBL268",
+"n": 1,
+"name": "Cathepsin K inhibitor"
+},
+{
+"id": "CHEMBL274",
+"n": 1,
+"name": "C-C chemokine receptor type 5 antagonist"
+},
+{
+"id": "CHEMBL2842",
+"n": 1,
+"name": "Serine/threonine-protein kinase mTOR inhibitor"
+},
+{
+"id": "CHEMBL3038488",
+"n": 1,
+"name": "Kir3.1/Kir3.4 blocker"
+},
+{
+"id": "CHEMBL308",
+"n": 1,
+"name": "Cyclin-dependent kinase 1 inhibitor"
+},
+{
+"id": "CHEMBL3227",
+"n": 1,
+"name": "Metabotropic glutamate receptor 5 modulator"
+},
+{
+"id": "CHEMBL3273",
+"n": 1,
+"name": "Sodium/hydrogen exchanger 3 inhibitor"
+},
+{
+"id": "CHEMBL3286067",
+"n": 1,
+"name": "DNA-directed RNA polymerase I subunit RPA1 inhibitor"
+},
+{
+"id": "CHEMBL3301398",
+"n": 1,
+"name": "Ribonucleotide reductase inhibitor"
+},
+{
+"id": "CHEMBL3514",
+"n": 1,
+"name": "LDL-associated phospholipase A2 inhibitor"
+},
+{
+"id": "CHEMBL3587",
+"n": 1,
+"name": "Dual specificity mitogen-activated protein kinase kinase 1 inhibitor"
+},
+{
+"id": "CHEMBL3831283",
+"n": 1,
+"name": "NEDD8 activating enzyme inhibitor"
+},
+{
+"id": "CHEMBL3923",
+"n": 1,
+"name": "Nischarin agonist"
+},
+{
+"id": "CHEMBL3974",
+"n": 1,
+"name": "Proteinase-activated receptor 1 antagonist"
+},
+{
+"id": "CHEMBL4005",
+"n": 1,
+"name": "PI3-kinase p110-alpha subunit inhibitor"
+},
+{
+"id": "CHEMBL4073",
+"n": 1,
+"name": "Matrix metalloproteinase 7 inhibitor"
+},
+{
+"id": "CHEMBL4247",
+"n": 1,
+"name": "ALK tyrosine kinase receptor inhibitor"
+},
+{
+"id": "CHEMBL4338",
+"n": 1,
+"name": "Purine nucleoside phosphorylase inhibitor"
+},
+{
+"id": "CHEMBL4427",
+"n": 1,
+"name": "Prostanoid DP receptor antagonist"
+},
+{
+"id": "CHEMBL4478",
+"n": 1,
+"name": "Voltage-gated N-type calcium channel alpha-1B subunit blocker"
+},
+{
+"id": "CHEMBL4581",
+"n": 1,
+"name": "Kinesin-like protein 1 inhibitor"
+},
+{
+"id": "CHEMBL4630",
+"n": 1,
+"name": "Serine/threonine-protein kinase Chk1 inhibitor"
+},
+{
+"id": "CHEMBL5145",
+"n": 1,
+"name": "Serine/threonine-protein kinase B-raf inhibitor"
+},
+{
+"id": "CHEMBL5251",
+"n": 1,
+"name": "Tyrosine-protein kinase BTK inhibitor"
+},
+{
+"id": "CHEMBL5936",
+"n": 1,
+"name": "Toll-like receptor 7 agonist"
+},
+{
+"id": "CHEMBL5971",
+"n": 1,
+"name": "Smoothened homolog inhibitor"
+}
+]
+}
