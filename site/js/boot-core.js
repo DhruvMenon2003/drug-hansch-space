@@ -5,7 +5,9 @@ const BENCH_MOD = 'bench.js';                       // a variable specifier: loa
 const QSAR_MOD = 'qsar.js';
 const BUILDER_MOD = 'builder.js';
 const TI_MOD = 'ti.js';                              // the ranked therapeutic-index overlay, on request                    // the all-target QSAR builder, also on request                         // the existing-home overlay loads only on request
+const TI_LIVE_MOD = 'ti-live.js';                    // the live index readout: after the first paint, never on the critical path
 import { app, anim, bus, STEPS, $ } from './kernel.js';
+import { whenIdle } from './idle.js';
 import { announce, initAnnounce } from './announce.js';
 import { loadData } from './data.js';
 import { initTheme, readTokens } from './theme.js';
@@ -93,6 +95,9 @@ export async function bootCore(caps) {
     $('#ti-status').textContent = 'The therapeutic-index overlay could not load. Close it and try again.';
   }));
   initExtras({ gl: !!caps?.webgl });                 // the QED panel and the binding overlay: both arrive on first use
+  // The live therapeutic index (readout on the stage, the index as an axis and a colour). Nothing on the page needs it to
+  // draw the first frame and its own data file is fetched at idle as well, so it is loaded the same way: after the paint.
+  whenIdle(() => import(`./${TI_LIVE_MOD}`).then(m => m.initTiLive()).catch(err => console.error('the live therapeutic index did not load', err)), { timeout: 3000, fallbackMs: 600 });
   fillTourText();
   fillMethod();
   syncControls();

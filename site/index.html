@@ -139,6 +139,9 @@
         <div class="hud">
           <div class="axis-key" id="axis-key"></div>
           <div class="legend" id="legend"></div>
+          <!-- The live therapeutic index (js/ti-live.js) fills this once data/ti/live.json is in. It is aria-hidden
+               because it repeats, for whatever the pointer is over, what the drug panel's own index row says in full. -->
+          <div class="ti-live" id="ti-live" aria-hidden="true" hidden></div>
         </div>
         <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
         <div class="stage-status" id="stage-status" role="status"><progress id="load-progress" max="4" value="0" aria-label="Loading data and 3D scene"></progress><span class="status-text">Loading data…</span></div>
@@ -315,6 +318,7 @@
           <p class="small" id="d-domain"></p>
           <p class="small" id="d-hbond-method">These Lipinski counts use RDKit <code>CalcNumLipinskiHBD</code> (N/O-bound hydrogens) and <code>CalcNumLipinskiHBA</code> (N + O atoms). The frozen DRD2 QSAR uses <code>NumHDonors</code> → <code>CalcNumHBD</code> and <code>NumHAcceptors</code> → <code>CalcNumHBA</code>, which count hydrogen-bond donor and acceptor sites. These definitions differ: amisulpride is 3/7 here and 2/6 in the QSAR. Both stored datasets are unchanged.</p>
           <div id="d-act"></div>
+          <div id="d-ti"></div>
           <p class="small" id="d-qsar" hidden></p>
           <div id="d-bench"><button type="button" id="d-bench-open" class="ghost">Edit PK values</button></div>
           <h4>ATC codes and routes</h4>
@@ -650,6 +654,9 @@
       <button type="button" role="tab" id="ti-t-rank" aria-controls="ti-p-rank" aria-selected="true">Ranked batch</button>
       <button type="button" role="tab" id="ti-t-route" aria-controls="ti-p-route" aria-selected="false">Routing</button>
       <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
+      <button type="button" role="tab" id="ti-t-decide" aria-controls="ti-p-decide" aria-selected="false">Decisions</button>
+      <button type="button" role="tab" id="ti-t-expose" aria-controls="ti-p-expose" aria-selected="false">Exposure</button>
+      <button type="button" role="tab" id="ti-t-search" aria-controls="ti-p-search" aria-selected="false">Model search</button>
       <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
     </div>
 
@@ -710,6 +717,36 @@
           <th scope="col">Similarity</th><th scope="col">Terms</th><th scope="col">r²</th>
           <th scope="col">q² (leave one out)</th><th scope="col">log P optimum</th></tr></thead>
         <tbody id="ti-series"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-decide" aria-labelledby="ti-t-decide" hidden>
+      <div id="ti-decide-intro"></div>
+      <p id="ti-decide-status" class="small">Loading the whole ranked batch…</p>
+      <div id="ti-decide-body" hidden>
+        <div class="controls" id="ti-decide-rules"></div>
+        <p><button type="button" id="ti-decide-reset" class="ghost">Back to the published rules</button></p>
+        <div id="ti-decide-out"></div>
+        <p id="ti-decide-say" class="small"></p>
+        <div id="ti-decide-tables"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-expose" aria-labelledby="ti-t-expose" hidden>
+      <div id="ti-exp-intro"></div>
+      <p id="ti-exp-status" class="small" hidden></p>
+      <div id="ti-exp-body" hidden>
+        <div class="controls" id="ti-exp-controls"></div>
+        <div id="ti-exp-out"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-search" aria-labelledby="ti-t-search" hidden>
+      <div id="ti-search-intro"></div>
+      <p id="ti-search-status" class="small" hidden></p>
+      <div id="ti-search-body" hidden>
+        <div class="controls" id="ti-search-controls"></div>
+        <div id="ti-search-out"></div>
       </div>
     </section>
 

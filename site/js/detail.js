@@ -195,6 +195,24 @@ function showBox(d) {
     : '';
 }
 
+/**
+ * The therapeutic-index row. The copy for it lives in js/ti-live.js, which arrives at idle with the index file
+ * itself, and registers itself here through setTiRow: there is no point carrying that writing on the critical path
+ * when it can say nothing until the data lands. Until then the row is empty, which is what an absent file means.
+ */
+let tiRow = null;
+
+/** js/ti-live.js hands over its renderer; called once, after the index file is in. */
+export function setTiRow(fn) {
+  tiRow = fn;
+  if (app.selected >= 0) showTi(app.drugs[app.selected]);
+}
+
+function showTi(d) {
+  const box = typeof document === 'undefined' ? null : $('#d-ti');   // the unit tests import this module without a DOM
+  if (box) box.innerHTML = (tiRow && d ? tiRow(d) : '');
+}
+
 function showDetail({ index }) {
   const d = app.drugs[index];
   $('#detail-empty').hidden = true;
@@ -221,6 +239,7 @@ function showDetail({ index }) {
       `at <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(a.target)}/" target="_blank" rel="noopener noreferrer">${esc(a.target)}</a> ${esc(a.tname || '')}` +
       `<br><small>Median of ${esc(a.types || 'IC50/Ki/EC50/Kd')} values from ${a.ndoc ?? '≥2'} ChEMBL documents.</small></div>`
     : `<div class="act-box">No activity value: fewer than two ChEMBL documents agreed on a pChEMBL at the mechanism target.</div>`;
+  showTi(d);
   const names = app.meta.atc_names;
   $('#d-atc').innerHTML = d.atc.map(e => {
     const path = [e.code[0], e.code.slice(0, 3), e.code.slice(0, 4), e.code.slice(0, 5)].filter(c => names[c]).map(c => cap(names[c])).join(' › ');
