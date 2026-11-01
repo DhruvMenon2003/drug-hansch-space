@@ -16,6 +16,9 @@ import { initMolEvents, molv } from './gl/molviewer.js';
 export function bootGl() {
   const disposeScene = initScene();
   const offScenery = initScenery();
+  let offInquiry = () => {}, offPair = () => {};
+  const INQUIRY_GL = 'inquiry.js', PAIR_GL = 'inquiry-pair.js';
+  const offInquiryInit = bus.on('inquiry:init', () => Promise.all([import(`./gl/${INQUIRY_GL}`), import(`./gl/${PAIR_GL}`)]).then(([m, p]) => { offInquiry = m.initInquiryScene(); offPair = p.initPairScene(); }));
   const offPointer = bindPointer($('#space'), $('.stage-inner'));
   const offMol = initMolEvents();
   const offTools = bindStageTools();
@@ -42,7 +45,7 @@ export function bootGl() {
   if (window.__hansch) Object.assign(window.__hansch, { stage, molv, camTo, THREE, stats: stage.loop.stats, quality: stage.quality, loop: stage.loop });
   const gl = {
     dispose() {
-      ac.abort(); offTools(); offPointer(); offMol(); offScenery(); disposeScene();
+      ac.abort(); offInquiryInit(); offPair(); offInquiry(); offTools(); offPointer(); offMol(); offScenery(); disposeScene();
       if (window.__hansch?.gl === gl) delete window.__hansch.gl;
     },
   };

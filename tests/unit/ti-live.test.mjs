@@ -48,7 +48,7 @@ test('posOf clamps to the ends of the strip', () => {
 });
 
 test('sourceWord says where a number came from, and passes an unknown key through', () => {
-  assert.equal(sourceWord('measured'), 'measured');
+  assert.equal(sourceWord('measured'), 'measured aggregate');
   assert.equal(sourceWord('series_hansch'), 'Hansch series');
   assert.equal(sourceWord('fallback_nonlinear'), 'model');
   assert.equal(sourceWord('something_new'), 'something_new');

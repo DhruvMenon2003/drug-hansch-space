@@ -1,0 +1,38 @@
+import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+
+test('QED styles load on demand before charts; filtering and source stay available @mobile', async ({ page }) => {
+  const source = JSON.parse(readFileSync(new URL('../../site/data/props.json', import.meta.url), 'utf8'));
+  const requests = [], errors = [];
+  let releaseStyles;
+  const held = new Promise(resolve => { releaseStyles = resolve; });
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('request', request => { if (request.url().endsWith('/css/qed.css')) requests.push(request.url()); });
+  await page.route('**/css/qed.css', async route => { await held; await route.continue(); });
+  await page.goto('/?debug');
+  await page.waitForFunction(() => document.querySelector('#stage-status')?.hidden === true);
+  expect(requests).toEqual([]);
+  await expect(page.locator('#qed-style')).toHaveCount(0);
+  await page.locator('#qed-details > summary').click();
+  await expect.poll(() => requests.length).toBe(1);
+  await expect(page.locator('#qed-grid')).toContainText('Loading QED');
+  await expect(page.locator('.qed-cell')).toHaveCount(0);
+  releaseStyles();
+  await expect(page.locator('.qed-cell')).toHaveCount(9);
+  await expect(page.locator('#qed-grid')).toHaveCSS('display', 'grid');
+  await expect(page.locator('#qed-cite')).toHaveText(source.meta.citation);
+  const bar = page.locator('.qed-cell').first().locator('.qed-bar:not([data-n="0"])').first();
+  const count = Number(await bar.getAttribute('data-n'));
+  await bar.click();
+  await expect(page.locator('#qed-clear')).toBeEnabled();
+  await expect.poll(() => page.evaluate(() => window.__hansch.app.visible.length)).toBe(count);
+  await page.locator('#qed-clear').click();
+  await expect(page.locator('#qed-clear')).toBeDisabled();
+  await expect.poll(() => page.evaluate(() => window.__hansch.app.view.qbin)).toBeNull();
+  await page.locator('#qed-details > summary').click();
+  await page.locator('#qed-details > summary').click();
+  await expect(page.locator('.qed-cell')).toHaveCount(9);
+  await expect(page.locator('#qed-cite')).toHaveText(source.meta.citation);
+  expect(requests).toHaveLength(1);
+  expect(errors).toEqual([]);
+});

@@ -1,0 +1,66 @@
+import { test, expect } from '@playwright/test';
+const ready = async (page, testInfo) => {
+  await page.setViewportSize(testInfo.project.name === 'phone' ? {width:390,height:844} : {width:1440,height:1000});
+  await page.goto('/?debug#explore');
+  await page.waitForFunction(() => document.querySelector('#stage-status').hidden);
+  await page.locator('#explore').scrollIntoViewIfNeeded();
+};
+const onScreen = async locator => locator.evaluate(el => { const r=el.getBoundingClientRect();return r.top>=0 && r.bottom<=innerHeight; });
+test('ordinary Explore exposes search and direct core-control access @mobile', async ({page},testInfo) => {
+  await ready(page,testInfo);
+  await expect(page.locator('#inquiry-disclosure')).toBeHidden();
+  expect(await onScreen(page.locator('#search'))).toBe(true);
+  for(const target of ['g-axes','g-filters']) expect(await onScreen(page.locator(`nav[aria-label="Explore controls"] a[href="#${target}"]`))).toBe(true);
+  expect(await page.locator('#g-axes').evaluate(el=>el.getBoundingClientRect().top-document.querySelector('#explore').getBoundingClientRect().top)).toBeLessThan(350);
+  await page.waitForTimeout(700);
+  await page.screenshot({path:`/tmp/design-review/explore-access-${testInfo.project.name}-initial.png`});
+  await page.locator('nav[aria-label="Explore controls"] a[href="#g-filters"]').click();
+  await page.locator('#g-filters summary').click();await page.selectOption('#f-route','ORAL');
+  expect(await page.evaluate(()=>__hansch.app.view.route)).toBe('ORAL');
+  await expect(page.locator('#t-extra').locator('..')).not.toContainText('(unavailable)');
+});
+test('Follow and return preserve comparison, axes, colour and filters @mobile', async ({page},testInfo) => {
+  await ready(page,testInfo);
+  await page.locator('#g-filters summary').click();await page.selectOption('#f-route','ORAL');
+  await page.selectOption('#ax-y','tpsa');
+  await page.selectOption('#color-by','oral');
+  await page.click('#inquiry-resume');
+  expect(await page.evaluate(()=>__hansch.app.view.route)).toBe('ORAL');
+  expect(await page.evaluate(()=>__hansch.app.view.color)).toBe('oral');
+  await expect(page.locator('#inquiry-name')).toHaveText('Caffeine');
+  await page.click('[data-inquiry-map="structure"]');
+  await page.locator('[data-neighbour]').first().click();
+  const snapshot = () => page.evaluate(()=>({view:{...__hansch.app.view},pin:__hansch.app.inquiry.cid,other:__hansch.app.inquiry.comparisonCid,selected:__hansch.app.selected}));
+  const before = await snapshot();
+  await page.locator('.inquiry-return').first().click();
+  await expect(page.locator('#inquiry-disclosure')).not.toHaveAttribute('open','');
+  await expect(page.locator('#search')).toBeFocused();
+  expect(await snapshot()).toEqual(before);
+  expect(await onScreen(page.locator('nav[aria-label="Explore controls"] a[href="#g-axes"]'))).toBe(true);
+  await page.waitForTimeout(700);
+  await page.screenshot({path:`/tmp/design-review/explore-access-${testInfo.project.name}-returned.png`});
+  await page.click('#inquiry-resume');await expect(page.locator('#inquiry-pin')).toBeFocused();
+  await expect(page.locator('#inquiry-disclosure')).toHaveAttribute('open','');expect(await snapshot()).toEqual(before);
+  await page.waitForTimeout(700);
+  await page.screenshot({path:`/tmp/design-review/explore-access-${testInfo.project.name}-resumed.png`});
+});
+
+test('Resume after inspecting fits reactivates inquiry without resetting state @mobile', async ({page},testInfo) => {
+  await ready(page,testInfo);
+  await page.selectOption('#ax-y','tpsa');
+  await page.click('#inquiry-resume');
+  await expect(page.locator('#inquiry-name')).toHaveText('Caffeine');
+  await page.click('[data-inquiry-map="structure"]');
+  await page.locator('[data-neighbour]').first().click();
+  await page.locator('.inquiry-next a[href="#hansch"]').click();
+  expect(await page.evaluate(()=>__hansch.app.inquiry.active)).toBe(false);
+  if (testInfo.project.name === 'phone') await page.click('#contents-btn');
+  await page.locator('header a[href="#explore"]:visible').click();
+  const snapshot = () => page.evaluate(()=>({view:{...__hansch.app.view},pin:__hansch.app.inquiry.cid,other:__hansch.app.inquiry.comparisonCid,selected:__hansch.app.selected}));
+  const before=await snapshot();
+  await page.click('#inquiry-resume');
+  await expect(page.locator('#inquiry-pin')).toBeFocused();
+  expect(await page.evaluate(()=>__hansch.app.inquiry.active)).toBe(true);
+  await expect(page.locator('#inquiry-beacon')).toBeVisible();
+  expect(await snapshot()).toEqual(before);
+});

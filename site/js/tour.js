@@ -50,6 +50,7 @@ function showSelectedFit() {
 // scrolling on from Explore through the drug panel into Hansch must not throw away a view the reader just built.
 const jumped = id => jump.id === id && performance.now() - jump.at < 1500;
 function activate(el) {
+  if (app.inquiry?.active) return; // Explicit inquiry choices own the map until the reader returns to Tour.
   if (el.classList.contains('step')) { ctx = 'step'; goStep(el.dataset.step); return; }
   const id = el.id || 'table', fresh = ctx === 'step' || ctx === null;
   if (id === 'explore' && (fresh || jumped(id))) goStep('all');      // the all-drugs view

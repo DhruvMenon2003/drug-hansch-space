@@ -312,7 +312,7 @@ function caption(sc, pose, d) {
   const p = sc.pdb;
   if (sc.art) {
     $('#bind-h').textContent = `${cap(d.name)}: an artistic view`;
-    $('#bind-what').textContent = `There is no annotated co-crystal for ${cap(d.name)} in this site's data, so this is an illustration: ${sc.target} drawn as a cartoon fold, with ${cap(d.name)}'s own 3D conformer settling into it. The fold, the pocket and the pose are not measured, and no contacts are claimed. For a real pose, dock the conformer with a program such as AutoDock Vina.`;
+    $('#bind-what').textContent = `There is no annotated co-crystal for ${cap(d.name)} in this site's data, so this is an illustration: ${sc.target} drawn as a cartoon fold, with ${cap(d.name)}'s own 3D conformer settling into it. The fold, the pocket and the pose are not measured, and no contacts are claimed. Docking can propose a pose, but neither docking nor this illustration establishes an experimentally observed pose.`;
     $('#bind-contacts').innerHTML = '<li>Illustration: no measured contacts</li>';
     $('#bind-cite').textContent = `Ligand geometry: the drug's 3D conformer (${d.conf || 'PubChem / RDKit'}). Receptor: illustrative only.`;
     return;

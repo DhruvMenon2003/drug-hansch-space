@@ -1,0 +1,40 @@
+/* Loaded with the ranked dialog. Keep identity beside horizontally scrolled evidence. */
+.ti-rank-table { border-collapse: separate; border-spacing: 0; }
+.ti-rank-table thead th { position: sticky; top: 0; z-index: 2; background: var(--panel); }
+.ti-rank-table tr > :first-child {
+  position: sticky; left: 0; z-index: 1; min-width: 11rem; max-width: 15rem;
+  white-space: normal; overflow-wrap: anywhere; background: var(--panel);
+  box-shadow: 1px 0 var(--line);
+}
+.ti-rank-table thead th:first-child { z-index: 3; }
+.ti-rank-table tbody th {
+  color: var(--ink); font-size: .9rem; font-weight: 600; text-transform: none; letter-spacing: 0;
+}
+.ti-rank-target-key { display: block; margin-top: 3px; color: var(--muted); font: 400 .75rem/1.4 var(--font-data); }
+.ti-rank-table td .small { display: block; color: var(--muted); }
+
+/* A phone can read one molecule's complete evidence without sideways navigation. */
+@media (max-width: 600px) {
+  .ti-rank-wrap { overflow-x: hidden; }
+  .ti-rank-table, .ti-rank-table tbody { display: block; }
+  .ti-rank-table thead {
+    position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+  .ti-rank-table tbody tr {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 10px 12px 14px; border-bottom: 1px solid var(--line);
+  }
+  .ti-rank-table tbody tr:last-child { border-bottom: 0; }
+  .ti-rank-table tbody tr > * {
+    border: 0; padding: 6px 8px; white-space: normal; overflow-wrap: anywhere;
+  }
+  .ti-rank-table tbody tr > :first-child {
+    position: static; min-width: 0; max-width: none; box-shadow: none;
+  }
+  .ti-rank-table tbody th { grid-column: 1 / -1; font-size: 1rem; padding-bottom: 8px; }
+  .ti-rank-table td::before {
+    content: attr(data-label); display: block; margin-bottom: 3px;
+    font: 500 .7rem/1.4 var(--font-display); color: var(--muted); letter-spacing: .02em;
+  }
+}

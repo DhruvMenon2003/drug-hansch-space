@@ -46,6 +46,11 @@ const GL_FAILED = 'The 3D view could not be started';
  * @returns {string} the message shown
  */
 export function showNoWebGL(why = 'nowebgl', err) {
+  if (!$('#workbench-css')) {
+    const css = document.createElement('link');
+    css.id = 'workbench-css'; css.rel = 'stylesheet'; css.href = 'css/workbench.css';
+    document.head.append(css);
+  }
   const detail = err ? ` (${err?.message || err})` : '';
   const msg = why === 'nowebgl' ? NO_WEBGL
     : `${GL_FAILED}${why === 'load' ? ': a script it needs did not load' : ''}${detail}. The controls, the data table and the drug search still work.`;

@@ -125,10 +125,18 @@ export function clearBin() {
 export function initQed() {
   if (started) return;
   started = true;
+  const styles = new Promise((resolve, reject) => {
+    const css = document.createElement('link');
+    css.id = 'qed-style'; css.rel = 'stylesheet';
+    css.href = new URL('../css/qed.css', import.meta.url).href;
+    css.addEventListener('load', resolve, { once: true });
+    css.addEventListener('error', reject, { once: true });
+    document.head.append(css);
+  });
   app.view.qbin = null;                     // runtime only: the default view never carries this key
   const grid = $('#qed-grid');
   grid.innerHTML = '<p class="small" aria-busy="true">Loading QED…</p>';
-  getSide('data/props.json').then(p => {
+  Promise.all([getSide('data/props.json'), styles]).then(([p]) => {
     props = p;
     for (const d of p.defs) defs.set(d.key, d);
     for (const name of Object.keys(p.cols)) {
@@ -138,7 +146,7 @@ export function initQed() {
     }
     $('#qed-cite').textContent = p.meta.citation || '';
     renderQed();
-  }).catch(() => { grid.innerHTML = '<p class="small">The QED file (data/props.json) could not be loaded, so this panel is empty.</p>'; });
+  }).catch(() => { grid.innerHTML = '<p class="small">The QED data or styles could not be loaded, so this panel is empty.</p>'; });
 
   const names = app.meta.atc_names, codes = new Set();
   for (const d of app.drugs) for (const a of d.atc) { codes.add(a.code[0]); codes.add(a.code.slice(0, 3)); }

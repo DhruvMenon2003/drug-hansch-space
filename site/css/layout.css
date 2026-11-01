@@ -124,11 +124,12 @@ select { text-overflow: ellipsis; }
 }
 
 /* Tablets and narrow windows: the stage column is 400 to 700 px wide, so Reset, Spin and Expand become icons (as on phones) and the axis key keeps clear of them */
+/* Every width needs the same icons: accessible labels are clipped above. */
+.stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
+.stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
 @media (min-width: 701px) and (max-width: 1279px) {
   .hud { max-width: calc(100% - 200px); }
   .stage-tools { gap: 4px; }
-  .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
-  .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
 }
 
 /* ---------------------------------------------------------------------------------------------------------------- compact stages: phones in portrait and landscape
@@ -146,8 +147,6 @@ select { text-overflow: ellipsis; }
   .legend > span { flex: none; white-space: nowrap; scroll-snap-align: start; }
   .stage-tools { top: 0; right: 0; height: var(--tb); flex-wrap: nowrap; align-items: center; gap: 4px; max-width: 70%; padding-right: max(8px, var(--inset-r)); overflow-x: auto; scrollbar-width: none; }
   .stage-tools > button { flex: none; }
-  .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
-  .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
   .stage-status { bottom: 6px; }
   .tooltip, .ti-live { display: none; }     /* a 44 px toolbar row has no space for either; the drug panel carries the index here */
   .show3d { position: absolute; top: 6px; right: max(8px, var(--inset-r)); }

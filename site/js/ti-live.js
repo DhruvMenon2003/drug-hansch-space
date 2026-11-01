@@ -16,9 +16,9 @@ import { setTiRow } from './detail.js';
 const URL = 'data/ti/live.json';
 /** Buckets in the little distribution strip. 40 spans are cheap to rebuild on every filter change. */
 const BUCKETS = 40;
-const SRC_WORD = { measured: 'measured', series_hansch: 'Hansch series', fallback_nonlinear: 'model', unavailable: 'none' };
+const SRC_WORD = { measured: 'measured aggregate', series_hansch: 'Hansch series', fallback_nonlinear: 'model', unavailable: 'none' };
 const AD_WORD = {
-  measured: 'both sides measured',
+  measured: 'both sides measured aggregates',
   inside: 'inside the applicability domain',
   outside: 'outside the applicability domain',
 };
@@ -136,10 +136,10 @@ export function tiRow(d) {
       : '';
   }
   const ord = t.rank === 1 ? '1st' : t.rank === 2 ? '2nd' : t.rank === 3 ? '3rd' : `${t.rank}th`;
-  const dom = { measured: 'Both sides are laboratory measurements.', inside: 'Inside the applicability domain.',
+  const dom = { measured: 'Both sides are ChEMBL-derived aggregates; assay compatibility still requires review.', inside: 'Inside the applicability domain.',
     outside: 'Outside the applicability domain: the model is answering about a molecule unlike its training set.' }[t.ad] || '';
   const out = app.tiKeep && !app.tiKeep.has(d.cid);
-  return `<div class="act-box"><span class="big">${fx(t.ti, 2)}</span> therapeutic index`
+  return `<div class="act-box"><span class="big">${fx(t.ti, 2)}</span> target–hERG p-scale margin`
     + ` <small>(activity − hERG, both pChEMBL)</small><br>`
     + `activity ${fx(t.act, 2)} <small>${esc(sourceWord(t.asrc))}${t.aq ? `, ${esc(t.aq)}` : ''}</small>`
     + ` − hERG ${fx(t.herg, 2)} <small>${esc(sourceWord(t.hsrc))}${t.hq ? `, ${esc(t.hq)}` : ''}</small><br>`
@@ -147,7 +147,7 @@ export function tiRow(d) {
     + ` <small>${esc(t.tsrc === 'chembl_mechanism' ? 'target recorded in ChEMBL' : 'target inferred from structure')}`
     + `${t.rdec === 'ambiguous' ? ', and the router\'s best matches were tied, so the target is a guess' : ''}</small><br>`
     + (out ? `<small><strong>Your own rules in the Decisions panel exclude this drug</strong>, so that rank is the published one, not yours.</small><br>` : '')
-    + `<small>${esc(dom)} A margin over the cardiac channel: not LD50 over ED50, not a clinical therapeutic index, not dose-aware.</small></div>`;
+    + `<small>${esc(dom)} Target and hERG endpoint types may differ. Not LD50/ED50, clinical TI or safety evidence; not dose-aware.</small></div>`;
 }
 
 /** Redraw the readout. Cheap enough for a pointer move: one innerHTML of about forty small nodes. */
@@ -155,13 +155,16 @@ export function renderTiLive() {
   const el = host();
   if (!el) return;
   if (!app.tiReady) { el.hidden = true; return; }
+  // The pair instrument already labels these points. Keep this duplicate stage readout for index views;
+  // the complete index/provenance row remains in Structure & sources for every selected record.
+  if (app.inquiry?.active && ![app.view.x, app.view.y, app.view.z, app.view.color].includes('ti')) { el.hidden = true; return; }
   el.hidden = false;
   const pick = current();
-  el.innerHTML = '<p class="til-head">Therapeutic index</p>'
+  el.innerHTML = '<p class="til-head">Target–hERG margin</p>'
     + (pick ? pickBlock(pick) : viewBlock())
     + strip(pick)
     + (app.tiRuleText ? `<p class="til-foot">Your rules are on — ${esc(app.tiRuleText)}. Drugs they exclude are grey.</p>` : '')
-    + '<p class="til-foot">A margin over the cardiac channel, not a clinical therapeutic index and not dose-aware.</p>';
+    + '<p class="til-foot">Exploratory p-scale contrast; target and hERG endpoint types may differ. Not clinical TI, safety evidence or dose-aware.</p>';
   viewDirty = false;
 }
 
@@ -192,6 +195,7 @@ export function loadTiLive(fetcher) {
 export function initTiLive() {
   bus.on('layout', () => { viewDirty = true; renderTiLive(); });
   bus.on('selection', renderTiLive);
+  bus.on('inquiry:changed', renderTiLive);
   bus.on('hover', renderTiLive);
   bus.on('theme', () => { if (app.tiReady) renderTiLive(); });
   bus.on('recolor', () => { if (viewDirty) renderTiLive(); });

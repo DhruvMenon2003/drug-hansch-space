@@ -171,3 +171,7 @@ copied into this repository or the site. The transitive dependencies of these pa
 
 Zdog 1.1.3 (MIT), Vanta.js 0.5.24 (MIT), Vanilla-Tilt 1.8.1 (MIT) were evaluated and are not adopted (see `docs/DECISIONS.md`). If one is adopted later:
 vendor an exact version and add its licence here.
+
+## Explorable projected labels
+
+The dot/leader/backing-plate implementation in `site/js/explorable-tags.js` adapts `tag()` from [MbappeWU/explorable](https://github.com/MbappeWU/explorable/blob/4a72bfa74af8f912eb93701cac924ab0fb68b969/gallery/planetary-gears.html), lines 455–473 at revision `4a72bfa74af8f912eb93701cac924ab0fb68b969`. Copyright (c) 2026 MbappeWU, MIT. The complete notice is preserved in `site/vendor/explorable/LICENSE`. The adaptation uses this app's Three.js camera and on-demand renderer, adds collision/bounds handling and retains actual scientific coordinates. The repository's shared-state noise-cancelling figure also informed the paired property renderer; no wave/gear physics or unrelated media were imported.
