@@ -137,3 +137,6 @@ html.no-webgl #inquiry-focus { display: none; }
 .projection-identity-mark { fill:none; stroke:var(--mark,#b95a36); stroke-width:1.5; pointer-events:none; }
 .projection-identity-mark * { vector-effect:non-scaling-stroke; }
 .inquiry-identity-marker { display:block; padding:2px 6px; border:2px dashed var(--mark,#b95a36); border-radius:50%; background:var(--panel,#f5faf9); color:var(--ink,#182b2c); font:700 13px/1.2 sans-serif; }
+.inquiry-neighbours button { grid-template-columns: 28px minmax(0,1fr) auto; }
+.inquiry-compare-action { font-size: 12px; color: var(--ink-2); }
+.inquiry-neighbours button[aria-pressed="true"] { background: rgba(39,133,139,.1); box-shadow: inset 3px 0 #27858b; }

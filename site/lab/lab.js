@@ -26,9 +26,9 @@ function load() {
 function save() { try { localStorage.setItem(KEY, JSON.stringify(mine)); } catch {} }
 
 // The archived expressions are not valid concentration or therapeutic-index models.
-// Keep raw evidence editable; never turn it into derived safety/exposure numbers.
-const fcOf = () => null;
-const tiOf = () => null;
+// Preserve exploratory arithmetic while labeling its unit and endpoint limitations.
+const fcOf = r => (r.F > 0 && r.t12 > 0 && r.dose > 0 && r.tau > 0 ? 1.44 * r.F * r.t12 * r.dose / r.tau : null);
+const tiOf = r => (r.tox > 0 && r.act > 0 ? Math.log10(r.tox) - Math.log10(1 / r.act) : null);
 
 function rebuild() {
   rows = base.map((r) => {
@@ -164,7 +164,7 @@ scene.onPointerObservable.add((pi) => {
       const r = rows[p.thinInstanceIndex];
       tip.hidden = false;
       tip.style.left = scene.pointerX + "px"; tip.style.top = scene.pointerY + "px";
-      tip.textContent = `${r.nm} · ${r.md.toLowerCase()}` + (r.fcv == null ? " · exposure not calculated" : ` · ${fmt(r.fcv)}`);
+      tip.textContent = `${r.nm} · ${r.md.toLowerCase()}` + (r.fcv == null ? " · missing expression inputs" : ` · legacy accumulation expression ${fmt(r.fcv)} mg`);
       canvas.style.cursor = "pointer";
     } else { tip.hidden = true; canvas.style.cursor = ""; }
   } else if (pi.type === B.PointerEventTypes.POINTERTAP) {
@@ -213,11 +213,15 @@ function open(i, move = true) {
 }
 
 function readout(r, flash) {
-  $("oFc").textContent = "Not calculated";
-  $("oTi").textContent = "Not calculated";
+  for (const [id, v, f] of [["oFc", r.fcv, fmt], ["oTi", r.tiv, x => x == null ? "–" : x.toFixed(2)]]) {
+    const el = $(id), txt = f(v);
+    if (flash && el.textContent !== txt) { el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 600); }
+    el.textContent = txt;
+  }
+  const missing = ["F", "t12", "dose", "tau"].filter(k => !(r[k] > 0));
   const w = $("warn");
   w.hidden = false;
-  w.textContent = "Raw inputs are retained. These mixed endpoints do not establish a therapeutic index; dose, half-life and F alone do not establish free concentration. Editing values does not validate either calculation.";
+  w.textContent = "Legacy exploratory expressions only. The log-product is unit-dependent and mixes incompatible endpoints; it is not a therapeutic index or safety ranking. The mg expression is not concentration or unbound exposure." + (missing.length ? ` Missing positive inputs for vertical placement: ${missing.join(", ")}.` : "");
 }
 
 card.addEventListener("input", (ev) => {
@@ -296,7 +300,7 @@ $("export").onclick = () => {
   const cols = ["rid", "nm", "atc", "md", "lgp", "qed", ...EDIT, "free_conc", "therapeutic_index", "derived_status", "src", "kind"];
   const out = [cols.join(",")];
   for (const r of rows.filter((r) => r.mine)) {
-    const v = { ...r, free_conc: null, therapeutic_index: null, derived_status: "withheld: incompatible endpoints and undefined exposure model", kind: r.added ? "added" : "edited" };
+    const v = { ...r, free_conc: r.fcv, therapeutic_index: r.tiv, derived_status: "Legacy fields: free_conc=1.44*F*t12*dose/tau (mg expression, not concentration); therapeutic_index=log10(tox)+log10(act) (unit-dependent log-product, incompatible endpoints, not therapeutic index or safety)", kind: r.added ? "added" : "edited" };
     out.push(cols.map((c) => { const s = v[c] == null ? "" : String(v[c]); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }).join(","));
   }
   const a = document.createElement("a");
@@ -323,6 +327,8 @@ base = J.rows.map((a) => {
   o.rid = String(o.rid); return o;
 });
 rebuild();
-// All records stay on the unplaced plane; no exposure scale is inferred.
+// Preserve the original percentile viewport for the legacy expression, not an exposure model.
+const ys = rows.map(r => r.fcv).filter(v => v > 0).map(Math.log10).sort((a, b) => a - b);
+if (ys.length) { yLo = ys[Math.floor(ys.length * .01)]; yHi = ys[Math.floor(ys.length * .99)]; if (yHi <= yLo) yHi = yLo + 1; }
 layout(true); names(); listMine();
 $("legend").append(...Object.entries(ATC).map(([k, [n, c]]) => { const s = document.createElement("span"); s.style.setProperty("--c", c); s.textContent = `${k} ${n}`; return s; }));

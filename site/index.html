@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
+<!-- Content Security Policy. A <meta> CSP cannot set frame-ancestors, report-uri or sandbox: framing protection would need an
+     HTTP header, which GitHub Pages does not let us set. The sha256 in script-src allows exactly the inline import map below
+     (an external import map is not supported by browsers); if the import map text changes, recompute it (tests/e2e/shell.spec.mjs
+     checks that it matches). style-src needs 'unsafe-inline' because three.js CSS2DRenderer and the page's JS set style attributes. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bgMiZ5XudRc3ON+iOP7TJVjZSb2mE636fa8zgcfI2dE='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Drug Hansch Space: drugs in a 3D descriptor space</title>
 <meta name="description" content="Explore drugs from a curated DrugBank-derived table as a 3D scatter of RDKit descriptors, with a guided tour of Hansch-type fits of potency on log P, molar refractivity and TPSA. Educational exploration, not medical advice.">
@@ -30,6 +34,7 @@
 <meta name="twitter:image" content="https://dhruvmenon2003.github.io/drug-hansch-space/assets/og.png">
 <meta name="twitter:image:alt" content="A 3D scatter of drugs as coloured spheres inside an axis cube.">
 
+<!-- The two faces used above the fold: Newsreader for the text, Bricolage Grotesque (one variable file, weights 500 to 800) for headings -->
 <link rel="preload" href="vendor/fonts/newsreader-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="vendor/fonts/bricolage-grotesque-normal-500-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
@@ -45,7 +50,10 @@
 <script src="vendor/gsap/gsap.min.js"></script>
 
 
-<!-- preload:start -->
+<!-- Hints for the app's own files, written by tools/check_site.py --write-preload (it checks them against the import graph). They come
+     LAST in the head on purpose: the preload scanner requests in document order, and the stylesheets and gsap above are what the
+     first paint waits for. Measured (1.6 Mbps, 150 ms, 4x CPU): hints before the stylesheets delayed first paint from 1.4 s to 2.9 s. -->
+<!-- preload:start (written by tools/check_site.py --write-preload from the import graph of js/main.js; do not edit by hand) -->
 <link rel="modulepreload" href="js/main.js">
 <link rel="modulepreload" href="js/caps.js">
 <link rel="modulepreload" href="js/fallback.js">
@@ -67,7 +75,7 @@
 <link rel="modulepreload" href="js/model.js">
 <link rel="modulepreload" href="js/domain.js">
 <link rel="modulepreload" href="js/idle.js">
-<template id="gl-preload">
+<template id="gl-preload"><!-- the 3D layer; js/main.js copies these into the head only when WebGL works -->
 <link rel="modulepreload" href="js/boot-gl.js">
 <link rel="modulepreload" href="vendor/three/three.module.min.js">
 <link rel="modulepreload" href="js/gl/scene.js">
@@ -113,6 +121,8 @@
       <a href="#method">Method</a>
     </nav>
 
+    <!-- Phones (and landscape phones): the four links collapse into one Contents button. js/layout.js drives it; without JS the
+         button does nothing and the menu stays hidden, but the page is still one scroll away from every section. -->
     <div class="contents" id="contents">
       <button type="button" id="contents-btn" class="contents-btn ghost" aria-expanded="false" aria-controls="contents-menu">Contents</button>
       <nav id="contents-menu" class="contents-menu" aria-label="Contents" hidden>
@@ -137,6 +147,8 @@
           <div class="axis-key" id="axis-key"></div>
           <div class="legend" id="legend"></div>
 
+          <!-- The live therapeutic index (js/ti-live.js) fills this once data/ti/live.json is in. It is aria-hidden
+               because it repeats, for whatever the pointer is over, what the drug panel's own index row says in full. -->
           <div class="ti-live" id="ti-live" aria-hidden="true" hidden></div>
         </div>
         <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
@@ -287,6 +299,8 @@
 
       <section id="detail" class="panel detail" aria-labelledby="detail-h" data-sheet="closed">
 
+        <!-- On phones, tablets and landscape phones this panel is a sheet fixed to the bottom of the screen (js/sheet.js): the handle
+             shows the name and three numbers and opens it half and fully. On a desktop it is an ordinary card in the text column. -->
         <div class="sheet-head" id="sheet-head">
           <button type="button" id="sheet-handle" class="sheet-handle" aria-expanded="false" aria-controls="sheet-body">
             <span class="sheet-grip" aria-hidden="true"></span>
@@ -323,6 +337,7 @@
           <ul class="atc-list" id="d-atc"></ul>
           <p class="flags" id="d-flags"></p>
 
+          <!-- The binding overlay (js/gl/binding.js) and its data arrive on the first press of this button or of the B key. -->
           <p class="bind-cue"><button type="button" id="d-bind" class="ghost" aria-expanded="false" aria-controls="bind">Show it binding <kbd>B</kbd></button><span class="small" id="d-bind-note"></span></p>
         </div>
         </div>
@@ -334,7 +349,7 @@
           <button type="button" id="qsar-open" class="ghost" aria-haspopup="dialog" aria-controls="qsar-dialog">DRD2 QSAR · validation</button>
           <button type="button" id="qsar-clear" class="ghost" hidden>Clear domain colours</button>
           <button type="button" id="qsb-open" class="ghost" aria-haspopup="dialog" aria-controls="qsb-dialog">QSAR builder · every target</button>
-          <button type="button" id="ti-open" disabled title="Withheld pending endpoint and prediction provenance review" class="ghost" aria-haspopup="dialog" aria-controls="ti-dialog">Archived index · unavailable</button><p class="small">Numeric safety ranking is withheld pending review of endpoint compatibility and measured-versus-predicted provenance. The archived source results are preserved.</p>
+          <button type="button" id="ti-open" class="ghost" aria-haspopup="dialog" aria-controls="ti-dialog">Therapeutic index · exploratory batch</button>
           <p class="small">One human target, binding assays and Ki only. Explore the reproducible model, scaffold holdout and applicability domain.</p>
         </div>
         <p class="lede">Drugs are grouped by their first ChEMBL mechanism target. Drugs up to 1000 Da are fitted. A group with at least five drugs gets the regression with the best leave-one-out q², allowing one descriptor per five drugs.</p>
@@ -408,6 +423,8 @@
 </div>
 
 
+<!-- The ligand-binding overlay. Empty until js/gl/binding.js is loaded on first use; the geometry is read from the PDB
+     co-crystal in data/binding/<target>.json, never computed here. -->
 <div class="bind" id="bind" hidden role="dialog" aria-modal="true" aria-labelledby="bind-h">
   <div class="bind-box">
     <div class="bind-head">
@@ -620,7 +637,7 @@
     <p><a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">three.js</a> 0.169.0 (MIT), <a href="https://gsap.com/standard-license/" target="_blank" rel="noopener noreferrer">GSAP</a> 3.12.5 (GSAP Standard "No Charge" License), <a href="https://github.com/reymond-group/smilesDrawer" target="_blank" rel="noopener noreferrer">SmilesDrawer</a> 2.1.7 (MIT). Fonts, served from this site: Bricolage Grotesque (Copyright 2022 The Bricolage Grotesque Project Authors), IBM Plex Mono (Copyright 2017 IBM Corp.), Newsreader (Copyright 2020 The Newsreader Project Authors), all under the <a href="https://openfontlicense.org/" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a>; the notices are in <a href="vendor/fonts/LICENSES.md">vendor/fonts/LICENSES.md</a>. All third-party notices: <a href="https://github.com/DhruvMenon2003/drug-hansch-space/blob/main/THIRD_PARTY_LICENSES.md" target="_blank" rel="noopener noreferrer">THIRD_PARTY_LICENSES.md</a>. This page makes no request to any third-party server.</p>
 
     <h3>About the data</h3>
-    <p>Drug Hansch Space is an educational exploration of 759 drugs. It is not medical advice, does not recommend, rank, dose or diagnose, and is not a toxicity, safety or efficacy predictor. Toxicity is not part of the data. The 3D positions come from descriptors computed with RDKit from each drug's structure, not from experiments on that drug. The Hansch-type fits relate the median ChEMBL pChEMBL potency to log P, molar refractivity and TPSA within groups of drugs that share a mechanism target. Those groups are not congeneric series, the potencies are medians across different assays, and TPSA is a whole-molecule polarity proxy, so the fits are exploratory; the page labels each one "internal fit signal; external predictivity unestablished", "weak" or "not predictive", and most are weak or not predictive. No model on this page predicts how a drug behaves in a person. ATC groups classify drugs for drug-utilisation statistics; membership of a group does not mean therapeutic equivalence or a difference in effectiveness. Routes of administration are summaries of WHO codes and US label listings, not dosing or labelling information, and the DailyMed "in use" labelling may differ from the FDA's own labelling. Source records can be incomplete, outdated or wrong. The site is provided "as is" without warranty and is not affiliated with or endorsed by DrugBank, EMBL-EBI, WHO or its Collaborating Centre, NCBI/NLM, the FDA or any other source named.</p>
+    <p>Drug Hansch Space is an educational exploration of 759 drugs. It is not medical advice, does not provide treatment advice or clinical safety rankings. Archived toxicity inputs and measured or predicted hERG values are labelled separately. The 3D positions come from descriptors computed with RDKit from each drug's structure, not from experiments on that drug. The Hansch-type fits relate the median ChEMBL pChEMBL potency to log P, molar refractivity and TPSA within groups of drugs that share a mechanism target. Those groups are not congeneric series, the potencies are medians across different assays, and TPSA is a whole-molecule polarity proxy, so the fits are exploratory; the page labels each one "internal fit signal; external predictivity unestablished", "weak" or "not predictive", and most are weak or not predictive. No model on this page predicts how a drug behaves in a person. ATC groups classify drugs for drug-utilisation statistics; membership of a group does not mean therapeutic equivalence or a difference in effectiveness. Routes of administration are summaries of WHO codes and US label listings, not dosing or labelling information, and the DailyMed "in use" labelling may differ from the FDA's own labelling. Source records can be incomplete, outdated or wrong. The site is provided "as is" without warranty and is not affiliated with or endorsed by DrugBank, EMBL-EBI, WHO or its Collaborating Centre, NCBI/NLM, the FDA or any other source named.</p>
     <p>Non-commercial, educational use. A licence for this project's own code and data has not been chosen yet; each source above keeps its own terms.</p>
   </div>
 </footer>
@@ -632,123 +649,15 @@
 
 
 
+<!-- The therapeutic-index overlay: the ranked batch, where each number came from, and the five OECD principles with
+     this run's own figures. Empty until js/ti.js is loaded on first use; the data is site/data/ti/summary.json,
+     written by ti/rank.py. -->
 <dialog id="ti-dialog" class="qsar-dialog" aria-labelledby="ti-title">
   <div class="qsar-head">
-    <div><p class="eyebrow">OECD QSAR workflow · ranked batch</p><h2 id="ti-title">Therapeutic index</h2></div>
+    <div><p class="eyebrow">Archived QSAR workflow · ranked batch</p><h2 id="ti-title">Therapeutic index · exploratory</h2></div>
     <form method="dialog"><button type="submit" class="ghost" autofocus>Close</button></form>
   </div>
   <p id="ti-status">Loading the ranked batch…</p>
-  <div id="ti-body" hidden>
-    <p class="lede" id="ti-lede"></p>
-    <p class="foot-disclaimer"><strong>Not a clinical therapeutic index.</strong> This is an in&nbsp;vitro
-      selectivity margin over one liability (the hERG cardiac channel), for putting a batch of molecules in order.
-      It is not LD50/ED50, it says nothing about dose, and it is not evidence that anything here is safe in a
-      person.</p>
-
-    <div class="ti-tabs" role="tablist" aria-label="Therapeutic index views">
-      <button type="button" role="tab" id="ti-t-rank" aria-controls="ti-p-rank" aria-selected="true">Ranked batch</button>
-      <button type="button" role="tab" id="ti-t-route" aria-controls="ti-p-route" aria-selected="false">Routing</button>
-      <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
-      <button type="button" role="tab" id="ti-t-decide" aria-controls="ti-p-decide" aria-selected="false">Decisions</button>
-      <button type="button" role="tab" id="ti-t-expose" aria-controls="ti-p-expose" aria-selected="false">Exposure</button>
-      <button type="button" role="tab" id="ti-t-search" aria-controls="ti-p-search" aria-selected="false">Model search</button>
-      <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
-    </div>
-
-    <section role="tabpanel" id="ti-p-rank" aria-labelledby="ti-t-rank">
-      <p class="small">Sorted by the margin, widest first. Each whole number is a tenfold difference: an index of
-        2.0 means the molecule grips its intended target about a hundred times more tightly than it grips the
-        heart channel. Rows marked <em>outside</em> fall beyond the model's applicability domain and should be
-        read as suggestions at best.</p>
-      <div class="field"><label for="ti-filter">Show</label><select id="ti-filter">
-        <option value="all">every ranked molecule</option>
-        <option value="inside">inside the applicability domain only</option>
-        <option value="measured">measured on both sides, no prediction</option>
-        <option value="series">from a validated Hansch series model</option>
-      </select></div>
-      <p id="ti-count" class="small"></p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Ranked molecules">
-        <table class="stats"><thead><tr>
-          <th scope="col">Rank in target</th><th scope="col">Molecule</th><th scope="col">Target</th>
-          <th scope="col">Activity</th><th scope="col">hERG</th><th scope="col">Index</th>
-          <th scope="col">Domain</th>
-        </tr></thead><tbody id="ti-rows"></tbody></table>
-      </div>
-    </section>
-
-    <section role="tabpanel" id="ti-p-route" aria-labelledby="ti-t-route" hidden>
-      <p class="small" id="ti-route-rule"></p>
-      <p class="small">A molecule's activity may only come from a model fitted on its own intended target, with the
-        same assay type and the same organism. There is no falling back to a related protein and none to a
-        general model across targets. A number from the wrong target's model is worse than no number, because on
-        the page it looks exactly like a right one. So where no model applies, the cell is empty and the row says
-        why.</p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Where each number came from">
-        <table class="stats"><thead><tr><th scope="col">Source</th><th scope="col">What it means</th>
-          <th scope="col">Molecules</th></tr></thead><tbody id="ti-sources"></tbody></table>
-      </div>
-      <h3>Left out, and why</h3>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Molecules not ranked">
-        <table class="stats"><thead><tr><th scope="col">Reason</th><th scope="col">Molecules</th></tr></thead>
-        <tbody id="ti-excluded"></tbody></table>
-      </div>
-      <h3>Models, one per target</h3>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Model report per target">
-        <table class="stats"><thead><tr><th scope="col">Target</th><th scope="col">Compounds</th>
-          <th scope="col">Assay</th><th scope="col">Series validated</th>
-          <th scope="col">Fallback q²</th><th scope="col">Shuffled q²</th></tr></thead>
-        <tbody id="ti-models"></tbody></table>
-      </div>
-    </section>
-
-    <section role="tabpanel" id="ti-p-series" aria-labelledby="ti-t-series" hidden>
-      <p class="small">A Hansch model is a model of a <em>series</em>, not of a target: a set of molecules sharing
-        one chemical core, where only the decorations change. Each of these cleared every gate — enough
-        compounds, genuinely related to each other, a fit, an honest leave-one-out score, and a shuffled-label
-        control. The equation is readable, which is the whole point of the method.</p>
-      <p id="ti-series-note" class="small"></p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Validated Hansch series models">
-        <table class="stats"><thead><tr><th scope="col">Target</th><th scope="col">n</th>
-          <th scope="col">Similarity</th><th scope="col">Terms</th><th scope="col">r²</th>
-          <th scope="col">q² (leave one out)</th><th scope="col">log P optimum</th></tr></thead>
-        <tbody id="ti-series"></tbody></table>
-      </div>
-    </section>
-
-    <section role="tabpanel" id="ti-p-decide" aria-labelledby="ti-t-decide" hidden>
-      <div id="ti-decide-intro"></div>
-      <p id="ti-decide-status" class="small">Loading the whole ranked batch…</p>
-      <div id="ti-decide-body" hidden>
-        <div class="controls" id="ti-decide-rules"></div>
-        <p><button type="button" id="ti-decide-reset" class="ghost">Back to the published rules</button></p>
-        <div id="ti-decide-out"></div>
-        <p id="ti-decide-say" class="small"></p>
-        <div id="ti-decide-tables"></div>
-      </div>
-    </section>
-
-    <section role="tabpanel" id="ti-p-expose" aria-labelledby="ti-t-expose" hidden>
-      <div id="ti-exp-intro"></div>
-      <p id="ti-exp-status" class="small" hidden></p>
-      <div id="ti-exp-body" hidden>
-        <div class="controls" id="ti-exp-controls"></div>
-        <div id="ti-exp-out"></div>
-      </div>
-    </section>
-
-    <section role="tabpanel" id="ti-p-search" aria-labelledby="ti-t-search" hidden>
-      <div id="ti-search-intro"></div>
-      <p id="ti-search-status" class="small" hidden></p>
-      <div id="ti-search-body" hidden>
-        <div class="controls" id="ti-search-controls"></div>
-        <div id="ti-search-out"></div>
-      </div>
-    </section>
-
-    <section role="tabpanel" id="ti-p-oecd" aria-labelledby="ti-t-oecd" hidden>
-      <div id="ti-oecd"></div>
-    </section>
-  </div>
 </dialog>
 
 <script type="module" src="js/main.js"></script>

@@ -26,7 +26,9 @@ test('slice changes geometry sizes and counts without changing records or colour
  const after=await page.evaluate(()=>({n:window.__hansch.app.visible.length,mode:window.__hansch.app.view.color,data:JSON.stringify(window.__hansch.app.drugs.map(d=>({cid:d.cid,d:d.d,act:d.act})))}));
  expect(after).toEqual(before);await expect(page.locator('#inquiry-slice-result')).toContainText('above');
  await page.click('[data-inquiry-map="pca"]');await expect(page.locator('#inquiry-slice')).toBeDisabled();
- await expect(page.locator('#ti-live')).toBeHidden();expect(await page.locator('#color-by option[value="ti"]').count()).toBe(0);
+ await page.waitForFunction(()=>window.__hansch.app.tiReady);
+ await page.selectOption('#color-by','ti');
+ await expect(page.locator('#ti-live')).toBeVisible();expect(await page.locator('#color-by option[value="ti"]').count()).toBe(1);
 });
 test('inquiry calculations and source detail remain available with WebGL disabled',async({page})=>{
  await page.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(t,...args){return /webgl/i.test(t)?null:get.call(this,t,...args)}});
@@ -57,6 +59,9 @@ test('inquiry calculations and source detail remain available with WebGL disable
 test('concrete caffeine/theophylline comparison exposes stored values and missing activity',async({page})=>{
  await ready(page);
  await page.click('[data-neighbour="2153"]');
+ await expect(page.locator('#inquiry-compare')).not.toHaveAttribute('open');
+ await expect(page.locator('#inquiry-pair')).toBeVisible();
+ await page.locator('#inquiry-compare summary').click();
  await expect(page.locator('#inquiry-compare')).toHaveAttribute('open','');
  await expect(page.locator('#inquiry-comparison')).toContainText('10.86');
  await expect(page.locator('#inquiry-comparison')).toContainText('Caffeine has no activity aggregate in this snapshot');
@@ -74,4 +79,41 @@ test('concrete caffeine/theophylline comparison exposes stored values and missin
  expect(await page.locator('#inquiry-comparison a[href="https://pubchem.ncbi.nlm.nih.gov/compound/2153"]').count()).toBe(1);
  const actual=await page.evaluate(()=>{const h=window.__hansch;return [h.app.byCid.get(2519).d.tpsa,h.app.byCid.get(2153).d.tpsa]});
  expect(actual).toEqual([61.82,72.68]);
+});
+
+test('pair values and selected identity persist across maps with keyboard descriptor controls @mobile',async({page})=>{
+ const errors=[];
+ page.on('pageerror',error=>errors.push(error.message));
+ page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
+ await ready(page);
+ await page.click('[data-neighbour="2153"]');
+ const pair=page.locator('#inquiry-pair'), disclosure=page.locator('#inquiry-compare');
+ await expect(disclosure).not.toHaveAttribute('open');
+ await expect(pair.locator('[data-pair-name="a"]')).toHaveText('Caffeine');
+ await expect(pair.locator('[data-pair-name="b"]')).toHaveText('Theophylline');
+ const controls=pair.getByRole('group',{name:'Descriptor to compare'});
+ for(const [name,key,a,b,delta] of [
+  ['TPSA','tpsa','61.820 Å²','72.680 Å²','+10.860 Å²'],
+  ['log P','logp','−1.029','−1.040','−0.011'],
+  ['Molar refractivity','mr','51.196 cm³/mol','46.576 cm³/mol','−4.620 cm³/mol'],
+ ]){
+  const button=controls.getByRole('button',{name,exact:true});
+  await button.focus();await page.keyboard.press('Enter');
+  await expect(button).toHaveAttribute('aria-pressed','true');
+  await expect(controls.locator('[aria-pressed="true"]')).toHaveCount(1);
+  await expect(pair.locator('[data-pair-value="a"]')).toHaveText(a);
+  await expect(pair.locator('[data-pair-value="b"]')).toHaveText(b);
+  await expect(pair.getByRole('status')).toContainText(delta);
+  await expect(pair.locator('.pair-ruler').getByRole('img')).toHaveAccessibleName(/Pair window, not population scale/);
+  expect(await page.evaluate(()=>window.__hansch.app.inquiry.descriptor)).toBe(key);
+ }
+ for(const map of ['pca','structure','properties']){
+  await page.click(`[data-inquiry-map="${map}"]`);
+  await expect(page.locator(`[data-inquiry-map="${map}"]`)).toHaveAttribute('aria-pressed','true');
+  await expect(pair.locator('[data-pair-name="b"]')).toHaveText('Theophylline');
+  await expect(pair.getByRole('status')).toContainText('−4.620 cm³/mol');
+  await expect(disclosure).not.toHaveAttribute('open');
+  expect(await page.evaluate(()=>{const h=window.__hansch;return {pin:h.app.inquiry.cid,comparison:h.app.inquiry.comparisonCid,selected:h.app.drugs[h.app.selected].cid,descriptor:h.app.inquiry.descriptor};})).toEqual({pin:2519,comparison:2153,selected:2153,descriptor:'mr'});
+ }
+ expect(errors).toEqual([]);
 });

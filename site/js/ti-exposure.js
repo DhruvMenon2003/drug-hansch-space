@@ -30,17 +30,13 @@ function routesOf(d) {
 function intro() {
   const box = $('#ti-exp-intro');
   if (!box) return;
-  box.innerHTML = `<p class="small">A ratio of two dish measurements cannot tell anyone whether a dose is safe. This
-      can start to: give a drug a dose, an interval and a bioavailability for the route it is given by, and its own
-      measured human clearance and free fraction turn that into the free concentration in plasma at steady state —
-      the concentration the heart channel actually sees. The gap between that and the hERG potency is the margin
-      that matters.</p>
-    <p class="small"><strong>Read these as averages, and as yours.</strong> This is the average concentration across
-      a dosing interval, not the peak; a peak is higher, and the margin regulators ask about is a peak margin, so
-      every number here is the kinder of the two. Clearance and the free fraction are measured human values from the
-      dataset. The dose and the interval are yours. So is the bioavailability on every route but the intravenous
-      one, which is 1 because the dose is put straight into the blood — nothing in this dataset measures F, and a
-      guessed F moves the margin one for one, which is why the sensitivity is printed with it.</p>`;
+  box.innerHTML = `<p class="small">Explore an average steady-state exposure scenario, not a safe-dose recommendation.
+      Css,total = F × dose / (CL × interval); Css,unbound = fu × Css,total. Clearance is converted from
+      mL/min/kg to L/h using the entered body weight; molecular weight converts mg/L to mol/L.</p>
+    <p class="small">This assumes linear, time-invariant systemic clearance, constant plasma binding and steady state.
+      Stored human PK values are experimental inputs, not individual patient measurements. Dose, interval and
+      non-intravascular F are your assumptions (F initially 100%). The estimate is an interval average, not Cmax,
+      cardiac-site concentration or a clinical safety assessment.</p>`;
 }
 
 function controls() {
@@ -88,7 +84,7 @@ function table(d) {
   }).join('');
   return `<div class="table-wrap" tabindex="0" role="region" aria-label="Exposure by route">
     <table class="stats sources-table"><thead><tr><th scope="col">Route</th><th scope="col">Bioavailability</th>
-      <th scope="col">Free plasma, steady state</th><th scope="col">Margin over hERG</th>
+      <th scope="col">Estimated average unbound plasma</th><th scope="col">Margin over hERG</th>
       <th scope="col">Against the activity</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
@@ -111,27 +107,25 @@ export function render() {
   if (!d) { out.innerHTML = '<p class="small">Pick a drug above.</p>'; return; }
   const t = d.ti, pk = t.pk;
   out.innerHTML = `<dl class="kv decide-figs">
-      <div><dt>Clearance</dt><dd><strong>${fx(pk.cl, 2)}</strong> <small>mL/min/kg, measured</small></dd></div>
-      <div><dt>Free fraction</dt><dd><strong>${frac(pk.fu)}</strong> <small>measured, ${esc(pctOf(pk.fu))} unbound</small></dd></div>
-      <div><dt>hERG</dt><dd><strong>${fx(t.herg, 2)}</strong> <small>pChEMBL, ${esc(t.hsrc === 'measured' ? 'measured' : 'modelled')}</small></dd></div>
-      <div><dt>Activity</dt><dd><strong>${fx(t.act, 2)}</strong> <small>pChEMBL at ${esc(t.tname)}</small></dd></div>
+      <div><dt>Clearance</dt><dd><strong>${fx(pk.cl, 2)}</strong> <small>mL/min/kg, stored experimental input</small></dd></div>
+      <div><dt>Free fraction</dt><dd><strong>${frac(pk.fu)}</strong> <small>stored experimental input, ${esc(pctOf(pk.fu))} unbound</small></dd></div>
+      <div><dt>hERG</dt><dd><strong>${fx(t.herg, 2)}</strong> <small>pChEMBL, ${esc(t.hsrc === 'measured' ? 'measured aggregate' : 'predicted')}</small></dd></div>
+      <div><dt>Activity</dt><dd><strong>${fx(t.act, 2)}</strong> <small>p-scale, ${esc(t.asrc === 'measured' ? 'measured aggregate' : 'predicted')} at ${esc(t.tname)}</small></dd></div>
     </dl>`
     + (t.tid === (app.tiMeta?.liability_target || 'CHEMBL240')
       ? `<p class="small"><strong>This drug's own target is the hERG channel.</strong> Its activity and its liability
-         are the same measurement, so the index is zero by construction and the two right-hand columns below carry
+         refer to the same endpoint, so the index is zero by construction and the two right-hand columns below carry
          the same number. The exposure is still worth reading; the margin is not.</p>`
       : '')
     + table(d)
     + `<p class="small">Both right-hand columns are log units against the same free concentration: the margin is how
-       far it sits below the hERG number, and the last column how far it sits below the concentration this molecule
-       needs in a dish to act on its target — positive there is ordinary, and is a statement about an assay rather
+       far it sits below the hERG number, and the last column how far it sits below the recorded target potency (aggregate or prediction) — positive there is ordinary, and is a statement about an assay rather
        than about whether the drug works.</p>`
-    + `<p class="small">A margin of ${fx(shift(30), 2)} is a thirtyfold gap, the bar usually quoted for a peak
-       concentration; these are averages, so the same number here is the weaker claim. Every assumption moves the
-       margin one for one in log units: halving the dose or the bioavailability adds ${fx(shift(2), 2)}, a clearance
-       half what the table says subtracts the same. The potencies on both sides were measured in a dish at total
-       concentration, in a buffer whose protein content is not this plasma's, which is the join this arithmetic
-       cannot make tight.</p>`;
+    + `<p class="small">The hERG gap is −log10(Css,unbound) − p(hERG), or log10(hERG potency concentration / Css,unbound).
+       A gap of ${fx(shift(30), 2)} means thirtyfold under these assumptions, not a safety threshold.
+       Halving dose or F adds ${fx(shift(2), 2)}; halving clearance subtracts it. Target and hERG values may be
+       predictions or measured aggregates with different assay endpoints. Plasma unbound concentration and
+       nominal assay concentration are not automatically comparable.</p>`;
 }
 
 function readNumber(id, key, min) {

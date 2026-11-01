@@ -8,7 +8,7 @@ import { selectDrug } from './view.js';
 // None of it is fetched on the first load.
 /**
  * The derived columns the data table offers on request: QED for every drug (data/props.json) and, for the H2-antagonist
- * cohort, a therapeutic index and a free concentration per administration mode (data/cohort_A02BA.json). Both files are
+ * cohort, legacy exploratory scores per administration mode (data/cohort_A02BA.json). Both files are
  * optional: when one is missing its columns stay empty and the table says so.
  */
 export const side = { ready: false, qed: new Map(), rows: new Map(), modes: new Map(), defs: new Map(), formulas: {}, missing: [] };
@@ -52,13 +52,13 @@ export function modesOf(d) {
 
 /**
  * The columns behind "Extra columns": QED for every drug (data/props.json) and, for the drugs the H2-antagonist cohort
- * covers, retained route-specific records (data/cohort_A02BA.json). Invalid derived TI and exposure values are withheld. Both files
+ * covers, retained route-specific records (data/cohort_A02BA.json). Archived derived values are shown as legacy expressions, not validated quantities. Both files
  * load on the first tick of the box, so neither is in the first load. A drug a file does not cover shows a dash.
  */
 const EXTRA = [
   { key: 'qed', label: 'QED', dec: 2, get: d => side.qed.get(d.cid), note: () => side.defs.get('qed')?.long },
-  { key: 'ti', label: 'Therapeutic index · withheld', dec: 2, get: () => null, note: () => 'Not calculated: the archived lethal and active endpoints are not comparable.' },
-  { key: 'fc', label: 'Free concentration · withheld', dec: 1, get: () => null, note: () => 'Not calculated: the archived expression does not establish a concentration or unbound exposure.' },
+  { key: 'ti', label: 'Legacy log-product score', dec: 2, get: (d, mode) => sideRow(d.cid, mode)?.ti, note: () => 'log10(tox numeric) + log10(act numeric), using archived endpoint conventions (activity: route DDD / 70 kg; toxicity: see source). Unit-dependent dimensional log-product; incompatible endpoints, not therapeutic index or safety.' },
+  { key: 'fc', label: 'Legacy accumulation expression (mg)', dec: 1, get: (d, mode) => sideRow(d.cid, mode)?.free_conc, note: () => '1.44 × F × t½ × dose / interval. Numerical mg expression under stored input units; not concentration or unbound exposure.' },
 ];
 /** The sort the reader chose. The default is the name, ascending, which is the order the table has always had. */
 let sort = { key: 'name', dir: 1 };
@@ -106,7 +106,7 @@ function tableNote(extra, n) {
   if (!extra) { el.textContent = ''; el.hidden = true; return; }
   const miss = side.missing.length ? ` Not loaded: ${side.missing.join(', ')}.` : '';
   el.hidden = false;
-  el.textContent = `${n} rows. QED from data/props.json. Therapeutic index and free concentration are withheld (dashes): the archived endpoints and exposure expression are not scientifically comparable. Source records and route-specific rows remain available.${miss}`;
+  el.textContent = `${n} rows. QED from data/props.json. Legacy columns preserve archived arithmetic: log10(tox) + log10(act), a unit-dependent log-product of incompatible endpoints, and 1.44 × F × t½ × dose / interval (mg expression). Neither is validated therapeutic index, concentration or safety. Dashes mean no matching route record, missing inputs, or a source-withheld score (for example a nonlethal toxicity endpoint).${miss}`;
 }
 
 /** Bind the table's listeners and keep it in step with layout and selection. Runs last on `layout`, as it always did. */

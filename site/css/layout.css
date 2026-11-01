@@ -1,4 +1,24 @@
-/* Responsive layout: stage, navigation, detail sheet and no-WebGL workbench. */
+/* css/layout.css
+   Responsive layout: the collapsing header and its Contents menu, the stage height policy, the expand (full-screen) view, the
+   drug panel as a bottom sheet, landscape phones, the Explore groups, the back-to-top button and the scroll-progress bar
+   (owned by the mobile layout stage; js/layout.js and js/sheet.js drive the classes and variables used here).
+
+   Layout is chosen by SHAPE, not by width alone:
+     stacked      (max-width: 700px) and (orientation: portrait)         stage on top, text under it       phones
+     landscape    (orientation: landscape) and (max-height: 520px)       two columns, static slim header    landscape phones
+     two columns  everything else (from 701 px)                          sticky stage beside the text       tablets, desktops
+   The drug panel is a sheet on everything except a mouse-driven window of at least 701 x 521 px, where it stays a card in the text column.
+
+   JS-driven state (all optional: without JS the page is the plain stacked or two-column layout with the stage at its tour height):
+     body.layout-ready          js/layout.js has started (reveals the Contents button, hides the inline navigation on phones)
+     body[data-stage]           tour | explore | read: which part of the page is under the reading line (stacked layout)
+     body[data-stage-size]      tour | explore | strip: the stage height class that follows from it (strip = 56 px legend bar)
+     body.header-hidden         the header has slid away on scroll-down (stacked layout)
+     body.stage-full            the stage is expanded over the whole screen
+     body.kb                    a text field or select has focus (the soft keyboard is up): the stage becomes the strip
+     #detail[data-sheet]        closed | peek | half | full
+   Custom properties set by JS on <html>: --stage-top (header height), --sticky-stack (header + stage on phones, header elsewhere),
+   --jump-pad (scroll padding while a jump link scrolls), --sheet-h (height of the open sheet), --tools-w (width of the stage buttons). */
 
 /* ---------------------------------------------------------------------------------------------------------------- tokens */
 :root { --svh: 1vh; --stage-strip: 56px; --sheet-peek: 96px; }
@@ -104,11 +124,12 @@ select { text-overflow: ellipsis; }
 }
 
 /* Tablets and narrow windows: the stage column is 400 to 700 px wide, so Reset, Spin and Expand become icons (as on phones) and the axis key keeps clear of them */
+/* Every width needs the same icons: accessible labels are clipped above. */
+.stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
+.stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
 @media (min-width: 701px) and (max-width: 1279px) {
   .hud { max-width: calc(100% - 200px); }
   .stage-tools { gap: 4px; }
-  .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
-  .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
 }
 
 /* ---------------------------------------------------------------------------------------------------------------- compact stages: phones in portrait and landscape
@@ -126,8 +147,6 @@ select { text-overflow: ellipsis; }
   .legend > span { flex: none; white-space: nowrap; scroll-snap-align: start; }
   .stage-tools { top: 0; right: 0; height: var(--tb); flex-wrap: nowrap; align-items: center; gap: 4px; max-width: 70%; padding-right: max(8px, var(--inset-r)); overflow-x: auto; scrollbar-width: none; }
   .stage-tools > button { flex: none; }
-  .stage-tools > #btn-reset, .stage-tools > #btn-spin, .stage-tools > #btn-expand { width: var(--target); padding: 0; position: relative; }
-  .stage-tools > #btn-reset::before, .stage-tools > #btn-spin::before, .stage-tools > #btn-expand::before { content: ""; position: absolute; inset: 11px; background: currentColor; -webkit-mask: var(--icon) center / contain no-repeat; mask: var(--icon) center / contain no-repeat; }
   .stage-status { bottom: 6px; }
   .tooltip, .ti-live { display: none; }     /* a 44 px toolbar row has no space for either; the drug panel carries the index here */
   .show3d { position: absolute; top: 6px; right: max(8px, var(--inset-r)); }
@@ -258,47 +277,3 @@ select { text-overflow: ellipsis; }
 .bench-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
 #d-bench-open { min-height: 44px; }
 .bench button { min-height: 44px; }
-
-/* The no-WebGL experience is a reading/workbench layout, not an empty plot column.
-   Keep the notice in normal flow so the usable search, tables and controls own the screen. */
-html.no-webgl { scroll-padding-top: calc(var(--stage-top, 64px) + 16px); }
-html.no-webgl .app { display: block; }
-html.no-webgl .masthead { position: sticky; top: 0; transform: none !important; }
-html.no-webgl .layout { display: block; }
-html.no-webgl .stage {
-  position: static; width: min(100%, 1120px); height: auto; min-height: 0;
-  margin: 0 auto; padding: 24px 28px 0; border: 0; background: none;
-  transform: none !important; pointer-events: auto;
-}
-html.no-webgl .stage-card {
-  position: static; inset: auto; min-height: 0; padding: 20px 24px;
-  border: 1px solid var(--line); border-left: 3px solid var(--accent);
-  border-radius: 12px; gap: 12px; background: var(--panel);
-}
-html.no-webgl .stage-card h2 { font-size: 1.15rem; }
-html.no-webgl .stage-card p { max-width: 80ch; font-size: 1rem; line-height: 1.55; }
-html.no-webgl .rail {
-  width: min(100%, 1120px); margin: 0 auto; padding: 24px 28px 48px;
-  border-left: 0; gap: 24px;
-}
-html.no-webgl .tour { gap: 24px; }
-html.no-webgl .step {
-  min-height: 0; padding: 24px 0; width: 100%; max-width: 78ch; margin-inline: auto;
-  --step-ink: var(--ink-2); --step-head: var(--ink);
-}
-html.no-webgl .step + .step { border-top: 1px solid var(--line); }
-html.no-webgl .panel { max-width: none; }
-html.no-webgl #explore > .lede, html.no-webgl #method > p { max-width: 78ch; }
-@media (min-width: 900px) {
-  html.no-webgl .stage-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 24px; }
-  html.no-webgl .stage-card h2 { grid-column: 1; }
-  html.no-webgl .stage-card > [data-fallback-text] { grid-column: 1; }
-  html.no-webgl .stage-card-actions { grid-column: 2; grid-row: 1 / span 2; }
-}
-@media (max-width: 700px) {
-  html.no-webgl .stage { padding: 16px 16px 0; }
-  html.no-webgl .stage-card { padding: 18px; }
-  html.no-webgl .rail { padding: 20px 16px 40px; }
-  html.no-webgl .step { padding-block: 20px; }
-}
-html.no-webgl .step .hint { display: none; }

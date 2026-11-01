@@ -33,6 +33,7 @@ export function renderFrame(t = 0, dt = 0) {
   if (!points || stage.collapsed) return false;      // collapsed: the stage is a legend strip, nothing is drawn
   if (dt > 0) { quality.active(); quality.sample(dt, true); }   // may re-allocate the buffer: before drawing, never after
   const moved = controls.update();
+  const camMoved = cameraMoved();
   const D = stage.dirty, animating = anim.t < 1, C = anim.cur;
   if (animating || D.inst || D.t !== anim.t) {
     const n = app.drugs.length, F = anim.from, T = anim.to, a = anim.t;
@@ -44,14 +45,14 @@ export function renderFrame(t = 0, dt = 0) {
     stage.recolor?.();
     D.inst = true;
   }
-  if (animating || D.inst || D.t !== anim.t) {
+  if (animating || D.inst || D.t !== anim.t || (camMoved && app.inquiry?.active && app.inquiry.focused)) {
     const { drugAt } = stage;
     for (let s = 0, count = points.count; s < count; s++) {
       const i = drugAt[s], k = i * 4;
       let sc = C[k + 3];
       if (app.inquiry?.active && app.inquiry.focused) {
         const distance = Math.hypot(C[k]-camera.position.x, C[k+1]-camera.position.y, C[k+2]-camera.position.z);
-        sc *= Math.min(1, Math.max(0.2, 6*distance*Math.tan(camera.fov*Math.PI/360)/(Math.max(1,stage.renderer.domElement.clientHeight)*0.22)));
+        sc *= Math.min(1, 6*distance*Math.tan(camera.fov*Math.PI/360)/(Math.max(1,stage.renderer.domElement.clientHeight)*0.22));
       }
       // Slice changes size only: preserve the chosen colour encoding and visible population.
       if (app.inquiry?.active && app.inquiry.slice != null && [app.view.x, app.view.y, app.view.z].includes('tpsa') && app.drugs[i].d.tpsa > app.inquiry.slice) sc *= 0.32;
@@ -69,10 +70,10 @@ export function renderFrame(t = 0, dt = 0) {
     ring.scale.setScalar(app.inquiry?.active && app.inquiry.focused ? 0.2 : 1);
     ring.position.set(C[k], C[k + 1], C[k + 2]);
     ring.quaternion.copy(camera.quaternion);
-    ring.visible = selLabel.visible = true;
+    ring.visible = true;
+    selLabel.visible = !(app.inquiry?.active && app.inquiry.comparisonCid != null && [app.inquiry.cid, app.inquiry.comparisonCid].includes(app.drugs[app.selected].cid));
     selLabel.position.copy(ring.position);
   } else ring.visible = selLabel.visible = false;
-  const camMoved = cameraMoved();
   stage.renderer.render(stage.scene, camera);
   stage.labels.render(stage.scene, camera);
   if (D.labels || camMoved) { D.labels = false; tidyLabels(); }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Drug Bench</title>
-<meta name="description" content="Inspect and annotate route-specific source records. Derived therapeutic index and free concentration are withheld pending scientific review.">
+<meta name="description" content="Explore and annotate route-specific records with explicitly labeled legacy arithmetic, not validated exposure or safety models.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../vendor/fonts/fonts.css">
 <link rel="stylesheet" href="lab.css">
@@ -19,16 +19,16 @@
 <main>
   <section class="intro">
     <h1>The drug bench</h1>
-    <p>Each sphere is one drug given one way. This bench preserves route-specific source inputs and your annotations. Therapeutic index and free concentration are not calculated: the archived endpoints are not comparable, and the exposure expression does not establish a concentration.</p>
-    <p>You can record a value and its source, then export your edits. All records remain on a flat plane; vertical position has no exposure meaning. QED is a computed drug-likeness descriptor, not measured toxicity or safety.</p>
+    <p>Each sphere is one drug given one way. This bench preserves route-specific source inputs and your annotations. Edit inputs to explore the original arithmetic and watch positions change. These legacy expressions are not validated therapeutic index or concentration models.</p>
+    <p>You can record a value and its source, then export your edits. Vertical position shows the log of a legacy accumulation expression, with missing inputs on the floor; sphere size uses the legacy log-product score, not safety. QED is a computed drug-likeness descriptor, not measured toxicity or safety.</p>
   </section>
 
   <section class="bench">
     <div class="stage">
-      <canvas id="scene" aria-label="Map of drug-route records: lipophilicity across and QED in depth; vertical position has no scientific meaning"></canvas>
+      <canvas id="scene" aria-label="Map of drug-route records: lipophilicity across and QED in depth; height shows log legacy accumulation expression, not concentration"></canvas>
       <div class="axes" aria-hidden="true">
         <span class="ax x">greasier →</span>
-        <span class="ax y">vertical position unassigned</span>
+        <span class="ax y">log legacy accumulation ↑</span>
         <span class="ax z">more drug-like ↗</span>
       </div>
       <div id="tip" class="tip" hidden></div>
@@ -57,8 +57,8 @@
         </div>
         <label class="wide">Where the numbers came from <small>DOI, PMID or citation</small><input name="src" placeholder="doi:10.…"></label>
         <output class="readout">
-          <div><span>Free concentration</span><b id="oFc">Not calculated</b><i>Exposure model and compatible units required</i></div>
-          <div><span>Therapeutic index</span><b id="oTi">Not calculated</b><i>Comparable experimental endpoints required</i></div>
+          <div><span>Legacy accumulation expression (mg)</span><b id="oFc">–</b><i>1.44 × F × t½ × dose / interval</i></div>
+          <div><span>Legacy log-product score</span><b id="oTi">–</b><i>log10(tox numeric) + log10(act numeric)</i></div>
         </output>
         <p class="warn" id="warn" hidden></p>
         <div class="row">
@@ -97,8 +97,8 @@
   <details>
     <summary>How the numbers are made</summary>
     <dl>
-      <dt>Placement</dt><dd>Across: Crippen logP (RDKit). Depth: QED. Colour: first ATC letter. Vertical position and small offsets separate overlapping records only; they do not represent exposure.</dd>
-      <dt>Formulas</dt><dd>No derived TI or exposure calculation is applied. Their CSV fields are blank and accompanied by a withholding reason; raw input values and source citations are preserved.</dd>
+      <dt>Placement</dt><dd>Across: Crippen logP (RDKit). Depth: QED. Colour: first ATC letter. Height: log10 of the legacy accumulation expression (mg input convention), clamped to the stored population’s 1st–99th percentile viewport. Missing inputs stay on the floor. Size uses the legacy log-product score; small offsets separate overlaps. Neither encoding represents safety.</dd>
+      <dt>Formulas</dt><dd>The mg expression is not concentration or unbound exposure. The log-product uses numeric lethal dose (mg/kg) and active dose (mg/day): its dimensional inputs make it unit-dependent, and its endpoints are incompatible. It is not a therapeutic index or safety ranking. CSV retains historical field names with an explicit derived_status explanation; raw inputs and citations are preserved.</dd>
       <dt>Curated values</dt><dd><a href="../data/clean_drugs.json">clean_drugs.json</a> · <a href="../data/provenance.csv">provenance</a> · <a href="../data/validation.md">validation</a></dd>
     </dl>
   </details>

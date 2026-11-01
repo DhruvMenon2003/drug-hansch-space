@@ -1,0 +1,112 @@
+<!-- Loaded into the existing therapeutic-index dialog on first use. -->
+  <div id="ti-body" hidden>
+    <p class="lede" id="ti-lede"></p>
+    <p class="foot-disclaimer"><strong>Target − hERG pChEMBL.</strong> This archived score combines measured
+      ChEMBL aggregates and model predictions, identified separately in each row. Different endpoint types and
+      assay conditions limit comparisons. It is neither clinical TI nor the legacy dose log-product shown in
+      the manual bench; no score establishes safety.</p>
+
+    <div class="ti-tabs" role="tablist" aria-label="Therapeutic index views">
+      <button type="button" role="tab" id="ti-t-rank" aria-controls="ti-p-rank" aria-selected="true">Ranked batch</button>
+      <button type="button" role="tab" id="ti-t-route" aria-controls="ti-p-route" aria-selected="false">Routing</button>
+      <button type="button" role="tab" id="ti-t-series" aria-controls="ti-p-series" aria-selected="false">Hansch series</button>
+      <button type="button" role="tab" id="ti-t-decide" aria-controls="ti-p-decide" aria-selected="false">Decisions</button>
+      <button type="button" role="tab" id="ti-t-expose" aria-controls="ti-p-expose" aria-selected="false">Exposure</button>
+      <button type="button" role="tab" id="ti-t-search" aria-controls="ti-p-search" aria-selected="false">Model search</button>
+      <button type="button" role="tab" id="ti-t-oecd" aria-controls="ti-p-oecd" aria-selected="false">OECD principles</button>
+    </div>
+
+    <section role="tabpanel" id="ti-p-rank" aria-labelledby="ti-t-rank">
+      <p class="small">Ordered by the stored p-scale difference within each target. A difference of 2 represents
+        a 100-fold ratio of the underlying numerical concentrations, conditional on comparable endpoints.
+        This does not establish a binding-affinity ratio when Ki and IC50 or assay conditions differ.
+        Rows marked <em>outside</em> are extrapolations beyond the recorded model domain.</p>
+      <div class="field"><label for="ti-filter">Show</label><select id="ti-filter">
+        <option value="all">every ranked molecule</option>
+        <option value="inside">inside the applicability domain only</option>
+        <option value="measured">measured on both sides, no prediction</option>
+        <option value="series">from a validated Hansch series model</option>
+      </select></div>
+      <p id="ti-count" class="small"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Ranked molecules">
+        <table class="stats"><thead><tr>
+          <th scope="col">Rank in target</th><th scope="col">Molecule</th><th scope="col">Target</th>
+          <th scope="col">Activity</th><th scope="col">hERG</th><th scope="col">Index</th>
+          <th scope="col">Domain</th>
+        </tr></thead><tbody id="ti-rows"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-route" aria-labelledby="ti-t-route" hidden>
+      <p class="small" id="ti-route-rule"></p>
+      <p class="small">A molecule's activity may only come from a model fitted on its own intended target, with the
+        same assay type and the same organism. There is no falling back to a related protein and none to a
+        general model across targets. A number from the wrong target's model is worse than no number, because on
+        the page it looks exactly like a right one. So where no model applies, the cell is empty and the row says
+        why.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Where each number came from">
+        <table class="stats"><thead><tr><th scope="col">Source</th><th scope="col">What it means</th>
+          <th scope="col">Molecules</th></tr></thead><tbody id="ti-sources"></tbody></table>
+      </div>
+      <h3>Left out, and why</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Molecules not ranked">
+        <table class="stats"><thead><tr><th scope="col">Reason</th><th scope="col">Molecules</th></tr></thead>
+        <tbody id="ti-excluded"></tbody></table>
+      </div>
+      <h3>Models, one per target</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Model report per target">
+        <table class="stats"><thead><tr><th scope="col">Target</th><th scope="col">Compounds</th>
+          <th scope="col">Assay</th><th scope="col">Series validated</th>
+          <th scope="col">Fallback q²</th><th scope="col">Shuffled q²</th></tr></thead>
+        <tbody id="ti-models"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-series" aria-labelledby="ti-t-series" hidden>
+      <p class="small">A Hansch model is a model of a <em>series</em>, not of a target: a set of molecules sharing
+        one chemical core, where only the decorations change. Each of these cleared every gate — enough
+        compounds, genuinely related to each other, a fit, an honest leave-one-out score, and a shuffled-label
+        control. The equation is readable, which is the whole point of the method.</p>
+      <p id="ti-series-note" class="small"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Validated Hansch series models">
+        <table class="stats"><thead><tr><th scope="col">Target</th><th scope="col">n</th>
+          <th scope="col">Similarity</th><th scope="col">Terms</th><th scope="col">r²</th>
+          <th scope="col">q² (leave one out)</th><th scope="col">log P optimum</th></tr></thead>
+        <tbody id="ti-series"></tbody></table>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-decide" aria-labelledby="ti-t-decide" hidden>
+      <div id="ti-decide-intro"></div>
+      <p id="ti-decide-status" class="small">Loading the whole ranked batch…</p>
+      <div id="ti-decide-body" hidden>
+        <div class="controls" id="ti-decide-rules"></div>
+        <p><button type="button" id="ti-decide-reset" class="ghost">Back to the published rules</button></p>
+        <div id="ti-decide-out"></div>
+        <p id="ti-decide-say" class="small"></p>
+        <div id="ti-decide-tables"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-expose" aria-labelledby="ti-t-expose" hidden>
+      <div id="ti-exp-intro"></div>
+      <p id="ti-exp-status" class="small" hidden></p>
+      <div id="ti-exp-body" hidden>
+        <div class="controls" id="ti-exp-controls"></div>
+        <div id="ti-exp-out"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-search" aria-labelledby="ti-t-search" hidden>
+      <div id="ti-search-intro"></div>
+      <p id="ti-search-status" class="small" hidden></p>
+      <div id="ti-search-body" hidden>
+        <div class="controls" id="ti-search-controls"></div>
+        <div id="ti-search-out"></div>
+      </div>
+    </section>
+
+    <section role="tabpanel" id="ti-p-oecd" aria-labelledby="ti-t-oecd" hidden>
+      <div id="ti-oecd"></div>
+    </section>
+  </div>

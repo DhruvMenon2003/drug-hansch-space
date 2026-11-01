@@ -43,7 +43,7 @@ function addTiColour() {
   if (!sel || sel.querySelector('option[value="ti"]')) return;
   const opt = document.createElement('option');
   opt.value = 'ti';
-  opt.textContent = 'Therapeutic index';
+  opt.textContent = 'TI · target − hERG';
   opt.title = 'Activity minus hERG, both as pChEMBL; grey where the batch has no index';
   sel.append(opt);
 }
