@@ -34,6 +34,16 @@ test('inquiry calculations and source detail remain available with WebGL disable
  expect(await page.locator('[data-neighbour]').count()).toBe(5);
  await expect(page.locator('#inquiry-projection')).toBeVisible();
  expect(await page.locator('.projection-point').count()).toBe(759);
+ const population=await page.evaluate(()=>({visible:window.__hansch.app.visible.map(d=>d.cid),neighbours:window.__hansch.app.inquiry.neighbours.map(d=>d.cid)}));
+ await page.click('#inquiry-projection-zoom');
+ expect(await page.locator('.projection-point').count()).toBe(14);
+ await expect(page.locator('#inquiry-projection figcaption')).toContainText('14 of 759 filtered records in frame · 745 off-screen');
+ await expect(page.locator('#inquiry-projection figcaption')).toContainText('known ofatumumab name–structure mismatch');
+ expect(await page.locator('.projection-identity-mark').count()).toBe(1);
+ expect(await page.evaluate(()=>({visible:window.__hansch.app.visible.map(d=>d.cid),neighbours:window.__hansch.app.inquiry.neighbours.map(d=>d.cid)}))).toEqual(population);
+ await expect(page.locator('#inquiry-slice-result')).toContainText('Across all 759 filtered records');
+ await page.click('#inquiry-projection-zoom');
+ expect(await page.locator('.projection-point').count()).toBe(759);
  await expect(page.locator('#inquiry-projection figcaption')).toContainText('MR is omitted');
  await page.selectOption('#color-by','oral');
  expect(await page.locator('.projection-point').evaluateAll(points=>new Set(points.map(p=>p.getAttribute('fill'))).size)).toBe(3);

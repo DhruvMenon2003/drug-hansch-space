@@ -1,5 +1,14 @@
 // Display-space calculations only. Never fit a model or alter scientific records.
 const finite = v => typeof v === 'number' && Number.isFinite(v);
+// Verified upstream name–structure mismatch; source bytes remain untouched.
+export const identityWarning = d => d?.cid === 6918250 ? 'Identity mapping needs review: the stored name links to an antibody in ChEMBL, while this map uses a small-molecule PubChem structure. Its position and neighbours do not describe validated ofatumumab chemistry.' : '';
+export function focusExtent(rows, get) {
+  const values = rows.map(get).filter(finite);
+  if (!values.length) return null;
+  const lo = Math.min(...values), hi = Math.max(...values);
+  const padding = (hi - lo) * 0.15 || Math.max(Math.abs(lo) * 0.05, 0.5);
+  return { lo: lo - padding, hi: hi + padding };
+}
 export function nearestInMap(rows, anchor, axes, count = 5) {
   if (!anchor || !axes.length || axes.some(get => !finite(get(anchor)))) return [];
   const complete = rows.filter(d => axes.every(get => finite(get(d))));

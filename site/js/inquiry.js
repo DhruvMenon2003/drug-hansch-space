@@ -3,20 +3,21 @@ import { app, bus, $, cap, esc, fx, ORDER } from './kernel.js';
 import { AX } from './model.js';
 import { isSheetMode } from './layout.js';
 import { setView, selectDrug } from './view.js';
-import { nearestInMap, sliceSummary } from './inquiry-math.js';
+import { nearestInMap, sliceSummary, identityWarning } from './inquiry-math.js';
 import { renderProjection } from './inquiry-projection.js';
+
+const outwardArrow = '<svg class="inquiry-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 15 15 5M5 5h10v10"/></svg>';
+const forwardArrow = '<svg class="inquiry-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10h14m-6-6 6 6-6 6"/></svg>';
 
 const MAPS = {
   properties: { axes: ['logp', 'tpsa', 'mr'], camera: 'tpsa', label: 'Physicochemical properties', note: 'Neighbours in logP, TPSA and molar refractivity. Similar properties need not mean similar structures or biological effects.' },
   structure: { axes: ['ts1', 'none', 'ts2'], camera: 'structure', label: 'Fingerprint map', note: 'Local neighbours in the frozen t-SNE map of Morgan fingerprints. Map distance is not fingerprint similarity; distant clusters cannot be compared quantitatively.' },
   pca: { axes: ['pc1', 'pc2', 'pc3'], camera: 'space', label: 'Descriptor overview', note: 'Neighbours in the first three frozen principal components. These summarise descriptor variation, not binding geometry.' },
 };
-// A verified name–structure mismatch in the frozen snapshot. Flag it; never rewrite the source.
-const identityWarning = d => d?.cid === 6918250 ? 'Identity mapping needs review: the stored name links to an antibody in ChEMBL, while this map uses a small-molecule PubChem structure. Its position and neighbours do not describe validated ofatumumab chemistry.' : '';
-const recordLinks = d => `<a href="https://pubchem.ncbi.nlm.nih.gov/compound/${d.pcid || d.cid}" target="_blank" rel="noopener noreferrer">PubChem structure ${d.pcid || d.cid} ↗</a>${d.chembl ? `<a href="https://www.ebi.ac.uk/chembl/compound_report_card/${esc(d.chembl)}/" target="_blank" rel="noopener noreferrer">${esc(d.chembl)} ↗</a>` : ''}`;
+const recordLinks = d => `<a href="https://pubchem.ncbi.nlm.nih.gov/compound/${d.pcid || d.cid}" target="_blank" rel="noopener noreferrer">PubChem structure ${d.pcid || d.cid} ${outwardArrow}</a>${d.chembl ? `<a href="https://www.ebi.ac.uk/chembl/compound_report_card/${esc(d.chembl)}/" target="_blank" rel="noopener noreferrer">${esc(d.chembl)} ${outwardArrow}</a>` : ''}`;
 function endpointEvidence(d) {
   const a = d.act;
-  return `<section><h5>${esc(cap(d.name))}</h5>${a ? `<p><strong>Stored median pChEMBL ${fx(a.p, 2)}</strong><br>${esc(a.types || 'Endpoint types not retained')} · ${a.ndoc ?? 'Unknown number of'} ChEMBL documents</p><p>Target: <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(a.target)}/" target="_blank" rel="noopener noreferrer">${esc(a.tname || a.target)} (${esc(a.target)}) ↗</a></p>` : `<p>${esc(cap(d.name))} has no activity aggregate in this snapshot. Missing does not mean inactive.</p>`}<p class="inquiry-source-links">${recordLinks(d)}</p><p class="inquiry-footnote">Dataset CID ${d.cid}${d.pcid && d.pcid !== d.cid ? ` · structure parent CID ${d.pcid}` : ''}</p>${identityWarning(d) ? `<p class="inquiry-identity-warning">${identityWarning(d)}</p>` : ''}</section>`;
+  return `<section><h5>${esc(cap(d.name))}</h5>${a ? `<p><strong>Stored median pChEMBL ${fx(a.p, 2)}</strong><br>${esc(a.types || 'Endpoint types not retained')} · ${a.ndoc ?? 'Unknown number of'} ChEMBL documents</p><p>Target: <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(a.target)}/" target="_blank" rel="noopener noreferrer">${esc(a.tname || a.target)} (${esc(a.target)}) ${outwardArrow}</a></p>` : `<p>${esc(cap(d.name))} has no activity aggregate in this snapshot. Missing does not mean inactive.</p>`}<p class="inquiry-source-links">${recordLinks(d)}</p><p class="inquiry-footnote">Dataset CID ${d.cid}${d.pcid && d.pcid !== d.cid ? ` · structure parent CID ${d.pcid}` : ''}</p>${identityWarning(d) ? `<p class="inquiry-identity-warning">${identityWarning(d)}</p>` : ''}</section>`;
 }
 export function initInquiry(caps, expandDetails) {
   $('#inquiry-mount').innerHTML = `        <section class="inquiry" aria-labelledby="inquiry-title">
@@ -32,7 +33,7 @@ export function initInquiry(caps, expandDetails) {
           <h4 id="inquiry-map-title"></h4><p id="inquiry-map-context">Neighbours are close in the displayed coordinates after scaling each axis to the current filtered cohort’s range. This is not chemical similarity, shared pharmacology or an applicability-domain result.</p>
           <p class="inquiry-identity-warning" id="inquiry-identity-warning" hidden></p>
           <details class="inquiry-method"><summary>What does this map mean?</summary><p class="small" id="inquiry-map-note"></p></details>
-          <figure id="inquiry-projection" hidden><div class="projection-legend" role="group" aria-label="Colour legend"></div><svg viewBox="0 0 640 400" role="img" aria-labelledby="projection-title"></svg><figcaption></figcaption></figure>
+          <figure id="inquiry-projection" hidden><button type="button" id="inquiry-projection-zoom" class="ghost" aria-pressed="false">Zoom to pin &amp; neighbours</button><div class="projection-legend" role="group" aria-label="Colour legend"></div><svg viewBox="0 0 640 400" role="img" aria-labelledby="projection-title"></svg><figcaption></figcaption></figure>
           <div class="inquiry-near-head"><strong>Nearest in this map</strong><span id="inquiry-count"></span></div>
           <ol id="inquiry-neighbours" class="inquiry-neighbours"></ol><details id="inquiry-compare" class="inquiry-compare"><summary id="inquiry-compare-title">Compare coordinates</summary><div id="inquiry-comparison"></div></details>
           <details class="inquiry-method"><summary>Distance &amp; animation method</summary><p class="inquiry-footnote">Distances use each displayed axis scaled to its range in the current filtered view. Changing axes or filters can change neighbours. Numbers match this list; point size is visual emphasis, not a measurement. Rings follow identities; transition trails are visual interpolation, not chemical transformations.</p></details>
@@ -44,10 +45,10 @@ export function initInquiry(caps, expandDetails) {
             <p id="inquiry-slice-help" class="small"></p><p id="inquiry-slice-result" class="inquiry-result" role="status"></p>
             <p class="inquiry-footnote">An exploratory threshold, not an absorption or safety prediction. Recorded administration route is not measured bioavailability. No compounds or source values are changed.</p>
           </div>
-          <p class="inquiry-next">03 / Challenge the equation <a href="#hansch">Inspect fits and frozen validation →</a></p>
+          <p class="inquiry-next">03 / Challenge the equation <a href="#hansch">Inspect fits and frozen validation ${forwardArrow}</a></p>
         </section>`;
   const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'css/inquiry.css'; document.head.append(css);
-  app.inquiry = { active: true, focused: true, cid: null, neighbours: [], slice: null };
+  app.inquiry = { active: true, focused: true, projectionZoom: false, cid: null, neighbours: [], slice: null };
   const state = app.inquiry;
   $('#inquiry-focus').disabled = !caps?.webgl;
   function render() {
@@ -63,9 +64,10 @@ export function initInquiry(caps, expandDetails) {
     $('#inquiry-pin').disabled = app.drugs[app.selected]?.cid === state.cid;
     $('#inquiry-pin').textContent = app.drugs[app.selected]?.cid === state.cid ? 'Pinned' : app.selected >= 0 ? `Pin ${cap(app.drugs[app.selected].name)}` : 'Start with caffeine';
     $('#inquiry-map-note').textContent = map?.note || 'Your custom axes are active. Neighbours are distances in this displayed coordinate system, not evidence of biological similarity.';
-    $('#inquiry-identity-warning').hidden = !identityWarning(d);
-    $('#inquiry-identity-warning').textContent = identityWarning(d);
-    $('#inquiry-neighbours').innerHTML = !d ? '<li>Pin a molecule to reveal its map neighbours.</li>' : !visible ? '<li>The pinned molecule is outside this view’s filters or lacks an axis value. Your pin is kept; change the controls below to bring it back.</li>' : state.neighbours.length ? state.neighbours.map((n, i) => `<li><button type="button" data-neighbour="${n.cid}"><span class="inquiry-rank">0${i + 1}</span><span>${esc(cap(n.name))}${identityWarning(n) ? `<small class="inquiry-identity-flag">Identity mapping needs review</small>` : ''}</span><span aria-hidden="true">↗</span></button></li>`).join('') : '<li>No other complete compound in this view.</li>';
+    const warned = [d, app.drugs[app.selected], ...state.neighbours].find(identityWarning);
+    $('#inquiry-identity-warning').hidden = !warned;
+    $('#inquiry-identity-warning').textContent = warned ? identityWarning(warned) : '';
+    $('#inquiry-neighbours').innerHTML = !d ? '<li>Pin a molecule to reveal its map neighbours.</li>' : !visible ? '<li>The pinned molecule is outside this view’s filters or lacks an axis value. Your pin is kept; change the controls below to bring it back.</li>' : state.neighbours.length ? state.neighbours.map((n, i) => `<li><button type="button" data-neighbour="${n.cid}"><span class="inquiry-rank">0${i + 1}</span><span>${esc(cap(n.name))}${identityWarning(n) ? `<small class="inquiry-identity-flag">Identity mapping needs review</small>` : ''}</span>${outwardArrow}</button></li>`).join('') : '<li>No other complete compound in this view.</li>';
     const selected = app.drugs[app.selected];
     const other = selected && selected.cid !== state.cid ? selected : state.neighbours[0];
     $('#inquiry-compare').hidden = !d || !other;
@@ -83,7 +85,7 @@ export function initInquiry(caps, expandDetails) {
     const summary = sliceSummary(app.visible, Number($('#inquiry-slice').value));
     $('#inquiry-slice-value').textContent = `${$('#inquiry-slice').value} Å²`;
     $('#inquiry-slice-live').textContent = `${summary.below} below · ${summary.above} above · ${summary.missing} missing`;
-    $('#inquiry-slice-result').textContent = `${summary.below} at or below · ${summary.above} above · ${summary.missing} missing TPSA. Of ${summary.knownRouteBelow} below with a recorded route, ${summary.oralBelow} include oral administration.`;
+    $('#inquiry-slice-result').textContent =  `Across all ${summary.total} filtered records: ${summary.below} at or below · ${summary.above} above · ${summary.missing} missing TPSA. Of ${summary.knownRouteBelow} below with a recorded route, ${summary.oralBelow} include oral administration.`;
     $('#inquiry-beacon').hidden = !d || !state.active;
     $('#inquiry-focus').textContent = state.focused ? 'Whole population' : 'Focus neighbours';
     $('#inquiry-focus').setAttribute('aria-pressed', String(state.focused));
@@ -122,6 +124,7 @@ export function initInquiry(caps, expandDetails) {
   const updateSlice = () => { state.slice = $('#inquiry-slice-enable').checked ? Number($('#inquiry-slice').value) : null; render(); bus.emit('inquiry:slice'); };
   $('#inquiry-slice').addEventListener('input', updateSlice);
   $('#inquiry-slice-enable').addEventListener('change', updateSlice);
+  $('#inquiry-projection-zoom').addEventListener('click', () => { if ($('#inquiry-projection').hidden) return; state.projectionZoom = !state.projectionZoom; render(); });
   $('#inquiry-projection').addEventListener('click', e => { const point = e.target.closest('[data-projection-cid]'); if (point) selectDrug(Number(point.dataset.projectionCid), { reveal: false }); });
   bus.on('recolor', render, ORDER.LATE);
   bus.on('theme', render, ORDER.LATE);

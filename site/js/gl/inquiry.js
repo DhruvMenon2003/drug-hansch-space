@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { app, anim, bus, S, reduceMotion } from '../kernel.js';
+import { identityWarning } from '../inquiry-math.js';
 import { stage, wake, disposeGroup } from './scene.js';
 export function initInquiryScene() {
   const group = new THREE.Group(); stage.scene.add(group);
@@ -20,10 +21,15 @@ export function initInquiryScene() {
   const plane = new THREE.Mesh(new THREE.PlaneGeometry(2*S,2*S), new THREE.MeshBasicMaterial({color:'#248c93',transparent:true,opacity:0.13,side:THREE.DoubleSide,depthWrite:false}));
   const edge = new THREE.LineSegments(new THREE.EdgesGeometry(plane.geometry),new THREE.LineBasicMaterial({color:'#248c93',transparent:true,opacity:0.8}));
   group.add(plane,edge);
+  const noticeElement=document.createElement('span');noticeElement.className='inquiry-identity-marker';noticeElement.textContent='!';noticeElement.title='Ofatumumab: known name–structure mismatch; stored coordinates are not validated ofatumumab chemistry';
+  const notice=new CSS2DObject(noticeElement);notice.center.set(0.5,-0.5);group.add(notice);
+  const noticeIndex=app.drugs.findIndex(identityWarning);
   const prior=stage.scene.onBeforeRender;
   stage.scene.onBeforeRender=function(...args){
     prior?.apply(this,args);
     const q=app.inquiry, ids=q?.active && q.cid != null ? [q.cid,...q.neighbours.map(d=>d.cid)] : [];
+    const nk=noticeIndex*4;notice.visible=!!q?.active && noticeIndex>=0 && anim.cur[nk+3]>0.5;
+    if(notice.visible)notice.position.set(anim.cur[nk],anim.cur[nk+1],anim.cur[nk+2]);
     const a=geo.attributes.position.array; a.fill(0);
     const placed = [];
     const projectedPin = ids.length ? new THREE.Vector3(...anim.cur.slice(app.drugs.findIndex(d=>d.cid===ids[0])*4,app.drugs.findIndex(d=>d.cid===ids[0])*4+3)).project(stage.camera) : null;
