@@ -94,14 +94,14 @@ STAGES = [
             "gradient boosting, MLP and a graph neural network. Libraries: QSPRpred, "
             "QSAR-Co-X, PyQSAR3."
         ),
-        "implemented_by": "nb:tier1,nb:tier2,nb:tier3,nb:tier4,nb:tier5",
+        "implemented_by": "nb:tier1,nb:tier2,nb:tier3,nb:tier4",
     },
     {
         "key": "G_tuning",
         "title": "G. Hyperparameter tuning",
         "cards": [107, 115, 121, 122],
         "reading": "Optuna, with median pruning and successive halving.",
-        "implemented_by": "nb:tier5",
+        "implemented_by": "nb:tier4",
     },
     {
         "key": "H_validation",
@@ -128,7 +128,7 @@ STAGES = [
             "SHAP, Morgan fingerprint similarity maps, a structure-activity landscape index, "
             "and Hansch-based mechanistic interpretation."
         ),
-        "implemented_by": "nb:tier1,nb:tier5",
+        "implemented_by": "nb:tier1,nb:interpret",
     },
     {
         "key": "J_domain",
@@ -204,15 +204,30 @@ STAGES = [
 CELL_IDS = {
     "nb:sources": "Section 3, cell `source_pull`",
     "nb:schema": "Section 4, cells `schema` and `atc_split`",
-    "nb:preprocess": "Section 5, cells `dedupe_standardise`, `rule_outliers`, `mmp_outliers`",
-    "nb:descriptors": "Section 6, cells `select_series`, `substituent_constants`, `descriptor_block`",
-    "nb:tier1": "Section 7, cells `tier1_hansch`, `tier1_diagnostics`, `williams`",
+    "nb:preprocess": "Section 5, cells `dedupe_standardise`, `rule_flags`, `cliffs`",
+    "nb:descriptors": "Section 6, cells `modelling_set`, `select_series`, `descriptor_block`",
+    "nb:tier1": "Section 7, cells `tier1_hansch`, `tier1_subsets`, `tier1_diagnostics`",
     "nb:tier2": "Section 8, cell `tier2_free_wilson`",
-    "nb:tier3": "Section 9, cell `tier3_lser`",
-    "nb:tier4": "Section 10, cells `tier4_align`, `tier4_comfa`",
-    "nb:tier5": "Section 11, cells `tier5_ml`, `tier5_shap`",
-    "nb:cv": "Section 12, cell `repeated_cv`",
-    "nb:validation": "Section 13, cells `y_randomisation`, `external_ccc`",
-    "nb:domain": "Section 14, cell `applicability_domain`",
+    "nb:tier3": "Section 9, cells `tier3_ga`, `tier3_pls_pca`",
+    "nb:tier4": "Section 10, cells `tier4_optuna`, `tier4_fit`",
+    "nb:cv": "Section 11, cell `group_k_fold`",
+    "nb:validation": "Section 11, cells `internal_validation`, `external_validation`",
+    "nb:domain": "Section 12, cell `applicability_domain`",
+    "nb:interpret": "Section 13, cells `tier1_reading`, `shap_values`, `similarity_maps`",
     "nb:goal": "Section 2, markdown `goal`, and Section 15, cell `comparison_table`",
+}
+
+# Model families the board's regression column names, and whether this notebook fits them.
+# Listed so the gap is visible rather than implied away.
+BOARD_MODELS = {
+    "Hansch analysis based multi linear regression": "Tier 1, section 7",
+    "Free-Wilson": "Tier 2, section 8",
+    "Principal component regression": "Tier 3, section 9",
+    "Partial least squares": "Tier 3, section 9",
+    "Kernel PLS": None,
+    "Support vector regression, Gaussian kernel": None,
+    "Random forest": "Tier 4, section 10",
+    "Gradient boosting": "Tier 4, section 10",
+    "Multilayer perceptron": None,
+    "Graph neural network": None,
 }
