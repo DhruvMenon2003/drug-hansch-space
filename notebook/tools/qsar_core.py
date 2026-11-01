@@ -48,7 +48,6 @@ class OLSFit:
     leverage: np.ndarray
     h_star: float
     std_residuals: np.ndarray
-    cov: np.ndarray            # covariance of the coefficients, intercept first
 
     def equation(self, response: str = "log(1/C)", dp: int = 3) -> str:
         parts = [f"{self.coef[0]:+.{dp}f}"]
@@ -119,40 +118,7 @@ def ols(X: np.ndarray, y: np.ndarray, names: list[str]) -> OLSFit:
     return OLSFit(names=list(names), coef=coef, se=se, t=t, p=p, n=n, k=k, r2=r2,
                   r2_adj=r2_adj, rmse=math.sqrt(sse / n), s=s, f_stat=f_stat, f_p=f_p,
                   vif=vif, aicc=aicc, fitted=fitted, residuals=resid, leverage=lev,
-                  h_star=h_star, std_residuals=std_resid, cov=xtx_inv * mse)
-
-
-def parabolic_optimum(fit: OLSFit, linear: str, square: str, alpha: float = 0.05) -> dict:
-    """The turning point of a parabolic term, with a delta-method confidence interval.
-
-    For y = ... + b*x + c*x^2 the optimum is x* = -b / (2c). Its uncertainty comes from the
-    coefficient covariance by the delta method, with gradient (-1/(2c), b/(2c^2)). A positive
-    c means the parabola opens upward, so the turning point is a minimum, not the optimum
-    Hansch describes - that is reported rather than hidden, because it says the transport
-    term did not behave.
-    """
-    from scipy import stats
-
-    names = ["intercept"] + list(fit.names)
-    try:
-        ib, ic = names.index(linear), names.index(square)
-    except ValueError:
-        return {"available": False, "reason": f"{linear} and {square} are not both in the model"}
-    b, c = float(fit.coef[ib]), float(fit.coef[ic])
-    if c == 0:
-        return {"available": False, "reason": "the squared term's coefficient is zero"}
-    x_star = -b / (2 * c)
-    g = np.zeros(len(names))
-    g[ib] = -1.0 / (2 * c)
-    g[ic] = b / (2 * c * c)
-    var = float(g @ fit.cov @ g)
-    se = math.sqrt(var) if var > 0 else float("nan")
-    tcrit = float(stats.t.ppf(1 - alpha / 2, fit.n - fit.k - 1))
-    return {"available": True, "optimum": x_star, "se": se,
-            "ci_low": x_star - tcrit * se, "ci_high": x_star + tcrit * se,
-            "opens": "downward (a maximum, as Hansch's transport term predicts)" if c < 0
-                     else "upward (a minimum, not a transport optimum)",
-            "b": b, "c": c, "alpha": alpha}
+                  h_star=h_star, std_residuals=std_resid)
 
 
 def q2_loo(X: np.ndarray, y: np.ndarray) -> tuple[float, np.ndarray]:
@@ -258,66 +224,37 @@ def external_metrics(y_train: np.ndarray, y_ext: np.ndarray, pred_ext: np.ndarra
 
 @dataclass
 class Subset:
-    terms: tuple[int, ...]            # column indices, in the design's own order
+    terms: tuple[int, ...]
     names: list[str]
     aicc: float
-    n_variables: int                  # descriptors, counting a grouped pair as one
-    n_coefficients: int               # fitted slopes, counting every column
     fit: OLSFit = field(repr=False)
-
-
-def _units(p: int, groups: list[tuple[int, ...]] | None) -> list[tuple[int, ...]]:
-    """Split the columns into selection units: a group is one unit, every other column its own.
-
-    A unit is what the Topliss-Costello rule counts. The parabolic lipophilicity term
-    (pi, pi^2) is one descriptor measured one way, so it is passed in as one group: it
-    enters and leaves the model together and is counted once, while the two coefficients
-    it fits are reported separately.
-    """
-    groups = [tuple(sorted(g)) for g in (groups or [])]
-    seen: set[int] = set()
-    for g in groups:
-        if not g:
-            raise ValueError("an empty group cannot be a descriptor")
-        for j in g:
-            if not 0 <= j < p:
-                raise ValueError(f"group column {j} is outside the design's {p} columns")
-            if j in seen:
-                raise ValueError(f"column {j} appears in more than one group")
-            seen.add(j)
-    return sorted(groups + [(j,) for j in range(p) if j not in seen])
 
 
 def best_subset_aicc(X: np.ndarray, y: np.ndarray, names: list[str],
                      max_terms: int | None = None,
-                     compounds_per_term: int = 5,
-                     groups: list[tuple[int, ...]] | None = None) -> tuple[Subset, list[Subset]]:
+                     compounds_per_term: int = 5) -> tuple[Subset, list[Subset]]:
     """Exhaustive subsets up to the Topliss-Costello cap, ranked on AICc.
 
     Selecting on AICc and reporting Q2 keeps the criterion that chose the model separate
     from the criterion that judges it. The cap is Topliss & Costello's rule of at least
-    `compounds_per_term` compounds for every fitted variable, where a variable is a
-    selection unit: see `_units`. `groups` names the column sets that are one descriptor.
+    `compounds_per_term` compounds for every fitted variable.
     """
     X = np.asarray(X, dtype=float)
     y = np.asarray(y, dtype=float).ravel()
     n, p = X.shape
-    units = _units(p, groups)
     cap = max(1, n // compounds_per_term)
     if max_terms is not None:
         cap = min(cap, max_terms)
-    cap = min(cap, len(units))
+    cap = min(cap, p)
     ranked: list[Subset] = []
     for size in range(1, cap + 1):
-        for combo in itertools.combinations(units, size):
-            cols = tuple(j for unit in combo for j in unit)
-            sub = X[:, list(cols)]
+        for combo in itertools.combinations(range(p), size):
+            sub = X[:, list(combo)]
             try:
-                fit = ols(sub, y, [names[i] for i in cols])
+                fit = ols(sub, y, [names[i] for i in combo])
             except (ValueError, np.linalg.LinAlgError):
                 continue
-            ranked.append(Subset(cols, [names[i] for i in cols], fit.aicc,
-                                 n_variables=size, n_coefficients=len(cols), fit=fit))
+            ranked.append(Subset(combo, [names[i] for i in combo], fit.aicc, fit))
     if not ranked:
         raise ValueError("no subset could be fitted")
     ranked.sort(key=lambda s: s.aicc)
