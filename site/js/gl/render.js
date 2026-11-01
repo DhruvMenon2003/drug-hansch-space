@@ -49,6 +49,12 @@ export function renderFrame(t = 0, dt = 0) {
     for (let s = 0, count = points.count; s < count; s++) {
       const i = drugAt[s], k = i * 4;
       let sc = C[k + 3];
+      if (app.inquiry?.active && app.inquiry.focused) {
+        const distance = Math.hypot(C[k]-camera.position.x, C[k+1]-camera.position.y, C[k+2]-camera.position.z);
+        sc *= Math.min(1, Math.max(0.2, 6*distance*Math.tan(camera.fov*Math.PI/360)/(Math.max(1,stage.renderer.domElement.clientHeight)*0.22)));
+      }
+      // Slice changes size only: preserve the chosen colour encoding and visible population.
+      if (app.inquiry?.active && app.inquiry.slice != null && [app.view.x, app.view.y, app.view.z].includes('tpsa') && app.drugs[i].d.tpsa > app.inquiry.slice) sc *= 0.32;
       if (i === app.hover && sc > 0) sc *= 1.7;
       else if (i === app.selected && sc > 0) sc *= 1.35;
       _m.makeScale(sc, sc, sc).setPosition(C[k], C[k + 1], C[k + 2]);
@@ -60,6 +66,7 @@ export function renderFrame(t = 0, dt = 0) {
   }
   if (app.selected >= 0 && C[app.selected * 4 + 3] > 0.5) {
     const k = app.selected * 4;
+    ring.scale.setScalar(app.inquiry?.active && app.inquiry.focused ? 0.2 : 1);
     ring.position.set(C[k], C[k + 1], C[k + 2]);
     ring.quaternion.copy(camera.quaternion);
     ring.visible = selLabel.visible = true;

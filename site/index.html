@@ -3,10 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Content Security Policy. A <meta> CSP cannot set frame-ancestors, report-uri or sandbox: framing protection would need an
-     HTTP header, which GitHub Pages does not let us set. The sha256 in script-src allows exactly the inline import map below
-     (an external import map is not supported by browsers); if the import map text changes, recompute it (tests/e2e/shell.spec.mjs
-     checks that it matches). style-src needs 'unsafe-inline' because three.js CSS2DRenderer and the page's JS set style attributes. -->
+
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bgMiZ5XudRc3ON+iOP7TJVjZSb2mE636fa8zgcfI2dE='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Drug Hansch Space: drugs in a 3D descriptor space</title>
 <meta name="description" content="Explore drugs from a curated DrugBank-derived table as a 3D scatter of RDKit descriptors, with a guided tour of Hansch-type fits of potency on log P, molar refractivity and TPSA. Educational exploration, not medical advice.">
@@ -32,7 +29,7 @@
 <meta name="twitter:description" content="Drugs as spheres in a 3D descriptor space, with a guided tour of Hansch-type fits. Educational exploration, not medical advice.">
 <meta name="twitter:image" content="https://dhruvmenon2003.github.io/drug-hansch-space/assets/og.png">
 <meta name="twitter:image:alt" content="A 3D scatter of drugs as coloured spheres inside an axis cube.">
-<!-- The two faces used above the fold: Newsreader for the text, Bricolage Grotesque (one variable file, weights 500 to 800) for headings -->
+
 <link rel="preload" href="vendor/fonts/newsreader-normal-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="vendor/fonts/bricolage-grotesque-normal-500-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
@@ -46,10 +43,9 @@
 } }
 </script>
 <script src="vendor/gsap/gsap.min.js"></script>
-<!-- Hints for the app's own files, written by tools/check_site.py --write-preload (it checks them against the import graph). They come
-     LAST in the head on purpose: the preload scanner requests in document order, and the stylesheets and gsap above are what the
-     first paint waits for. Measured (1.6 Mbps, 150 ms, 4x CPU): hints before the stylesheets delayed first paint from 1.4 s to 2.9 s. -->
-<!-- preload:start (written by tools/check_site.py --write-preload from the import graph of js/main.js; do not edit by hand) -->
+
+
+<!-- preload:start -->
 <link rel="modulepreload" href="js/main.js">
 <link rel="modulepreload" href="js/caps.js">
 <link rel="modulepreload" href="js/fallback.js">
@@ -71,7 +67,7 @@
 <link rel="modulepreload" href="js/model.js">
 <link rel="modulepreload" href="js/domain.js">
 <link rel="modulepreload" href="js/idle.js">
-<template id="gl-preload"><!-- the 3D layer; js/main.js copies these into the head only when WebGL works -->
+<template id="gl-preload">
 <link rel="modulepreload" href="js/boot-gl.js">
 <link rel="modulepreload" href="vendor/three/three.module.min.js">
 <link rel="modulepreload" href="js/gl/scene.js">
@@ -86,6 +82,7 @@
 </template>
 <link rel="preload" href="data/drugs.json" as="fetch" type="application/json" crossorigin fetchpriority="low">
 <link rel="preload" href="data/hansch.json" as="fetch" type="application/json" crossorigin fetchpriority="low">
+
 <!-- preload:end -->
 </head>
 <body>
@@ -115,8 +112,7 @@
       <a href="#hansch">Hansch fits</a>
       <a href="#method">Method</a>
     </nav>
-    <!-- Phones (and landscape phones): the four links collapse into one Contents button. js/layout.js drives it; without JS the
-         button does nothing and the menu stays hidden, but the page is still one scroll away from every section. -->
+
     <div class="contents" id="contents">
       <button type="button" id="contents-btn" class="contents-btn ghost" aria-expanded="false" aria-controls="contents-menu">Contents</button>
       <nav id="contents-menu" class="contents-menu" aria-label="Contents" hidden>
@@ -136,11 +132,11 @@
         <canvas id="space" tabindex="0" role="application" aria-roledescription="3D scatter plot" aria-label="Interactive 3D scatter plot of drugs, one sphere per drug. Press the arrow keys to move to the nearest drug in that direction, Enter to open its panel." aria-describedby="kbd-help" aria-keyshortcuts="ArrowLeft ArrowRight ArrowUp ArrowDown Enter Escape"></canvas>
         <p id="kbd-help" class="sr-only">Keyboard: with the plot focused, the arrow keys move the selection to the nearest visible drug in that direction on screen. Enter or Space opens the drug panel for the selected drug. Escape clears the selection. D jumps to the data table. Every drug is also listed in the data table and the search box below.</p>
         <div id="labels" class="labels" aria-hidden="true"></div>
+        <div id="inquiry-beacon" class="inquiry-beacon" hidden></div>
         <div class="hud">
           <div class="axis-key" id="axis-key"></div>
           <div class="legend" id="legend"></div>
-          <!-- The live therapeutic index (js/ti-live.js) fills this once data/ti/live.json is in. It is aria-hidden
-               because it repeats, for whatever the pointer is over, what the drug panel's own index row says in full. -->
+
           <div class="ti-live" id="ti-live" aria-hidden="true" hidden></div>
         </div>
         <div class="tooltip" id="tooltip" aria-hidden="true" hidden></div>
@@ -158,7 +154,7 @@
         <button type="button" id="btn-show3d" class="ghost show3d" aria-expanded="false" aria-controls="stage" hidden>Show 3D</button>
       </div>
       <div id="fallback-2d" class="stage-card" hidden>
-        <h2>The 3D view could not start</h2>
+        <h2>Explore without 3D graphics</h2>
         <p data-fallback-text>This browser could not create the WebGL graphics context that the 3D plot needs. Nothing else is lost: the tour text, the Explore controls, the drug search, the Hansch fits and the data table all work without it.</p>
         <p class="stage-card-actions">
           <button type="button" id="fallback-table" class="primary">Open the data table</button>
@@ -180,6 +176,7 @@
         <article class="step" data-step="space">
           <p class="eyebrow">Step 1 of 8 · Chemical space</p>
           <h2>Every sphere is one drug</h2>
+          <div class="inquiry-invitation"><span class="eyebrow">An invitation to wander</span><p>What makes two molecules neighbours?</p><button id="inquiry-start" type="button" class="primary">Follow a molecule <span aria-hidden="true">↗</span></button><small>One identity. Three maps. A different question each time.</small></div>
           <p>Each point is a drug from the curated DrugBank-derived table (one point per PubChem compound, salts removed). Its position comes from a principal component analysis of nine RDKit descriptors computed from the curated SMILES (sizes and counts on a log scale, so a few large peptides do not flatten the rest), so drugs with similar size, polarity and lipophilicity sit close together.</p>
           <p class="fig" id="t-pca"></p>
           <p class="hint">Drag to turn the space, pinch or Ctrl + scroll to zoom, and hover or tap a sphere to name it.</p>
@@ -187,16 +184,16 @@
 
         <article class="step" data-step="structure">
           <p class="eyebrow">Step 2 of 8 · Structure</p>
-          <h2>A map of shared scaffolds</h2>
-          <p>The same drugs, now placed by structure rather than by properties. Each drug's Morgan count fingerprint (radius 3, 2048 bits, from marimo-chem-utils) is reduced to two dimensions with t-SNE, so drugs built on the same scaffold land next to each other. Distances between distant clusters mean little in t-SNE; only the neighbourhoods do.</p>
+          <h2>A map of structural neighbourhoods</h2>
+          <p>The same drugs, now placed by structure rather than by properties. Each drug's Morgan count fingerprint (radius 3, 2048 bits, from marimo-chem-utils) is reduced to two dimensions with t-SNE, so local neighbours can suggest structural relationships to inspect; a shared scaffold is not guaranteed. Distances between distant clusters mean little in t-SNE; only the neighbourhoods do.</p>
           <p class="fig" id="t-ts"></p>
-          <p>A Hansch equation compares drugs that share a scaffold and differ by substituents. Neighbours on this map are the closest thing this set has to such a series.</p>
+          <p>A Hansch equation compares drugs that share a scaffold and differ by substituents. A map neighbourhood alone does not establish a congeneric series.</p>
         </article>
 
         <article class="step" data-step="logp">
           <p class="eyebrow">Step 3 of 8 · Hydrophobicity</p>
-          <h2>log P, the π term</h2>
-          <p>Hansch and Fujita (1964) wrote biological activity as a function of hydrophobicity, electronic effects and size: <span class="eq">log 1/C = −k π² + k′ π + ρ σ + k″</span>. A drug has to partition into membranes to reach its target, so potency often rises with log P and then falls again once the molecule is too greasy to leave the membrane.</p>
+          <h2>log P: a whole-molecule property</h2>
+          <p>Hansch and Fujita (1964) wrote biological activity as a function of hydrophobicity, electronic effects and size: <span class="eq">log 1/C = −k π² + k′ π + ρ σ + k″</span>. Classical substituent π is a difference in log P relative to a reference compound. Whole-molecule log P below is not π, and its association with activity does not establish a mechanism or a general optimum.</p>
           <p>The points now spread along one axis only: Crippen log P, computed by RDKit the same way for every drug. PubChem's XLogP3 is shown beside it in the drug panel and as an axis in Explore.</p>
           <p class="fig" id="t-logp"></p>
         </article>
@@ -241,7 +238,9 @@
 
       <section id="explore" class="panel" aria-labelledby="explore-h" tabindex="-1">
         <h2 id="explore-h">Explore</h2>
-        <p class="lede">Find a drug by name, choose the three axes and the colour, or narrow the set by ATC group or route.</p>
+        <p class="lede">Change the question. Keep the molecule in sight.</p>
+        <div id="inquiry-mount"></div>
+        <p class="lede">Use the full controls below to change any axis, colour, ATC group or route. Your filters stay in place when switching maps.</p>
         <div class="field wide"><label for="search">Find a drug</label>
           <input id="search" type="search" list="drug-names" placeholder="e.g. dexamethasone" autocomplete="off" inputmode="search" enterkeyhint="search">
           <datalist id="drug-names"></datalist>
@@ -287,8 +286,7 @@
       </section>
 
       <section id="detail" class="panel detail" aria-labelledby="detail-h" data-sheet="closed">
-        <!-- On phones, tablets and landscape phones this panel is a sheet fixed to the bottom of the screen (js/sheet.js): the handle
-             shows the name and three numbers and opens it half and fully. On a desktop it is an ordinary card in the text column. -->
+
         <div class="sheet-head" id="sheet-head">
           <button type="button" id="sheet-handle" class="sheet-handle" aria-expanded="false" aria-controls="sheet-body">
             <span class="sheet-grip" aria-hidden="true"></span>
@@ -324,7 +322,7 @@
           <h4>ATC codes and routes</h4>
           <ul class="atc-list" id="d-atc"></ul>
           <p class="flags" id="d-flags"></p>
-          <!-- The binding overlay (js/gl/binding.js) and its data arrive on the first press of this button or of the B key. -->
+
           <p class="bind-cue"><button type="button" id="d-bind" class="ghost" aria-expanded="false" aria-controls="bind">Show it binding <kbd>B</kbd></button><span class="small" id="d-bind-note"></span></p>
         </div>
         </div>
@@ -336,7 +334,7 @@
           <button type="button" id="qsar-open" class="ghost" aria-haspopup="dialog" aria-controls="qsar-dialog">DRD2 QSAR · validation</button>
           <button type="button" id="qsar-clear" class="ghost" hidden>Clear domain colours</button>
           <button type="button" id="qsb-open" class="ghost" aria-haspopup="dialog" aria-controls="qsb-dialog">QSAR builder · every target</button>
-          <button type="button" id="ti-open" class="ghost" aria-haspopup="dialog" aria-controls="ti-dialog">Therapeutic index · ranked batch</button>
+          <button type="button" id="ti-open" disabled title="Withheld pending endpoint and prediction provenance review" class="ghost" aria-haspopup="dialog" aria-controls="ti-dialog">Archived index · unavailable</button><p class="small">Numeric safety ranking is withheld pending review of endpoint compatibility and measured-versus-predicted provenance. The archived source results are preserved.</p>
           <p class="small">One human target, binding assays and Ki only. Explore the reproducible model, scaffold holdout and applicability domain.</p>
         </div>
         <p class="lede">Drugs are grouped by their first ChEMBL mechanism target. Drugs up to 1000 Da are fitted. A group with at least five drugs gets the regression with the best leave-one-out q², allowing one descriptor per five drugs.</p>
@@ -382,7 +380,7 @@
           <summary><h2 id="table-h">Data table</h2></summary>
           <p class="lede">The drugs in the current view with the three axis values. Click a row to select the drug, or a column heading to sort by it.</p>
           <div class="controls">
-            <div class="field wide"><span class="label">Extra columns</span><label class="check" for="t-extra"><input type="checkbox" id="t-extra"> QED, therapeutic index and free concentration</label></div>
+            <div class="field wide"><span class="label">Extra columns</span><label class="check" for="t-extra"><input type="checkbox" id="t-extra"> QED and archived derived fields (unavailable)</label></div>
             <div class="field"><label for="t-mode">Mode of administration</label><select id="t-mode"><option value="">All modes</option></select></div>
             <div class="field wide"><span class="label">Rows</span><label class="check" for="t-permode"><input type="checkbox" id="t-permode"> One row per mode, so the modes of one drug can be compared</label></div>
           </div>
@@ -409,8 +407,7 @@
   </div>
 </div>
 
-<!-- The ligand-binding overlay. Empty until js/gl/binding.js is loaded on first use; the geometry is read from the PDB
-     co-crystal in data/binding/<target>.json, never computed here. -->
+
 <div class="bind" id="bind" hidden role="dialog" aria-modal="true" aria-labelledby="bind-h">
   <div class="bind-box">
     <div class="bind-head">
@@ -623,7 +620,7 @@
     <p><a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">three.js</a> 0.169.0 (MIT), <a href="https://gsap.com/standard-license/" target="_blank" rel="noopener noreferrer">GSAP</a> 3.12.5 (GSAP Standard "No Charge" License), <a href="https://github.com/reymond-group/smilesDrawer" target="_blank" rel="noopener noreferrer">SmilesDrawer</a> 2.1.7 (MIT). Fonts, served from this site: Bricolage Grotesque (Copyright 2022 The Bricolage Grotesque Project Authors), IBM Plex Mono (Copyright 2017 IBM Corp.), Newsreader (Copyright 2020 The Newsreader Project Authors), all under the <a href="https://openfontlicense.org/" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a>; the notices are in <a href="vendor/fonts/LICENSES.md">vendor/fonts/LICENSES.md</a>. All third-party notices: <a href="https://github.com/DhruvMenon2003/drug-hansch-space/blob/main/THIRD_PARTY_LICENSES.md" target="_blank" rel="noopener noreferrer">THIRD_PARTY_LICENSES.md</a>. This page makes no request to any third-party server.</p>
 
     <h3>About the data</h3>
-    <p>Drug Hansch Space is an educational exploration of 759 drugs. It is not medical advice, does not recommend, rank, dose or diagnose, and is not a toxicity, safety or efficacy predictor. Toxicity is not part of the data. The 3D positions come from descriptors computed with RDKit from each drug's structure, not from experiments on that drug. The Hansch-type fits relate the median ChEMBL pChEMBL potency to log P, molar refractivity and TPSA within groups of drugs that share a mechanism target. Those groups are not congeneric series, the potencies are medians across different assays, and TPSA is a whole-molecule polarity proxy, so the fits are exploratory; the page labels each one "predictive within this set", "weak" or "not predictive", and most are weak or not predictive. No model on this page predicts how a drug behaves in a person. ATC groups classify drugs for drug-utilisation statistics; membership of a group does not mean therapeutic equivalence or a difference in effectiveness. Routes of administration are summaries of WHO codes and US label listings, not dosing or labelling information, and the DailyMed "in use" labelling may differ from the FDA's own labelling. Source records can be incomplete, outdated or wrong. The site is provided "as is" without warranty and is not affiliated with or endorsed by DrugBank, EMBL-EBI, WHO or its Collaborating Centre, NCBI/NLM, the FDA or any other source named.</p>
+    <p>Drug Hansch Space is an educational exploration of 759 drugs. It is not medical advice, does not recommend, rank, dose or diagnose, and is not a toxicity, safety or efficacy predictor. Toxicity is not part of the data. The 3D positions come from descriptors computed with RDKit from each drug's structure, not from experiments on that drug. The Hansch-type fits relate the median ChEMBL pChEMBL potency to log P, molar refractivity and TPSA within groups of drugs that share a mechanism target. Those groups are not congeneric series, the potencies are medians across different assays, and TPSA is a whole-molecule polarity proxy, so the fits are exploratory; the page labels each one "internal fit signal; external predictivity unestablished", "weak" or "not predictive", and most are weak or not predictive. No model on this page predicts how a drug behaves in a person. ATC groups classify drugs for drug-utilisation statistics; membership of a group does not mean therapeutic equivalence or a difference in effectiveness. Routes of administration are summaries of WHO codes and US label listings, not dosing or labelling information, and the DailyMed "in use" labelling may differ from the FDA's own labelling. Source records can be incomplete, outdated or wrong. The site is provided "as is" without warranty and is not affiliated with or endorsed by DrugBank, EMBL-EBI, WHO or its Collaborating Centre, NCBI/NLM, the FDA or any other source named.</p>
     <p>Non-commercial, educational use. A licence for this project's own code and data has not been chosen yet; each source above keeps its own terms.</p>
   </div>
 </footer>
@@ -634,9 +631,7 @@
 <div id="xr-overlay" hidden></div>
 
 
-<!-- The therapeutic-index overlay: the ranked batch, where each number came from, and the five OECD principles with
-     this run's own figures. Empty until js/ti.js is loaded on first use; the data is site/data/ti/summary.json,
-     written by ti/rank.py. -->
+
 <dialog id="ti-dialog" class="qsar-dialog" aria-labelledby="ti-title">
   <div class="qsar-head">
     <div><p class="eyebrow">OECD QSAR workflow · ranked batch</p><h2 id="ti-title">Therapeutic index</h2></div>

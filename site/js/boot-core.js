@@ -19,7 +19,7 @@ import { initTable, initExtras } from './table.js';
 import { fillMethod, fillTourText, initHansch } from './hansch.js';
 import { goStep, initTour, refreshTourBand, tourBand } from './tour.js';
 import { initLayout, layoutState } from './layout.js';
-import { initSheet } from './sheet.js';
+import { initSheet, setSheet } from './sheet.js';
 import { APP_BUILD, buildMismatch } from './version.js';
 import { hideStatus, setProgress, setStatus } from './fallback.js';
 
@@ -78,6 +78,8 @@ export async function bootCore(caps) {
   initSheet();
   initAnnounce();
   initControls();
+  const INQUIRY_MOD = 'inquiry.js';
+  $('#inquiry-start').addEventListener('click', () => import(`./${INQUIRY_MOD}`).then(m => m.initInquiry(caps, () => setSheet('full'))), { once: true });
   initHansch();
   $('#qsar-open')?.addEventListener('click', () => import(`./${QSAR_MOD}`).then(m => m.openQsar()).catch(() => {
     const panel = $('#qsar-dialog');
@@ -97,7 +99,7 @@ export async function bootCore(caps) {
   initExtras({ gl: !!caps?.webgl });                 // the QED panel and the binding overlay: both arrive on first use
   // The live therapeutic index (readout on the stage, the index as an axis and a colour). Nothing on the page needs it to
   // draw the first frame and its own data file is fetched at idle as well, so it is loaded the same way: after the paint.
-  whenIdle(() => import(`./${TI_LIVE_MOD}`).then(m => m.initTiLive()).catch(err => console.error('the live therapeutic index did not load', err)), { timeout: 3000, fallbackMs: 600 });
+  // Archived TI results remain intact; no numeric safety ranking is exposed before endpoint review.
   fillTourText();
   fillMethod();
   syncControls();

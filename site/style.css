@@ -474,3 +474,7 @@ details > summary h2 { display: inline; }
 .bind-contacts .hb { color: var(--s1); }
 .bind-contacts .hp { color: var(--s2); }
 .bind-contacts li { padding: 3px 9px; border: 1px solid var(--line); border-radius: 999px; }
+
+
+.inquiry-invitation {margin:24px 0;padding:16px 20px;border-left:3px solid #27858b;background:rgba(39,133,139,.08)}
+.inquiry-invitation p {font-size:24px;line-height:1.25;margin:6px 0 12px}.inquiry-invitation small{display:block;margin-top:10px}

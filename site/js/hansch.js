@@ -18,7 +18,7 @@ function equation(g, withSe = true) {
 }
 function verdict(g) {
   if (g.q2 >= 0.5 && g.yrand_beats === 0)
-    return ['Predictive within this set', `Leave-one-out q² is ${fx(g.q2)} and none of 100 shuffled activity vectors reached r² = ${fx(g.r2)}.`];
+    return ['Internal fit signal; external predictivity unestablished', `Leave-one-out q² is ${fx(g.q2)} and none of 100 shuffled activity vectors reached r² = ${fx(g.r2)}.`];
   if (g.q2 >= 0.2)
     return ['Weak', `q² is ${fx(g.q2)}: better than the mean, but below the usual 0.5 bar${g.yrand_beats ? `, and ${g.yrand_beats} of 100 shuffled fits matched its r²` : ''}.`];
   return ['Not predictive', g.q2 < 0 ? `q² is ${fx(g.q2)}: predicting every drug with the group mean does better.` : `q² is ${fx(g.q2)}, close to zero.`];

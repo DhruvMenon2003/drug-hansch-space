@@ -52,13 +52,13 @@ export function modesOf(d) {
 
 /**
  * The columns behind "Extra columns": QED for every drug (data/props.json) and, for the drugs the H2-antagonist cohort
- * covers, a therapeutic index and a free concentration for each administration mode (data/cohort_A02BA.json). Both files
+ * covers, retained route-specific records (data/cohort_A02BA.json). Invalid derived TI and exposure values are withheld. Both files
  * load on the first tick of the box, so neither is in the first load. A drug a file does not cover shows a dash.
  */
 const EXTRA = [
   { key: 'qed', label: 'QED', dec: 2, get: d => side.qed.get(d.cid), note: () => side.defs.get('qed')?.long },
-  { key: 'ti', label: 'Therapeutic index', dec: 2, get: (d, mode) => sideRow(d.cid, mode)?.ti, note: () => side.formulas.therapeutic_index },
-  { key: 'fc', label: 'Free drug', dec: 1, get: (d, mode) => sideRow(d.cid, mode)?.free_conc, note: () => side.formulas.free_concentration },
+  { key: 'ti', label: 'Therapeutic index · withheld', dec: 2, get: () => null, note: () => 'Not calculated: the archived lethal and active endpoints are not comparable.' },
+  { key: 'fc', label: 'Free concentration · withheld', dec: 1, get: () => null, note: () => 'Not calculated: the archived expression does not establish a concentration or unbound exposure.' },
 ];
 /** The sort the reader chose. The default is the name, ascending, which is the order the table has always had. */
 let sort = { key: 'name', dir: 1 };
@@ -106,7 +106,7 @@ function tableNote(extra, n) {
   if (!extra) { el.textContent = ''; el.hidden = true; return; }
   const miss = side.missing.length ? ` Not loaded: ${side.missing.join(', ')}.` : '';
   el.hidden = false;
-  el.textContent = `${n} rows. QED from data/props.json; the therapeutic index and the free concentration come from the H2-antagonist cohort (data/cohort_A02BA.json), so every other drug shows a dash.${miss}`;
+  el.textContent = `${n} rows. QED from data/props.json. Therapeutic index and free concentration are withheld (dashes): the archived endpoints and exposure expression are not scientifically comparable. Source records and route-specific rows remain available.${miss}`;
 }
 
 /** Bind the table's listeners and keep it in step with layout and selection. Runs last on `layout`, as it always did. */

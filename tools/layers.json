@@ -51,6 +51,10 @@
     "js/boot-gl.js": 4,
     "js/gl/binding.js": 4,
     "js/main.js": 5,
-    "js/ti-search.js": 3
+    "js/ti-search.js": 3,
+    "js/inquiry-math.js": 1,
+    "js/inquiry.js": 3,
+    "js/gl/inquiry.js": 3,
+    "js/inquiry-projection.js": 2
   }
 }
