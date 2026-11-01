@@ -26,7 +26,11 @@ function endpointEvidence(d) {
   return `<section><h5>${esc(cap(d.name))}</h5>${a ? `<p><strong>Stored median pChEMBL ${fx(a.p, 2)}</strong><br>${esc(a.types || 'Endpoint types not retained')} · ${a.ndoc ?? 'Unknown number of'} ChEMBL documents</p><p>Target: <a href="https://www.ebi.ac.uk/chembl/target_report_card/${esc(a.target)}/" target="_blank" rel="noopener noreferrer">${esc(a.tname || a.target)} (${esc(a.target)}) ${outwardArrow}</a></p>` : `<p>${esc(cap(d.name))} has no activity aggregate in this snapshot. Missing does not mean inactive.</p>`}<p class="inquiry-source-links">${recordLinks(d)}</p><p class="inquiry-footnote">Dataset CID ${d.cid}${d.pcid && d.pcid !== d.cid ? ` · structure parent CID ${d.pcid}` : ''}</p>${batchEvidence(d)}${identityWarning(d) ? `<p class="inquiry-identity-warning">${identityWarning(d)}</p>` : ''}</section>`;
 }
 export function initInquiry(caps, updateSheet) {
+  const disclosure = $('#inquiry-disclosure');
+  disclosure.hidden = false; disclosure.open = true;
+  $('#inquiry-resume').textContent = 'Resume inquiry';
   $('#inquiry-mount').innerHTML = `        <section class="inquiry" aria-labelledby="inquiry-title">
+          <a class="inquiry-return" href="#explore">Back to Explore controls</a>
           <p class="eyebrow">01 / Follow an identity</p>
           <h3 id="inquiry-title">Same molecule. Different neighbours.</h3>
           <div class="inquiry-anchor"><span class="inquiry-orbit" aria-hidden="true">◎</span><div><strong id="inquiry-name"></strong><small id="inquiry-identity"></small></div></div>
@@ -51,7 +55,7 @@ export function initInquiry(caps, updateSheet) {
             <p id="inquiry-slice-help" class="small"></p><p id="inquiry-slice-result" class="inquiry-result" role="status"></p>
             <p class="inquiry-footnote">An exploratory threshold, not an absorption or safety prediction. Recorded administration route is not measured bioavailability. No compounds or source values are changed.</p>
           </div>
-          <p class="inquiry-next">03 / Challenge the equation <a href="#hansch">Inspect fits and frozen validation ${forwardArrow}</a></p>
+          <p class="inquiry-next">03 / Challenge the equation <a href="#hansch">Inspect fits and frozen validation ${forwardArrow}</a><a class="inquiry-return" href="#explore">Back to Explore controls</a></p>
         </section>`;
   for (const file of ['inquiry.css', 'inquiry-pair.css', 'inquiry-tags.css']) { const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = `css/${file}`; document.head.append(css); }
   app.inquiry = { active: true, focused: true, projectionZoom: false, comparisonCid: null, descriptor: 'tpsa', cid: null, neighbours: [], slice: null };
@@ -118,11 +122,24 @@ export function initInquiry(caps, updateSheet) {
   $('#inquiry-evidence').addEventListener('click', () => { if (state.cid != null) { selectDrug(state.cid); if (isSheetMode()) updateSheet?.('full'); } });
   const start = () => {
     state.active = true;
-    $('#explore').scrollIntoView({ block: 'start', behavior: 'instant' });
+    disclosure.open = true;
+    $('#inquiry-mount').scrollIntoView({ block: 'start', behavior: 'instant' });
     // Let the scroll-tour settle first; then the instrument owns the explicit choice.
     requestAnimationFrame(() => requestAnimationFrame(() => { choose('properties'); pin(); if (isSheetMode()) updateSheet?.('closed'); $('#inquiry-pin').focus({ preventScroll: true }); }));
   };
   $('#inquiry-start').addEventListener('click', start);
+  $('#inquiry-resume').addEventListener('click', () => {
+    state.active = true;
+    disclosure.open = true;
+    render();
+    requestAnimationFrame(() => { $('#inquiry-mount').scrollIntoView({ block: 'start', behavior: 'instant' }); $('#inquiry-pin').focus({ preventScroll: true }); });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('a[href="#explore"]')) return;
+    disclosure.open = false;
+    if (isSheetMode()) updateSheet?.('closed');
+    requestAnimationFrame(() => $('#search').focus({ preventScroll: true }));
+  });
   document.addEventListener('click', e => { if (e.target.closest('a[href="#tour"], a[href="#hansch"]')) { state.active = false; render(); } });
   function choose(key) {
     state.active = true;

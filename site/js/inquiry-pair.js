@@ -2,7 +2,7 @@
 // Conceptual reference (not copied code): MbappeWU/explorable@4a72bfa,
 // gallery/noise-cancelling.html:329–347,375–394 (shared params/readout/drawing),
 // gallery/planetary-gears.html:438–473 (anchored labels). MIT; see project notices.
-import { cap, esc, fx } from './kernel.js';
+import { cap, esc, fx, isDark } from './kernel.js';
 import { identityWarning } from './inquiry-math.js';
 
 const DESCRIPTORS = {
@@ -29,7 +29,7 @@ export function initPair(host, { loadSmilesDrawer, onDescriptor = () => {} } = {
     <div class="pair-descriptors" role="group" aria-label="Descriptor to compare">${Object.entries(DESCRIPTORS).map(([key, d]) => `<button type="button" data-pair-descriptor="${key}" aria-pressed="false" title="${d.full}">${d.label}</button>`).join('')}</div>
     <p class="pair-difference" role="status" aria-live="polite"></p>
     <figure class="pair-ruler"><svg viewBox="0 0 520 128" role="img"></svg><figcaption></figcaption></figure>
-    <p class="pair-method">Stored RDKit descriptors · 2D drawings from curated SMILES. Activity cannot be compared from these descriptors.</p>
+    <p class="pair-method">Stored RDKit descriptors · independently laid out 2D structures from curated SMILES. Activity cannot be compared from these descriptors.</p>
   </section>`;
   const q = s => host.querySelector(s);
   async function depict(d, target, ticket) {
@@ -47,7 +47,7 @@ export function initPair(host, { loadSmilesDrawer, onDescriptor = () => {} } = {
       const drawer = new SD.SvgDrawer({ width: 300, height: 210, bondThickness: 1.2, padding: 14, compactDrawing: false });
       SD.parse(d.smiles, tree => {
         if (disposed || ticket !== version) return;
-        try { drawer.draw(tree, svg, matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); svg.removeAttribute('style'); target.replaceChildren(svg); target.removeAttribute('aria-busy'); }
+        try { drawer.draw(tree, svg, isDark() ? 'dark' : 'light'); svg.removeAttribute('style'); target.replaceChildren(svg); target.removeAttribute('aria-busy'); }
         catch { unavailable('Structure drawing unavailable.'); }
       }, () => unavailable('Structure drawing unavailable.'));
     } catch { unavailable('Structure drawing unavailable.'); }
@@ -62,7 +62,7 @@ export function initPair(host, { loadSmilesDrawer, onDescriptor = () => {} } = {
       q(`[data-pair-name="${id}"]`).textContent = cap(d.name);
       q(`[data-pair-value="${id}"]`).textContent = Number.isFinite(value) ? `${fx(value, 3)}${unit}` : 'Missing descriptor';
     }
-    const key = `${p.anchor.cid}|${p.anchor.smiles}|${p.other.cid}|${p.other.smiles}|${matchMedia('(prefers-color-scheme: dark)').matches}`;
+    const key = `${p.anchor.cid}|${p.anchor.smiles}|${p.other.cid}|${p.other.smiles}|${isDark()}`;
     if (key !== depictionKey) { depictionKey = key; const ticket = ++version; depict(p.anchor, q('[data-pair-structure="a"]'), ticket); depict(p.other, q('[data-pair-structure="b"]'), ticket); }
     for (const button of host.querySelectorAll('[data-pair-descriptor]')) button.setAttribute('aria-pressed', String(button.dataset.pairDescriptor === p.key));
     const svg = q('.pair-ruler svg');

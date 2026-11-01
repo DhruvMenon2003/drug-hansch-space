@@ -1,6 +1,6 @@
 # Following an identity across maps
 
-This milestone extends the original static explorer with a lazy-loaded inquiry instrument. Start with **Follow a molecule** in the opening tour card. Pin the current selection or caffeine, compare Properties / Structure map / PCA overview, inspect the five nearest displayed-coordinate neighbours, and switch between a neighbourhood camera and the whole population. The TPSA sweep changes visual size and reports population counts while preserving the chosen colour encoding and filters. Structure & sources opens the original detail view (full sheet on mobile). The validation link returns control to the existing fit explorer.
+This milestone extends the original static explorer with a lazy-loaded inquiry instrument. Start with **Follow a molecule** in the opening tour card or directly in Explore. Pin the current selection or caffeine, compare Properties / Structure map / PCA overview, inspect the five nearest displayed-coordinate neighbours, and switch between a neighbourhood camera and the whole population. The TPSA sweep changes visual size and reports population counts while preserving the chosen colour encoding and filters. Structure & sources opens the original detail view (full sheet on mobile). The validation link returns control to the existing fit explorer.
 
 ## Scientific meaning
 
@@ -45,7 +45,7 @@ The delivery destination is the existing GitHub Pages site. Prepare a draft PR f
 
 The fallback now offers an explicit reversible neighbourhood zoom. It pads the pin plus its five current map neighbours by 15% on each projected axis, draws every filtered record inside that window, and reports in-frame/off-screen counts. For the initial caffeine view, this reveals 14 of 759 records with 745 off-screen. It does not change population filters, neighbour normalization/ranks, source values or the population slice statistics. Known identity mismatches receive a crossed outline in the projection and an inspection marker in 3D; the source record remains available. Directional inquiry glyphs use inline SVG.
 
-Two official frontend design/testing instruction packages are installed in the executor; AGENTS.md records actual paths, provenance, discovery limits and existing browser capabilities. This setup does not add MCP/browser tools. The full original explorable fork ZIP was downloaded directly from `DhruvMenon2003/explorable` at `4a72bfa74af8f912eb93701cac924ab0fb68b969`: 15,518,883 bytes, 36 files, SHA-256 `f822a64ad09e82363d92a5c36eb7c0707c1f4043c2f0091412d3b6619674825c`. CRC validation passed; gallery pages, templates, examples, images, GIF/MP4 and support code are preserved. No recorder/install scripts were executed.
+Two official frontend design/testing instruction packages were used; AGENTS.md records portable capability-check rules and source provenance. Session-specific installation and transfer receipts remain in the private project record. Instruction packages do not add MCP/browser tools. The full original explorable fork ZIP was downloaded directly from `DhruvMenon2003/explorable` at `4a72bfa74af8f912eb93701cac924ab0fb68b969`: 15,518,883 bytes, 36 files, SHA-256 `f822a64ad09e82363d92a5c36eb7c0707c1f4043c2f0091412d3b6619674825c`. CRC validation passed; gallery pages, templates, examples, images, GIF/MP4 and support code are preserved. No recorder/install scripts were executed.
 
 
 ## Paired exploration and review corrections
@@ -57,3 +57,15 @@ Fresh visual review found and corrected a startup race (comparison chosen before
 All ten explanatory HTML comments plus the original preload marker, and the layout policy comment, are restored. The full ranked dialog body now loads on first use from a local HTML fragment, and the added fallback styling loads only in fallback mode, preserving the initial payload budget without erasing rationale or weakening checks.
 
 A separate frozen-data inconsistency is disclosed: summary metadata says 337 rows have a predicted side, while the full 649-row batch contains 620 with predictions and 29 measured-only. No source metadata or result was rewritten. Ranked preview and full Decisions batch remain distinguishable. The laboratory restores the original arithmetic (e.g. famotidine 3.06 and 4.900367…) as explicitly labelled legacy derived values, not validated concentration or TI.
+
+## Access and visual-context correction
+
+Ordinary Explore exposes search, axes/colour, filters and a direct Follow entry before the long inquiry. The instrument opens in a disclosure below those controls; Back and Resume preserve the pin, comparison, selection, map and filters. Both entry buttons share one lazy initialization. The CSV input remains available in its own disclosure. The stale “unavailable” table caption is removed.
+
+Resume also reactivates scene annotations after visiting the fit section, without resetting the current view. The unchanged QED stylesheet and its original comment move to the existing on-demand QED load; charts wait for both their data and styling. This keeps the initial-load budget intact without removing rationale or capabilities.
+
+The ranked table pins molecule identity and target provenance beside horizontally scrolled evidence on desktop. On phones, each row presents all seven fields without horizontal scrolling. It retains the original preview limit, filters and frozen values.
+
+Projected identity tags reserve the population beacon, one another and the moving mobile detail sheet. Sheet bounds trigger on-demand redraws during its CSS transition and stop when settled. Axis labels also reserve the beacon. Molecular drawings follow the application's explicit theme, including an override of the OS preference. Their caption now states that these are independent 2D layouts: the existing depiction library provides no verified common-core alignment mechanism, and no atom correspondence or binding pose has been invented.
+
+The pair ruler's arithmetic and scale are unchanged. In the caffeine/theophylline pair, the log P difference of −0.011 occupies about 9.91% of its labelled pair window, not nearly all of it. The ruler remains a local comparison with explicit bounds, not a population-wide magnitude scale.

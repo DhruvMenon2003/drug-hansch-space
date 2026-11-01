@@ -45,9 +45,23 @@ export function initPairScene() {
         ctx.setLineDash([2,4]);ctx.globalAlpha=0.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(c.x,c.y);ctx.moveTo(b.x,b.y);ctx.lineTo(d.x,d.y);ctx.stroke();ctx.restore();
       }
     }
-    drawPairTags(ctx,items,width,height,{ink:css.getPropertyValue('--pair-ink').trim()||'#183c43',panel:css.getPropertyValue('--pair-panel').trim()||'#fffdf5',muted:css.getPropertyValue('--pair-muted').trim()||'#607678'});
+    const bounds=source.getBoundingClientRect();
+    const reserved=['inquiry-beacon','detail'].flatMap(id=>{
+      const el=document.getElementById(id);
+      if(!el || el.hidden || !el.getClientRects().length)return [];
+      const r=el.getBoundingClientRect(),sx=width/bounds.width,sy=height/bounds.height;
+      const x=Math.max(0,(r.left-bounds.left)*sx),y=Math.max(0,(r.top-bounds.top)*sy);
+      const right=Math.min(width,(r.right-bounds.left)*sx),bottom=Math.min(height,(r.bottom-bounds.top)*sy);
+      return right>x && bottom>y ? [{x,y,width:right-x,height:bottom-y}] : [];
+    });
+    drawPairTags(ctx,items,width,height,{ink:css.getPropertyValue('--pair-ink').trim()||'#183c43',panel:css.getPropertyValue('--pair-panel').trim()||'#fffdf5',muted:css.getPropertyValue('--pair-muted').trim()||'#607678'},reserved);
   }
   scene.onBeforeRender=render;
-  const off=bus.on('inquiry:changed',wake);wake();
-  return ()=>{disposed=true;off();if(scene.onBeforeRender===render)scene.onBeforeRender=prior;canvas.remove();};
+  // The sheet's CSS height transition can outlast the scene tween. Redraw on its
+  // actual bounds changes so identity tags never retain a pre-transition position.
+  const refresh=()=>{stage.dirty.labels=true;wake();};
+  const sheet=document.getElementById('detail'), observer=new ResizeObserver(refresh);
+  if(sheet)observer.observe(sheet);
+  const off=bus.on('inquiry:changed',refresh);refresh();
+  return ()=>{disposed=true;observer.disconnect();off();if(scene.onBeforeRender===render)scene.onBeforeRender=prior;canvas.remove();};
 }

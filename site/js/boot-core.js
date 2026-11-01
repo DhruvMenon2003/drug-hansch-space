@@ -79,7 +79,11 @@ export async function bootCore(caps) {
   initAnnounce();
   initControls();
   const INQUIRY_MOD = 'inquiry.js';
-  $('#inquiry-start').addEventListener('click', () => import(`./${INQUIRY_MOD}`).then(m => m.initInquiry(caps, setSheet)), { once: true });
+  let inquiryLoad;
+  for (const id of ['#inquiry-start', '#inquiry-resume']) $(id).addEventListener('click', e => {
+    e.preventDefault();
+    inquiryLoad ??= import(`./${INQUIRY_MOD}`).then(m => m.initInquiry(caps, setSheet));
+  });
   initHansch();
   $('#qsar-open')?.addEventListener('click', () => import(`./${QSAR_MOD}`).then(m => m.openQsar()).catch(() => {
     const panel = $('#qsar-dialog');

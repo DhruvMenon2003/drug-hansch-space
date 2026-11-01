@@ -140,3 +140,6 @@ html.no-webgl #inquiry-focus { display: none; }
 .inquiry-neighbours button { grid-template-columns: 28px minmax(0,1fr) auto; }
 .inquiry-compare-action { font-size: 12px; color: var(--ink-2); }
 .inquiry-neighbours button[aria-pressed="true"] { background: rgba(39,133,139,.1); box-shadow: inset 3px 0 #27858b; }
+
+.inquiry-return { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; }
+#inquiry-disclosure > #inquiry-mount .inquiry { margin-top: 0; }

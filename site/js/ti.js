@@ -3,7 +3,7 @@
 // with this run's own figures. Data: site/data/ti/summary.json, written by ti/rank.py.
 import { $, esc, getSide } from './kernel.js';
 
-const URL = 'data/ti/summary.json';
+const SUMMARY_URL = 'data/ti/summary.json';
 const TABS = ['rank', 'route', 'series', 'decide', 'expose', 'search', 'oecd'];
 const DECIDE_MOD = 'ti-decide.js';   // variable specifiers: the workbench, its whole-batch file and the exposure
 const EXPOSE_MOD = 'ti-exposure.js'; // arithmetic all arrive on first use, never on the way to anything else
@@ -18,6 +18,12 @@ let data = null, wired = false, bodyReady = null;
 
 // Keep the complete archived instrument off the first-paint path. The static fragment contains no scripts.
 function loadBody() {
+  if (!$('#ti-rank-style')) {
+    const link = document.createElement('link');
+    link.id = 'ti-rank-style'; link.rel = 'stylesheet';
+    link.href = new URL('../css/ti-rank.css', import.meta.url).href;
+    document.head.append(link);
+  }
   bodyReady ||= fetch('fragments/ti-body.html').then(r => {
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     return r.text();
@@ -71,8 +77,8 @@ function fillRanked() {
   });
   const tag = s => (s === 'measured' ? 'measured aggregate' : s === 'series_hansch' ? 'Hansch series' : 'fallback');
   $('#ti-rows').innerHTML = rows.slice(0, 200).map(r => `<tr>
+    <th scope="row" data-label="Molecule">${esc(r.name)} <span class="ti-rank-target-key">${esc(r.target_chembl_id)} · ${r.target_source === 'chembl_mechanism' ? 'recorded' : r.routing_decision === 'ambiguous' ? 'ambiguous' : 'inferred'}</span></th>
     <td data-label="Rank in target">${r.rank_in_target} <span class="small">of ${r.n_in_target}</span></td>
-    <td data-label="Molecule">${esc(r.name)}</td>
     <td data-label="Target">${esc(r.target_name || r.target_chembl_id)}
         <span class="small">${esc(r.target_source === 'chembl_mechanism' ? 'recorded' : 'inferred from structure' + (r.routing_decision === 'ambiguous' ? ', ambiguous' : ''))}</span></td>
     <td data-label="Activity">${num(r.p_activity)} <span class="small">${esc(tag(r.p_activity_source))}</span></td>
@@ -174,7 +180,7 @@ export async function openIndex() {
   if (data) return;
   try {
     await loadBody();
-    data = await getSide(URL);
+    data = await getSide(SUMMARY_URL);
     const c = data.counts;
     $('#ti-lede').textContent = `${c['molecules in']} molecules in, ${c.ranked} ranked. `
       + `Rows distinguish measured aggregates from predictions. The ranked preview contains ${data.ranked.length} rows; the full frozen batch is available in Decisions and CSV. `

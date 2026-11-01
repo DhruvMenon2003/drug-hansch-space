@@ -91,7 +91,7 @@ const rectsOverlap = (a, b, pad = 2) => a.left < b.right + pad && a.right > b.le
 const _o = new THREE.Vector3();
 function tidyLabels() {
   const host = stage.labels.domElement, box = host.getBoundingClientRect();
-  const keepOut = ['.hud', '.stage-tools'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height && rectsOverlap(r, box, 0));
+  const keepOut = ['.hud', '.stage-tools', '#inquiry-beacon'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height && rectsOverlap(r, box, 0));
   const titles = [...host.querySelectorAll('.ax-title, .sel-label')].map(el => ({ el, r: el.getBoundingClientRect() })).filter(o => o.r.width);
   const ticks = [...host.querySelectorAll('.ax-label')].map(el => ({ el, r: el.getBoundingClientRect() }));
   const kept = [];
@@ -99,8 +99,11 @@ function tidyLabels() {
     const [wx, wy] = (el.dataset.shift || '0 0').split(' ').map(Number);
     const left = r.left - wx, right = r.right - wx, top = r.top - wy, bottom = r.bottom - wy;
     const x = Math.round(Math.max(box.left + 8 - left, Math.min(0, box.right - 8 - right)));
-    let y = 0;
-    for (const k of keepOut) if (left + x < k.right && right + x > k.left && top + y < k.bottom && bottom + y > k.top) y = Math.round(k.bottom + 6 - top);
+    let y = Math.round(Math.max(box.top + 4 - top, Math.min(0, box.bottom - 4 - bottom)));
+    for (const k of keepOut) if (left + x < k.right && right + x > k.left && top + y < k.bottom && bottom + y > k.top) {
+      y = Math.round(k.bottom + 6 - top);
+      if (bottom + y > box.bottom - 4) y = Math.round(k.top - 6 - bottom);
+    }
     // never below the bottom edge or above the top edge of the layer (the clamp wins over the keep-out: a title on a button beats a lost title)
     if (bottom + y > box.bottom - 4) y = Math.round(box.bottom - 4 - bottom);
     if (top + y < box.top + 4) y = Math.round(box.top + 4 - top);
@@ -114,7 +117,7 @@ function tidyLabels() {
   const order = ticks.map(t => ({ ...t, d: Math.hypot((t.r.left + t.r.right) / 2 - ox, (t.r.top + t.r.bottom) / 2 - oy) })).sort((a, b) => a.d - b.d);
   for (const t of order) {
     const inside = t.r.left >= box.left && t.r.right <= box.right && t.r.top >= box.top && t.r.bottom <= box.bottom;
-    const show = inside && !kept.some(k => rectsOverlap(t.r, k, 1));
+    const show = inside && ![...kept, ...keepOut].some(k => rectsOverlap(t.r, k, 1));
     if (show) kept.push(t.r);
     const v = show ? '' : 'hidden';
     if (t.el.style.visibility !== v) t.el.style.visibility = v;

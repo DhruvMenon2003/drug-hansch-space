@@ -251,15 +251,14 @@
       <section id="explore" class="panel" aria-labelledby="explore-h" tabindex="-1">
         <h2 id="explore-h">Explore</h2>
         <p class="lede">Change the question. Keep the molecule in sight.</p>
-        <div id="inquiry-mount"></div>
-        <p class="lede">Use the full controls below to change any axis, colour, ATC group or route. Your filters stay in place when switching maps.</p>
+        <nav class="chips" aria-label="Explore controls">
+          <span class="link-list"><a href="#g-axes">Axes &amp; colour</a></span>
+          <span class="link-list"><a href="#g-filters">Filters</a></span>
+          <span class="link-list"><a href="#inquiry-mount" id="inquiry-resume">Follow a molecule</a></span>
+        </nav>
         <div class="field wide"><label for="search">Find a drug</label>
           <input id="search" type="search" list="drug-names" placeholder="e.g. dexamethasone" autocomplete="off" inputmode="search" enterkeyhint="search">
           <datalist id="drug-names"></datalist>
-        </div>
-        <div class="field wide"><label for="upload">Load your own table <small>CSV with drug name or PubChem CID, plus any of route, F, half-life, dose, interval, toxicity, activity</small></label>
-          <input id="upload" type="file" accept=".csv,.tsv,.txt,text/csv">
-          <div id="upload-out" class="small"></div>
         </div>
         <details class="group" id="g-axes" open>
           <summary>Axes and colour</summary>
@@ -295,6 +294,13 @@
           </div>
         </details>
         <p class="count" id="count"></p>
+        <details class="group" id="g-upload"><summary>Load your own table</summary>
+        <div class="field wide"><label for="upload">Load your own table <small>CSV with drug name or PubChem CID, plus any of route, F, half-life, dose, interval, toxicity, activity</small></label>
+          <input id="upload" type="file" accept=".csv,.tsv,.txt,text/csv">
+          <div id="upload-out" class="small"></div>
+        </div>
+        </details>
+        <details class="group" id="inquiry-disclosure" hidden><summary>Follow a molecule</summary><div id="inquiry-mount"></div></details>
       </section>
 
       <section id="detail" class="panel detail" aria-labelledby="detail-h" data-sheet="closed">
@@ -395,7 +401,7 @@
           <summary><h2 id="table-h">Data table</h2></summary>
           <p class="lede">The drugs in the current view with the three axis values. Click a row to select the drug, or a column heading to sort by it.</p>
           <div class="controls">
-            <div class="field wide"><span class="label">Extra columns</span><label class="check" for="t-extra"><input type="checkbox" id="t-extra"> QED and archived derived fields (unavailable)</label></div>
+            <div class="field wide"><span class="label">Extra columns</span><label class="check" for="t-extra"><input type="checkbox" id="t-extra"> QED and archived derived fields</label></div>
             <div class="field"><label for="t-mode">Mode of administration</label><select id="t-mode"><option value="">All modes</option></select></div>
             <div class="field wide"><span class="label">Rows</span><label class="check" for="t-permode"><input type="checkbox" id="t-permode"> One row per mode, so the modes of one drug can be compared</label></div>
           </div>
