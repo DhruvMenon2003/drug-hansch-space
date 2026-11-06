@@ -147,3 +147,25 @@ test('QSAR records can be searched and filtered, then inspected in the frozen tr
   await expect(page.locator('#d-hbond-method')).toBeVisible();
   await expect(page.locator('#d-hbond-method')).toContainText('3/7 here and 2/6 in the QSAR');
 });
+
+test('QSAR property-range rails follow the admetSAR 3.0 rule with a training-only min–max scaler @mobile', async ({ page }, info) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await open(page);
+  const n = readData().training_coefficients.filter(c => c.descriptor !== 'Intercept').length;
+  await expect(page.locator('#qsar-range-section')).toBeVisible();
+  await expect(page.locator('#qsar-range .qsar-range-track')).toHaveCount(n);
+  await expect(page.locator('#qsar-range-ref tr')).toHaveCount(n);
+  await expect(page.locator('#qsar-range-pop-cap')).toContainText(/Training \(n = \d+\): \d+ in, \d+ warning, 0 out/);
+  // Pick a held-out compound the range check places out of domain and confirm verdict, marker and table agree.
+  const key = await page.evaluate(() => [...document.querySelectorAll('#qsar-compounds tr')]
+    .find(tr => tr.children[1].textContent === 'test' && tr.lastElementChild.textContent === 'Out of domain')?.querySelector('.mono')?.textContent);
+  if (key) {
+    await page.locator('#qsar-range-compound').selectOption(key);
+    await expect(page.locator('#qsar-range-verdict')).toContainText('Out of domain');
+    await expect(page.locator('#qsar-range .qsar-range-out')).not.toHaveCount(0);
+  }
+  if (process.env.SHOT_DIR) await page.locator('#qsar-range-section').screenshot({ path: `${process.env.SHOT_DIR}/range-${info.project.name}.png` });
+  if (process.env.SHOT_DIR) console.log('RANGE', key, '|', await page.locator('#qsar-range-verdict').textContent(), '|', await page.locator('#qsar-range-pop-cap').textContent());
+  expect(errors).toEqual([]);
+});
