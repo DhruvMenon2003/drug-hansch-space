@@ -559,6 +559,7 @@
       <p class="small">Descriptor values use their native units shown below; they are not z-scores. Coefficient units are pChEMBL per descriptor unit. Displayed numbers are rounded; the sum uses the full precision stored in the JSON. The intercept is the algebraic offset at zero descriptor values.</p>
       <div class="table-wrap" tabindex="0" role="region" aria-label="Training equation contributions"><table class="stats"><thead><tr><th scope="col">Term</th><th scope="col">Input</th><th scope="col">Input units</th><th scope="col">Coefficient</th><th scope="col">Contribution (pChEMBL)</th></tr></thead><tbody id="qsar-equation-terms"></tbody></table></div>
     </details>
+    <section id="qsar-range-section" class="qsar-range" aria-labelledby="qsar-range-h" hidden></section>
     <div class="qsar-grid">
       <figure><h3>Conditional fit surface</h3><svg id="qsar-surface" role="img" aria-labelledby="qsar-surface-caption"></svg><figcaption id="qsar-surface-caption"></figcaption></figure>
       <figure><h3>Observed and predicted</h3><svg id="qsar-prediction" role="img" aria-labelledby="qsar-prediction-caption"></svg><figcaption id="qsar-prediction-caption">Predictions use only the scaffold training set. Filled circles: training; hollow circles: held-out test. Crosses flag points outside the applicability domain. Dashed line: perfect prediction.</figcaption></figure>
@@ -578,7 +579,7 @@
       </div>
       <p id="qsar-record-count" class="small"></p>
       <p id="qsar-no-matches" hidden>No compounds match these filters. Clear the filters or change the search.</p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="Compound predictions and domain flags"><table class="stats"><thead><tr><th scope="col">InChIKey / explorer drug</th><th scope="col">Split</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">Leverage</th><th scope="col">Standardized residual</th><th scope="col">Domain</th></tr></thead><tbody id="qsar-compounds"></tbody></table></div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Compound predictions and domain flags"><table class="stats"><thead><tr><th scope="col">InChIKey / explorer drug</th><th scope="col">Split</th><th scope="col">Observed</th><th scope="col">Predicted</th><th scope="col">Leverage</th><th scope="col">Standardized residual</th><th scope="col">Domain</th><th scope="col">Range domain</th></tr></thead><tbody id="qsar-compounds"></tbody></table></div>
     </details>
   </div>
 </dialog>
