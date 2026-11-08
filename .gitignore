@@ -6,3 +6,5 @@ tools/data/cache_curate/
 tools/__marimo__/
 tools/.cache/
 tools/data/cache_qsar/
+tools/pk_harvest/cache/
+tools/pk_harvest/__pycache__/
