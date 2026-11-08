@@ -45,10 +45,11 @@ def _host(url: str) -> str:
 def _throttle(url: str) -> None:
     host = _host(url)
     gap = MIN_INTERVAL.get(host, MIN_INTERVAL["default"])
-    with _lock:
-        last = _last_call.get(host, 0.0)
-        wait = gap - (time.time() - last)
-        _last_call[host] = max(time.time(), last) + (wait if wait > 0 else 0)
+    with _lock:  # hand out slots `gap` seconds apart per host; each caller sleeps until its own slot
+        now = time.time()
+        slot = max(now, _last_call.get(host, 0.0) + gap)
+        _last_call[host] = slot
+    wait = slot - now
     if wait > 0:
         time.sleep(wait)
 
