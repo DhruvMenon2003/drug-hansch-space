@@ -2,9 +2,30 @@
 import { app, bus, $, esc, fin, fx } from './kernel.js';
 import { announce } from './announce.js';
 import { selectDrug } from './view.js';
+import { ADMETSAR_MAP, agreement, fitRange, populationRange, rangeProfile } from './qsar-range.js';
 
 const DATA_URL = 'data/qsar_drd2.json';
-let data = null, pending = null, wired = false;
+let data = null, pending = null, wired = false, rangeRef = null;
+const RANGE_WORDS = { in: 'In domain', warn: 'Warning', out: 'Out of domain' };
+// Built here, not in index.html: this module loads only when the dialog opens, so the markup stays off the first load.
+const RANGE_HTML = `<style>
+.qsar-range{margin-block:20px;padding:12px;border:1px solid var(--line);border-radius:8px}.qsar-range>h3{font-size:1.05rem}
+.qsar-range-verdict{font-weight:600}.qsar-range-track{fill:var(--grid)}.qsar-range-band{fill:var(--ok);fill-opacity:.22}
+.qsar-range-iqr{fill:var(--ok);fill-opacity:.45}.qsar-range-median{stroke:var(--ink);stroke-width:2}
+.qsar-range-edge{stroke:var(--ink-2);stroke-width:1;stroke-dasharray:3 3}
+.qsar-range-in,.qsar-range-warn,.qsar-range-out{stroke:var(--panel);stroke-width:1.5}
+.qsar-range-in,.qsar-range-seg-in{fill:var(--ok)}.qsar-range-warn,.qsar-range-seg-warn{fill:var(--warn)}.qsar-range-out,.qsar-range-seg-out{fill:var(--mark)}
+.qsar-grid svg text.qsar-range-seg-label{fill:var(--bg);font-weight:700}
+</style><h3 id="qsar-range-h">Property-range domain · percentile rails (admetSAR 3.0 rule)</h3>
+<p class="small">Each model descriptor is min–max standardized against the <strong>scaffold-training set only</strong>: 0 = training minimum, 1 = training maximum. Test compounds use the same parameters, so they can fall below 0 or above 1. The pale track is the training range, the tinted band is the 5th–95th percentile, the darker band is the interquartile range and the tick is the median. A compound is <em>in domain</em> if every descriptor lies within the 5th–95th percentiles. It gets a <em>warning</em> if any value falls past a percentile but stays inside the training range, and it is <em>out of domain</em> if any value falls outside the training range. This follows the property-range rule of <a href="https://lmmd.ecust.edu.cn/admetsar3/about/endpoint.php" target="_blank" rel="noopener noreferrer">admetSAR 3.0</a> (Gu et al., <i>Nucleic Acids Res.</i> 2024, 52(W1):W432–W438), applied here to this model's nine descriptors. It complements the leverage-based Williams plot and does not establish that a prediction is reliable.</p>
+<div class="field"><label for="qsar-range-compound">Compound</label><select id="qsar-range-compound"></select></div>
+<p id="qsar-range-verdict" class="qsar-range-verdict" aria-live="polite"></p>
+<div class="qsar-grid">
+<figure><h3>Percentile rails · selected compound</h3><svg id="qsar-range" role="img" aria-labelledby="qsar-range-cap"></svg><figcaption id="qsar-range-cap"></figcaption></figure>
+<figure><h3>Range verdict by split</h3><svg id="qsar-range-pop" role="img" aria-labelledby="qsar-range-pop-cap"></svg><figcaption id="qsar-range-pop-cap"></figcaption></figure>
+</div>
+<details><summary>Training reference ranges (min–max scaler parameters)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Training reference ranges"><table class="stats"><thead><tr><th scope="col">Descriptor</th><th scope="col">Min</th><th scope="col">P5</th><th scope="col">Median</th><th scope="col">P95</th><th scope="col">Max</th><th scope="col">admetSAR 3.0 property</th></tr></thead><tbody id="qsar-range-ref"></tbody></table></div></details>`;
+const rangeWorst = p =>rangeRef ? rangeProfile(rangeRef, p).worst : null;
 const joins = new Map();                         // standardized compound InChIKey -> existing explorer drug
 
 /** Fail visibly rather than render a partially loaded or incompatible scientific result as a valid model. */
@@ -110,6 +131,8 @@ export async function openQsar() {
       for (const [key, drug] of joinCompounds(data.compounds, app.drugs)) joins.set(key, drug);
       app.qsarByCid.clear();
       for (const p of data.compounds) for (const d of matches(p, app.drugs)) app.qsarByCid.set(d.cid, p);
+      // Scaler and percentile reference: the training model's own descriptors, training split only.
+      rangeRef = fitRange(data.compounds, (data.training_coefficients || []).map(c => c.descriptor).filter(d => !isIntercept(d)));
       render();
       updateDetail();
       $('#qsar-status').hidden = true;
@@ -139,11 +162,14 @@ function wire() {
     $('#qsar-search').focus();
   });
   $('#qsar-inspect-compound').addEventListener('change', renderEquationRecord);
+  $('#qsar-range-section').innerHTML = RANGE_HTML;
+  $('#qsar-range-compound').addEventListener('change', () => { renderRangeVerdict(); drawRange(); });
   $('#qsar-compounds').addEventListener('click', e => {
     const inspect = e.target.closest('button[data-inspect]');
     if (inspect) {
       $('#qsar-inspect-compound').value = inspect.dataset.inspect;
-      renderEquationRecord();
+      $('#qsar-range-compound').value = inspect.dataset.inspect;
+      renderEquationRecord(); renderRangeVerdict(); drawRange();
       $('#qsar-equation-inspector').open = true;
       $('#qsar-equation-title').focus({ preventScroll: true });
       $('#qsar-equation-title').scrollIntoView({ block: 'start' });
@@ -201,7 +227,7 @@ function renderCompounds() {
     const d = joins.get(p.inchikey), name = d?.name || p.inchikey;
     const identity = d ? `<button type="button" class="ghost" data-cid="${d.cid}">${esc(d.name)}</button><br>` : '';
     const cid = p.pubchem_cid == null ? '' : `<br><span class="small">CID ${esc(p.pubchem_cid)}</span>`;
-    return `<tr${p.outside_domain ? ' class="qsar-outside"' : ''}><th scope="row">${identity}<span class="mono">${esc(p.inchikey)}</span>${cid}<br><button type="button" class="ghost" data-inspect="${esc(p.inchikey)}" aria-label="Inspect equation for ${esc(name)}">Inspect equation</button></th><td>${esc(p.split)}</td><td>${number(p.observed)}</td><td>${number(p.predicted)}</td><td>${number(p.leverage)}</td><td>${number(p.standardized_residual)}</td><td class="qsar-domain">${p.outside_domain ? 'Outside' : 'Within'}</td></tr>`;
+    return `<tr${p.outside_domain ? ' class="qsar-outside"' : ''}><th scope="row">${identity}<span class="mono">${esc(p.inchikey)}</span>${cid}<br><button type="button" class="ghost" data-inspect="${esc(p.inchikey)}" aria-label="Inspect equation for ${esc(name)}">Inspect equation</button></th><td>${esc(p.split)}</td><td>${number(p.observed)}</td><td>${number(p.predicted)}</td><td>${number(p.leverage)}</td><td>${number(p.standardized_residual)}</td><td class="qsar-domain">${p.outside_domain ? 'Outside' : 'Within'}</td><td>${esc(RANGE_WORDS[rangeWorst(p)] || '—')}</td></tr>`;
   }).join('');
 }
 
@@ -232,6 +258,77 @@ function renderEquation() {
   $('#qsar-inspect-compound').innerHTML = data.compounds.map(p => `<option value="${esc(p.inchikey)}">${esc(joins.get(p.inchikey)?.name ? `${joins.get(p.inchikey).name} · ${p.inchikey}` : p.inchikey)}</option>`).join('');
   $('#qsar-inspect-compound').value = (data.compounds.find(p => joins.has(p.inchikey)) || data.compounds[0]).inchikey;
   renderEquationRecord();
+  $('#qsar-range-compound').innerHTML = $('#qsar-inspect-compound').innerHTML;
+  $('#qsar-range-compound').value = $('#qsar-inspect-compound').value;
+}
+
+function renderRange() {
+  const names = Object.keys(rangeRef || {});
+  $('#qsar-range-section').hidden = !names.length;
+  if (!names.length) return;
+  const proxy = Object.fromEntries(Object.entries(ADMETSAR_MAP).filter(([, v]) => v).map(([k, v]) => [v, k]));
+  $('#qsar-range-ref').innerHTML = names.map(n => { const r = rangeRef[n]; return `<tr><th scope="row">${esc(n)}</th>${[r.min, r.p5, r.p50, r.p95, r.max].map(v => `<td>${number(v)}</td>`).join('')}<td>${esc(proxy[n] || '—')}</td></tr>`; }).join('');
+  const pop = populationRange(rangeRef, data.compounds), agree = agreement(rangeRef, data.compounds);
+  const both = (agree['out|outside'] || 0) + (agree['warn|outside'] || 0);
+  const flagged = data.compounds.filter(p => p.outside_domain).length;
+  $('#qsar-range-pop-cap').textContent = `Training (n = ${pop.train.n}): ${pop.train.in} in, ${pop.train.warn} warning, ${pop.train.out} out. Held-out test (n = ${pop.test.n}): ${pop.test.in} in, ${pop.test.warn} warning, ${pop.test.out} out. Training compounds cannot be out of domain by construction, because they define the range. Of the ${flagged} leverage/residual-flagged compounds, ${both} also receive a range warning or out-of-domain verdict. The two checks measure different things. Unmapped admetSAR properties (nAtom, nRing) are not in this export.`;
+  renderRangeVerdict();
+}
+
+function renderRangeVerdict() {
+  const p = data?.compounds.find(c => c.inchikey === $('#qsar-range-compound').value);
+  if (!p || !rangeRef) { $('#qsar-range-verdict').textContent = ''; return; }
+  const prof = rangeProfile(rangeRef, p), name = joins.get(p.inchikey)?.name || p.inchikey;
+  const off = prof.rows.filter(r => r.band !== 'in').map(r => `${r.name} ${number(r.value)} (P${fx(r.pct, 0)})`);
+  $('#qsar-range-verdict').textContent = `${name} · ${p.split === 'test' ? 'held-out test' : 'training'} · ${RANGE_WORDS[prof.worst] || 'unavailable'} (${prof.counts.in} in, ${prof.counts.warn} warning, ${prof.counts.out} out)${off.length ? ` · past the 5th–95th percentile: ${off.join('; ')}` : ''}. Stored leverage flag: ${p.outside_domain ? 'outside' : 'within'}.`;
+}
+
+function drawRange() {
+  if (!rangeRef || !Object.keys(rangeRef).length) return;
+  const p = data.compounds.find(c => c.inchikey === $('#qsar-range-compound').value);
+  const prof = rangeProfile(rangeRef, p), rowH = 30, svg = $('#qsar-range');
+  const W = Math.max(280, Math.round(svg.clientWidth || 440)), H = 30 + prof.rows.length * rowH;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const left = Math.min(118, W * 0.3), right = W - 78, lo = -0.25, hi = 1.25, X = v => left + (Math.min(hi, Math.max(lo, v)) - lo) * (right - left) / (hi - lo);
+  let html = [0, 0.5, 1].map(v => line(X(v), 8, X(v), H - 18, 'qsar-range-edge') + textAt(X(v), H - 4, v === 0 ? '0 · min' : v === 1 ? '1 · max' : '0.5')).join('');
+  prof.rows.forEach((r, i) => {
+    const y = 14 + i * rowH, m = r.marks, cy = y + 8;
+    html += `<text x="${left - 8}" y="${cy + 4}" text-anchor="end">${esc(r.name)}</text>`;
+    html += `<rect class="qsar-range-track" x="${X(0)}" y="${y + 2}" width="${X(1) - X(0)}" height="12" rx="3"/>`;
+    html += `<rect class="qsar-range-band" x="${X(m.p5)}" y="${y + 2}" width="${X(m.p95) - X(m.p5)}" height="12"><title>${esc(r.name)} 5th–95th percentile: ${number(r.p5)} to ${number(r.p95)} (training)</title></rect>`;
+    html += `<rect class="qsar-range-iqr" x="${X(m.p25)}" y="${y + 2}" width="${X(m.p75) - X(m.p25)}" height="12"/>`;
+    html += line(X(m.p50), y, X(m.p50), y + 16, 'qsar-range-median');
+    if (fin(r.scaled)) {
+      const clipped = r.scaled < lo || r.scaled > hi, x = X(r.scaled);
+      html += clipped
+        ? `<path class="qsar-range-${r.band}" d="M${x} ${cy} l${r.scaled < lo ? 8 : -8} -6 v12 z"><title>${esc(r.name)} ${number(r.value)}: scaled ${fx(r.scaled, 2)}, beyond the plotted axis</title></path>`
+        : `<circle class="qsar-range-${r.band}" cx="${x}" cy="${cy}" r="6"><title>${esc(r.name)} ${number(r.value)} · min–max scaled ${fx(r.scaled, 3)} · percentile ${fx(r.pct, 1)} · ${RANGE_WORDS[r.band]}</title></circle>`;
+    }
+    html += `<text x="${right + 6}" y="${cy + 4}" text-anchor="start">${fin(r.pct) ? `P${fx(r.pct, 0)}` : '—'} · ${r.band === 'in' ? 'in' : r.band === 'warn' ? 'warn' : 'out'}</text>`;
+  });
+  svg.innerHTML = html;
+  $('#qsar-range-cap').textContent = `Markers show the selected compound's min–max scaled value; the right column gives its percentile rank in the training set (mid-rank) and its band. Green: within the 5th–95th percentile. Amber: past a percentile. Red: outside the training range. A triangle means the value lies beyond the plotted axis (−0.25 to 1.25).`;
+}
+
+function drawRangePopulation() {
+  if (!rangeRef || !Object.keys(rangeRef).length) return;
+  const svg = $('#qsar-range-pop'), W = Math.max(280, Math.round(svg.clientWidth || 440)), H = 140;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const pop = populationRange(rangeRef, data.compounds), left = 96, right = W - 16;
+  let html = '';
+  [['train', 'Training'], ['test', 'Held-out test']].forEach(([k, label], i) => {
+    const s = pop[k], y = 18 + i * 52; let x = left;
+    html += `<text x="${left - 8}" y="${y + 20}" text-anchor="end">${label}</text>`;
+    for (const b of ['in', 'warn', 'out']) {
+      if (!s[b]) continue;
+      const w = (right - left) * s[b] / s.n;
+      html += `<rect class="qsar-range-seg-${b}" x="${x}" y="${y}" width="${w}" height="30"><title>${label}: ${s[b]} of ${s.n} ${RANGE_WORDS[b].toLowerCase()} (${fx(100 * s[b] / s.n, 1)}%)</title></rect>`;
+      if (w > 34) html += `<text x="${x + w / 2}" y="${y + 20}" text-anchor="middle" class="qsar-range-seg-label">${s[b]}</text>`;
+      x += w;
+    }
+  });
+  html += textAt((left + right) / 2, H - 6, 'Share of compounds · green in · amber warning · red out');
+  svg.innerHTML = html;
 }
 
 function render() {
@@ -247,8 +344,9 @@ function render() {
   $('#qsar-training-table').hidden = !data.training_coefficients?.length;
   $('#qsar-training-coefficients').innerHTML = coefficients(data.training_coefficients || []);
   $('#qsar-compound-summary').textContent = `Compounds and domain flags · ${flagged} outside of ${data.n}`;
-  renderCompounds();
   renderEquation();
+  renderRange();
+  renderCompounds();
   $('#qsar-workflow-outcome').textContent = `The frozen dataset contains ${data.n} compounds: ${data.metrics.train.n} training and ${data.metrics.test.n} held-out test compounds. The model is labelled ${data.verdict_label || 'not predictive'}; scaffold-test r² = ${fx(data.metrics.test.r2, 3)}, five-fold q² = ${fx(data.metrics.cv.q2, 3)}, and LOO q² = ${fx(data.metrics.loo.q2, 3)}. Passing the scrambling check alone does not establish predictive performance.`;
   $('#qsar-workflow-snapshot').textContent = `Frozen source: ${data.sources?.chembl_release || 'ChEMBL'} · seed ${data.seed}. The linked executed notebook records the filters, pinned software versions, assumptions and cache replay checks.`;
   $('#qsar-surface-caption').textContent = data.fit_surface?.note || 'Conditional slice of the training-only model. Other descriptors are held at training medians.';
@@ -289,7 +387,7 @@ function point(p, x, y) {
   if (p.outside_domain) return `<g class="qsar-point qsar-flag">${title}${line(x - 4, y - 4, x + 4, y + 4)}${line(x - 4, y + 4, x + 4, y - 4)}</g>`;
   return `<circle class="qsar-point ${p.split === 'test' ? 'qsar-test' : 'qsar-train'}" cx="${x}" cy="${y}" r="3.3">${title}</circle>`;
 }
-function drawCharts() { if (!data) return; drawSurface(); drawPrediction(); drawScrambling(); drawWilliams(); }
+function drawCharts() { if (!data) return; drawRange(); drawRangePopulation(); drawSurface(); drawPrediction(); drawScrambling(); drawWilliams(); }
 function drawPrediction() {
   const box = setup('#qsar-prediction'), domain = extent(data.compounds.flatMap(p => [p.observed, p.predicted]));
   const { X, Y, html } = axes(box, domain, domain, 'Observed pChEMBL', 'Predicted pChEMBL');

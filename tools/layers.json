@@ -18,6 +18,7 @@
     "js/announce.js": 1,
     "js/data.js": 1,
     "js/domain.js": 1,
+    "js/qsar-range.js": 2,
     "js/exposure.js": 1,
     "js/gl/chimera.js": 1,
     "js/gl/quality.js": 1,
