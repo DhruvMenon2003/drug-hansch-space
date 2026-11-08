@@ -118,13 +118,49 @@ def pair_score(pa: dict, pb: dict, ra: dict, rb: dict, names: list[str]) -> tupl
     return score, agreed, differ
 
 
+def name_variants(drug: str) -> list[str]:
+    """Searchable spellings of a Drug Names entry.
+
+    'Acetylcysteine, N-' → ['N-Acetylcysteine', 'Acetylcysteine'];  'Albuterol (salbutamol)' → ['Albuterol', 'salbutamol'];
+    'Amphetamine (-d)' → ['Amphetamine', 'd-Amphetamine'];  'Acecainide (N-acetylprocainamide)' → both names.
+    """
+    out: list[str] = []
+
+    def add(s: str):
+        s = s.strip(" -–,")
+        if len(s) >= 3 and s.lower() not in [o.lower() for o in out]:
+            out.append(s)
+
+    m = re.match(r"^(.*?)\s*\((.*?)\)\s*(.*)$", drug)
+    if m:
+        head, inner, tail = m.group(1), m.group(2), m.group(3)
+        base = (head + " " + tail).strip()
+        add(base)
+        inner_clean = inner.strip()
+        if re.fullmatch(r"[-+±]?\s*[dlDLrsRS]{1,2}", inner_clean):  # '(-d)', '(l)', '(R)' stereo tags
+            add(re.sub(r"[-+±\s]", "", inner_clean).lower() + "-" + base)
+        elif not re.fullmatch(r"[-+±]", inner_clean):
+            add(inner_clean)
+    else:
+        m2 = re.match(r"^(.*?),\s*([A-Za-z0-9,'\-\s]+-)$", drug)  # 'Aminosalicylic acid, 5-' → '5-Aminosalicylic acid'
+        if m2:
+            add(m2.group(2).strip() + m2.group(1).strip())
+            add(m2.group(1))
+        else:
+            add(drug)
+    if not out:
+        add(drug)
+    return out
+
+
 def harvest_one(idx: int, drug: str, fulltext: bool = True) -> dict:
     t0 = time.time()
+    variants = name_variants(drug)
     try:
-        ids = idmod.lookup(drug)
+        ids = idmod.lookup(variants)
     except Exception as e:  # identifiers are best-effort
         ids = {"name": drug, "error": repr(e)}
-    names = [drug]
+    names = list(variants)
     for alt in (ids.get("pubchem_title"), ids.get("chembl_pref_name")):
         if alt and alt.lower() not in [n.lower() for n in names] and len(alt) >= 4 and not re.search(r"[\[\](),]", alt):
             names.append(alt)
@@ -132,7 +168,7 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True) -> dict:
            "t_ids": round(time.time() - t0, 1)}
     t1 = time.time()
     recs: dict[str, dict] = {}
-    for stage, q, sort in query_ladder(drug, names[1:]):
+    for stage, q, sort in query_ladder(names[0], names[1:]):
         res = search(q, sort=sort)
         log["queries"].append({"stage": stage, "query": q, "sort": sort, "hits": len(res)})
         for r in res:

@@ -114,9 +114,16 @@ def chembl_fallback(name: str) -> dict:
     return out
 
 
-def lookup(name: str) -> dict:
-    pc = pubchem(name)
-    alts = [pc.get("pubchem_title")] if pc.get("pubchem_title") else []
+def lookup(name) -> dict:
+    """`name` may be a string or a list of spelling variants (tried in order until PubChem resolves one)."""
+    variants = [name] if isinstance(name, str) else list(name)
+    name = variants[0]
+    pc = {"cid": None, "smiles": None, "drugbank": None, "pubchem_title": None}
+    for v in variants:
+        pc = pubchem(v)
+        if pc.get("cid"):
+            break
+    alts = [v for v in variants[1:]] + ([pc.get("pubchem_title")] if pc.get("pubchem_title") else [])
     ot = opentargets(name, alts)
     src = "Open Targets (ChEMBL mechanisms)"
     if not ot["targets"] and USE_CHEMBL_FALLBACK:
