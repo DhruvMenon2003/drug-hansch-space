@@ -106,7 +106,7 @@ def existing_bonus(params: dict, existing: dict | None) -> float:
         return 0.0
     b = 0.0
     for p in ("CL", "Vss", "fu"):
-        if p in params and p in existing and params[p]["value"] > 0:
+        if p in params and p in existing and params[p]["value"] > 0 and "apparent oral" not in params[p]["subtype"]:
             ratio = max(existing[p], params[p]["value"]) / min(existing[p], params[p]["value"])
             b += WEIGHT[p] if ratio <= 1.5 else (-0.5 * WEIGHT[p] if ratio > 3 else 0.0)
     return b
@@ -117,6 +117,10 @@ def pair_score(pa: dict, pb: dict, ra: dict, rb: dict, names: list[str], existin
     score = 0.0
     for p in PARAMS:
         if p in pa and p in pb:
+            oral_a, oral_b = "apparent oral" in pa[p]["subtype"], "apparent oral" in pb[p]["subtype"]
+            if oral_a != oral_b:
+                score += WEIGHT[p] * 0.4  # CL/F vs CL (or V/F vs Vss) are not comparable: count as one value found
+                continue
             if agree(p, pa[p]["value"], pb[p]["value"]):
                 agreed.append(p)
                 score += WEIGHT[p] * 2
@@ -210,9 +214,10 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True, existing: dict | Non
         if "full text" in cap["access"]:
             ft_used += 1
         hits = []
+        paediatric = "paediatric" in (rec.get("population") or [])
         for b in cap["blocks"]:
             b["animal"] = block_is_animal(b)
-            for h in extract_block(b, names):
+            for h in extract_block(b, names, allow_assumed_weight=not paediatric):
                 h["verified"] = verbatim_ok(h["sentence"], b["text"])
                 if h["verified"] != "NOT IN SOURCE":
                     hits.append(h)

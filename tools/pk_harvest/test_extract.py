@@ -31,6 +31,8 @@ CASES = [
     ("Clearance averaged 6.4 ± 1.2 mL/min/kg.", {("CL", 6.4)}),
     ("Clearance averaged 6.4 mL/min/kg (SD 1.2).", {("CL", 6.4)}),
     ("The steady-state volume of distribution (Vss) was 7.9 +/- 2.5 l/kg.", {("Vss", 7.9)}),
+    ("Clearance was 95.1 (IIV 26.2) mL/min in the final model.", set()),
+    ("Clearance was 95.1 mL/min (IIV 26.2%) in the final model.", {("CL", 1.36)}),
 ]
 
 fails = 0

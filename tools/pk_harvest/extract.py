@@ -155,7 +155,7 @@ def _hit(param, sentence, value_reported, unit_reported, value_norm, unit_norm, 
 
 
 def _scan_units(sentence: str, units: dict, word_re, bad_re, normaliser, param: str, workbook_unit: str,
-                subtype_fn=None) -> list[dict]:
+                subtype_fn=None, allow_assumed_weight: bool = True) -> list[dict]:
     hits = []
     if not word_re.search(sentence):
         return hits
@@ -175,6 +175,8 @@ def _scan_units(sentence: str, units: dict, word_re, bad_re, normaliser, param: 
             # context window before the number: look for the keyword and reject excluded qualifiers
             before = sentence[max(0, m.start() - 120):m.start()]
             after = sentence[m.end():m.end() + 60]
+            if "(" in before.rsplit(")", 1)[-1] and ")" in m.group(0):
+                continue  # "(IIV 26.2) mL/min": a number inside an open parenthesis (SD, CI bound, IIV) is not the point estimate
             ctx = before + " " + after
             kw = list(word_re.finditer(before)) or list(word_re.finditer(after))
             if not kw:
@@ -195,6 +197,8 @@ def _scan_units(sentence: str, units: dict, word_re, bad_re, normaliser, param: 
                 vn, note = normaliser(v, uname, stated_weight(sentence))
             except ValueError:
                 continue
+            if not allow_assumed_weight and "assumed adult weight" in note:
+                continue  # paediatric paper: an absolute L or mL/min value cannot be scaled with 70 kg
             if not _plausible(param, vn):
                 continue
             kind = subtype_fn(ctx) if subtype_fn else ""
@@ -409,7 +413,7 @@ def extract_table_row(block: dict) -> list[dict]:
 MAX_SENTENCE = 700
 
 
-def extract_block(block: dict, names: list[str] | None = None) -> list[dict]:
+def extract_block(block: dict, names: list[str] | None = None, allow_assumed_weight: bool = True) -> list[dict]:
     """All PK hits in one capture block, each carrying its sentence and locator."""
     out = []
     if block.get("animal"):
@@ -424,8 +428,8 @@ def extract_block(block: dict, names: list[str] | None = None) -> list[dict]:
         if len(s) > MAX_SENTENCE:  # crammed table-as-paragraph text is not a quotable sentence
             continue
         hits = []
-        hits += _scan_units(s, CL_UNITS, CL_WORD, CL_BAD, norm_cl, "CL", "mL/min/kg", _cl_subtype)
-        hits += _scan_units(s, V_UNITS, V_WORD, V_BAD, norm_v, "Vss", "L/kg", _v_subtype)
+        hits += _scan_units(s, CL_UNITS, CL_WORD, CL_BAD, norm_cl, "CL", "mL/min/kg", _cl_subtype, allow_assumed_weight)
+        hits += _scan_units(s, V_UNITS, V_WORD, V_BAD, norm_v, "Vss", "L/kg", _v_subtype, allow_assumed_weight)
         hits += extract_pb(s)
         hits += extract_f(s)
         hits += extract_dose(s, names)

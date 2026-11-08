@@ -208,6 +208,9 @@ def main() -> int:
         for param, key in PARAM_COL.items():
             h1 = srcs[0]["params"].get(param) if srcs else None
             h2 = srcs[1]["params"].get(param) if len(srcs) > 1 else None
+            # apparent oral CL/F and V/F are not the systemic quantities the table columns hold: evidence only
+            h1 = None if (h1 and "apparent oral" in h1["subtype"]) else h1
+            h2 = None if (h2 and "apparent oral" in h2["subtype"]) else h2
             h = h1 or h2
             if not h:
                 continue

@@ -111,6 +111,9 @@ def is_animal_or_invitro(rec: dict) -> bool:
     t = rec.get("title", "")
     if ANIMAL_WORDS.search(t):
         return True
+    if re.search(r"\b(vet\w*|equine|animal|zoo\w*|poultry|avian|canine|feline|bovine|porcine|aquacult\w*|fish|wildlife|livestock)\b",
+                 rec.get("journal") or "", re.I):
+        return True
     a = TAG_RE.sub("", rec.get("abstract", "") or "")
     animals = len(ANIMAL_WORDS.findall(a))
     humans = len(HUMAN_WORDS.findall(a))
