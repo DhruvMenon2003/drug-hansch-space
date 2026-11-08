@@ -208,7 +208,9 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True, existing: dict | Non
     t2 = time.time()
     papers = []
     ft_used = 0
-    for rec in cands:
+
+    def capture_paper(rec: dict, strict_name: bool) -> None:
+        nonlocal ft_used
         want_ft = fulltext and ft_used < MAX_FULLTEXT and bool(rec.get("pmcid"))
         cap = capture(rec, want_ft)
         if "full text" in cap["access"]:
@@ -218,13 +220,34 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True, existing: dict | Non
         for b in cap["blocks"]:
             b["animal"] = block_is_animal(b)
             for h in extract_block(b, names, allow_assumed_weight=not paediatric):
+                if strict_name and not any(n.lower() in h["sentence"].lower() for n in names):
+                    continue  # paper not titled after the drug: only sentences that name it count
                 h["verified"] = verbatim_ok(h["sentence"], b["text"])
                 if h["verified"] != "NOT IN SOURCE":
                     hits.append(h)
         params = {p: best_value(hits, p, names) for p in PARAMS + ["ther_max"] if best_value(hits, p, names)}
         if params:
-            papers.append({"rec": rec, "access": cap["access"], "params": params, "n_hits": len(hits)})
+            papers.append({"rec": rec, "access": cap["access"], "params": params, "n_hits": len(hits),
+                           "stage": "fallback (drug named in sentence)" if strict_name else "title match"})
         log["captured"] += 1
+
+    for rec in cands:
+        capture_paper(rec, strict_name=False)
+    if len(papers) < 2:  # fallback: drug in the abstract rather than the title; sentences must name the drug
+        q = "(" + " OR ".join(f"ABSTRACT:\"{n}\"" for n in names) + ") AND (ABSTRACT:clearance OR ABSTRACT:\"volume of distribution\" OR ABSTRACT:\"protein binding\" OR ABSTRACT:bioavailability) AND SRC:MED"
+        res = search(q)
+        log["queries"].append({"stage": "fallback-abstract", "query": q, "sort": None, "hits": len(res)})
+        extra = []
+        for r in res:
+            s = record_summary(r)
+            key = s["doi"] or s["pmid"] or s["id"]
+            if not key or key in recs or not s["abstract"] or is_animal_or_invitro(s):
+                continue
+            s["population"] = population(s)
+            recs[key] = s
+            extra.append(s)
+        for rec in sorted(extra, key=lambda r: -paper_score(r, names))[:MAX_CANDIDATES]:
+            capture_paper(rec, strict_name=True)
     log["fulltext"] = ft_used
     log["t_capture"] = round(time.time() - t2, 1)
     best = None
