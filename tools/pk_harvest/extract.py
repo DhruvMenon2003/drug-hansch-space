@@ -170,10 +170,14 @@ def _scan_units(sentence: str, units: dict, word_re, bad_re, normaliser, param: 
             kw = list(word_re.finditer(before)) or list(word_re.finditer(after))
             if not kw:
                 continue
-            # nearest keyword to the number; check qualifiers right before it
-            nearest = kw[-1] if word_re.search(before) else kw[0]
-            qual = before[max(0, nearest.start() - 40):nearest.start()] if word_re.search(before) else after[:nearest.start()]
-            if bad_re.search(qual) or bad_re.search(before[-50:]):
+            # nearest keyword to the number; excluded qualifiers must sit right next to that keyword
+            if word_re.search(before):
+                nearest = kw[-1]
+                qual = before[max(0, nearest.start() - 30):nearest.start()] + " " + before[nearest.end():]
+            else:
+                nearest = kw[0]
+                qual = after[:nearest.end() + 30]
+            if bad_re.search(qual):
                 continue
             v = _mean_range(m)
             if v is None:
@@ -288,8 +292,9 @@ def extract_dose(sentence: str, names: list[str] | None = None) -> list[dict]:
         return hits
     if re.search(r"simulat|\bFig\.?\b|figure|hypothetical|\bwould\b|\bcould\b|\bshould\b|\bif\b|scenario|predicted", sentence, re.I):
         return hits
-    for m in DOSE_RE.finditer(sentence):
-        if names:  # the dose must sit next to this drug's name, not another drug's in the same sentence
+    matches = list(DOSE_RE.finditer(sentence))
+    for m in matches:
+        if names and len(matches) > 1:  # several regimens in one sentence: keep the one next to this drug's name
             window = sentence[max(0, m.start() - 40):m.end() + 5].lower()
             if not any(n.lower() in window for n in names):
                 continue
