@@ -144,6 +144,21 @@ def read_drug_names(xlsx: Path) -> list[str]:
     return names
 
 
+def read_existing(xlsx: Path) -> dict[int, dict[str, float]]:
+    """Existing table values per Drug Names index (1-based): Vss (AH), CL (AI), fu (AM) when numeric and > 0."""
+    import openpyxl
+    wb = openpyxl.load_workbook(xlsx, read_only=True)
+    ws = wb["Drug Leaderboard"]
+    out: dict[int, dict[str, float]] = {}
+    for i, row in enumerate(ws.iter_rows(min_row=25, max_row=1397, min_col=34, max_col=39, values_only=True), start=1):
+        vals = {}
+        for key, v in (("Vss", row[0]), ("CL", row[1]), ("fu", row[5])):
+            if isinstance(v, (int, float)) and v > 0:
+                vals[key] = float(v)
+        out[i] = vals
+    return out
+
+
 def sig(x: float, n: int = 3) -> float:
     """Round to n significant figures."""
     if x == 0:

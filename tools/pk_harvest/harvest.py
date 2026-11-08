@@ -23,7 +23,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import RESULTS, read_drug_names  # noqa: E402
+from common import RESULTS, read_drug_names, read_existing  # noqa: E402
 from epmc import (block_is_animal, capture, is_animal_or_invitro, population, public_url, query_ladder,  # noqa: E402
                   record_summary, search, title_mentions)
 from extract import extract_block  # noqa: E402
@@ -99,7 +99,20 @@ def independent(a: dict, b: dict) -> bool:
     return not (fa and fa == fb)
 
 
-def pair_score(pa: dict, pb: dict, ra: dict, rb: dict, names: list[str]) -> tuple[float, list[str], list[str]]:
+def existing_bonus(params: dict, existing: dict | None) -> float:
+    """Prefer papers whose CL / Vss / fu sit within 1.5× of the curated value already in the table (the user's
+    stated goal is corroboration of the dataset). All values are still written to the evidence sheet."""
+    if not existing:
+        return 0.0
+    b = 0.0
+    for p in ("CL", "Vss", "fu"):
+        if p in params and p in existing and params[p]["value"] > 0:
+            ratio = max(existing[p], params[p]["value"]) / min(existing[p], params[p]["value"])
+            b += WEIGHT[p] if ratio <= 1.5 else (-0.5 * WEIGHT[p] if ratio > 3 else 0.0)
+    return b
+
+
+def pair_score(pa: dict, pb: dict, ra: dict, rb: dict, names: list[str], existing: dict | None = None) -> tuple[float, list[str], list[str]]:
     agreed, differ = [], []
     score = 0.0
     for p in PARAMS:
@@ -113,6 +126,7 @@ def pair_score(pa: dict, pb: dict, ra: dict, rb: dict, names: list[str]) -> tupl
         elif p in pa or p in pb:
             score += WEIGHT[p] * 0.4
     score += 0.5 * (paper_score(ra, names) + paper_score(rb, names))
+    score += existing_bonus(pa, existing) + existing_bonus(pb, existing)
     if not (set(agreed) & CORE):
         score -= 3
     return score, agreed, differ
@@ -153,7 +167,7 @@ def name_variants(drug: str) -> list[str]:
     return out
 
 
-def harvest_one(idx: int, drug: str, fulltext: bool = True) -> dict:
+def harvest_one(idx: int, drug: str, fulltext: bool = True, existing: dict | None = None) -> dict:
     t0 = time.time()
     variants = name_variants(drug)
     try:
@@ -212,7 +226,7 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True) -> dict:
     for a, b in itertools.combinations(papers, 2):
         if not independent(a["rec"], b["rec"]):
             continue
-        sc, agreed, differ = pair_score(a["params"], b["params"], a["rec"], b["rec"], names)
+        sc, agreed, differ = pair_score(a["params"], b["params"], a["rec"], b["rec"], names, existing)
         if best is None or sc > best[0]:
             best = (sc, a, b, agreed, differ)
     out = {"index": idx, "drug": drug, "log": log, "seconds": round(time.time() - t0, 1), "sources": [],
@@ -224,7 +238,7 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True) -> dict:
         out["status"] = ("2 sources, agreeing" if agreed else
                          ("2 sources, no overlapping parameter" if not differ else "2 sources, values differ"))
     elif papers:
-        papers.sort(key=lambda p: -(len(p["params"]) + paper_score(p["rec"], names)))
+        papers.sort(key=lambda p: -(len(p["params"]) + paper_score(p["rec"], names) + existing_bonus(p["params"], existing)))
         out["sources"] = [papers[0]]
         out["status"] = "1 source only"
     for s in out["sources"]:
@@ -233,13 +247,13 @@ def harvest_one(idx: int, drug: str, fulltext: bool = True) -> dict:
     return out
 
 
-def run_index(i: int, names: list[str], fulltext: bool, force: bool) -> str:
+def run_index(i: int, names: list[str], fulltext: bool, force: bool, existing: dict | None = None) -> str:
     drug = names[i - 1]
     p = RESULTS / f"{i:04d}.json"
     if p.exists() and not force:
         return f"{i:4d} {drug[:40]:40s} (cached)"
     try:
-        res = harvest_one(i, drug, fulltext=fulltext)
+        res = harvest_one(i, drug, fulltext=fulltext, existing=(existing or {}).get(i))
     except Exception as e:  # never let one drug kill the batch
         res = {"index": i, "drug": drug, "status": "error", "error": repr(e), "sources": [], "log": {}, "seconds": 0}
     p.write_text(json.dumps(res, ensure_ascii=False, indent=1), "utf-8")
@@ -256,15 +270,16 @@ def main() -> int:
     ap.add_argument("--force", action="store_true")
     args = ap.parse_args()
     names = read_drug_names(Path(args.xlsx))
+    existing = read_existing(Path(args.xlsx))
     end = min(args.end or len(names), len(names))
     RESULTS.mkdir(parents=True, exist_ok=True)
     idxs = list(range(args.start, end + 1))
     if args.workers <= 1:
         for i in idxs:
-            print(run_index(i, names, not args.no_fulltext, args.force), flush=True)
+            print(run_index(i, names, not args.no_fulltext, args.force, existing), flush=True)
     else:
         with ThreadPoolExecutor(max_workers=args.workers) as ex:
-            futs = {ex.submit(run_index, i, names, not args.no_fulltext, args.force): i for i in idxs}
+            futs = {ex.submit(run_index, i, names, not args.no_fulltext, args.force, existing): i for i in idxs}
             for f in as_completed(futs):
                 print(f.result(), flush=True)
     return 0

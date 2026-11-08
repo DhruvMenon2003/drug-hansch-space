@@ -26,6 +26,11 @@ CASES = [
     ("The therapeutic range is 10-20 mg/L and toxicity occurs above 25 mg/L.",
      {("ther_min", 10.0), ("ther_max", 20.0), ("tox_min", 25.0)}),
     ("Simulated plasma profiles of haloperidol 0.5 mg every 12 h.", set()),
+    ("Total plasma clearance was 48 (range 32-64) ml/min and the volume of distribution 120 (69) L.",
+     {("CL", 0.686), ("Vss", 1.71)}),
+    ("Clearance averaged 6.4 ± 1.2 mL/min/kg.", {("CL", 6.4)}),
+    ("Clearance averaged 6.4 mL/min/kg (SD 1.2).", {("CL", 6.4)}),
+    ("The steady-state volume of distribution (Vss) was 7.9 +/- 2.5 l/kg.", {("Vss", 7.9)}),
 ]
 
 fails = 0

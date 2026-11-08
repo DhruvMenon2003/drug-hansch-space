@@ -15,9 +15,14 @@ import re
 
 from common import BODY_WEIGHT_KG, sig
 
-NUM = r"(?P<num>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:[.,]\d+)?)"
-RANGE = r"(?P<lo>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s*(?:[-–—−]|to|and)\s*(?P<hi>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)"
-PM = r"(?:\s*(?:±|\+/-|\(SD)?\s*\d+(?:\.\d+)?\)?)?"
+# A number must not be a fragment of a longer number ((?<![\d.,]) ... (?![\d])); the ± tail needs an explicit marker,
+# otherwise "6.4 mL/min" could be read as 6 ± 4 and "64) ml/min" as 6 + "4)".
+NUM = r"(?<![\d.,])(?P<num>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:[.,]\d+)?)(?![\d])"
+RANGE = (r"(?<![\d.,])(?P<lo>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(?![\d])\s*(?:[-–—−]|to|and)\s*"
+         r"(?P<hi>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(?![\d])")
+PM = (r"(?:\s*(?:±|\+/-|\+/−)\s*\d+(?:\.\d+)?"                                            # 6.4 ± 1.2
+      r"|\s*\((?:SD\s*=?\s*|range\s*|±\s*)?\d+(?:\.\d+)?(?:\s*(?:[-–—−]|to)\s*\d+(?:\.\d+)?)?\))?"  # 120 (69), 48 (range 32-64)
+      r"\s*\)?")                                                                             # closing paren of "(range 32-64) ml/min"
 SEP = r"\s*(?:/|per|·|\.|\s)\s*"
 DASH1 = r"(?:\s*(?:-|−|–|⁻)\s*1|\s*\^?-1)"
 
@@ -161,7 +166,11 @@ def _scan_units(sentence: str, units: dict, word_re, bad_re, normaliser, param: 
             prev = found.get(m.start())
             if prev is None or m.end() > prev[0]:
                 found[m.start()] = (m.end(), uname, m)
-    for _, (end, uname, m) in sorted(found.items()):
+    last_end = -1
+    for start, (end, uname, m) in sorted(found.items()):
+        if start < last_end:  # "120 (69) L": the parenthesised 69 lies inside the span already matched for 120
+            continue
+        last_end = end
         if True:
             # context window before the number: look for the keyword and reject excluded qualifiers
             before = sentence[max(0, m.start() - 120):m.start()]

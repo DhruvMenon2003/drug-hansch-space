@@ -20,13 +20,13 @@ RES = Path(__file__).resolve().parent / "cache" / "results"
 wb = openpyxl.load_workbook(sys.argv[1], read_only=True)
 ws = wb["Drug Leaderboard"]
 existing = {}
-for r in range(25, 1398):
+# columns AH (34) .. AM (39): Vss, CL, dose, interval, Fabs, fu — streamed, not addressed per cell (read-only mode is slow otherwise)
+for i, row in enumerate(ws.iter_rows(min_row=25, max_row=1397, min_col=34, max_col=39, values_only=True), start=1):
     vals = {}
-    for key, col in (("Vss", "AH"), ("CL", "AI"), ("fu", "AM")):
-        v = ws[f"{col}{r}"].value
+    for key, v in (("Vss", row[0]), ("CL", row[1]), ("fu", row[5])):
         if isinstance(v, (int, float)) and v > 0:
             vals[key] = float(v)
-    existing[r - 24] = vals
+    existing[i] = vals
 
 status = Counter()
 ratios = defaultdict(list)
