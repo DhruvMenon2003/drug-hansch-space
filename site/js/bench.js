@@ -31,13 +31,14 @@ const merged = r => ({ ...r, ...(edits[r.rid] || {}) });
 
 function card(list, pick) {
   const r = merged(list[pick]), e = edits[r.rid] || {};
-  const fc = fcOf(r), ti = tiOf(r);
+  const fc = fcOf(r), ti = tiOf(r); // Legacy exploratory expressions, not validated PK or safety quantities.
   $('#d-bench').innerHTML = `<div class="bench">
     <h4>Numbers from a paper</h4>
     ${list.length > 1 ? `<div class="bench-modes">${list.map((m, i) => `<button type="button" class="ghost" data-i="${i}" aria-pressed="${i === pick}">${esc(cap(m.md || 'no route'))}</button>`).join('')}</div>` : `<p class="small">${esc(cap(r.md || 'No route listed'))} · ${esc(r.atc || '')}</p>`}
     <div class="bench-grid">${F.map(([k, l, u]) => `<label>${l} <small>${u}</small><input name="${k}" inputmode="decimal" value="${r[k] ?? ''}" placeholder="missing"${k in e ? ' class="changed"' : ''}></label>`).join('')}</div>
     <label class="bench-src">Source <small>DOI or PMID</small><input name="src" value="${esc(e.src || '')}" placeholder="doi:10.…"></label>
-    <dl class="kv"><div><dt>Steady-state level</dt><dd>${fc == null ? 'needs F, t½, dose and interval' : fx(fc, 2)}</dd></div><div><dt>Therapeutic index</dt><dd>${ti == null ? 'needs lethal and active dose' : fx(ti, 2)}</dd></div></dl>
+    <dl class="kv"><div><dt>Legacy accumulation expression (mg)</dt><dd>${fc == null ? 'missing positive inputs' : fx(fc, 2)}</dd></div><div><dt>Legacy log-product score</dt><dd>${ti == null ? 'missing positive endpoints' : fx(ti, 2)}</dd></div></dl>
+    <p class="small">Exploratory arithmetic: 1.44 × F × t½ × dose / interval; not concentration or unbound exposure. Score = log10(tox numeric) + log10(act numeric), using the entered mg/kg and mg/day conventions. This dimensionful log-product is unit-dependent, not a therapeutic index or safety ranking; animal lethal and active endpoints are not comparable.</p>
     <p class="bench-row">${Object.keys(e).length ? '<button type="button" class="ghost" data-act="revert">Back to curated</button>' : ''}
       <button type="button" class="ghost" data-act="csv">Download my edits (${Object.keys(edits).length})</button></p>
   </div>`;
@@ -57,12 +58,12 @@ function card(list, pick) {
 }
 
 function csv() {
-  const cols = ['rid', 'nm', 'md', ...F.map(f => f[0]), 'fc', 'ti', 'src'];
+  const cols = ['rid', 'nm', 'md', ...F.map(f => f[0]), 'fc', 'ti', 'derived_status', 'src'];
   const q = v => (v == null ? '' : /[",\n]/.test(v) ? `"${String(v).replace(/"/g, '""')}"` : v);
   const lines = Object.entries(edits).map(([rid, e]) => {
     const base = [...(rows?.values() || [])].flat().find(r => r.rid === rid) || {};
     const m = { ...base, ...e, rid };
-    return cols.map(c => q(c === 'fc' ? fcOf(m) : c === 'ti' ? tiOf(m) : m[c])).join(',');
+    return cols.map(c => q(c === 'fc' ? fcOf(m) : c === 'ti' ? tiOf(m) : c === 'derived_status' ? 'Legacy fields: fc=1.44*F*t12*dose/tau (mg expression, not concentration); ti=log10(tox)+log10(act) (unit-dependent log-product, incompatible endpoints, not therapeutic index or safety)' : m[c])).join(',');
   });
   const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(new Blob([[cols.join(','), ...lines].join('\n')], { type: 'text/csv' })), download: 'my-pk-edits.csv' });
   a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);

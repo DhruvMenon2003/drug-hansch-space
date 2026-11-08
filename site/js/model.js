@@ -23,7 +23,7 @@ export const AX = {
   cx: { label: 'Complexity', get: d => d.d.cx, dec: 0, long: 'PubChem complexity' },
   // The ranked batch covers 278 of these drugs, and its file (data/ti/live.json) arrives after the first paint, so the
   // axis is offered only once that file is in: `needs` keeps it out of the three selects until then (js/controls.js).
-  ti: { label: 'Therapeutic index', get: d => d.ti?.ti, dec: 2, needs: 'ti', long: 'Therapeutic index: activity minus hERG, both as pChEMBL (log ratio)' },
+  ti: { label: 'TI · target − hERG', get: d => d.ti?.ti, dec: 2, needs: 'ti', long: 'Exploratory index: target − hERG pChEMBL; measured aggregates or predictions, not clinical TI' },
   none: { label: 'Flat (no axis)', pseudo: true },
   jitter: { label: 'Random spread (no meaning)', pseudo: true, get: d => d._jit },
 };

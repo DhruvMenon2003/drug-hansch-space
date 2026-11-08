@@ -3,18 +3,34 @@
 // with this run's own figures. Data: site/data/ti/summary.json, written by ti/rank.py.
 import { $, esc, getSide } from './kernel.js';
 
-const URL = 'data/ti/summary.json';
+const SUMMARY_URL = 'data/ti/summary.json';
 const TABS = ['rank', 'route', 'series', 'decide', 'expose', 'search', 'oecd'];
 const DECIDE_MOD = 'ti-decide.js';   // variable specifiers: the workbench, its whole-batch file and the exposure
 const EXPOSE_MOD = 'ti-exposure.js'; // arithmetic all arrive on first use, never on the way to anything else
 const SEARCH_MOD = 'ti-search.js';   // and so does the recorded model search, which is the largest file of the three
 const SOURCES = {
-  measured: 'ChEMBL holds a binding measurement for this molecule at this target, so no model was used',
+  measured: 'ChEMBL-derived binding aggregate (median of retained records); no prediction on this side',
   series_hansch: 'a readable Hansch equation on this molecule’s own congeneric series, past every gate',
   fallback_nonlinear: 'the declared fallback for this target: same properties, no equation to read',
   unavailable: 'no measurement and no model that validates, so the cell was left empty',
 };
-let data = null, wired = false;
+let data = null, wired = false, bodyReady = null;
+
+// Keep the complete archived instrument off the first-paint path. The static fragment contains no scripts.
+function loadBody() {
+  if (!$('#ti-rank-style')) {
+    const link = document.createElement('link');
+    link.id = 'ti-rank-style'; link.rel = 'stylesheet';
+    link.href = new URL('../css/ti-rank.css', import.meta.url).href;
+    document.head.append(link);
+  }
+  bodyReady ||= fetch('fragments/ti-body.html').then(r => {
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.text();
+  }).then(html => { $('#ti-dialog').insertAdjacentHTML('beforeend', html); wire(); })
+    .catch(err => { bodyReady = null; throw err; });
+  return bodyReady;
+}
 
 const num = (v, d = 2) => (v === '' || v === null || v === undefined || Number.isNaN(Number(v))
   ? '—' : Number(v).toFixed(d));
@@ -59,10 +75,10 @@ function fillRanked() {
     if (mode === 'series') return r.p_activity_source === 'series_hansch' || r.p_toxicity_source === 'series_hansch';
     return true;
   });
-  const tag = s => (s === 'measured' ? 'measured' : s === 'series_hansch' ? 'Hansch series' : 'fallback');
+  const tag = s => (s === 'measured' ? 'measured aggregate' : s === 'series_hansch' ? 'Hansch series' : 'fallback');
   $('#ti-rows').innerHTML = rows.slice(0, 200).map(r => `<tr>
+    <th scope="row" data-label="Molecule">${esc(r.name)} <span class="ti-rank-target-key">${esc(r.target_chembl_id)} · ${r.target_source === 'chembl_mechanism' ? 'recorded' : r.routing_decision === 'ambiguous' ? 'ambiguous' : 'inferred'}</span></th>
     <td data-label="Rank in target">${r.rank_in_target} <span class="small">of ${r.n_in_target}</span></td>
-    <td data-label="Molecule">${esc(r.name)}</td>
     <td data-label="Target">${esc(r.target_name || r.target_chembl_id)}
         <span class="small">${esc(r.target_source === 'chembl_mechanism' ? 'recorded' : 'inferred from structure' + (r.routing_decision === 'ambiguous' ? ', ambiguous' : ''))}</span></td>
     <td data-label="Activity">${num(r.p_activity)} <span class="small">${esc(tag(r.p_activity_source))}</span></td>
@@ -132,47 +148,43 @@ function fillOecd() {
     ['1 · A defined endpoint',
       `<code>${esc(data.endpoint.definition)}</code> — ${esc(data.endpoint.direction)}. It is
        ${esc(data.endpoint.is_not)}.
-       Both halves are ChEMBL pChEMBL values (−log₁₀ mol/L) from binding assays on the human protein.
-       One assay type per target, never mixed, because a Ki and an IC50 are different experiments. Repeats
-       disagreeing by more than tenfold were dropped rather than averaged.`],
+       Values are measured aggregates or model predictions on the pChEMBL scale (−log₁₀ mol/L).
+       Training records use one endpoint type per target; target Ki and hERG IC50 may still differ.
+       Retained repeats are aggregated by median; spreads above one log unit are excluded.
+       The difference is an exploratory potency contrast, not evidence of clinical safety.`],
     ['2 · An unambiguous algorithm',
       `The inputs are fixed by checksum, the versions are recorded (${Object.entries(data.software)
         .map(([k, v]) => `${k} ${v}`).join(', ')}), and the same ${data.descriptors.length} properties are
        calculated the same way for every molecule. Measured pharmacokinetic values travel through the file and
        are never model inputs.`],
     ['3 · A defined domain of applicability',
-      `Every model refuses to answer outside its range, and every row says <code>measured</code>,
-       <code>inside</code> or <code>outside</code>. ${c['inside the applicability domain']} of ${c.ranked} ranked
-       molecules are inside.`],
+      `Predictions outside the recorded domain remain in this frozen batch and are explicitly flagged.
+       Decisions lets you exclude them. Measured aggregates need no prediction domain, but still have assay and source limitations.`],
     ['4 · Fit, robustness and predictivity',
-      `Fit (r²) is the weakest evidence; predictivity (q²) is scored only on molecules the model never
-       saw, with whole chemical families held out at once so a near-twin cannot sit on both sides of a split.
-       ${seriesOk} of ${seriesTried} series models passed. ${q2s.length} targets produced a usable fallback${
-        q2s.length ? `, q² from ${num(q2s[0])} to ${num(q2s[q2s.length - 1])}` : ''}. Refitted against
-       deliberately scrambled answers, the worst any model managed was q² ${num(worstShuffled)} — at or
-       below zero, which is what it has to be.`],
+      `Series use leave-one-out q²; fallback models use scaffold-grouped q². These are different tests,
+       not external prospective validation. ${seriesOk} of ${seriesTried} series passed the recorded gates.
+       ${q2s.length} targets produced a usable fallback${q2s.length ? `, grouped q² ${num(q2s[0])}–${num(q2s[q2s.length - 1])}` : ''}.
+       Maximum recorded fallback shuffled q²: ${num(worstShuffled)}. Passing these gates does not validate clinical use.`],
     ['5 · A mechanistic interpretation, where there is one',
-      `Only the series models have one. Their equations are readable and a negative squared log P term locates an
-       optimum: too water-loving never crosses a membrane, too greasy never leaves it. The fallback has no
-       equation and is labelled accordingly. Across a diverse set the same six terms in a straight line reach
-       q² 0.07 on hERG, which is why the equation is kept where it is valid and refused where it is not.`],
+      `Series equations expose fitted descriptor relationships. A negative squared log P coefficient can
+       locate a fitted maximum within the studied range; it does not demonstrate membrane transport or mechanism.
+       The nonlinear fallback has no comparable simple equation. Both remain empirical models.`],
   ];
   $('#ti-oecd').innerHTML = principles
     .map(([h, body]) => `<h3>${h}</h3><p class="small">${body}</p>`).join('');
 }
 
 export async function openIndex() {
-  wire();
   const dialog = $('#ti-dialog');
   if (!dialog.open) dialog.showModal();
   if (data) return;
   try {
-    data = await getSide(URL);
+    await loadBody();
+    data = await getSide(SUMMARY_URL);
     const c = data.counts;
     $('#ti-lede').textContent = `${c['molecules in']} molecules in, ${c.ranked} ranked. `
-      + `${c['both sides measured']} rest on two laboratory measurements and no prediction at all; `
-      + `${c['at least one side predicted']} have a predicted side, each naming its model and that model's score. `
-      + `The rest are in the CSV with an empty index and a reason.`;
+      + `Rows distinguish measured aggregates from predictions. The ranked preview contains ${data.ranked.length} rows; the full frozen batch is available in Decisions and CSV. `
+      + `Archived summary source counts do not reconcile with the full batch; use row-level source labels.`;
     $('#ti-status').hidden = true;
     $('#ti-body').hidden = false;
     fillRanked();

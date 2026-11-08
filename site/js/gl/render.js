@@ -33,6 +33,7 @@ export function renderFrame(t = 0, dt = 0) {
   if (!points || stage.collapsed) return false;      // collapsed: the stage is a legend strip, nothing is drawn
   if (dt > 0) { quality.active(); quality.sample(dt, true); }   // may re-allocate the buffer: before drawing, never after
   const moved = controls.update();
+  const camMoved = cameraMoved();
   const D = stage.dirty, animating = anim.t < 1, C = anim.cur;
   if (animating || D.inst || D.t !== anim.t) {
     const n = app.drugs.length, F = anim.from, T = anim.to, a = anim.t;
@@ -44,11 +45,17 @@ export function renderFrame(t = 0, dt = 0) {
     stage.recolor?.();
     D.inst = true;
   }
-  if (animating || D.inst || D.t !== anim.t) {
+  if (animating || D.inst || D.t !== anim.t || (camMoved && app.inquiry?.active && app.inquiry.focused)) {
     const { drugAt } = stage;
     for (let s = 0, count = points.count; s < count; s++) {
       const i = drugAt[s], k = i * 4;
       let sc = C[k + 3];
+      if (app.inquiry?.active && app.inquiry.focused) {
+        const distance = Math.hypot(C[k]-camera.position.x, C[k+1]-camera.position.y, C[k+2]-camera.position.z);
+        sc *= Math.min(1, 6*distance*Math.tan(camera.fov*Math.PI/360)/(Math.max(1,stage.renderer.domElement.clientHeight)*0.22));
+      }
+      // Slice changes size only: preserve the chosen colour encoding and visible population.
+      if (app.inquiry?.active && app.inquiry.slice != null && [app.view.x, app.view.y, app.view.z].includes('tpsa') && app.drugs[i].d.tpsa > app.inquiry.slice) sc *= 0.32;
       if (i === app.hover && sc > 0) sc *= 1.7;
       else if (i === app.selected && sc > 0) sc *= 1.35;
       _m.makeScale(sc, sc, sc).setPosition(C[k], C[k + 1], C[k + 2]);
@@ -60,12 +67,13 @@ export function renderFrame(t = 0, dt = 0) {
   }
   if (app.selected >= 0 && C[app.selected * 4 + 3] > 0.5) {
     const k = app.selected * 4;
+    ring.scale.setScalar(app.inquiry?.active && app.inquiry.focused ? 0.2 : 1);
     ring.position.set(C[k], C[k + 1], C[k + 2]);
     ring.quaternion.copy(camera.quaternion);
-    ring.visible = selLabel.visible = true;
+    ring.visible = true;
+    selLabel.visible = !(app.inquiry?.active && app.inquiry.comparisonCid != null && [app.inquiry.cid, app.inquiry.comparisonCid].includes(app.drugs[app.selected].cid));
     selLabel.position.copy(ring.position);
   } else ring.visible = selLabel.visible = false;
-  const camMoved = cameraMoved();
   stage.renderer.render(stage.scene, camera);
   stage.labels.render(stage.scene, camera);
   if (D.labels || camMoved) { D.labels = false; tidyLabels(); }
@@ -83,7 +91,7 @@ const rectsOverlap = (a, b, pad = 2) => a.left < b.right + pad && a.right > b.le
 const _o = new THREE.Vector3();
 function tidyLabels() {
   const host = stage.labels.domElement, box = host.getBoundingClientRect();
-  const keepOut = ['.hud', '.stage-tools'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height && rectsOverlap(r, box, 0));
+  const keepOut = ['.hud', '.stage-tools', '#inquiry-beacon'].map(q => $(q)?.getBoundingClientRect()).filter(r => r && r.width && r.height && rectsOverlap(r, box, 0));
   const titles = [...host.querySelectorAll('.ax-title, .sel-label')].map(el => ({ el, r: el.getBoundingClientRect() })).filter(o => o.r.width);
   const ticks = [...host.querySelectorAll('.ax-label')].map(el => ({ el, r: el.getBoundingClientRect() }));
   const kept = [];
@@ -91,8 +99,11 @@ function tidyLabels() {
     const [wx, wy] = (el.dataset.shift || '0 0').split(' ').map(Number);
     const left = r.left - wx, right = r.right - wx, top = r.top - wy, bottom = r.bottom - wy;
     const x = Math.round(Math.max(box.left + 8 - left, Math.min(0, box.right - 8 - right)));
-    let y = 0;
-    for (const k of keepOut) if (left + x < k.right && right + x > k.left && top + y < k.bottom && bottom + y > k.top) y = Math.round(k.bottom + 6 - top);
+    let y = Math.round(Math.max(box.top + 4 - top, Math.min(0, box.bottom - 4 - bottom)));
+    for (const k of keepOut) if (left + x < k.right && right + x > k.left && top + y < k.bottom && bottom + y > k.top) {
+      y = Math.round(k.bottom + 6 - top);
+      if (bottom + y > box.bottom - 4) y = Math.round(k.top - 6 - bottom);
+    }
     // never below the bottom edge or above the top edge of the layer (the clamp wins over the keep-out: a title on a button beats a lost title)
     if (bottom + y > box.bottom - 4) y = Math.round(box.bottom - 4 - bottom);
     if (top + y < box.top + 4) y = Math.round(box.top + 4 - top);
@@ -106,7 +117,7 @@ function tidyLabels() {
   const order = ticks.map(t => ({ ...t, d: Math.hypot((t.r.left + t.r.right) / 2 - ox, (t.r.top + t.r.bottom) / 2 - oy) })).sort((a, b) => a.d - b.d);
   for (const t of order) {
     const inside = t.r.left >= box.left && t.r.right <= box.right && t.r.top >= box.top && t.r.bottom <= box.bottom;
-    const show = inside && !kept.some(k => rectsOverlap(t.r, k, 1));
+    const show = inside && ![...kept, ...keepOut].some(k => rectsOverlap(t.r, k, 1));
     if (show) kept.push(t.r);
     const v = show ? '' : 'hidden';
     if (t.el.style.visibility !== v) t.el.style.visibility = v;

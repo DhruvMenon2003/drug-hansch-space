@@ -21,17 +21,17 @@ const URL = 'data/ti/batch.json';
 export const RULES = [
   { key: 'act', label: 'Activity number', dflt: 'any', options: [
     { v: 'any', label: 'any source', note: 'measurement, Hansch series or the target’s fallback model' },
-    { v: 'model_ok', label: 'no fallback', note: 'a measurement or a validated Hansch series only', keep: m => m.as !== 'fallback_nonlinear' },
-    { v: 'measured', label: 'measured only', note: 'ChEMBL holds a binding value for this molecule at this target', keep: m => m.as === 'measured' },
+    { v: 'model_ok', label: 'no fallback', note: 'a measured aggregate or Hansch series that passed recorded gates', keep: m => m.as !== 'fallback_nonlinear' },
+    { v: 'measured', label: 'measured only', note: 'ChEMBL-derived binding aggregate; not a prediction', keep: m => m.as === 'measured' },
   ] },
   { key: 'herg', label: 'hERG number', dflt: 'any', options: [
     { v: 'any', label: 'any source', note: 'measurement or the liability model' },
-    { v: 'measured', label: 'measured only', note: 'a real hERG measurement, no prediction on the toxicity side', keep: m => m.hs === 'measured' },
+    { v: 'measured', label: 'measured only', note: 'ChEMBL-derived hERG aggregate; not a prediction', keep: m => m.hs === 'measured' },
   ] },
   { key: 'ad', label: 'Applicability domain', dflt: 'any', options: [
     { v: 'any', label: 'keep molecules outside it', note: 'the published batch does this, and says so on every row' },
     { v: 'inside', label: 'inside the domain only', note: 'drop molecules the model was asked about but not trained near', keep: m => m.ad !== 'outside' },
-    { v: 'measured', label: 'measured on both sides', note: 'no domain question at all, because nothing was modelled', keep: m => m.ad === 'measured' },
+    { v: 'measured', label: 'measured on both sides', note: 'no prediction-domain test needed; assay and source limitations remain', keep: m => m.ad === 'measured' },
   ] },
   { key: 'tgt', label: 'Target assignment', dflt: 'any', options: [
     { v: 'any', label: 'recorded or inferred', note: 'the structure router may name the target' },
@@ -206,7 +206,7 @@ export function render() {
   $('#ti-decide-out').innerHTML = `<dl class="kv decide-figs">
       <div><dt>Molecules ranked</dt><dd>${cell(now.n, base.n)} <small>of ${base.n} published, ${pct(now.n, base.n)}</small></dd></div>
       <div><dt>Targets</dt><dd>${cell(now.targets, base.targets)} <small>each with its own ranking</small></dd></div>
-      <div><dt>Median index</dt><dd>${now.median === null ? '—' : cell(now.median, base.median, 2)} <small>log units</small></dd></div>
+      <div><dt>Median p-scale margin</dt><dd>${now.median === null ? '—' : cell(now.median, base.median, 2)} <small>log units</small></dd></div>
       <div><dt>Drugs on this plot</dt><dd>${cell(now.onPage, base.onPage)} <small>of ${base.onPage} that carry one</small></dd></div>
     </dl>`;
 

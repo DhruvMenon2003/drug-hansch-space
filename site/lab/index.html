@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Drug Bench</title>
-<meta name="description" content="Fill in the pharmacokinetic numbers a paper gave you and watch the drug rise out of the floor of a 3D map of 1,231 drug routes.">
+<meta name="description" content="Explore and annotate route-specific records with explicitly labeled legacy arithmetic, not validated exposure or safety models.">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../vendor/fonts/fonts.css">
 <link rel="stylesheet" href="lab.css">
@@ -19,16 +19,16 @@
 <main>
   <section class="intro">
     <h1>The drug bench</h1>
-    <p>Most of the drugs in this dataset are missing something. A label gives the dose but not the half-life; a rat study gives a lethal dose but nobody wrote down the oral bioavailability. Each sphere below is one drug given one way. The ones lying on the floor are the ones we can't yet place, because their steady-state concentration can't be computed without all four numbers.</p>
-    <p>If you have the missing value from a paper, type it in. The drug lifts off the floor to where it belongs.</p>
+    <p>Each sphere is one drug given one way. This bench preserves route-specific source inputs and your annotations. Edit inputs to explore the original arithmetic and watch positions change. These legacy expressions are not validated therapeutic index or concentration models.</p>
+    <p>You can record a value and its source, then export your edits. Vertical position shows the log of a legacy accumulation expression, with missing inputs on the floor; sphere size uses the legacy log-product score, not safety. QED is a computed drug-likeness descriptor, not measured toxicity or safety.</p>
   </section>
 
   <section class="bench">
     <div class="stage">
-      <canvas id="scene" aria-label="3D map of drugs: lipophilicity across, steady-state concentration up, drug-likeness in depth"></canvas>
+      <canvas id="scene" aria-label="Map of drug-route records: lipophilicity across and QED in depth; height shows log legacy accumulation expression, not concentration"></canvas>
       <div class="axes" aria-hidden="true">
         <span class="ax x">greasier →</span>
-        <span class="ax y">↑ more drug in the blood</span>
+        <span class="ax y">log legacy accumulation ↑</span>
         <span class="ax z">more drug-like ↗</span>
       </div>
       <div id="tip" class="tip" hidden></div>
@@ -57,8 +57,8 @@
         </div>
         <label class="wide">Where the numbers came from <small>DOI, PMID or citation</small><input name="src" placeholder="doi:10.…"></label>
         <output class="readout">
-          <div><span>Steady-state level</span><b id="oFc">–</b><i>1.44 · F · t½ · dose / τ</i></div>
-          <div><span>Therapeutic index</span><b id="oTi">–</b><i>log₁₀ (lethal · active)</i></div>
+          <div><span>Legacy accumulation expression (mg)</span><b id="oFc">–</b><i>1.44 × F × t½ × dose / interval</i></div>
+          <div><span>Legacy log-product score</span><b id="oTi">–</b><i>log10(tox numeric) + log10(act numeric)</i></div>
         </output>
         <p class="warn" id="warn" hidden></p>
         <div class="row">
@@ -97,8 +97,8 @@
   <details>
     <summary>How the numbers are made</summary>
     <dl>
-      <dt>Placement</dt><dd>Across: Crippen logP (RDKit). Up: log₁₀ of the steady-state level. Depth: QED. Colour: first ATC letter.</dd>
-      <dt>Formulas</dt><dd>The same ones the curated table uses, so your edit and a rebuild agree.</dd>
+      <dt>Placement</dt><dd>Across: Crippen logP (RDKit). Depth: QED. Colour: first ATC letter. Height: log10 of the legacy accumulation expression (mg input convention), clamped to the stored population’s 1st–99th percentile viewport. Missing inputs stay on the floor. Size uses the legacy log-product score; small offsets separate overlaps. Neither encoding represents safety.</dd>
+      <dt>Formulas</dt><dd>The mg expression is not concentration or unbound exposure. The log-product uses numeric lethal dose (mg/kg) and active dose (mg/day): its dimensional inputs make it unit-dependent, and its endpoints are incompatible. It is not a therapeutic index or safety ranking. CSV retains historical field names with an explicit derived_status explanation; raw inputs and citations are preserved.</dd>
       <dt>Curated values</dt><dd><a href="../data/clean_drugs.json">clean_drugs.json</a> · <a href="../data/provenance.csv">provenance</a> · <a href="../data/validation.md">validation</a></dd>
     </dl>
   </details>

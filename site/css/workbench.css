@@ -1,0 +1,43 @@
+/* The no-WebGL experience is a reading/workbench layout, not an empty plot column.
+   Keep the notice in normal flow so the usable search, tables and controls own the screen. */
+html.no-webgl { scroll-padding-top: calc(var(--stage-top, 64px) + 16px); }
+html.no-webgl .app { display: block; }
+html.no-webgl .masthead { position: sticky; top: 0; transform: none !important; }
+html.no-webgl .layout { display: block; }
+html.no-webgl .stage {
+  position: static; width: min(100%, 1120px); height: auto; min-height: 0;
+  margin: 0 auto; padding: 24px 28px 0; border: 0; background: none;
+  transform: none !important; pointer-events: auto;
+}
+html.no-webgl .stage-card {
+  position: static; inset: auto; min-height: 0; padding: 20px 24px;
+  border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 12px; gap: 12px; background: var(--panel);
+}
+html.no-webgl .stage-card h2 { font-size: 1.15rem; }
+html.no-webgl .stage-card p { max-width: 80ch; font-size: 1rem; line-height: 1.55; }
+html.no-webgl .rail {
+  width: min(100%, 1120px); margin: 0 auto; padding: 24px 28px 48px;
+  border-left: 0; gap: 24px;
+}
+html.no-webgl .tour { gap: 24px; }
+html.no-webgl .step {
+  min-height: 0; padding: 24px 0; width: 100%; max-width: 78ch; margin-inline: auto;
+  --step-ink: var(--ink-2); --step-head: var(--ink);
+}
+html.no-webgl .step + .step { border-top: 1px solid var(--line); }
+html.no-webgl .panel { max-width: none; }
+html.no-webgl #explore > .lede, html.no-webgl #method > p { max-width: 78ch; }
+@media (min-width: 900px) {
+  html.no-webgl .stage-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 24px; }
+  html.no-webgl .stage-card h2 { grid-column: 1; }
+  html.no-webgl .stage-card > [data-fallback-text] { grid-column: 1; }
+  html.no-webgl .stage-card-actions { grid-column: 2; grid-row: 1 / span 2; }
+}
+@media (max-width: 700px) {
+  html.no-webgl .stage { padding: 16px 16px 0; }
+  html.no-webgl .stage-card { padding: 18px; }
+  html.no-webgl .rail { padding: 20px 16px 40px; }
+  html.no-webgl .step { padding-block: 20px; }
+}
+html.no-webgl .step .hint { display: none; }

@@ -1,0 +1,23 @@
+/* Screen annotations identify the comparison pair; they never encode chemistry. */
+.inquiry-pair-tags {
+  position: absolute;
+  pointer-events: none;
+  z-index: 100; /* Above CSS2D child ranks, without intercepting controls. */
+  --pair-ink: #183c43;
+  --pair-panel: #fffdf5;
+  --pair-muted: #607678;
+}
+[data-theme="dark"] .inquiry-pair-tags {
+  --pair-ink: #e7f1ed;
+  --pair-panel: #14272c;
+  --pair-muted: #94adae;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .inquiry-pair-tags {
+    --pair-ink: #e7f1ed;
+    --pair-panel: #14272c;
+    --pair-muted: #94adae;
+  }
+}
+body[data-stage-size="strip"] .inquiry-pair-tags,
+html.no-webgl .inquiry-pair-tags { visibility: hidden; }

@@ -129,7 +129,7 @@ function buildModeObserver() {
 }
 
 function initKeyboardCollapse(signal) {
-  const fields = 'input:not([type="checkbox"]):not([type="radio"]):not([type="button"]), select, textarea';
+  const fields = 'input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="range"]), select, textarea';
   const set = on => { if (layoutState.kb === on) return; layoutState.kb = on; body().classList.toggle('kb', on); updateSize(); };
   document.addEventListener('focusin', e => { if (narrow.matches && coarse.matches && e.target.matches?.(fields)) set(true); }, { signal });
   document.addEventListener('focusout', () => setTimeout(() => { if (!document.activeElement?.matches?.(fields)) set(false); }, 80), { signal });
