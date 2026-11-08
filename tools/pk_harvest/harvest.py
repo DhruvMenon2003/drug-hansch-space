@@ -35,7 +35,7 @@ WEIGHT = {"CL": 3, "Vss": 3, "fu": 2, "F": 2, "dose_ug": 1, "interval_min": 1, "
 SPECIAL = {"paediatric", "pregnancy", "renal impairment", "hepatic impairment", "critically ill", "obesity",
            "drug interaction", "formulation study", "elderly"}
 MAX_CANDIDATES = 30
-MAX_FULLTEXT = 5
+MAX_FULLTEXT = 3  # Europe PMC full-text XML is the slowest call (1–27 s); abstracts carry most CL/Vss values
 
 
 def agree(param: str, a: float, b: float) -> bool:

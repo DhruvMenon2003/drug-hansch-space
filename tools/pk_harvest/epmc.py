@@ -59,7 +59,6 @@ def query_ladder(drug: str, synonyms: list[str] | None = None) -> list[tuple[str
         ("title-pk-cited", f"{t} AND {pk} AND SRC:MED", "CITED desc"),
         ("clinical-pk", f"{t} AND \"clinical pharmacokinetics\" AND SRC:MED", None),
         ("title-params", f"{t} AND {params} AND SRC:MED", None),
-        ("title-params-cited", f"{t} AND {params} AND SRC:MED", "CITED desc"),
     ]
 
 
@@ -142,7 +141,7 @@ def _text(el: ET.Element) -> str:
 
 def fulltext_blocks(pmcid: str) -> list[dict] | None:
     """Return paragraph and table-row blocks from the Europe PMC full-text XML, or None if unavailable."""
-    r = get(f"{EPMC}/{pmcid}/fullTextXML", kind="epmc_fulltext")
+    r = get(f"{EPMC}/{pmcid}/fullTextXML", kind="epmc_fulltext", timeout=40, retries=1)
     if r["status"] != 200 or not r["text"].strip():
         return None
     try:
