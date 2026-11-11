@@ -467,3 +467,15 @@ details > summary h2 { display: inline; }
 
 .inquiry-invitation {margin:24px 0;padding:16px 20px;border-left:3px solid #27858b;background:rgba(39,133,139,.08)}
 .inquiry-invitation p {font-size:24px;line-height:1.25;margin:6px 0 12px}.inquiry-invitation small{display:block;margin-top:10px}
+
+/* The front door: three plain-language routes into the page, so a first-time reader has somewhere to start.
+   It is a .panel, so only what differs from a panel is set here. Anchors, not buttons, so every route still works
+   with JavaScript off; js/boot-core.js upgrades the first two to press the dialog button their section owns. */
+.start { gap: 10px; margin-top: 32px; }
+.start h2 { max-width: 24ch; }
+.start ul { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
+.start li a { display: block; min-height: var(--target); padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); color: var(--ink); text-decoration: none; }
+.start li a:hover, .start li a:focus-visible { border-color: var(--accent); }
+.start b { display: block; font-family: var(--font-display); }
+.start small { display: block; margin-top: 2px; color: var(--ink-2); }
+.start .hint { margin: 0; font-size: 0.9rem; }
