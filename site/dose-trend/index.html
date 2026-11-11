@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Dose-Trend Analyzer</title>
+<meta name="description" content="An explorable explanation of the Cochran–Armitage trend test, ending in an analyzer that turns an adverse-event table into a journal-format figure.">
+<!-- Nothing on this page comes from another origin (tools/check_site.py): the site's own fonts, its vendored three.js, and
+     scripts beside the page. style-src keeps 'unsafe-inline' for the few style attributes the page and its scripts set. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<link rel="canonical" href="https://dhruvmenon2003.github.io/drug-hansch-space/dose-trend/">
+<meta name="theme-color" content="#f7f7f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121416" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../vendor/fonts/fonts.css">
+<link rel="stylesheet" href="dose-trend.css">
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<main>
+<nav class="site-nav" aria-label="Other pages of this site"><a href="../">Hansch Space</a><a href="../learn/">Why the greasiest drug isn’t the best one</a><a href="../lab/">The drug bench</a></nav>
+<header class="mast wide">
+  <div>
+    <p class="kicker"><b>Dose-Trend Analyzer</b><span>An explorable explanation, with the working tool at the end</span></p>
+    <h1>How a trend test reads a dose table</h1>
+    <p class="lede"><span data-b="evCap">Headache</span> was reported by <em><span data-b="refPct">31</span>% of patients on <span data-b="refL">placebo</span></em> and <em><span data-b="topPct">62</span>% on the highest dose</em> of <span data-b="drugL">apricitabine</span>. Is that the drug, or <span data-b="nTop">13</span> patients having an unlucky ten days? A trend test answers by measuring how far the cases lean toward the high doses, then asking how often pure chance leans that far.</p>
+    <p class="jump"><a href="#analyzer">Skip to the analyzer and figure studio</a></p>
+  </div>
+  <figure id="fig-molecule" class="hero">
+    <div class="stage" tabindex="0" role="img" aria-label="Ball-and-stick model of the drug molecule. Drag it, or use the arrow keys, to turn it.">
+      <canvas class="flat" aria-hidden="true"></canvas>
+    </div>
+    <figcaption><span data-b="drug">Apricitabine</span>, <span data-b="formula">C8H11N3O3S</span>: the drug in the table. Drag to turn it. A computed conformer, not a crystal structure.</figcaption>
+  </figure>
+</header>
+
+<div class="scroll-x wide" id="specimen-wrap"></div>
+
+<h2 data-n="1" id="s1">Five small groups</h2>
+<p>Every patient in this trial was assigned at random to one group and took that dose for ten days, so the five groups are five different sets of people. Take the highlighted row. In the figure each dot is a patient, and a <span class="c1">filled dot</span> is a patient who reported <span data-b="ev">headache</span>.</p>
+
+<figure id="fig-dots">
+  <canvas data-aspect="0.38" style="aspect-ratio:1/0.38" tabindex="0" role="img" aria-label="Dot plot of patients in each dose group"></canvas>
+  <div class="controls"><button type="button" data-role="reset">Back to the trial's numbers</button><span class="k">Keys: <kbd>←</kbd> <kbd>→</kbd> choose a group, <kbd>↑</kbd> <kbd>↓</kbd> change it</span></div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 1.</b> Drag up or down inside a column to change how many patients have <span data-b="ev">headache</span>, and watch what a single patient does to the percentage.</figcaption>
+</figure>
+
+<p>Groups this size are coarse instruments. In a group of <span data-b="nTop">13</span>, one patient is worth <span data-b="onePt">7.7</span> percentage points, and the whole gap between <span data-b="refL">placebo</span> and the top dose is <span data-b="gap">4</span> patients.</p>
+
+<h2 data-n="2" id="s2">What chance does to small groups</h2>
+<p>Suppose the dose made no difference at all. The <span data-b="R">25</span> patients who got a <span data-b="ev">headache</span> would have got one anyway, and which group each of them landed in was settled by the randomization. You can replay that draw: keep the <span data-b="R">25</span> cases, and <span class="c3">deal them out again at random</span> among the <span data-b="N">63</span> patients.</p>
+<aside class="aside" data-if="totalIsDoseOnly"><b>Why <span data-b="R">25</span> and not <span data-b="skipR">21</span>?</b> The table’s <span data-b="skipL">Total</span> column adds up the <span data-b="nDose">four</span> <span data-b="drugL">apricitabine</span> groups only. With <span data-b="refL">placebo</span> counted as well, <span data-b="R">25</span> of the <span data-b="N">63</span> patients reported a <span data-b="ev">headache</span>.</aside>
+
+<figure id="fig-shuffle">
+  <canvas data-aspect="0.38" style="aspect-ratio:1/0.38" role="img" aria-label="The same dot plot with the cases dealt at random"></canvas>
+  <div class="controls">
+    <button type="button" data-role="once">Shuffle once</button>
+    <button type="button" data-role="auto" aria-pressed="false">Keep shuffling</button>
+    <button type="button" data-role="reset" class="push">Clear the tally</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption><b>Figure 2.</b> Shuffle a few times by hand, then let it run. The ticks beside each column mark what the trial observed.</figcaption>
+</figure>
+
+<p>Chance alone builds staircases, cliffs and spikes. Counting every possible deal, the top dose ends up at least <span data-b="gap">4</span> patients ahead of <span data-b="refL">placebo</span> in <span data-b="gapShare">8.1</span>% of them. So the useful question is never whether there is a pattern. It is whether the pattern is larger than shuffling usually makes.</p>
+
+<h2 data-n="3" id="s3">One number for the whole staircase</h2>
+<p>Comparing only the two end groups throws away the three in between. A trend test uses all <span data-b="k">five</span>. Picture a beam marked in milligrams, with every <span class="c1">patient who had a <span data-b="ev">headache</span></span> standing at their dose. If dose were irrelevant, the cases would balance at the average dose of all <span data-b="N">63</span> patients. If they crowd toward the high doses, their balance point moves right.</p>
+
+<figure id="fig-beam">
+  <canvas data-aspect="0.44" style="aspect-ratio:1/0.44" tabindex="0" role="img" aria-label="Balance beam with the cases standing at their doses"></canvas>
+  <div class="controls"><button type="button" data-role="reset">Back to the trial's numbers</button><span class="k">Keys: <kbd>←</kbd> <kbd>→</kbd> choose a dose, <kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd> move a case</span></div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 3.</b> Drag a case from one dose to another. The <span class="c4">lean</span> is the distance between the two markers. The tilt of the beam is drawn in proportion to the lean and is exaggerated.</figcaption>
+</figure>
+
+<p>That distance is the trend statistic. Cochran in 1954 and Armitage in 1955 wrote it as the sum of dose × cases; dividing by the number of cases turns it into the lean you see here. In the trial the cases averaged <span data-b="meanEv">976</span> mg against <span data-b="meanAll">819</span> mg for everyone, a <span class="c4">lean of <span data-b="lean">157</span> mg</span>.</p>
+
+<h2 data-n="4" id="s4">How far does chance lean?</h2>
+<p>Now shuffle again, thousands of times, and keep only the lean from each shuffle.</p>
+
+<figure id="fig-pile">
+  <canvas data-aspect="0.48" style="aspect-ratio:1/0.48" role="img" aria-label="Histogram of the lean in shuffled data"></canvas>
+  <div class="controls">
+    <button type="button" data-role="run" aria-pressed="false">Run the shuffles</button>
+    <span class="seg" role="group" aria-label="Which tails count"><button type="button" data-side="two" aria-pressed="true">Either direction</button><button type="button" data-side="inc" aria-pressed="false">Toward high doses only</button></span>
+    <button type="button" data-role="reset" class="push">Start over</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption><b>Figure 4.</b> Each shuffle adds to the <span class="c3">pile</span>. The <span class="c1">filled tails</span> are shuffles that lean at least as far as the trial did. The outline is the exact answer, every possible shuffle counted; the smooth <span class="c4">curve</span> is the bell shape the Cochran–Armitage test puts in its place.</figcaption>
+</figure>
+
+<p>The share of shuffles in the tails is the <i>P</i> value. Counting every possible shuffle gives <i>P</i> = <span data-b="pExact">0.090</span>. The Cochran–Armitage test swaps the pile for a bell curve and reports <i>P</i> = <span data-b="pAsym">0.077</span> (<i>z</i> = <span data-b="z">1.77</span>). With groups of <span data-b="nRange">11 to 14</span> the bell is a slightly generous fit, so the exact figure is the safer one to quote. Either way a lean this large turns up about one time in <span data-b="oneIn">11</span> when dose does nothing.</p>
+
+<h2 data-n="5" id="s5">One question or four</h2>
+<p>A common alternative is to compare each dose with <span data-b="refL">placebo</span>, one pair at a time. That asks <span data-b="nPairs">four</span> questions of <span data-b="pairN">24 to 27</span> patients each, and the <i>P</i> values have to be adjusted because there are <span data-b="nPairs">four</span> of them. The trend test asks one ordered question of all <span data-b="N">63</span>.</p>
+<aside class="aside"><b>Why not McNemar’s test?</b> McNemar’s is for paired data, the same patients measured twice. Here each group is a different set of patients, so the pairwise step uses Fisher’s exact test.</aside>
+
+<figure id="fig-verdicts">
+  <canvas data-aspect="0.52" style="aspect-ratio:1/0.52" tabindex="0" role="img" aria-label="Bars for each group beside the P values of the trend test and of each pairwise test"></canvas>
+  <div class="controls">
+    <span class="seg" role="group" aria-label="Example tables"><button type="button" data-preset="trial" aria-pressed="true">The trial</button><button type="button" data-preset="stair" aria-pressed="false">Staircase</button><button type="button" data-preset="spike" aria-pressed="false">Spike</button><button type="button" data-preset="flat" aria-pressed="false">Flat</button></span>
+  </div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 5.</b> Try the presets, or drag the bars. <b>Staircase</b> is a steady climb in which no single dose stands out. <b>Spike</b> is one dose standing out with no climb at all.</figcaption>
+</figure>
+
+<p>The two approaches answer different questions and can disagree in both directions. The staircase gives a trend with <i>P</i> = <span data-b="stairTrend">0.022</span> while no dose on its own gets below <span data-b="stairRaw">0.11</span>. The spike gives a pairwise <i>P</i> of <span data-b="spikeHolm">0.012</span> after adjustment while the trend test sees nothing (<i>P</i> = <span data-b="spikeTrend">0.35</span>), because one ordered question is blind to anything that is not a climb.</p>
+
+<h2 data-n="6" id="s6">One patient from a different verdict</h2>
+<p>Here is the uncomfortable part. Hold the middle groups as they were and vary only the two ends: the number of cases on <span data-b="refL">placebo</span> and at the top dose.</p>
+
+<figure id="fig-land">
+  <canvas data-aspect="0.74" style="aspect-ratio:1/0.74" tabindex="0" role="img" aria-label="Grid of trials that could have happened, shaded by P value"></canvas>
+  <div class="controls">
+    <span class="seg" role="group" aria-label="How P is computed"><button type="button" data-mode="asym" aria-pressed="true">Bell curve</button><button type="button" data-mode="exact" aria-pressed="false">Exact</button></span>
+    <button type="button" data-role="reset" class="push">Back to the trial</button>
+  </div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 6.</b> Each cell is a trial that could have happened; the stronger the blue, the smaller the <i>P</i>. Drag the ring, or use the arrow keys. The heavy line is <span class="nb"><i>P</i> = 0.05</span>.</figcaption>
+</figure>
+
+<p>One case fewer on <span data-b="refL">placebo</span> and the same test reports <i>P</i> = <span data-b="pRefMinus">0.031</span>. One more at the top dose: <i>P</i> = <span data-b="pTopPlus">0.035</span>. The exact versions agree (<span data-b="pRefMinusX">0.038</span> and <span data-b="pTopPlusX">0.041</span>). “Not significant” is a statement about these <span data-b="N">63</span> patients, not about <span data-b="drugL">apricitabine</span>. The honest summary is the estimate with its uncertainty: <span data-b="topRD">+30.8</span> percentage points at the top dose, 95% confidence interval <span data-b="topCI">−6.6 to 58.3</span>.</p>
+
+<h2 data-n="7" id="analyzer">Your table</h2>
+<p>The same model runs on any table of this shape. Paste one or drop a screenshot, check the numbers in the grid, and the figure studio lays the result out to a journal’s specification.</p>
+
+<figure id="fig-analyzer" class="tool wide">
+  <div class="bench">
+    <section aria-labelledby="h-table">
+      <h3 id="h-table"><i>7a</i> Table</h3>
+      <div class="inputs">
+        <div>
+          <label for="paste-box">Paste the table as text (from Excel, Word or a PDF)</label>
+          <textarea id="paste-box" spellcheck="false" aria-describedby="paste-hint"></textarea>
+          <p class="hint" id="paste-hint">One row per event. Group sizes go in the header as (n = 13). A cell may be a count, or a count with a percentage such as 4 (30.8).</p>
+          <div class="row">
+            <button type="button" class="primary" id="btn-parse">Read pasted table</button>
+            <button type="button" id="btn-example">Load the example again</button>
+          </div>
+        </div>
+        <div>
+          <span class="lab" id="shot-label">Or use a screenshot of the table</span>
+          <div class="drop off" id="drop" aria-labelledby="shot-label" aria-describedby="shot-hint">
+            <p><b>Drop an image here</b>, paste it with <kbd>Ctrl</kbd>+<kbd>V</kbd>, or <label for="file-in" class="linkish">choose a file</label>.</p>
+            <p class="hint" id="shot-hint">Checking whether Claude can read images in this view…</p>
+            <input type="file" id="file-in" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+          </div>
+          <div class="row" id="shot-busy" hidden><span class="hint" id="shot-status">Reading the table from the image…</span><button type="button" class="small" id="btn-stop">Stop</button></div>
+          <img class="thumb" id="shot-thumb" alt="The screenshot you supplied, for checking the numbers" hidden>
+        </div>
+      </div>
+      <div class="msg" id="parse-msg" role="status"></div>
+      <div class="scroll-x"><table class="grid" id="grid" aria-label="Editable table of groups and event counts"></table></div>
+      <div class="row">
+        <button type="button" class="small" id="btn-add-row">Add an event row</button>
+        <button type="button" class="small" id="btn-add-col">Add a group column</button>
+        <span class="hint">Pick the row to analyse with its radio button. Every cell can be edited.</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-tests">
+      <h3 id="h-tests"><i>7b</i> Tests</h3>
+      <div class="fields">
+        <label for="sel-event">Event<select id="sel-event"></select></label>
+        <label for="sel-scores">Dose scores<select id="sel-scores"><option value="dose">Dose values from the table</option><option value="rank">Equally spaced (1, 2, 3 …)</option></select></label>
+        <label for="sel-alt">Alternative<select id="sel-alt"><option value="two">Two-sided</option><option value="inc">One-sided: rises with dose</option><option value="dec">One-sided: falls with dose</option></select></label>
+        <label class="check" for="chk-ref"><input type="checkbox" id="chk-ref" checked> Count the reference group in the trend test</label>
+      </div>
+      <div class="msg bad" id="errors" role="alert"></div>
+      <div id="results" style="display:grid;gap:1rem">
+        <div class="tiles" id="tiles"></div>
+        <p class="verdict" id="verdict"></p>
+        <div class="msg" id="warnings"></div>
+        <div class="two">
+          <div><h3>Incidence by group</h3><div class="scroll-x"><table class="data" id="tbl-groups"></table></div></div>
+          <div><h3 id="pairs-title">Each dose against the reference</h3><div class="scroll-x"><table class="data" id="tbl-pairs"></table></div><p class="hint" id="pairs-note"></p></div>
+        </div>
+        <div class="texts">
+          <div class="textblock"><div class="top"><h3>Methods text</h3><button type="button" class="small" data-copy="txt-methods">Copy</button></div><p id="txt-methods"></p></div>
+          <div class="textblock"><div class="top"><h3>Results text</h3><button type="button" class="small" data-copy="txt-results">Copy</button></div><p id="txt-results"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-studio">
+      <h3 id="h-studio"><i>7c</i> Figure studio</h3>
+      <div class="fields">
+        <label for="fig-journal">Journal preset<select id="fig-journal"><option value="nature">Nature</option><option value="cell">Cell</option><option value="science">Science</option><option value="pnas">PNAS</option><option value="lancet">The Lancet</option><option value="nejm">NEJM</option></select></label>
+        <label for="fig-column">Width<select id="fig-column"></select></label>
+        <label for="fig-panel-a">Panel a<select id="fig-panel-a"><option value="schematic">Trial design, vector</option><option value="image">Trial design, illustration</option><option value="none">No design panel</option></select></label>
+        <label for="fig-style">Marks<select id="fig-style"><option value="bars">Bars with 95% CI</option><option value="points">Points with 95% CI</option></select></label>
+        <label for="fig-palette">Palette<select id="fig-palette"><option value="soft">Soft colour</option><option value="grey">Greyscale</option></select></label>
+        <label for="fig-pa"><span>Trend <i>P</i></span><select id="fig-pa"><option value="asym">Asymptotic</option><option value="exact">Exact</option></select></label>
+        <label for="fig-pb"><span>Pairwise <i>P</i></span><select id="fig-pb"><option value="holm">Holm-adjusted</option><option value="raw">Unadjusted</option></select></label>
+        <label class="check" for="fig-border"><input type="checkbox" id="fig-border" checked> Hairline border</label>
+      </div>
+      <div class="fields">
+        <label for="fig-xt">X-axis title<input type="text" id="fig-xt"></label>
+        <label for="fig-yt">Y-axis title<input type="text" id="fig-yt"></label>
+        <label for="fig-pop">Population (panel a)<input type="text" id="fig-pop"></label>
+        <label for="fig-design">Design (panel a)<input type="text" id="fig-design"></label>
+        <label for="fig-dur">Duration (panel a)<input type="text" id="fig-dur"></label>
+      </div>
+      <div class="row" id="image-row" hidden>
+        <label for="image-in" class="btn">Use another image for panel a</label>
+        <input type="file" id="image-in" accept="image/png,image/jpeg" hidden>
+        <span class="hint" id="image-note"></span>
+      </div>
+      <div class="studio">
+        <div class="tabs" role="tablist" aria-label="Figure views">
+          <button type="button" role="tab" id="tab-proof" aria-selected="true" aria-controls="pane-proof">Proof</button>
+          <button type="button" role="tab" id="tab-json" aria-selected="false" aria-controls="pane-json">Figure JSON</button>
+          <button type="button" role="tab" id="tab-style" aria-selected="false" aria-controls="pane-style">style.json</button>
+        </div>
+        <div id="pane-proof" role="tabpanel" aria-labelledby="tab-proof"><div class="proof" id="proof"></div></div>
+        <div id="pane-json" role="tabpanel" aria-labelledby="tab-json" hidden>
+          <p class="hint">The JSON is the figure: every bar, line and label is an entry here, and the drawing is rendered from it. Edit a value, then apply. Changing an option above rebuilds the JSON from the data.</p>
+          <textarea class="jsonbox" id="json-box" spellcheck="false" aria-label="Figure JSON"></textarea>
+          <div class="row"><button type="button" class="primary" id="btn-json-apply">Apply JSON</button><button type="button" id="btn-json-reset">Rebuild from the data</button><span class="hint" id="json-msg" role="status"></span></div>
+        </div>
+        <div id="pane-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+          <p class="hint">Palette, type sizes and journal limits for every figure of the same paper. Keep this file with the figure JSON.</p>
+          <textarea class="jsonbox" id="style-box" spellcheck="false" readonly aria-label="style.json" style="min-height:13rem"></textarea>
+        </div>
+        <ul class="checks" id="checks" aria-label="Checks against the journal preset"></ul>
+        <div class="row">
+          <button type="button" class="primary" id="btn-svg">SVG</button>
+          <button type="button" id="btn-pdf">PDF</button>
+          <button type="button" id="btn-png">PNG</button>
+          <select id="fig-dpi" aria-label="PNG resolution"><option value="300">300 dpi</option><option value="450">450 dpi</option><option value="600" selected>600 dpi</option><option value="1200">1200 dpi</option></select>
+          <button type="button" id="btn-json">JSON</button>
+          <button type="button" id="btn-copy-svg">Copy SVG code</button>
+          <span class="hint" id="export-msg" role="status"></span>
+        </div>
+        <div class="row">
+          <label for="fig-pdf-fonts" class="inline">Fonts in the PDF<select id="fig-pdf-fonts"><option value="embed">Embedded TrueType (Arimo)</option><option value="base">Helvetica by name, not embedded</option></select></label>
+          <span class="hint" id="pdf-fonts-note"></span>
+        </div>
+        <p class="hint" id="fig-size"></p>
+        <div class="textblock"><div class="top"><h3>Figure legend</h3><button type="button" class="small" data-copy="txt-caption">Copy</button></div><p id="txt-caption"></p></div>
+      </div>
+    </section>
+  </div>
+  <figcaption><b>Figure 7.</b> The analyzer. Statistics run in your browser; a table leaves it only if you supply a screenshot, which is read by Claude. Journal presets follow each journal’s published sizes at the time of writing, so check the current author guidelines before you submit.</figcaption>
+</figure>
+
+<h2 data-n="8" id="s8">What the test leaves unsaid</h2>
+<p>Three limits are worth carrying away. The scores are a choice: using the doses in milligrams assumes each step matters in proportion to its size, and equally spaced scores would be just as defensible. The test looks for a climb and nothing else, so a spike or a plateau can hide from it, which is why Figure 7 also reports the departure from a straight line. And this table has <span data-b="nRows">nine</span> rows. Test each one at 0.05 and, if the rows were independent and the drug did nothing, the chance that at least one dips under the line is <span data-b="fwer">37</span>%.</p>
+<p>None of that makes the test less useful. It makes the single number less important than the picture around it: how big the difference is, how wide the interval, and how few patients stand between one verdict and the other.</p>
+
+<footer>
+  <p><b>Sources.</b></p>
+  <ol>
+    <li>Cahn P, Cassetti I, Wood R, et al. Efficacy and tolerability of 10-day monotherapy with apricitabine in antiretroviral-naive, HIV-infected patients. <i>AIDS</i> 2006;20:1261–1268. The table above is the paper’s adverse-event table.</li>
+    <li>Cochran WG. Some methods for strengthening the common χ² tests. <i>Biometrics</i> 1954;10:417–451.</li>
+    <li>Armitage P. Tests for linear trends in proportions and frequencies. <i>Biometrics</i> 1955;11:375–386.</li>
+    <li>Newcombe RG. Interval estimation for the difference between independent proportions. <i>Statistics in Medicine</i> 1998;17:873–890.</li>
+    <li>Wilson EB. Probable inference, the law of succession, and statistical inference. <i>Journal of the American Statistical Association</i> 1927;22:209–212.</li>
+    <li>Holm S. A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i> 1979;6:65–70.</li>
+  </ol>
+  <p><b>How it was made.</b> One HTML file. The figures are live simulations drawn on canvas, and every number in the text is computed from the table when the page loads. The statistics were checked against SciPy 1.18 and statsmodels 0.15. The molecule is rendered with the site’s own copy of three.js, loaded only when it is on screen, from a conformer computed with RDKit (ETKDG, MMFF94). The trial-design illustration was made in BioRender; journals need a BioRender publication licence for it. Exported figures are laid out with Helvetica’s published widths; the PDF embeds Arimo (SIL Open Font License), which shares those widths, so the file passes a journal’s font check. The page is set in the site’s faces: Newsreader, Bricolage Grotesque and IBM Plex Mono.</p>
+</footer>
+</main>
+<noscript><p style="max-width:41rem;margin:2rem auto;font-family:sans-serif">The figures on this page are simulations and need JavaScript to run.</p></noscript>
+<script src="core.js"></script>
+<script src="figure.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

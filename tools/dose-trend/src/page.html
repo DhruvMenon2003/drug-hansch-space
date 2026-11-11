@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Dose-Trend Analyzer</title>
+<meta name="description" content="An explorable explanation of the Cochran–Armitage trend test, ending in an analyzer that turns an adverse-event table into a journal-format figure.">
+<!--__HEAD__-->
+<style>
+@layer tokens, base, layout, parts, figures, tool;
+
+@layer tokens {
+  /* c1–c4 are concepts, not decoration: c1 = patients with the event, c2 = the dose groups,
+     c3 = what chance does (shuffles), c4 = the trend statistic (the lean). */
+/*__TOKENS__*/
+  :root {
+/*__FONT_TOKENS__*/
+    --measure: 41rem;
+    --rail-gap: 2.5rem;
+    --ease-out: cubic-bezier(.22, 1, .36, 1);
+    --quick: 140ms;
+  }
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1.5rem; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 1.125rem/1.62 var(--serif); font-optical-sizing: auto; text-rendering: optimizeLegibility; }
+  h1, h2, h3 { text-wrap: balance; }
+  h1 { font: var(--display-weight) clamp(2rem, 1.3rem + 3.2vw, 3.1rem)/1.06 var(--display); letter-spacing: var(--display-tracking); margin: 0 0 .45em; }
+  h2 { font: var(--display-weight) 1.42rem/1.25 var(--display); margin: 3.2rem 0 .7rem; position: relative; }
+  h3 { font: 600 .78rem/1.3 var(--sans); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  p { margin: 0 0 1.05em; text-wrap: pretty; hanging-punctuation: first; }
+  a { color: inherit; text-decoration-color: var(--c2); text-decoration-thickness: .08em; text-underline-offset: .18em; }
+  a:hover { text-decoration-thickness: .14em; }
+  b, strong { font-weight: 600; }
+  :focus-visible { outline: 2px solid var(--c2); outline-offset: 2px; border-radius: 2px; }
+  .c1 { color: var(--c1); font-weight: 600; } .c2 { color: var(--c2); font-weight: 600; }
+  .c3 { color: var(--c3); font-weight: 600; } .c4 { color: var(--c4); font-weight: 600; }
+  .num { font-variant-numeric: lining-nums tabular-nums; }
+  .nb { white-space: nowrap; }
+  kbd { font: 500 .78em var(--mono); border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 3px; padding: .05em .35em; background: var(--panel); }
+}
+
+@layer layout {
+  /* Text column and a rail to its right. Wide blocks span both; asides sit in the rail. */
+  main { display: grid; grid-template-columns: minmax(1.25rem, 1fr) min(var(--measure), 100% - 2.5rem) minmax(0, 29rem) minmax(1.25rem, 1fr); padding: 2.6rem 0 5rem; }
+  main > * { grid-column: 2; min-width: 0; }
+  main > .wide { grid-column: 2 / 4; }
+  .progress { position: fixed; inset: 0 0 auto 0; height: 3px; background: var(--c4); transform-origin: 0 50%; transform: scaleX(0); z-index: 5; }
+  @supports (animation-timeline: scroll()) {
+    .progress { animation: read linear both; animation-timeline: scroll(root block); }
+    @keyframes read { to { transform: scaleX(1); } }
+  }
+
+  .mast { display: grid; grid-template-columns: minmax(0, var(--measure)) minmax(15rem, 1fr); column-gap: var(--rail-gap); align-items: end; margin-bottom: 1.2rem; }
+  .kicker { font: 500 .8rem/1.4 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 1.4rem; display: flex; flex-wrap: wrap; gap: .2rem .9rem; }
+  .kicker b { color: var(--fg); }
+  .lede { font-size: 1.22rem; line-height: 1.5; color: var(--muted); margin: 0 0 1rem; }
+  .lede em { color: var(--fg); font-style: normal; }
+  .jump { font: 500 .88rem/1.4 var(--sans); }
+
+  /* Section numbers hang in the margin once there is a margin to hang them in. */
+  h2[data-n]::before { content: attr(data-n); font: 500 .8rem/1 var(--mono); color: var(--muted); display: block; margin-bottom: .55rem; }
+  @media (min-width: 78rem) { h2[data-n]::before { position: absolute; right: calc(100% + 1.2rem); top: .55em; margin: 0; } }
+  /* A note goes in the rail, level with the paragraph before it. Auto-placement keeps the two on one row
+     because the note comes later in the source and asks for a later column. */
+  .aside { font: 400 .84rem/1.5 var(--sans); color: var(--muted); border-left: 2px solid var(--rule); padding: 0 0 0 .8rem; margin: -.3rem 0 1.2rem; }
+  .aside b { display: block; color: var(--fg); font-weight: 600; }
+  @media (min-width: 64rem) { main > .aside { grid-column: 3; align-self: start; max-width: 19rem; margin: .45rem 0 0 var(--rail-gap); border-left: 0; border-top: 1px solid var(--edge); padding: .5rem 0 0; } }
+  @media (max-width: 47.99rem) {
+    .mast { grid-template-columns: minmax(0, 1fr); }
+    .hero { max-width: 22rem; }
+  }
+  footer { margin-top: 4rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); font: 400 .86rem/1.6 var(--sans); color: var(--muted); }
+  /* Present only on the copy that lives inside a larger site: where this page sits among its neighbours. */
+  .site-nav { grid-column: 2 / 4; display: flex; flex-wrap: wrap; gap: .3rem 1.4rem; font: 500 .82rem/1.4 var(--sans); color: var(--muted); margin: -1rem 0 1.6rem; }
+  .site-nav a { text-decoration: none; }
+  .site-nav a:hover { text-decoration: underline; }
+  .site-nav a::before { content: "\2190\00a0"; }
+  footer ol { padding-left: 1.3rem; margin: .4rem 0 1rem; }
+  footer li { margin-bottom: .25rem; }
+}
+
+@layer parts {
+  button, .btn { font: 500 .84rem/1 var(--sans); color: var(--fg); background: var(--panel); border: 1px solid var(--edge); border-radius: 3px; padding: .5rem .8rem; cursor: pointer;
+    transition: transform var(--quick) var(--ease-out), background-color var(--quick), border-color var(--quick), color var(--quick); }
+  button:hover { border-color: var(--fg); }
+  button:active { transform: scale(.97); }
+  button.on, button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  button.primary { background: var(--c2); border-color: var(--c2); color: var(--on-accent); }
+  button.primary:hover { filter: brightness(1.1); }
+  button:disabled { opacity: .5; cursor: default; }
+  .seg { display: inline-flex; }
+  .seg button { border-radius: 0; margin-left: -1px; }
+  .seg button:first-child { border-radius: 3px 0 0 3px; margin-left: 0; }
+  .seg button:last-child { border-radius: 0 3px 3px 0; }
+  .seg button[aria-pressed="true"] { position: relative; z-index: 1; }
+  @media (pointer: coarse) { button, select, input[type="text"] { min-height: 2.75rem; } }
+  input, select, textarea { font: 400 .88rem/1.3 var(--sans); color: var(--fg); background: var(--panel); border: 1px solid var(--edge); border-radius: 3px; }
+  select { padding: .42rem .5rem; max-width: 100%; }
+  input[type="text"] { padding: .42rem .55rem; }
+  input[type="range"] { flex: 1; accent-color: var(--fg); min-width: 90px; }
+  .scroll-x { overflow-x: auto; max-width: 100%; }
+
+  table { border-collapse: collapse; font-variant-numeric: lining-nums tabular-nums; }
+  .booktabs { width: 100%; font: 400 .86rem/1.35 var(--sans); border-top: 1.5px solid var(--fg); border-bottom: 1.5px solid var(--fg); margin: 0; }
+  .booktabs caption { caption-side: bottom; text-align: left; font: 400 .82rem/1.5 var(--sans); color: var(--muted); padding-top: .6rem; }
+  .booktabs th, .booktabs td { padding: .32rem .7rem; text-align: right; white-space: nowrap; }
+  .booktabs thead tr:first-child th:first-child, .booktabs td:first-child { text-align: left; padding-left: 0; }
+  .booktabs thead th { font-weight: 500; border-bottom: 1px solid var(--fg); vertical-align: bottom; }
+  .booktabs thead .span { border-bottom: 1px solid var(--edge); text-align: center; font-weight: 400; color: var(--muted); }
+  .booktabs td { font-family: var(--mono); font-size: .82rem; }
+  .booktabs td:first-child { font-family: var(--sans); font-size: .86rem; }
+  .booktabs tr.sub td:first-child { padding-left: 1rem; }
+  .booktabs tr.focus td { background: color-mix(in srgb, var(--c1) 11%, transparent); font-weight: 500; }
+  .booktabs tr.focus td:first-child { box-shadow: inset 3px 0 0 var(--c1); padding-left: .6rem; }
+  .booktabs .dim { color: var(--muted); }
+}
+
+@layer figures {
+  figure { margin: 1.7rem 0 2.1rem; padding: .9rem 0 .8rem; border-top: 1px solid var(--fg); border-bottom: 1px solid var(--rule); }
+  figure > canvas, .stage > canvas { display: block; width: 100%; user-select: none; -webkit-user-select: none; border-radius: 2px; }
+  figure > canvas:focus-visible { outline-offset: 4px; }
+  figcaption { font: 400 .86rem/1.5 var(--sans); color: var(--muted); margin-top: .65rem; max-width: 38rem; }
+  figcaption b:first-child { color: var(--fg); font-weight: 600; margin-right: .2em; }
+  .controls { display: flex; flex-wrap: wrap; gap: .55rem 1rem; align-items: center; font: 400 .86rem/1.3 var(--sans); margin-top: .7rem; }
+  .controls label { display: flex; align-items: center; gap: .6rem; }
+  .controls .k { white-space: nowrap; color: var(--muted); }
+  @media (hover: none) and (pointer: coarse) { .controls .k { display: none; } } /* key hints are no use without keys */
+  @media (max-width: 30rem) { .controls .k { white-space: normal; } }
+  .controls output { font-variant-numeric: tabular-nums; min-width: 4.5em; text-align: right; }
+  .controls .push { margin-left: auto; }
+  .readout { font: 400 .92rem/1.5 var(--sans); margin-top: .7rem; font-variant-numeric: lining-nums tabular-nums; min-height: 2.9em; max-width: 40rem; }
+  .readout b { font-weight: 600; }
+
+  /* With a rail to use, an essay figure spans both columns and its caption moves beside the drawing. */
+  @media (min-width: 64rem) {
+    @supports (grid-template-columns: subgrid) {
+      main > figure:not(.tool) { grid-column: 2 / 4; display: grid; grid-template-columns: subgrid; }
+      main > figure:not(.tool) > * { grid-column: 1; }
+      main > figure:not(.tool) > figcaption { grid-column: 2; grid-row: 1; align-self: start; max-width: 19rem; margin: .1rem 0 0 var(--rail-gap); }
+    }
+  }
+
+  .hero { margin: 0; padding: 0; border: 0; align-self: center; }
+  .hero .stage { position: relative; aspect-ratio: 4 / 3; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+  .hero canvas:active { cursor: grabbing; }
+  .hero .gl { opacity: 0; transition: opacity 400ms var(--ease-out); }
+  .hero.live .gl { opacity: 1; }
+  .hero.live .flat { visibility: hidden; }
+  .hero figcaption { font-size: .8rem; margin-top: .2rem; }
+}
+
+@layer tool {
+  .tool { margin-top: 1.4rem; }
+  .tool > figcaption { max-width: 46rem; }
+  .bench { display: grid; gap: 1.6rem; }
+  .bench > section { display: grid; gap: .9rem; min-width: 0; }
+  .bench > section + section { border-top: 1px solid var(--rule); padding-top: 1.4rem; }
+  .bench h3 { display: flex; align-items: baseline; gap: .7rem; }
+  .bench h3 i { font: 500 .8rem/1 var(--mono); font-style: normal; color: var(--fg); letter-spacing: 0; }
+  .row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+  .row label.inline { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .35rem .5rem; max-width: 100%; font: 500 .8rem/1.3 var(--sans); color: var(--muted); }
+  .row label.inline select { max-width: 100%; min-width: 0; }
+  .hint { font: 400 .82rem/1.5 var(--sans); color: var(--muted); max-width: 46rem; margin: 0; }
+  .fields { display: flex; flex-wrap: wrap; gap: .7rem 1.1rem; align-items: flex-end; font: 400 .86rem/1.3 var(--sans); }
+  .fields label { display: grid; gap: .25rem; font-weight: 500; font-size: .8rem; color: var(--muted); }
+  .fields label.check { display: flex; align-items: center; gap: .45rem; padding-bottom: .5rem; color: var(--fg); font-weight: 400; font-size: .86rem; }
+  .fields input[type="text"] { width: 15.5rem; max-width: 100%; }
+
+  .inputs { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 1.1rem; }
+  .inputs > div { display: grid; gap: .5rem; align-content: start; min-width: 0; }
+  .inputs label, .inputs .lab { font: 500 .8rem/1.3 var(--sans); color: var(--muted); }
+  textarea { width: 100%; min-height: 9.2rem; padding: .6rem .7rem; font: 400 .78rem/1.5 var(--mono); resize: vertical; white-space: pre; overflow: auto; }
+  .jsonbox { min-height: 17rem; white-space: pre; tab-size: 1; }
+  .drop { min-height: 9.2rem; border: 1px dashed var(--edge); border-radius: 3px; padding: 1rem; display: grid; align-content: center; gap: .35rem; text-align: center; font: 400 .88rem/1.45 var(--sans);
+    transition: background-color var(--quick), border-color var(--quick); }
+  .drop.over { border-color: var(--c2); background: color-mix(in srgb, var(--c2) 9%, transparent); }
+  .drop.off { color: var(--muted); }
+  .drop p { margin: 0; }
+  .linkish { color: var(--c2); text-decoration: underline; cursor: pointer; font: inherit; font-weight: 500; }
+  .thumb { max-width: 100%; max-height: 13rem; border: 1px solid var(--rule); background: #fff; justify-self: start; }
+  .msg { font: 400 .86rem/1.5 var(--sans); padding: .55rem .8rem; border-left: 3px solid var(--c2); background: color-mix(in srgb, var(--c2) 8%, transparent); }
+  .msg.bad { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad) 9%, transparent); }
+  .msg ul { margin: .2rem 0 0; padding-left: 1.1rem; }
+  .msg:empty { display: none; }
+
+  .grid th, .grid td { padding: 2px; }
+  .grid .rowhead, .grid tbody th { text-align: left; font: 500 .8rem/1.3 var(--sans); color: var(--muted); padding-right: .7rem; white-space: nowrap; }
+  .grid input[type="text"] { width: 6.3rem; padding: .36rem .45rem; }
+  .grid td input, .grid .n { font: 400 .8rem var(--mono); text-align: right; }
+  .grid .gname { font: 600 .86rem var(--sans); text-align: left; }
+  .grid select { width: 6.3rem; padding: .36rem .2rem; font-size: .8rem; }
+  .grid .ev { display: flex; align-items: center; gap: .4rem; }
+  .grid .ev input[type="text"] { width: 12.5rem; text-align: left; font: 400 .86rem var(--sans); }
+  .grid tr.sel td input, .grid tr.sel .ev input[type="text"] { background: color-mix(in srgb, var(--c1) 10%, var(--panel)); border-color: var(--c1); }
+  .grid .skip input, .grid .skip select { opacity: .5; }
+  .grid input.invalid { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 12%, var(--panel)); }
+  .grid .colhead { display: flex; gap: 1px; align-items: center; }
+  .x { border: 0; background: none; color: var(--muted); font: 400 1rem/1 var(--sans); padding: .25rem .4rem; }
+  .x:hover { color: var(--bad); }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--fg); border-bottom: 1px solid var(--rule); }
+  .tile { padding: .8rem 1rem .85rem 0; display: grid; gap: .2rem; align-content: start; min-width: 0; }
+  .tile + .tile { border-left: 1px solid var(--rule); padding-left: 1rem; }
+  .tile .k { font: 500 .76rem/1.3 var(--sans); color: var(--muted); letter-spacing: .02em; }
+  .tile .v { font: 500 1.5rem/1.15 var(--mono); letter-spacing: -.02em; overflow-wrap: anywhere; }
+  .tile .s { font: 400 .78rem/1.4 var(--sans); color: var(--muted); }
+  .tile .flag { font: 500 .74rem/1 var(--sans); justify-self: start; margin-top: .2rem; padding: .25rem .45rem; border: 1px solid var(--edge); border-radius: 2px; color: var(--muted); }
+  .tile .flag.sig { border-color: var(--good); color: var(--good); }
+  .verdict { font-size: 1.02rem; max-width: 46rem; margin: 0; }
+  .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 1.6rem; }
+  .two > div { display: grid; gap: .5rem; align-content: start; min-width: 0; }
+  .data { width: 100%; font: 400 .84rem/1.3 var(--sans); }
+  .data th { text-align: right; font-weight: 500; color: var(--muted); font-size: .76rem; padding: .35rem .5rem; border-bottom: 1px solid var(--fg); white-space: nowrap; }
+  .data td { text-align: right; padding: .35rem .5rem; border-bottom: 1px solid var(--rule); font: 400 .8rem var(--mono); white-space: nowrap; }
+  .data th:first-child, .data td:first-child { text-align: left; padding-left: 0; font-family: var(--sans); font-size: .84rem; }
+  .texts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; }
+  .textblock { display: grid; gap: .4rem; align-content: start; }
+  .textblock .top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; }
+  .textblock p { font: 400 .92rem/1.55 var(--serif); margin: 0; max-width: 44rem; }
+  button.small { padding: .32rem .55rem; font-size: .78rem; }
+
+  .studio { display: grid; grid-template-columns: minmax(0, 1fr); gap: .9rem; }
+  .proof { background: #fff; border: 1px solid var(--rule); padding: 1rem; overflow-x: auto; }
+  .proof svg { display: block; margin: 0 auto; max-width: none; height: auto; }
+  .proof .empty { color: #5c6066; font: 400 .9rem var(--sans); text-align: center; padding: 2rem 0; margin: 0; }
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--rule); }
+  .tabs button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; padding: .55rem .8rem; color: var(--muted); }
+  .tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--fg); }
+  .tabs button:active { transform: none; }
+  .checks { font: 400 .82rem/1.5 var(--sans); margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; color: var(--muted); }
+  .checks li::before { content: "\2713\00a0"; color: var(--good); font-weight: 600; }
+  .checks li.warn::before { content: "!\00a0"; color: var(--bad); }
+  .checks li.warn { color: var(--fg); }
+
+  @media (max-width: 53rem) {
+    .inputs, .two, .texts { grid-template-columns: minmax(0, 1fr); }
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tile:nth-child(3) { border-left: 0; padding-left: 0; }
+    .tile:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  }
+  @media (max-width: 30rem) {
+    body { font-size: 1.06rem; }
+    .tiles { grid-template-columns: minmax(0, 1fr); }
+    .tile + .tile { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); }
+    .grid .ev input[type="text"] { width: 9rem; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation: none !important; }
+}
+@media print {
+  .progress, .controls, .jump, .hero canvas.gl, .tool .inputs, button { display: none !important; }
+  body { background: #fff; color: #000; font-size: 10.5pt; }
+  figure { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<main>
+<!--__SITE_NAV__-->
+<header class="mast wide">
+  <div>
+    <p class="kicker"><b>Dose-Trend Analyzer</b><span>An explorable explanation, with the working tool at the end</span></p>
+    <h1>How a trend test reads a dose table</h1>
+    <p class="lede"><span data-b="evCap">Headache</span> was reported by <em><span data-b="refPct">31</span>% of patients on <span data-b="refL">placebo</span></em> and <em><span data-b="topPct">62</span>% on the highest dose</em> of <span data-b="drugL">apricitabine</span>. Is that the drug, or <span data-b="nTop">13</span> patients having an unlucky ten days? A trend test answers by measuring how far the cases lean toward the high doses, then asking how often pure chance leans that far.</p>
+    <p class="jump"><a href="#analyzer">Skip to the analyzer and figure studio</a></p>
+  </div>
+  <figure id="fig-molecule" class="hero">
+    <div class="stage" tabindex="0" role="img" aria-label="Ball-and-stick model of the drug molecule. Drag it, or use the arrow keys, to turn it.">
+      <canvas class="flat" aria-hidden="true"></canvas>
+    </div>
+    <figcaption><span data-b="drug">Apricitabine</span>, <span data-b="formula">C8H11N3O3S</span>: the drug in the table. Drag to turn it. A computed conformer, not a crystal structure.</figcaption>
+  </figure>
+</header>
+
+<div class="scroll-x wide" id="specimen-wrap"></div>
+
+<h2 data-n="1" id="s1">Five small groups</h2>
+<p>Every patient in this trial was assigned at random to one group and took that dose for ten days, so the five groups are five different sets of people. Take the highlighted row. In the figure each dot is a patient, and a <span class="c1">filled dot</span> is a patient who reported <span data-b="ev">headache</span>.</p>
+
+<figure id="fig-dots">
+  <canvas data-aspect="0.38" style="aspect-ratio:1/0.38" tabindex="0" role="img" aria-label="Dot plot of patients in each dose group"></canvas>
+  <div class="controls"><button type="button" data-role="reset">Back to the trial's numbers</button><span class="k">Keys: <kbd>←</kbd> <kbd>→</kbd> choose a group, <kbd>↑</kbd> <kbd>↓</kbd> change it</span></div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 1.</b> Drag up or down inside a column to change how many patients have <span data-b="ev">headache</span>, and watch what a single patient does to the percentage.</figcaption>
+</figure>
+
+<p>Groups this size are coarse instruments. In a group of <span data-b="nTop">13</span>, one patient is worth <span data-b="onePt">7.7</span> percentage points, and the whole gap between <span data-b="refL">placebo</span> and the top dose is <span data-b="gap">4</span> patients.</p>
+
+<h2 data-n="2" id="s2">What chance does to small groups</h2>
+<p>Suppose the dose made no difference at all. The <span data-b="R">25</span> patients who got a <span data-b="ev">headache</span> would have got one anyway, and which group each of them landed in was settled by the randomization. You can replay that draw: keep the <span data-b="R">25</span> cases, and <span class="c3">deal them out again at random</span> among the <span data-b="N">63</span> patients.</p>
+<aside class="aside" data-if="totalIsDoseOnly"><b>Why <span data-b="R">25</span> and not <span data-b="skipR">21</span>?</b> The table’s <span data-b="skipL">Total</span> column adds up the <span data-b="nDose">four</span> <span data-b="drugL">apricitabine</span> groups only. With <span data-b="refL">placebo</span> counted as well, <span data-b="R">25</span> of the <span data-b="N">63</span> patients reported a <span data-b="ev">headache</span>.</aside>
+
+<figure id="fig-shuffle">
+  <canvas data-aspect="0.38" style="aspect-ratio:1/0.38" role="img" aria-label="The same dot plot with the cases dealt at random"></canvas>
+  <div class="controls">
+    <button type="button" data-role="once">Shuffle once</button>
+    <button type="button" data-role="auto" aria-pressed="false">Keep shuffling</button>
+    <button type="button" data-role="reset" class="push">Clear the tally</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption><b>Figure 2.</b> Shuffle a few times by hand, then let it run. The ticks beside each column mark what the trial observed.</figcaption>
+</figure>
+
+<p>Chance alone builds staircases, cliffs and spikes. Counting every possible deal, the top dose ends up at least <span data-b="gap">4</span> patients ahead of <span data-b="refL">placebo</span> in <span data-b="gapShare">8.1</span>% of them. So the useful question is never whether there is a pattern. It is whether the pattern is larger than shuffling usually makes.</p>
+
+<h2 data-n="3" id="s3">One number for the whole staircase</h2>
+<p>Comparing only the two end groups throws away the three in between. A trend test uses all <span data-b="k">five</span>. Picture a beam marked in milligrams, with every <span class="c1">patient who had a <span data-b="ev">headache</span></span> standing at their dose. If dose were irrelevant, the cases would balance at the average dose of all <span data-b="N">63</span> patients. If they crowd toward the high doses, their balance point moves right.</p>
+
+<figure id="fig-beam">
+  <canvas data-aspect="0.44" style="aspect-ratio:1/0.44" tabindex="0" role="img" aria-label="Balance beam with the cases standing at their doses"></canvas>
+  <div class="controls"><button type="button" data-role="reset">Back to the trial's numbers</button><span class="k">Keys: <kbd>←</kbd> <kbd>→</kbd> choose a dose, <kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd> move a case</span></div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 3.</b> Drag a case from one dose to another. The <span class="c4">lean</span> is the distance between the two markers. The tilt of the beam is drawn in proportion to the lean and is exaggerated.</figcaption>
+</figure>
+
+<p>That distance is the trend statistic. Cochran in 1954 and Armitage in 1955 wrote it as the sum of dose × cases; dividing by the number of cases turns it into the lean you see here. In the trial the cases averaged <span data-b="meanEv">976</span> mg against <span data-b="meanAll">819</span> mg for everyone, a <span class="c4">lean of <span data-b="lean">157</span> mg</span>.</p>
+
+<h2 data-n="4" id="s4">How far does chance lean?</h2>
+<p>Now shuffle again, thousands of times, and keep only the lean from each shuffle.</p>
+
+<figure id="fig-pile">
+  <canvas data-aspect="0.48" style="aspect-ratio:1/0.48" role="img" aria-label="Histogram of the lean in shuffled data"></canvas>
+  <div class="controls">
+    <button type="button" data-role="run" aria-pressed="false">Run the shuffles</button>
+    <span class="seg" role="group" aria-label="Which tails count"><button type="button" data-side="two" aria-pressed="true">Either direction</button><button type="button" data-side="inc" aria-pressed="false">Toward high doses only</button></span>
+    <button type="button" data-role="reset" class="push">Start over</button>
+  </div>
+  <div class="readout"></div>
+  <figcaption><b>Figure 4.</b> Each shuffle adds to the <span class="c3">pile</span>. The <span class="c1">filled tails</span> are shuffles that lean at least as far as the trial did. The outline is the exact answer, every possible shuffle counted; the smooth <span class="c4">curve</span> is the bell shape the Cochran–Armitage test puts in its place.</figcaption>
+</figure>
+
+<p>The share of shuffles in the tails is the <i>P</i> value. Counting every possible shuffle gives <i>P</i> = <span data-b="pExact">0.090</span>. The Cochran–Armitage test swaps the pile for a bell curve and reports <i>P</i> = <span data-b="pAsym">0.077</span> (<i>z</i> = <span data-b="z">1.77</span>). With groups of <span data-b="nRange">11 to 14</span> the bell is a slightly generous fit, so the exact figure is the safer one to quote. Either way a lean this large turns up about one time in <span data-b="oneIn">11</span> when dose does nothing.</p>
+
+<h2 data-n="5" id="s5">One question or four</h2>
+<p>A common alternative is to compare each dose with <span data-b="refL">placebo</span>, one pair at a time. That asks <span data-b="nPairs">four</span> questions of <span data-b="pairN">24 to 27</span> patients each, and the <i>P</i> values have to be adjusted because there are <span data-b="nPairs">four</span> of them. The trend test asks one ordered question of all <span data-b="N">63</span>.</p>
+<aside class="aside"><b>Why not McNemar’s test?</b> McNemar’s is for paired data, the same patients measured twice. Here each group is a different set of patients, so the pairwise step uses Fisher’s exact test.</aside>
+
+<figure id="fig-verdicts">
+  <canvas data-aspect="0.52" style="aspect-ratio:1/0.52" tabindex="0" role="img" aria-label="Bars for each group beside the P values of the trend test and of each pairwise test"></canvas>
+  <div class="controls">
+    <span class="seg" role="group" aria-label="Example tables"><button type="button" data-preset="trial" aria-pressed="true">The trial</button><button type="button" data-preset="stair" aria-pressed="false">Staircase</button><button type="button" data-preset="spike" aria-pressed="false">Spike</button><button type="button" data-preset="flat" aria-pressed="false">Flat</button></span>
+  </div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 5.</b> Try the presets, or drag the bars. <b>Staircase</b> is a steady climb in which no single dose stands out. <b>Spike</b> is one dose standing out with no climb at all.</figcaption>
+</figure>
+
+<p>The two approaches answer different questions and can disagree in both directions. The staircase gives a trend with <i>P</i> = <span data-b="stairTrend">0.022</span> while no dose on its own gets below <span data-b="stairRaw">0.11</span>. The spike gives a pairwise <i>P</i> of <span data-b="spikeHolm">0.012</span> after adjustment while the trend test sees nothing (<i>P</i> = <span data-b="spikeTrend">0.35</span>), because one ordered question is blind to anything that is not a climb.</p>
+
+<h2 data-n="6" id="s6">One patient from a different verdict</h2>
+<p>Here is the uncomfortable part. Hold the middle groups as they were and vary only the two ends: the number of cases on <span data-b="refL">placebo</span> and at the top dose.</p>
+
+<figure id="fig-land">
+  <canvas data-aspect="0.74" style="aspect-ratio:1/0.74" tabindex="0" role="img" aria-label="Grid of trials that could have happened, shaded by P value"></canvas>
+  <div class="controls">
+    <span class="seg" role="group" aria-label="How P is computed"><button type="button" data-mode="asym" aria-pressed="true">Bell curve</button><button type="button" data-mode="exact" aria-pressed="false">Exact</button></span>
+    <button type="button" data-role="reset" class="push">Back to the trial</button>
+  </div>
+  <div class="readout" role="status"></div>
+  <figcaption><b>Figure 6.</b> Each cell is a trial that could have happened; the stronger the blue, the smaller the <i>P</i>. Drag the ring, or use the arrow keys. The heavy line is <span class="nb"><i>P</i> = 0.05</span>.</figcaption>
+</figure>
+
+<p>One case fewer on <span data-b="refL">placebo</span> and the same test reports <i>P</i> = <span data-b="pRefMinus">0.031</span>. One more at the top dose: <i>P</i> = <span data-b="pTopPlus">0.035</span>. The exact versions agree (<span data-b="pRefMinusX">0.038</span> and <span data-b="pTopPlusX">0.041</span>). “Not significant” is a statement about these <span data-b="N">63</span> patients, not about <span data-b="drugL">apricitabine</span>. The honest summary is the estimate with its uncertainty: <span data-b="topRD">+30.8</span> percentage points at the top dose, 95% confidence interval <span data-b="topCI">−6.6 to 58.3</span>.</p>
+
+<h2 data-n="7" id="analyzer">Your table</h2>
+<p>The same model runs on any table of this shape. Paste one or drop a screenshot, check the numbers in the grid, and the figure studio lays the result out to a journal’s specification.</p>
+
+<figure id="fig-analyzer" class="tool wide">
+  <div class="bench">
+    <section aria-labelledby="h-table">
+      <h3 id="h-table"><i>7a</i> Table</h3>
+      <div class="inputs">
+        <div>
+          <label for="paste-box">Paste the table as text (from Excel, Word or a PDF)</label>
+          <textarea id="paste-box" spellcheck="false" aria-describedby="paste-hint"></textarea>
+          <p class="hint" id="paste-hint">One row per event. Group sizes go in the header as (n = 13). A cell may be a count, or a count with a percentage such as 4 (30.8).</p>
+          <div class="row">
+            <button type="button" class="primary" id="btn-parse">Read pasted table</button>
+            <button type="button" id="btn-example">Load the example again</button>
+          </div>
+        </div>
+        <div>
+          <span class="lab" id="shot-label">Or use a screenshot of the table</span>
+          <div class="drop off" id="drop" aria-labelledby="shot-label" aria-describedby="shot-hint">
+            <p><b>Drop an image here</b>, paste it with <kbd>Ctrl</kbd>+<kbd>V</kbd>, or <label for="file-in" class="linkish">choose a file</label>.</p>
+            <p class="hint" id="shot-hint">Checking whether Claude can read images in this view…</p>
+            <input type="file" id="file-in" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+          </div>
+          <div class="row" id="shot-busy" hidden><span class="hint" id="shot-status">Reading the table from the image…</span><button type="button" class="small" id="btn-stop">Stop</button></div>
+          <img class="thumb" id="shot-thumb" alt="The screenshot you supplied, for checking the numbers" hidden>
+        </div>
+      </div>
+      <div class="msg" id="parse-msg" role="status"></div>
+      <div class="scroll-x"><table class="grid" id="grid" aria-label="Editable table of groups and event counts"></table></div>
+      <div class="row">
+        <button type="button" class="small" id="btn-add-row">Add an event row</button>
+        <button type="button" class="small" id="btn-add-col">Add a group column</button>
+        <span class="hint">Pick the row to analyse with its radio button. Every cell can be edited.</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-tests">
+      <h3 id="h-tests"><i>7b</i> Tests</h3>
+      <div class="fields">
+        <label for="sel-event">Event<select id="sel-event"></select></label>
+        <label for="sel-scores">Dose scores<select id="sel-scores"><option value="dose">Dose values from the table</option><option value="rank">Equally spaced (1, 2, 3 …)</option></select></label>
+        <label for="sel-alt">Alternative<select id="sel-alt"><option value="two">Two-sided</option><option value="inc">One-sided: rises with dose</option><option value="dec">One-sided: falls with dose</option></select></label>
+        <label class="check" for="chk-ref"><input type="checkbox" id="chk-ref" checked> Count the reference group in the trend test</label>
+      </div>
+      <div class="msg bad" id="errors" role="alert"></div>
+      <div id="results" style="display:grid;gap:1rem">
+        <div class="tiles" id="tiles"></div>
+        <p class="verdict" id="verdict"></p>
+        <div class="msg" id="warnings"></div>
+        <div class="two">
+          <div><h3>Incidence by group</h3><div class="scroll-x"><table class="data" id="tbl-groups"></table></div></div>
+          <div><h3 id="pairs-title">Each dose against the reference</h3><div class="scroll-x"><table class="data" id="tbl-pairs"></table></div><p class="hint" id="pairs-note"></p></div>
+        </div>
+        <div class="texts">
+          <div class="textblock"><div class="top"><h3>Methods text</h3><button type="button" class="small" data-copy="txt-methods">Copy</button></div><p id="txt-methods"></p></div>
+          <div class="textblock"><div class="top"><h3>Results text</h3><button type="button" class="small" data-copy="txt-results">Copy</button></div><p id="txt-results"></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-studio">
+      <h3 id="h-studio"><i>7c</i> Figure studio</h3>
+      <div class="fields">
+        <label for="fig-journal">Journal preset<select id="fig-journal"><option value="nature">Nature</option><option value="cell">Cell</option><option value="science">Science</option><option value="pnas">PNAS</option><option value="lancet">The Lancet</option><option value="nejm">NEJM</option></select></label>
+        <label for="fig-column">Width<select id="fig-column"></select></label>
+        <label for="fig-panel-a">Panel a<select id="fig-panel-a"><option value="schematic">Trial design, vector</option><option value="image">Trial design, illustration</option><option value="none">No design panel</option></select></label>
+        <label for="fig-style">Marks<select id="fig-style"><option value="bars">Bars with 95% CI</option><option value="points">Points with 95% CI</option></select></label>
+        <label for="fig-palette">Palette<select id="fig-palette"><option value="soft">Soft colour</option><option value="grey">Greyscale</option></select></label>
+        <label for="fig-pa"><span>Trend <i>P</i></span><select id="fig-pa"><option value="asym">Asymptotic</option><option value="exact">Exact</option></select></label>
+        <label for="fig-pb"><span>Pairwise <i>P</i></span><select id="fig-pb"><option value="holm">Holm-adjusted</option><option value="raw">Unadjusted</option></select></label>
+        <label class="check" for="fig-border"><input type="checkbox" id="fig-border" checked> Hairline border</label>
+      </div>
+      <div class="fields">
+        <label for="fig-xt">X-axis title<input type="text" id="fig-xt"></label>
+        <label for="fig-yt">Y-axis title<input type="text" id="fig-yt"></label>
+        <label for="fig-pop">Population (panel a)<input type="text" id="fig-pop"></label>
+        <label for="fig-design">Design (panel a)<input type="text" id="fig-design"></label>
+        <label for="fig-dur">Duration (panel a)<input type="text" id="fig-dur"></label>
+      </div>
+      <div class="row" id="image-row" hidden>
+        <label for="image-in" class="btn">Use another image for panel a</label>
+        <input type="file" id="image-in" accept="image/png,image/jpeg" hidden>
+        <span class="hint" id="image-note"></span>
+      </div>
+      <div class="studio">
+        <div class="tabs" role="tablist" aria-label="Figure views">
+          <button type="button" role="tab" id="tab-proof" aria-selected="true" aria-controls="pane-proof">Proof</button>
+          <button type="button" role="tab" id="tab-json" aria-selected="false" aria-controls="pane-json">Figure JSON</button>
+          <button type="button" role="tab" id="tab-style" aria-selected="false" aria-controls="pane-style">style.json</button>
+        </div>
+        <div id="pane-proof" role="tabpanel" aria-labelledby="tab-proof"><div class="proof" id="proof"></div></div>
+        <div id="pane-json" role="tabpanel" aria-labelledby="tab-json" hidden>
+          <p class="hint">The JSON is the figure: every bar, line and label is an entry here, and the drawing is rendered from it. Edit a value, then apply. Changing an option above rebuilds the JSON from the data.</p>
+          <textarea class="jsonbox" id="json-box" spellcheck="false" aria-label="Figure JSON"></textarea>
+          <div class="row"><button type="button" class="primary" id="btn-json-apply">Apply JSON</button><button type="button" id="btn-json-reset">Rebuild from the data</button><span class="hint" id="json-msg" role="status"></span></div>
+        </div>
+        <div id="pane-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+          <p class="hint">Palette, type sizes and journal limits for every figure of the same paper. Keep this file with the figure JSON.</p>
+          <textarea class="jsonbox" id="style-box" spellcheck="false" readonly aria-label="style.json" style="min-height:13rem"></textarea>
+        </div>
+        <ul class="checks" id="checks" aria-label="Checks against the journal preset"></ul>
+        <div class="row">
+          <button type="button" class="primary" id="btn-svg">SVG</button>
+          <button type="button" id="btn-pdf">PDF</button>
+          <button type="button" id="btn-png">PNG</button>
+          <select id="fig-dpi" aria-label="PNG resolution"><option value="300">300 dpi</option><option value="450">450 dpi</option><option value="600" selected>600 dpi</option><option value="1200">1200 dpi</option></select>
+          <button type="button" id="btn-json">JSON</button>
+          <button type="button" id="btn-copy-svg">Copy SVG code</button>
+          <span class="hint" id="export-msg" role="status"></span>
+        </div>
+        <div class="row">
+          <label for="fig-pdf-fonts" class="inline">Fonts in the PDF<select id="fig-pdf-fonts"><option value="embed">Embedded TrueType (Arimo)</option><option value="base">Helvetica by name, not embedded</option></select></label>
+          <span class="hint" id="pdf-fonts-note"></span>
+        </div>
+        <p class="hint" id="fig-size"></p>
+        <div class="textblock"><div class="top"><h3>Figure legend</h3><button type="button" class="small" data-copy="txt-caption">Copy</button></div><p id="txt-caption"></p></div>
+      </div>
+    </section>
+  </div>
+  <figcaption><b>Figure 7.</b> The analyzer. Statistics run in your browser; a table leaves it only if you supply a screenshot, which is read by Claude. Journal presets follow each journal’s published sizes at the time of writing, so check the current author guidelines before you submit.</figcaption>
+</figure>
+
+<h2 data-n="8" id="s8">What the test leaves unsaid</h2>
+<p>Three limits are worth carrying away. The scores are a choice: using the doses in milligrams assumes each step matters in proportion to its size, and equally spaced scores would be just as defensible. The test looks for a climb and nothing else, so a spike or a plateau can hide from it, which is why Figure 7 also reports the departure from a straight line. And this table has <span data-b="nRows">nine</span> rows. Test each one at 0.05 and, if the rows were independent and the drug did nothing, the chance that at least one dips under the line is <span data-b="fwer">37</span>%.</p>
+<p>None of that makes the test less useful. It makes the single number less important than the picture around it: how big the difference is, how wide the interval, and how few patients stand between one verdict and the other.</p>
+
+<footer>
+  <p><b>Sources.</b></p>
+  <ol>
+    <li>Cahn P, Cassetti I, Wood R, et al. Efficacy and tolerability of 10-day monotherapy with apricitabine in antiretroviral-naive, HIV-infected patients. <i>AIDS</i> 2006;20:1261–1268. The table above is the paper’s adverse-event table.</li>
+    <li>Cochran WG. Some methods for strengthening the common χ² tests. <i>Biometrics</i> 1954;10:417–451.</li>
+    <li>Armitage P. Tests for linear trends in proportions and frequencies. <i>Biometrics</i> 1955;11:375–386.</li>
+    <li>Newcombe RG. Interval estimation for the difference between independent proportions. <i>Statistics in Medicine</i> 1998;17:873–890.</li>
+    <li>Wilson EB. Probable inference, the law of succession, and statistical inference. <i>Journal of the American Statistical Association</i> 1927;22:209–212.</li>
+    <li>Holm S. A simple sequentially rejective multiple test procedure. <i>Scandinavian Journal of Statistics</i> 1979;6:65–70.</li>
+  </ol>
+  <p><b>How it was made.</b> One HTML file. The figures are live simulations drawn on canvas, and every number in the text is computed from the table when the page loads. The statistics were checked against SciPy 1.18 and statsmodels 0.15. The molecule is rendered with PlayCanvas, loaded only when it is on screen, from a conformer computed with RDKit (ETKDG, MMFF94). The trial-design illustration was made in BioRender; journals need a BioRender publication licence for it. Exported figures are laid out with Helvetica’s published widths; the PDF embeds Arimo (SIL Open Font License), which shares those widths, so the file passes a journal’s font check. The page is set in STIX Two and IBM Plex.</p>
+</footer>
+</main>
+<noscript><p style="max-width:41rem;margin:2rem auto;font-family:sans-serif">The figures on this page are simulations and need JavaScript to run.</p></noscript>
+<script>
+/*__CORE__*/
+</script>
+<script>
+/*__FIGURE__*/
+</script>
+<script>
+(() => {
+'use strict';
+/*__MAIN__*/
+})();
+</script>
+</body>
+</html>
