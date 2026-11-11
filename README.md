@@ -77,13 +77,31 @@ From the run published in `site/data/ti/summary.json`:
 | | |
 | --- | --- |
 | Molecules in | 1345 |
-| Ranked | 649 (the published file carries the first 400 rows) |
+| Ranked | 649 (the published summary carries the first 400 rows) |
 | Inside the applicability domain | 371 |
-| At least one side predicted rather than measured | 337 |
+| At least one side predicted rather than measured | **620** |
 | Both sides measured | 29 |
 | **Activity from a validated Hansch series model** | **5** |
 
-That last row is the honest summary of the whole exercise. 2,238 candidate series were tried and
+Counted per side across all 649 ranked molecules:
+
+| Side | Measured | Series Hansch | Nonlinear fallback |
+| --- | --- | --- | --- |
+| Activity (own target) | 284 | 5 | 360 |
+| Toxicity (hERG) | 57 | — | 592 |
+
+The toxicity side is the weak one: hERG is a measured value for 57 molecules and a prediction for the
+other 592. Since the index is a difference between the two sides, almost every row in this ranking
+inherits the error of a predicted hERG value.
+
+A caution about where these come from. The row counts above are derived from `site/data/ti/batch.json`,
+which carries one row per ranked molecule with its own `as` and `hs` source labels. The `counts` block
+in `summary.json` disagrees with them: it reports 337 for "at least one side predicted" where the rows
+give 620. `site/js/ti.js` already warns about this in the overlay, in its own words: "Archived summary
+source counts do not reconcile with the full batch; use row-level source labels." Take the row-level
+labels as authoritative and treat that `counts` block as an archived statistic that has drifted.
+
+The series row is the honest summary of the whole exercise. 2,238 candidate series were tried and
 190 cleared the series gate, spread across 85 of the 189 targets that have a model at all, and 139
 targets have a usable nonlinear fallback. Yet only five ranked molecules take their activity from a
 validated series model. In the published 400 rows the split is 236 from the nonlinear fallback, 160
