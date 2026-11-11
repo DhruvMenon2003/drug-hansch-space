@@ -479,3 +479,10 @@ details > summary h2 { display: inline; }
 .start b { display: block; font-family: var(--font-display); }
 .start small { display: block; margin-top: 2px; color: var(--ink-2); }
 .start .hint { margin: 0; font-size: 0.9rem; }
+
+/* Guided mode: progressive disclosure of expert panels */
+.panel-reveal{display:none;margin-left:.55em;vertical-align:.18em;font-size:.56em}
+html[data-mode=guided] .panel-reveal{display:inline-block}
+html[data-mode=guided] section#explore:not([data-open])>:not(h2),
+html[data-mode=guided] section#hansch:not([data-open])>:not(h2),
+html[data-mode=guided] section#method:not([data-open])>:not(h2){display:none}

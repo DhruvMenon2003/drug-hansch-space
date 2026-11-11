@@ -102,6 +102,24 @@ export async function bootCore(caps) {
   // The front door's first two routes point at #hansch so they work with JavaScript off; here they also press the
   // dialog button that section already owns, so the open behaviour stays defined in exactly one place.
   $('#start')?.addEventListener('click', e => { const a = e.target.closest('[data-opens]'); if (a) $('#' + a.dataset.opens)?.click(); });
+  { // Guided mode: expert panels start collapsed; ?debug/?expert or a stored choice opens them.
+    const KEY = 'dhs-mode', OPEN = 'dhs-open', qp = new URLSearchParams(location.search);
+    let mode; try { mode = qp.has('expert') || qp.has('debug') ? 'expert' : localStorage.getItem(KEY) || 'guided'; } catch { mode = 'guided'; }
+    document.documentElement.dataset.mode = mode;
+    let opened; try { opened = new Set(JSON.parse(localStorage.getItem(OPEN) || '[]')); } catch { opened = new Set(); }
+    const save = () => { try { localStorage.setItem(OPEN, JSON.stringify([...opened])); } catch {} };
+    for (const id of ['explore', 'hansch', 'method']) {
+      const sec = $('#' + id), h = sec?.querySelector('h2'); if (!h) continue;
+      if (opened.has(id)) sec.dataset.open = '';
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'ghost panel-reveal'; b.textContent = sec.dataset.open !== undefined ? 'Hide' : 'Show';
+      b.setAttribute('aria-expanded', String(sec.dataset.open !== undefined)); b.setAttribute('aria-label', (sec.dataset.open !== undefined ? 'Hide ' : 'Show ') + h.textContent.trim());
+      b.addEventListener('click', () => { const on = sec.dataset.open === undefined; if (on) { sec.dataset.open = ''; opened.add(id); } else { delete sec.dataset.open; opened.delete(id); }
+        b.textContent = on ? 'Hide' : 'Show'; b.setAttribute('aria-expanded', String(on)); b.setAttribute('aria-label', (on ? 'Hide ' : 'Show ') + h.textContent.trim()); save(); });
+      h.append(b);
+    }
+    $('#expert-link')?.addEventListener('click', () => { try { localStorage.setItem(KEY, 'expert'); } catch {} document.documentElement.dataset.mode = 'expert'; });
+  }
   initExtras({ gl: !!caps?.webgl });                 // the QED panel and the binding overlay: both arrive on first use
   // The live therapeutic index (readout on the stage, the index as an axis and a colour). Nothing on the page needs it to
   // draw the first frame and its own data file is fetched at idle as well, so it is loaded the same way: after the paint.
