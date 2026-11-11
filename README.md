@@ -200,9 +200,15 @@ npx playwright test tests/e2e/qsar.spec.mjs tests/e2e/inquiry.spec.mjs tests/e2e
 ```
 
 `site/` is published by GitHub Pages as-is. There is no framework and no application bundle. The
-first-load budget is tight on purpose and `npm run check` enforces it; at the time of writing the
-page sits at roughly 450 KB gzip including fonts, against its own 450 KB ceiling, so new weight has
-to buy its way in.
+first-load budget is tight on purpose and `npm run check` enforces it: 450 KB gzip for everything
+the first load needs, fonts excluded. At the time of writing the page sits at about 424 KB.
+
+Two things about that number. GSAP is not in it: the page fetches it after the scene's first drawn
+frame, because only the 3D layer tweens and every tween falls back to an instant change without it.
+And the measurement depends on the machine. `check_site.py` compresses with whatever zlib Python
+was linked against, and a zlib-ng build reads about 1.2 KB lower across the first-load set than
+stock gzip does. A pass within a couple of kilobytes of the ceiling is therefore not a pass
+everywhere; check the margin, not the verdict.
 
 Three shell tests currently fail on `main`, independently of any of the above: two axe colour-contrast
 violations on `.inquiry-invitation > .eyebrow` (4.26:1 against a required 4.5:1) and four

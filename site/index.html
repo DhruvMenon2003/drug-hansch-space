@@ -47,11 +47,12 @@
   "three/addons/": "./vendor/three/addons/"
 } }
 </script>
-<script src="vendor/gsap/gsap.min.js"></script>
 
+<!-- gsap is not loaded here. It only animates the 3D scene and every tween site falls back to an instant change without it, so
+     js/boot-core.js fetches it after the scene's first drawn frame. As a script in the head it blocked the parser and the first paint. -->
 
 <!-- Hints for the app's own files, written by tools/check_site.py --write-preload (it checks them against the import graph). They come
-     LAST in the head on purpose: the preload scanner requests in document order, and the stylesheets and gsap above are what the
+     LAST in the head on purpose: the preload scanner requests in document order, and the stylesheets above are what the
      first paint waits for. Measured (1.6 Mbps, 150 ms, 4x CPU): hints before the stylesheets delayed first paint from 1.4 s to 2.9 s. -->
 <!-- preload:start (written by tools/check_site.py --write-preload from the import graph of js/main.js; do not edit by hand) -->
 <link rel="modulepreload" href="js/main.js">

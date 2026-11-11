@@ -6,6 +6,7 @@ const QSAR_MOD = 'qsar.js';
 const BUILDER_MOD = 'builder.js';
 const TI_MOD = 'ti.js';                              // the ranked therapeutic-index overlay, on request                    // the all-target QSAR builder, also on request                         // the existing-home overlay loads only on request
 const TI_LIVE_MOD = 'ti-live.js';                    // the live index readout: after the first paint, never on the critical path
+const GSAP_SRC = 'vendor/gsap/gsap.min.js';          // a classic script, fetched by loadTweens() after the first drawn frame
 import { app, anim, bus, STEPS, $ } from './kernel.js';
 import { whenIdle } from './idle.js';
 import { announce, initAnnounce } from './announce.js';
@@ -58,8 +59,6 @@ export function checkBuild(meta, build = APP_BUILD) {
  */
 export async function bootCore(caps) {
   if (new URLSearchParams(location.search).has('debug')) window.__hansch = { app, anim, selectDrug, setView, goStep, STEPS, bus, caps, layout: layoutState, tour: { band: tourBand, refresh: refreshTourBand } };
-  // gsap keeps its ticker (a rAF loop) alive for 120 ticks after the last tween by default; 20 is plenty and shortens the tail before true idle
-  window.gsap?.config({ autoSleep: 20 });
   bindSkipLink();
   setStatus('Loading data…');
   try { await loadData(); } catch (err) { err.phase = 'data'; throw err; }
@@ -115,8 +114,23 @@ export async function bootCore(caps) {
 }
 
 /**
+ * Fetch gsap, once. It is an enhancement: view.js and the gl/ modules tween with it when window.gsap exists and apply the
+ * change at once when it does not, and nothing needs it to draw the first frame. So it is not a blocking script in the head
+ * and not part of first load: startTour() calls this after the scene's first drawn frame, and never without the 3D layer,
+ * which is the only thing that tweens. If the file fails to load, transitions simply stay instant.
+ * gsap keeps its ticker (a rAF loop) alive for 120 ticks after the last tween by default; 20 is plenty and shortens the
+ * tail before true idle.
+ */
+function loadTweens() {
+  const s = document.createElement('script');
+  s.src = GSAP_SRC;
+  s.onload = () => window.gsap?.config({ autoSleep: 20 });
+  document.head.append(s);
+}
+
+/**
  * Show the first tour step (which lays the scene out) and start watching the theme. With the 3D layer the loading line
- * goes away after the first drawn frame (progress 4); without it, now.
+ * goes away after the first drawn frame (progress 4), and gsap is fetched then; without it, now, and gsap never.
  * @param {{ gl?: boolean }} [o]
  */
 export function startTour({ gl = true } = {}) {
@@ -125,7 +139,7 @@ export function startTour({ gl = true } = {}) {
   // or the initial camera distance, which scales with the aspect at the time, would depend on load timing.
   const head = $('.masthead');
   new ResizeObserver(() => document.documentElement.style.setProperty('--stage-top', `${head.offsetHeight}px`)).observe(head);
-  const done = () => { setProgress(4); hideStatus(); };
+  const done = () => { setProgress(4); hideStatus(); if (gl) loadTweens(); };
   if (gl) {
     const off = bus.on('gl:firstframe', () => { off(); clearTimeout(timer); done(); });
     const timer = setTimeout(() => { off(); done(); }, 8000);     // a tab that never draws must not show "loading" for ever
