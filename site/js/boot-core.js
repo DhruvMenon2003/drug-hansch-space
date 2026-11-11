@@ -100,6 +100,9 @@ export async function bootCore(caps) {
     if (!panel.open) panel.showModal();
     $('#ti-status').textContent = 'The therapeutic-index overlay could not load. Close it and try again.';
   }));
+  // The front door's first two routes point at #hansch so they work with JavaScript off; here they also press the
+  // dialog button that section already owns, so the open behaviour stays defined in exactly one place.
+  $('#start')?.addEventListener('click', e => { const a = e.target.closest('[data-opens]'); if (a) $('#' + a.dataset.opens)?.click(); });
   initExtras({ gl: !!caps?.webgl });                 // the QED panel and the binding overlay: both arrive on first use
   // The live therapeutic index (readout on the stage, the index as an axis and a colour). Nothing on the page needs it to
   // draw the first frame and its own data file is fetched at idle as well, so it is loaded the same way: after the paint.
