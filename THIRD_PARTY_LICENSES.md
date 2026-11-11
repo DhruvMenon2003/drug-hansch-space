@@ -14,6 +14,7 @@ the data terms are summarised on the page itself under "Data sources and licence
 | Bricolage Grotesque (latin subset) | 1.001 | SIL OFL 1.1 | `site/vendor/fonts/bricolage-grotesque-normal-500-latin.woff2` | https://github.com/ateliertriay/bricolage |
 | IBM Plex Mono (latin subsets) | 2.3 | SIL OFL 1.1, Reserved Font Name "Plex" | `site/vendor/fonts/ibm-plex-mono-normal-400-latin.woff2`, `...-500-latin.woff2` | https://github.com/IBM/plex |
 | Newsreader (latin subsets) | 1.003 | SIL OFL 1.1 | `site/vendor/fonts/newsreader-normal-400-latin.woff2`, `newsreader-italic-400-latin.woff2` | https://github.com/productiontype/Newsreader |
+| Arimo (subsets, deflated, inside a JSON file; embedded only in PDFs the dose-trend page exports) | package `@expo-google-fonts/arimo` 0.4.3 | SIL OFL 1.1 | `site/dose-trend/pdf-fonts.json` | https://github.com/googlefonts/arimo |
 
 The JavaScript files were checked byte-for-byte against the upstream releases (three@0.169.0 and smiles-drawer@2.1.7 on jsDelivr, gsap 3.12.5 on
 cdnjs) on 2026-10-09. The site loads nothing from any third-party server.
@@ -100,6 +101,14 @@ Copyright lines (the full OFL 1.1 text for each family is in [site/vendor/fonts/
 - Newsreader: Copyright 2020 The Newsreader Project Authors (http://github.com/productiontype/Newsreader)
 
 The fonts are not sold by themselves, and author names are not used to promote the site. Open question about the Reserved Font Name: `docs/LICENSING-NOTES.md`, item 4.
+
+### Dose-trend page (`site/dose-trend/`)
+
+`site/dose-trend/` is a built explorable (the Cochran–Armitage trend test, with an analyzer and a figure studio). It loads
+nothing from another origin: the site's own fonts and `vendor/three/three.module.min.js` for its molecule view. Its notices
+are in [site/dose-trend/LICENSES.md](site/dose-trend/LICENSES.md): Arimo (OFL 1.1, subsets embedded in exported PDFs),
+canvas helpers adapted from MbappeWU/explorable (MIT, same revision as above), and `panel-a.jpg`, a draft BioRender
+illustration credited on the page, which a journal would require a BioRender publication licence to print.
 
 ## 2. Data shipped in `site/data/`
 

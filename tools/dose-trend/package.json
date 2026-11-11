@@ -1,0 +1,10 @@
+{
+  "name": "dose-trend-source",
+  "private": true,
+  "description": "Source of site/dose-trend/. CommonJS so that core.js and figure.js (classic browser scripts that also export for the tests) run under node; the repository root is type: module.",
+  "type": "commonjs",
+  "scripts": {
+    "build": "python3 build.py --site ../../site/dose-trend",
+    "test": "node test/core.test.js && node test/figure.test.js"
+  }
+}
