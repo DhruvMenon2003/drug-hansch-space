@@ -32,9 +32,13 @@ export async function openReady(page, baseURL, query = '?debug') {
   await settled(page);
 }
 
-/** Wait until the layout tween is over and the render loop has gone quiet (no frame for 600 ms). */
+/**
+ * Wait until gsap has arrived, the layout tween is over and the render loop has gone quiet (no frame for 600 ms).
+ * The page fetches gsap after the first drawn frame (js/boot-core.js loadTweens), so it is not there yet when the status line
+ * goes away. Waiting for it here means every test that starts from openReady() runs with tweens available, as before.
+ */
 export async function settled(page, quietMs = 600) {
-  await page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.gsap.globalTimeline.getChildren(false, true, true).every(k => k.paused()), null, { timeout: 30_000 });
+  await page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.gsap?.globalTimeline.getChildren(false, true, true).every(k => k.paused()), null, { timeout: 30_000 });
   await quiet(page, quietMs);
 }
 

@@ -41,6 +41,7 @@ for (const [label, opts] of VIEWPORTS) {
 
     test('no ScrollTrigger: not on window, not requested, not in the page; gsap core still there', async ({ browser, baseURL }) => {
       const { ctx, page, requests } = await boot(browser, baseURL, opts);
+      await page.waitForFunction(() => window.gsap, null, { timeout: 30_000 });      // fetched after the first drawn frame
       expect(await page.evaluate(() => typeof window.ScrollTrigger)).toBe('undefined');
       expect(await page.evaluate(() => typeof window.gsap?.to)).toBe('function');
       expect(await page.evaluate(() => !!window.gsap.core.globals().ScrollTrigger)).toBe(false);

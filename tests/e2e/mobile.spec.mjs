@@ -41,7 +41,8 @@ async function open(browser, baseURL, context, { query = '?debug', counters = tr
   await tweensDone(page);
   return { ctx, page, errors, requests };
 }
-const tweensDone = page => page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.gsap.globalTimeline.getChildren(false, true, true).every(k => k.paused()), null, { timeout: 30_000 });
+// gsap is fetched after the first drawn frame, so `?.` also waits for it to arrive: the tests below then run with tweens available
+const tweensDone = page => page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.gsap?.globalTimeline.getChildren(false, true, true).every(k => k.paused()), null, { timeout: 30_000 });
 const frames = page => page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 140)))));
 const scrollToY = async (page, y) => { await page.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), y); await frames(page); };
 /**

@@ -35,7 +35,7 @@ async function shoot(browser, base, hook, opts, name, useHead) {
   const shots = {};
   for (const s of STEP_NAMES) {
     await page.evaluate(([h, n]) => window[h].goStep(n), [hook, s]);
-    await page.waitForFunction(h => window[h].anim.t >= 1 && window.gsap.globalTimeline.getChildren(false, true, true).every(k => k.paused()), hook, { timeout: 30_000 }).catch(() => {});
+    await page.waitForFunction(h => window[h].anim.t >= 1 && (!window.gsap || window.gsap.globalTimeline.getChildren(false, true, true).every(k => k.paused())), hook, { timeout: 30_000 }).catch(() => {});
     await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(r)))));
     await page.waitForTimeout(500);
     const buf = await page.screenshot({ type: 'png' });

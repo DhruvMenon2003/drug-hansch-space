@@ -63,13 +63,15 @@ test.describe('fallbacks', () => {
     await ctx.close();
   });
 
-  test('WebGL unavailable: the 3D layer is never even downloaded', async ({ browser, baseURL }) => {
+  test('WebGL unavailable: the 3D layer is never even downloaded, and neither is gsap, which only the 3D layer uses', async ({ browser, baseURL }) => {
     const ctx = await browser.newContext(CONTEXT), page = await ctx.newPage(), urls = [];
     page.on('request', r => urls.push(r.url()));
     await page.addInitScript(noWebGL);
     await page.goto(new URL('index.html', baseURL).href);
     await ready2d(page);
-    expect(urls.filter(u => /boot-gl|three\.module|OrbitControls|CSS2DRenderer/.test(u))).toEqual([]);
+    await page.waitForTimeout(1500);                       // a deferred fetch would have gone out by now
+    expect(urls.filter(u => /boot-gl|three\.module|OrbitControls|CSS2DRenderer|vendor\/gsap/.test(u))).toEqual([]);
+    expect(await page.evaluate(() => typeof window.gsap)).toBe('undefined');
     await ctx.close();
   });
 
@@ -155,6 +157,73 @@ test.describe('fallbacks', () => {
     expect(seen.at(-1)).toBe(4);
     expect(seen.filter(v => v > 0)).toEqual([...seen.filter(v => v > 0)].sort((a, b) => a - b));
     expect(await page.evaluate(() => document.querySelector('#load-progress').value)).toBe(4);
+    await ctx.close();
+  });
+});
+
+// gsap is an enhancement that only the 3D layer uses. It is not a script in the head: js/boot-core.js fetches it after the
+// first drawn frame, and until it arrives (or if it never does) every tween site applies its change at once.
+test.describe('gsap is fetched after the first frame', () => {
+  test.setTimeout(180_000);
+  const GSAP = '**/vendor/gsap/gsap.min.js';
+  const firstFrame = page => page.waitForFunction(() => window.__hansch?.stage?.points && document.querySelector('#stage-status').hidden, null, { timeout: 60_000 });
+  /**
+   * Go to a tour step and report, in the same task, whether the layout was applied at once (t = 1) or started a tween (t = 0),
+   * and whether a camera tween was created (getTweensOf: isTweening() is false until a tween's first tick).
+   */
+  const stepNow = (page, name) => page.evaluate(n => { const H = window.__hansch; H.goStep(n); return { t: H.anim.t, step: H.app.step, camTween: (window.gsap?.getTweensOf(H.stage.camera.position).length ?? 0) > 0 }; }, name);
+
+  test('not a script in the served HTML; requested only once the first frame is drawn', async ({ browser, baseURL, request }) => {
+    const html = await (await request.get(new URL('index.html', baseURL).href)).text();
+    expect(html, 'no <script> for gsap in index.html').not.toMatch(/<script[^>]*gsap/i);
+    const progressAtRequest = [];
+    const { ctx, page, errors } = await open(browser, baseURL, {
+      route: p => p.route(GSAP, async r => { progressAtRequest.push(await p.evaluate(() => document.querySelector('#load-progress')?.value)); await r.continue(); }),
+    });
+    await firstFrame(page);
+    await page.waitForFunction(() => window.gsap, null, { timeout: 30_000 });
+    expect(progressAtRequest, 'one request, made after loading phase 4 (first frame)').toEqual([4]);
+    expect(await page.evaluate(() => [...document.scripts].filter(s => /vendor\/gsap\//.test(s.src)).length), 'fetched once').toBe(1);
+    expect(errors).toEqual([]);
+    await ctx.close();
+  });
+
+  test('held back: the scene is drawn and a step change is applied at once; once it arrives the next change tweens', async ({ browser, baseURL }) => {
+    let release;
+    const held = new Promise(r => { release = r; });
+    const { ctx, page, errors } = await open(browser, baseURL, { init: installCounters, route: p => p.route(GSAP, async r => { await held; await r.continue(); }) });
+    await firstFrame(page);
+    expect(await page.evaluate(() => typeof window.gsap), 'gsap has not arrived').toBe('undefined');
+    expect(await page.evaluate(() => window.__hansch.anim.t), 'the first layout did not wait for it').toBe(1);
+    await expectInk(page, '#space', 0.02, 'spheres are on screen without gsap');
+    const before = await stepNow(page, 'tpsa');
+    expect(before).toEqual({ t: 1, step: 'tpsa', camTween: false });
+    await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+    await expectInk(page, '#space', 0.02, 'the new step is drawn');
+    release();
+    await page.waitForFunction(() => window.gsap, null, { timeout: 30_000 });
+    expect(await page.evaluate(() => window.gsap.config().autoSleep), 'the ticker setting is applied when it loads').toBe(20);
+    const after = await stepNow(page, 'series');
+    expect(after.step).toBe('series');
+    expect(after.t, 'the layout now tweens from 0').toBe(0);
+    expect(after.camTween, 'and so does the camera').toBe(true);
+    await page.waitForFunction(() => window.__hansch.anim.t >= 1 && window.gsap.globalTimeline.getChildren(false, true, true).every(k => k.paused()), null, { timeout: 30_000 });
+    expect(errors).toEqual([]);
+    await ctx.close();
+  });
+
+  test('fails to load (404): nothing thrown, the page works and transitions stay instant', async ({ browser, baseURL }) => {
+    const { ctx, page, errors } = await open(browser, baseURL, { init: installCounters, route: p => p.route(GSAP, r => r.fulfill({ status: 404, body: 'nope' })) });
+    await firstFrame(page);
+    await page.waitForTimeout(1500);
+    expect(await page.evaluate(() => typeof window.gsap)).toBe('undefined');
+    expect(await stepNow(page, 'tpsa')).toEqual({ t: 1, step: 'tpsa', camTween: false });
+    await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+    await expectInk(page, '#space', 0.02, 'the plot is drawn without gsap');
+    await page.fill('#search', 'dexamethasone');
+    await page.press('#search', 'Enter');
+    await expect(page.locator('#d-name')).toHaveText('dexamethasone');
+    expect(errors).toEqual([]);
     await ctx.close();
   });
 });
