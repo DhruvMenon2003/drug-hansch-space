@@ -53,6 +53,13 @@ for (const [name, v] of Object.entries(variants)) {
   fs.writeFileSync(path.join(out, name + '.json'), JSON.stringify(figure, (k, val) => k === 'image_href' ? '(image data)' : val, 1));
   console.log(name.padEnd(30), figure.canvas.width_mm + ' x ' + figure.canvas.height_mm + ' mm', '| elements', figure.elements.length, 'annotations', figure.annotations.length, 'connectors', figure.connectors.length, '| svg', svg.length, 'pdf', pdf.length);
 }
+// the branching node follows the stated design
+for (const [design, want] of [['Randomized, double-blind', true], ['randomised, open-label', true], ['Observational, not randomized', false], ['Non-randomised cohort', false], ['unrandomized', false], ['', false], ['Prospective cohort', false]]) {
+  ok(F.isRandomized(design) === want, 'isRandomized(' + JSON.stringify(design) + ') should be ' + want);
+  const fig = F.buildFigure(res, Object.assign({}, base, { study: Object.assign({}, study, { design }) })).figure, node = fig.elements.find(e => e.id === 'node_allocation');
+  ok(node && (want ? node.type === 'diamond' && node.label === 'R' : node.type === 'circle' && !node.label), 'allocation node for ' + JSON.stringify(design) + ': ' + (node && node.type));
+  ok(/were (randomized|allocated) to/.test(fig.figure_meta.caption) && (fig.figure_meta.caption.includes('randomized to') === want), 'caption wording for ' + JSON.stringify(design));
+}
 // path parser
 ok(JSON.stringify(F.parsePath('M1 2 H5 V7 l1 1 Z')) === JSON.stringify([['m', 1, 2], ['l', 5, 2], ['l', 5, 7], ['l', 6, 8], ['h']]), 'path parser');
 // validation catches problems

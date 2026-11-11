@@ -9,7 +9,7 @@
     const f = tool.fig, r = tool.result, ref = r && r.ref;
     return { journal: f.journal, column: f.column, panelA: f.panelA, style: f.style, palette: f.palette, pA: f.pA, pB: f.pB, alt: tool.alt, border: f.border,
       xTitle: f.xTitle, yTitle: f.yTitle, image: tool.image, styleId: tool.isStudy ? lc(STUDY.drug) : 'dose_trend',
-      study: { population: f.population, design: f.design || (ref ? 'Randomized' : 'Allocated'), duration: f.duration, outcome: tool.isStudy ? STUDY.outcome : 'Events recorded', groupLabel: tool.isStudy ? STUDY.spanner : '' } };
+      study: { population: f.population, design: f.design, duration: f.duration, outcome: tool.isStudy ? STUDY.outcome : 'Events recorded', groupLabel: tool.isStudy ? STUDY.spanner : '' } };
   };
   const forBox = (fig) => JSON.stringify(fig, (k, v) => (k === 'image_href' ? IMG : v), 1);
   function fillColumns() {
@@ -64,7 +64,7 @@
   bind('fig-journal', 'journal', null, fillColumns); bind('fig-column', 'column'); bind('fig-panel-a', 'panelA'); bind('fig-style', 'style');
   bind('fig-palette', 'palette'); bind('fig-pa', 'pA'); bind('fig-pb', 'pB');
   $('fig-border').onchange = () => { tool.fig.border = $('fig-border').checked; render(); };
-  [['fig-xt', 'xTitle', 'Dose group'], ['fig-yt', 'yTitle', ''], ['fig-pop', 'population', 'Patients'], ['fig-design', 'design', 'Randomized'], ['fig-dur', 'duration', 'for example, 10 days of dosing']].forEach(([id, key, ph]) => {
+  [['fig-xt', 'xTitle', 'Dose group'], ['fig-yt', 'yTitle', ''], ['fig-pop', 'population', 'Patients'], ['fig-design', 'design', 'for example, Randomized, double-blind'], ['fig-dur', 'duration', 'for example, 10 days of dosing']].forEach(([id, key, ph]) => {
     $(id).placeholder = ph; $(id).oninput = () => { tool.fig[key] = $(id).value.trim(); render(); };
   });
   $('image-in').onchange = function () {

@@ -145,5 +145,29 @@ eq('validation', [bad.ok, bad.errors.length], [false, 2]);
 const zero = C.analyze({ groups: groups.slice(0, 3), counts: [0, 0, 0] });
 eq('no events', [zero.ok, zero.trend.computable], [true, false]);
 
+
+// --- regressions from review ---
+function ok(cond, name) { checks++; if (!cond) { fails++; if (fails < 40) console.log('FAIL', name); } }
+// exact test: large groups with few events must not underflow to NaN (two groups: hypergeometric, P(T>=2 | R=3) = 0.5)
+{
+  const e = C.exactTrend([0, 1], [1, 2], [1100, 1100]);
+  ok(e && Number.isFinite(e.pTwo) && Number.isFinite(e.pInc) && Math.abs(e.total - 1) < 1e-9, 'exactTrend 2x1100 normalises');
+  ok(e && Math.abs(e.pInc - 0.5) < 1e-9 && Math.abs(e.pTwo - 1) < 1e-9, 'exactTrend 2x1100 equals the hypergeometric tail: pInc=' + (e && e.pInc) + ' pTwo=' + (e && e.pTwo));
+  const a = C.analyze({ groups: [{ label: 'A', n: 1100, role: 'ref', score: 0 }, { label: 'B', n: 1100, role: 'dose', score: 1 }], counts: [1, 2], event: 'x', scoreType: 'dose', includeRef: true });
+  ok(Number.isFinite(a.trend.exact.pTwo), 'analyze: exact P is a number for 2x1100 (' + a.trend.exact.method + ')');
+  const e2 = C.exactTrend([0, 1, 2], [0, 0, 1], [5000, 5000, 5000]);
+  ok(e2 && Math.abs(e2.total - 1) < 1e-9 && Math.abs(e2.pInc - 1 / 3) < 1e-9, 'exactTrend 3x5000 with one event: pInc = 1/3');
+}
+// percentage-only cells are not counts
+{
+  for (const c of ['10%', '10 %', '30.8%', '<1%']) ok(C.parseCount(c) === null, 'parseCount refuses ' + JSON.stringify(c));
+  for (const [c, v] of [['4 (30.8)', 4], ['4 (30.8%)', 4], ['4/13', 4], ['0', 0], ['12', 12], ['4 [30.8]', 4]]) ok(C.parseCount(c) === v, 'parseCount accepts ' + JSON.stringify(c));
+  const t = C.parseTable('Event\tA (n = 200)\tB (n = 200)\tC (n = 200)\nRash\t10%\t20%\t30%\nNausea\t3 (1.5%)\t5\t7 (3.5)\n');
+  ok(t.rows.length === 1 && t.rows[0].label === 'Nausea' && t.notes.some(n => /percentage/.test(n)), 'tab table: the percentage row is left out with a note');
+  const u = C.parseTable('Event\tA (n = 200)\tB (n = 200)\tC (n = 200)\nRash\t10%\t20%\t30%\n');
+  ok(u.error && /percentages but no counts/.test(u.error), 'a table of only percentages is refused with a specific message');
+  const f = C.parseTable('Event A (n = 200) B (n = 200) C (n = 200)\nRash 10% 20% 30%\nNausea 3 (1.5%) 5 7 (3.5)\n');
+  ok(f.rows.length === 1 && f.notes.some(n => /percentages/.test(n)), 'free-text table: the percentage line is left out with a note');
+}
 console.log(fails === 0 ? 'ALL ' + checks + ' CHECKS PASSED' : fails + ' of ' + checks + ' checks FAILED');
 process.exit(fails ? 1 : 0);

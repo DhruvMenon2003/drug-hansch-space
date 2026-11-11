@@ -41,6 +41,11 @@
     return out;
   }
   function plain(content) { return String(content).replace(/\*/g, ''); }
+  // "Randomized, double-blind" is; "observational", "not randomized", "non-randomised" and an empty design are not.
+  function isRandomized(design) {
+    var d = String(design || '');
+    return /\brandomi[sz]/i.test(d) && !/\b(?:not|non|un)[-\s]?randomi[sz]/i.test(d);
+  }
   function wrapLines(str, maxW, size, bold, maxLines) {
     var words = String(str).split(/\s+/).filter(Boolean), lines = [], cur = '';
     words.forEach(function (w) {
@@ -134,12 +139,17 @@
       els.push({ id: 'node_population', type: 'rectangle', label: popLines.join('\n'), sublabel: '*n* = ' + nTot, x: r1(x0 + popW / 2), y: r1(cy), width: r1(popW), height: r1(popH), rx: r1(fsT * 0.35),
         fill: mix(PALETTE.soft_orange, 0.45), stroke: ink, stroke_width: r1(sw), font_size: r1(fsT), font_weight: 'bold', text_color: pal.text, panel_id: id });
       var rx = x0 + popW + gapA + rS;
-      els.push({ id: 'node_randomize', type: 'diamond', label: 'R', x: r1(rx), y: r1(cy), width: r1(2 * rS), height: r1(2 * rS), fill: '#FFFFFF', stroke: ink, stroke_width: r1(sw),
-        font_size: r1(fsT), font_weight: 'bold', text_color: pal.text, panel_id: id, notes: 'Randomization shown as a branching node' });
-      // The design note sits under the diamond when there is room; in a narrow figure it joins the duration line.
-      var dLines = narrow ? [] : wrapLines(study.design || 'Randomized', gapA * 2 + 2 * rS - fsT * 0.2, fsT, false, 3);
+      // The branching node says only what the design says: the CONSORT "R" diamond when the design mentions
+      // randomization, otherwise a plain allocation node, so a non-randomized study is not drawn as a trial.
+      var randomized = isRandomized(study.design);
+      if (randomized) els.push({ id: 'node_allocation', type: 'diamond', label: 'R', x: r1(rx), y: r1(cy), width: r1(2 * rS), height: r1(2 * rS), fill: '#FFFFFF', stroke: ink, stroke_width: r1(sw),
+        font_size: r1(fsT), font_weight: 'bold', text_color: pal.text, panel_id: id, notes: 'Randomization (R) shown as a branching node' });
+      else els.push({ id: 'node_allocation', type: 'circle', x: r1(rx), y: r1(cy), width: r1(rS * 0.9), height: r1(rS * 0.9), fill: '#FFFFFF', stroke: ink, stroke_width: r1(sw), panel_id: id,
+        notes: 'Allocation to groups shown as a branching node' + (study.design ? ' (' + study.design + ')' : '; the design was not given') });
+      // The design note sits under the node when there is room; in a narrow figure it joins the duration line.
+      var dLines = narrow || !study.design ? [] : wrapLines(study.design, gapA * 2 + 2 * rS - fsT * 0.2, fsT, false, 3);
       dLines.forEach(function (ln, i) { text('ann_design_' + i, ln, rx, cy + rS + lh * (i + 1), { anchor: 'middle', panel_id: id }); });
-      cons.push({ id: 'conn_population_to_randomize', from: 'node_population', to: 'node_randomize', type: 'solid_arrow', stroke: PALETTE.dark_gray, stroke_width: r1(sw), path_style: 'straight' });
+      cons.push({ id: 'conn_population_to_allocation', from: 'node_population', to: 'node_allocation', type: 'solid_arrow', stroke: PALETTE.dark_gray, stroke_width: r1(sw), path_style: 'straight' });
       var doseIdx = 0, nDose = nDoseArms, members = [], yCur = top;
       var trunkIn = rx + rS + gapA * 0.45, trunkOut = armX1 + gapA * 0.55;
       arms.forEach(function (g, i) {
@@ -152,7 +162,7 @@
         els.push({ id: nid, type: 'rectangle', label: g.label, sublabel: '*n* = ' + g.n, label_align: 'left', sublabel_align: 'right', x: r1((armX0 + armX1) / 2), y: r1(y), width: r1(armW), height: armH, rx: r1(fsT * 0.3),
           fill: tint, stroke: ink, stroke_width: r1(sw), font_size: r1(fsT), font_weight: 'bold', text_color: pal.text, group_id: isRef ? null : 'group_dose_arms', panel_id: id });
         if (!isRef) members.push(nid);
-        cons.push({ id: 'conn_randomize_to_arm_' + i, from: 'node_randomize', to: nid, type: 'solid_arrow', stroke: PALETTE.dark_gray, stroke_width: r1(sw), path_style: 'orthogonal', via_x: r1(trunkIn) });
+        cons.push({ id: 'conn_allocation_to_arm_' + i, from: 'node_allocation', to: nid, type: 'solid_arrow', stroke: PALETTE.dark_gray, stroke_width: r1(sw), path_style: 'orthogonal', via_x: r1(trunkIn) });
         cons.push({ id: 'conn_arm_' + i + '_to_outcome', from: nid, to: 'node_outcome', type: 'line', stroke: PALETTE.dark_gray, stroke_width: r1(sw), path_style: 'orthogonal', via_x: r1(trunkOut) });
       });
       if (members.length > 1 && study.groupLabel) {
@@ -350,7 +360,8 @@
     var title = res.event.charAt(0).toUpperCase() + res.event.slice(1) + ' by dose group.';
     function tag() { return panels.length > 1 ? panels[i++] + ', ' : ''; }
     function cap(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
-    if (wantA !== 'none') s.push(tag() + cap('trial design: ' + lc((o.study && o.study.population) || 'patients') + ' were allocated to ' + res.groups.length + ' groups' + (o.study && o.study.duration ? ' (' + lc(o.study.duration) + ')' : '') + '.'));
+    var rnd = isRandomized(o.study && o.study.design);
+    if (wantA !== 'none') s.push(tag() + cap((rnd ? 'trial' : 'study') + ' design: ' + lc((o.study && o.study.population) || 'patients') + ' were ' + (rnd ? 'randomized' : 'allocated') + ' to ' + res.groups.length + ' groups' + (o.study && o.study.duration ? ' (' + lc(o.study.duration) + ')' : '') + '.'));
     var a = tag() + cap('percentage of patients with ' + evl + ' in each group; ' + (o.style === 'points' ? 'points' : 'bars') + ' show the percentage and error bars the Wilson 95% confidence interval, with patients with the event over patients in the group under the axis.');
     if (tr && tr.computable) {
       var sc = res.scoreType === 'rank' ? 'equally spaced scores' : 'scores of ' + tr.scores.map(C.fmtScore).join(', ');
@@ -664,7 +675,7 @@
     return out;
   }
 
-  var Fig = { PT: PT, MM: MM, JOURNALS: JOURNALS, PALETTE: PALETTE, textW: textW, wrapLines: wrapLines, makeStyle: makeStyle, buildFigure: buildFigure, caption: caption,
+  var Fig = { PT: PT, MM: MM, JOURNALS: JOURNALS, PALETTE: PALETTE, textW: textW, wrapLines: wrapLines, isRandomized: isRandomized, makeStyle: makeStyle, buildFigure: buildFigure, caption: caption,
     validate: validate, displayList: displayList, renderSVG: renderSVG, renderPDF: renderPDF, parsePath: parsePath, jpegInfo: jpegInfo, HELV: HELV, HELV_B: HELV_B };
   if (typeof module !== 'undefined' && module.exports) module.exports = Fig;
   root.Fig = Fig;

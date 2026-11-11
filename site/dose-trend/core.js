@@ -179,7 +179,12 @@
     var logScale = 0, tables = 0;
     for (var g = 0; g < k; g++) {
       var ni = n[g];
-      var lcMax = logChoose(ni, Math.floor(ni / 2));
+      // Weights are binomial coefficients scaled to stay in range. The scale is the largest coefficient among the event
+      // counts this group can actually take (0..R, and enough to leave the later groups their share), not the central
+      // one: for a large group with few events the central coefficient is astronomically bigger and every feasible
+      // weight would underflow to zero.
+      var jLo = Math.max(0, R - (N - ni)), jHi = Math.min(ni, R);
+      var lcMax = logChoose(ni, Math.min(jHi, Math.max(jLo, Math.floor(ni / 2))));
       var w = new Array(ni + 1);
       for (var j0 = 0; j0 <= ni; j0++) w[j0] = Math.exp(logChoose(ni, j0) - lcMax);
       logScale += lcMax;
@@ -212,6 +217,7 @@
     var fin = layer.get(R);
     if (!fin) return null;
     var f = Math.exp(logScale - logChoose(N, R));
+    if (!isFinite(f) || f <= 0) return null; // cannot be normalised: let the caller fall back to Monte Carlo
     var eps = 1e-9 * Math.max(1, Math.abs(tObs));
     var dObs = Math.abs(tObs - eT);
     var pInc = 0, pDec = 0, pTwo = 0, total = 0;
@@ -232,6 +238,7 @@
     var points = [];
     fin.forEach(function (wv, t) { points.push([min * R + scale * t, wv * f]); });
     points.sort(function (p1, p2) { return p1[0] - p2[0]; });
+    if (!(total > 0.999 && total < 1.001)) return null; // the probabilities must add up to one, or this answer is not trustworthy
     return { method: 'exact', pTwo: Math.min(1, pTwo), pInc: Math.min(1, pInc), pDec: Math.min(1, pDec),
              total: total, support: tables, points: points, expected: min * R + scale * eT, observed: min * R + scale * tObs };
   }
@@ -315,7 +322,10 @@
 
   // ---------- table parsing ----------
   var RE_N = /\(?\s*[nN]\s*=\s*(\d[\d,]*)\s*\)?/;
-  var RE_COUNT_CELL = /^\s*(\d+)\s*(?:\/\s*\d+\s*)?(?:[\(\[]\s*<?\s*\d+(?:[.,]\d+)?\s*%?\s*[\)\]])?\s*%?\s*$/;
+  // A cell is a count, optionally "count/n", optionally followed by a percentage in brackets: 4, 4/13, 4 (30.8), 4 (30.8%).
+  // A bare percentage ("10%", "30.8 %") is not a count and is refused, so it cannot pass for one.
+  var RE_COUNT_CELL = /^\s*(\d+)\s*(?:\/\s*\d+\s*)?(?:[\(\[]\s*<?\s*\d+(?:[.,]\d+)?\s*%?\s*[\)\]])?\s*$/;
+  var RE_PERCENT_ONLY = /^\s*<?\s*\d+(?:[.,]\d+)?\s*%\s*$/;
   var RE_SKIP = /\b(total|overall|pooled|combined|any\s+dose|all\s+(doses|active|treated|patients|subjects|participants|apricitabine))\b/i;
   var RE_REF = /\b(placebo|vehicle|control|controls|sham|untreated|comparator)\b/i;
   var RE_STUB = /^(adverse\s+events?|treatment[- ]emergent\s+adverse\s+events?|events?|preferred\s+terms?|terms?|parameters?|system\s+organ\s+class|symptoms?|a\.?e\.?s?|teaes?|category|variable|characteristics?|reactions?)\b[\s:,-]*/i;
@@ -326,6 +336,10 @@
   function parseCount(cell) {
     var m = RE_COUNT_CELL.exec(String(cell == null ? '' : cell));
     return m ? parseInt(m[1], 10) : null;
+  }
+  function isPercentOnly(cell) { return RE_PERCENT_ONLY.test(String(cell == null ? '' : cell)); }
+  function percentNote(count) {
+    return count + (count === 1 ? ' cell was' : ' cells were') + ' a percentage with no count and ' + (count === 1 ? 'was' : 'were') + ' left blank: the tests need the number of patients with the event, so type the counts into the grid.';
   }
   function firstNumber(label) {
     var m = /(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/.exec(label);
@@ -388,7 +402,8 @@
       if (row.length < 2 || !/[A-Za-z]/.test(row[0])) return false;
       var rest = row.slice(1).filter(function (c) { return c !== ''; });
       if (!rest.length) return false;
-      var counts = rest.filter(function (c) { return parseCount(c) !== null; }).length;
+      // A row of counts, or of bare percentages (which read as data, are refused as counts, and earn a note).
+      var counts = rest.filter(function (c) { return parseCount(c) !== null || isPercentOnly(c); }).length;
       return counts >= Math.max(1, Math.ceil(rest.length / 2));
     }
     var firstData = -1;
@@ -420,11 +435,11 @@
       lab = cleanLabel(lab.replace(/\(\s*\)/g, ''));
       return inferGroup(lab || ('Group ' + (idx + 1)), n);
     });
-    var out = [];
+    var out = [], pctOnly = 0;
     dataRows.forEach(function (r) {
       var label = cleanLabel(r[0]);
       var counts = [];
-      for (var c3 = 1; c3 < width; c3++) counts.push(parseCount(r[c3]));
+      for (var c3 = 1; c3 < width; c3++) { counts.push(parseCount(r[c3])); if (isPercentOnly(r[c3])) pctOnly++; }
       if (!label && counts.every(function (v) { return v === null; })) return;
       if (counts.every(function (v) { return v === null; })) return; // sub-heading
       // A row that carries the group sizes
@@ -436,11 +451,12 @@
       out.push({ label: label || 'Event', counts: counts });
     });
     if (main < 0) notes.push('No header row found, so the columns are named Group 1, Group 2 and so on. Rename them in the grid.');
+    if (pctOnly) notes.push(percentNote(pctOnly));
     return { groups: finishGroups(groups), rows: out, notes: notes };
   }
 
   function trailingCounts(line, K) {
-    var TOK = /(?:^|\s)(\d+)(?:\s*[\(\[]\s*<?\s*\d+(?:[.,]\d+)?\s*%?\s*[\)\]])?\s*%?\s*$/;
+    var TOK = /(?:^|\s)(\d+)(?:\s*[\(\[]\s*<?\s*\d+(?:[.,]\d+)?\s*%?\s*[\)\]])?\s*$/;
     var rest = line.replace(/ /g, ' ').replace(/\s+$/, ''), toks = [];
     while (toks.length < K) {
       var m = TOK.exec(rest);
@@ -496,15 +512,17 @@
       notes.push(names ? 'Group sizes were not in the header. Type the number of patients (n) for each group.'
                        : 'Column names and group sizes were not found. Fill them in the grid.');
     }
-    var rows = [], skipped = 0;
+    var rows = [], skipped = 0, pctLines = 0;
     body.forEach(function (l) {
       if (!l.trim()) return;
       var t = trailingCounts(l, K);
       var label = cleanLabel(t.label);
       if (t.counts.length === K && /[A-Za-z]/.test(label)) rows.push({ label: label, counts: t.counts });
       else if (t.counts.length > 0 && t.counts.length < K && /[A-Za-z]/.test(label)) skipped++;
+      else if (t.counts.length === 0 && /\d\s*%/.test(l) && /[A-Za-z]/.test(label)) pctLines++;
     });
     if (skipped) notes.push(skipped + (skipped === 1 ? ' line had' : ' lines had') + ' fewer numbers than there are columns and ' + (skipped === 1 ? 'was' : 'were') + ' left out.');
+    if (pctLines) notes.push(pctLines + (pctLines === 1 ? ' line carried' : ' lines carried') + ' percentages with no counts and ' + (pctLines === 1 ? 'was' : 'were') + ' left out: the tests need the number of patients with the event.');
     if (!rows.length) return null;
     return { groups: finishGroups(groups), rows: rows, notes: notes };
   }
@@ -516,6 +534,7 @@
     var res = mode === 'free' ? parseFree(lines) : parseDelimited(lines, mode);
     if (!res && mode !== 'free') res = parseFree(lines);
     if (!res || !res.rows.length || res.groups.length < 2) {
+      if (/\d\s*%/.test(text) && !/\d\s*[\(\[]/.test(text)) return { error: 'That table gives percentages but no counts. The tests need the number of patients with the event in each group; paste counts, or counts with the percentage in brackets, for example: Headache 4 (30.8) 3 4 6 8.' };
       return { error: 'No table found in that text. Each row needs an event name followed by one count per group, for example: Headache 4 (30.8) 3 4 6 8.' };
     }
     res.mode = mode;
