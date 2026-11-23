@@ -1,0 +1,431 @@
+{
+ "DB06155": {
+  "drugbank_id": "DB06155",
+  "name": "Rimonabant",
+  "pubchem_cid": 104850,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB06155",
+  "text": [
+   "Rimonabant is a specific CB1 cannabinoid receptor antagonist. There is considerable evidence that the endocannabinoid (endogenous cannabinoid) system plays a significant role in appetitive drive and associated behaviours. It is therefore reasonable to hypothesize that the attenuation of the activity of this system would have therapeutic benefit in treating disorders that might have a component of excess appetitive drive or over-activity of the endocannabinoid system, such as obesity, ethanol and other drug abuse, and a variety of central nervous system and other disorders."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:25.019Z",
+  "source_id": "DB06155",
+  "source_url": "https://go.drugbank.com/drugs/DB06155",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/104850#section=Mechanism-of-Action"
+ },
+ "DB13873": {
+  "drugbank_id": "DB13873",
+  "name": "Fenofibric acid",
+  "pubchem_cid": 64929,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB13873",
+  "text": [
+   "Having performed clinical studies with in vivo transgenic mice and in vitro human hepatocyte cultures, it is believed that the principal mechanism of action of fenofibric acid is demonstrated through its capability to activate peroxisome proliferator receptor alpha (PPAR-alpha).  By activating PPAR-alpha, fenofibric acid increases lipolysis and the elimination of triglyceride-rich particles from plasma by actuating lipoprotein lipase and reducing production of apoprotein C-III, which acts as an inhibitor of lipoprotein lipase activity. The resultant decrease in triglycerides causes an alteration in the size and composition of low-density-lipoprotein from small, dense particles to large, buoyant ones. The size of these larger low-density-lipoprotein particles have a greater affinity for cholesterol receptors and are therefore catabolized more rapidly. Additionally, fenofibric acid's activation of PPAR-alpha also induces an increase in the synthesis of apoproteins apo A-I, apo A-II, and high-density-lipoprotein.  Moreover, the use of fenofibric acid can also act to reduce serum uric acid levels in ordinary or hyperuricemic individuals by increasing the urinary excretion of uric acid."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:26.022Z",
+  "source_id": "DB13873",
+  "source_url": "https://go.drugbank.com/drugs/DB13873",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/64929#section=Mechanism-of-Action"
+ },
+ "DB01393": {
+  "drugbank_id": "DB01393",
+  "name": "Bezafibrate",
+  "pubchem_cid": 39042,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01393",
+  "text": [
+   "It is generally accepted that bezafibrate is likely an agonist of PPAR-alpha. However, certain other investigations have also suggested that the substance might also elicit some effects on PPAR-gamma and PPAR-delta too."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:26.992Z",
+  "source_id": "DB01393",
+  "source_url": "https://go.drugbank.com/drugs/DB01393",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/39042#section=Mechanism-of-Action"
+ },
+ "DB00636": {
+  "drugbank_id": "DB00636",
+  "name": "Clofibrate",
+  "pubchem_cid": 2796,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00636",
+  "text": [
+   "Clofibrate increases the activity of extrahepatic lipoprotein lipase (LL), thereby increasing lipoprotein triglyceride lipolysis. Chylomicrons are degraded, VLDLs are converted to LDLs, and LDLs are converted to HDL. This is accompanied by a slight increase in secretion of lipids into the bile and ultimately the intestine. Clofibrate also inhibits the synthesis and increases the clearance of apolipoprotein B, a carrier molecule for VLDL. Also, as a fibrate, Clofibrate is an agonist of the PPAR-α receptor[4] in muscle, liver, and other tissues. This agonism ultimately leads to modification in gene expression resulting in increased beta-oxidation, decreased triglyceride secretion, increased HDL, increased lipoprotein lipase activity."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:28.023Z",
+  "source_id": "DB00636",
+  "source_url": "https://go.drugbank.com/drugs/DB00636",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/2796#section=Mechanism-of-Action"
+ },
+ "DB00822": {
+  "drugbank_id": "DB00822",
+  "name": "Disulfiram",
+  "pubchem_cid": 3117,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00822",
+  "text": [
+   "Disulfiram blocks the oxidation of alcohol at the acetaldehyde stage during alcohol metabolism following disulfiram intake causing an accumulation of acetaldehyde in the blood producing highly unpleasant symptoms. Disulfiram blocks the oxidation of alcohol through its irreversible inactivation of aldehyde dehydrogenase, which acts in the second step of ethanol utilization. In addition, disulfiram competitively binds and inhibits the peripheral benzodiazepine receptor, which may indicate some value in the treatment of the symptoms of alcohol withdrawal, however this activity has not been extensively studied."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:28.968Z",
+  "source_id": "DB00822",
+  "source_url": "https://go.drugbank.com/drugs/DB00822",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/3117#section=Mechanism-of-Action"
+ },
+ "DB00704": {
+  "drugbank_id": "DB00704",
+  "name": "Naltrexone",
+  "pubchem_cid": 5360515,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00704",
+  "text": [
+   "Naltrexone is a pure opiate antagonist and has little or no agonist activity. The mechanism of action of naltrexone in alcoholism is not understood; however, involvement of the endogenous opioid system is suggested by preclinical data. Naltrexone is thought to act as a competitive antagonist at mc, κ, and δ receptors in the CNS, with the highest affintiy for the μ receptor. Naltrexone competitively binds to such receptors and may block the effects of endogenous opioids. This leads to the antagonization of most of the subjective and objective effects of opiates, including respiratory depression, miosis, euphoria, and drug craving. The major metabolite of naltrexone, 6-β-naltrexol, is also an opiate antagonist and may contribute to the antagonistic activity of the drug."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:30.108Z",
+  "source_id": "DB00704",
+  "source_url": "https://go.drugbank.com/drugs/DB00704",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5360515#section=Mechanism-of-Action"
+ },
+ "DB00659": {
+  "drugbank_id": "DB00659",
+  "name": "Acamprosate",
+  "pubchem_cid": 71158,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00659",
+  "text": [
+   "The mechanism of action of acamprosate for the maintenance of alcohol abstinence has not been established. Chronic alcohol exposure is believed to modify the balance between neuronal excitation and inhibition. Results of studies in animals suggest acamprosate may interact with glutamate and GABA neurotransmitter systems in the CNS, supporting the hypothesis that acamprosate restores the balance between neuronal excitation and inhibition. Evidence shows that acamprosate directly binds and inhibits GABA B receptors and indirectly affects GABA A receptors."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:31.105Z",
+  "source_id": "DB00659",
+  "source_url": "https://go.drugbank.com/drugs/DB00659",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/71158#section=Mechanism-of-Action"
+ },
+ "DB00904": {
+  "drugbank_id": "DB00904",
+  "name": "Ondansetron",
+  "pubchem_cid": 4595,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00904",
+  "text": [
+   "Ondansetron is a selective antagonist of the serotonin receptor subtype, 5-HT3.  Cytotoxic chemotherapy and radiotherapy are associated with the release of serotonin (5-HT) from enterochromaffin cells of the small intestine, presumably initiating a vomiting reflex through stimulation of 5-HT3 receptors located on vagal afferents. Ondansetron may block the initiation of this reflex. Activation of vagal afferents may also cause a central release of serotonin from the chemoreceptor trigger zone of the area postrema, located on the floor of the fourth ventricle. Thus, the antiemetic effect of ondansetron is probably due to the selective antagonism of 5-HT3 receptors on neurons located in either the peripheral or central nervous systems, or both.  Although the mechanisms of action of ondansetron in treating postoperative nausea and vomiting and cytotoxic induced nausea and vomiting may share similar pathways, the role of ondansetron in opiate-induced emesis has not yet been formally established."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:32.093Z",
+  "source_id": "DB00904",
+  "source_url": "https://go.drugbank.com/drugs/DB00904",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/4595#section=Mechanism-of-Action"
+ },
+ "DB00181": {
+  "drugbank_id": "DB00181",
+  "name": "Baclofen",
+  "pubchem_cid": 2284,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00181",
+  "text": [
+   "The exact mechanism of action of baclofen is unclear. Baclofen is an agonist at the beta subunit of gamma-aminobutyric acid (GABA) receptors expressed on pre- and post-synaptic neurons. Upon binding to GABA<sub>B</sub> receptors, baclofen causes an influx of potassium into the neuron, leading to hyperpolarization of the neuronal membrane and decreased calcium influx at presynaptic nerve terminals. This results in a decreased rate of action potential threshold being reached by presynaptic neurons and reduced action potential of postsynaptic motor neurons that innervate the muscle spindles. Baclofen thereby inhibits the transmission of both mono- and polysynaptic reflexes at the spinal cord, relaxing spasticity. Baclofen may act on some voltage-gated calcium channels; however, the clinical significance of this is unclear."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:33.397Z",
+  "source_id": "DB00181",
+  "source_url": "https://go.drugbank.com/drugs/DB00181",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/2284#section=Mechanism-of-Action"
+ },
+ "DB00273": {
+  "drugbank_id": "DB00273",
+  "name": "Topiramate",
+  "pubchem_cid": 5284627,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00273",
+  "text": [
+   "A seizure is an abnormal and unregulated electrical discharge occurring in the brain. This leads to transient interruption in brain function, manifested by reduced alertness, abnormal sensations, and focal involuntary movements or convulsions. Several types of seizures exist, with common types including tonic-clonic seizures and partial onset seizures.  The exact mechanisms by which topiramate exerts pharmacological actions on seizures and migraines are currently not fully characterized.  Several properties of this drug, however, are likely to contribute to its therapeutic effects. Topiramate has been observed to exert actions on voltage-dependent sodium channels, GABA receptors, and glutamate receptors.   Topiramate stimulates GABA-A receptor activity at brain non-benzodiazepine receptor sites and reduces glutamate activity at both AMPA and kainate receptors. Normally, GABA-A receptors are inhibitory and glutaminergic receptors are stimulatory for neuronal activity. By increasing GABA activity and inhibiting glutamate activity, topiramate blocks neuronal excitability, preventing seizures and migraines. Additionally, it blocks the voltage-dependent sodium channels, further blocking seizure activity. Topiramate has been shown to inhibit various carbonic anhydrase isozymes, but the clinical significance of this is unknown at this time."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:34.506Z",
+  "source_id": "DB00273",
+  "source_url": "https://go.drugbank.com/drugs/DB00273",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5284627#section=Mechanism-of-Action"
+ },
+ "DB00898": {
+  "drugbank_id": "DB00898",
+  "name": "Ethanol",
+  "pubchem_cid": 702,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00898",
+  "text": [
+   "Ethanol affects the brain’s neurons in several ways. It alters their membranes as well as their ion channels, enzymes, and receptors. Alcohol also binds directly to the receptors for acetylcholine, serotonin, GABA, and the NMDA receptors for glutamate.  The sedative effects of ethanol are mediated through binding to GABA receptors and glycine receptors (alpha 1 and alpha 2 subunits). It also inhibits NMDA receptor functioning. In its role as an anti-infective, ethanol acts as an osmolyte or dehydrating agent that disrupts the osmotic balance across cell membranes."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:35.548Z",
+  "source_id": "DB00898",
+  "source_url": "https://go.drugbank.com/drugs/DB00898",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/702#section=Mechanism-of-Action"
+ },
+ "DB00145": {
+  "drugbank_id": "DB00145",
+  "name": "Glycine",
+  "pubchem_cid": 750,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00145",
+  "text": [
+   "In the CNS, there exist strychnine-sensitive glycine binding sites as well as strychnine-insensitive glycine binding sites. The strychnine-insensitive glycine-binding site is located on the NMDA receptor complex. The strychnine-sensitive glycine receptor complex is comprised of a chloride channel and is a member of the ligand-gated ion channel superfamily. The putative antispastic activity of supplemental glycine could be mediated by glycine's binding to strychnine-sensitive binding sites in the spinal cord. This would result in increased chloride conductance and consequent enhancement of inhibitory neurotransmission. The ability of glycine to potentiate NMDA receptor-mediated neurotransmission raised the possibility of its use in the management of neuroleptic-resistant negative symptoms in schizophrenia. Animal studies indicate that supplemental glycine protects against endotoxin-induced lethality, hypoxia-reperfusion injury after liver transplantation, and D-galactosamine-mediated liver injury. Neutrophils are thought to participate in these pathologic processes via invasion of tissue and releasing such reactive oxygen species as superoxide. In vitro studies have shown that neutrophils contain a glycine-gated chloride channel that can attenuate increases in intracellular calcium and diminsh neutrophil oxidant production. This research is ealy-stage, but suggests that supplementary glycine may turn out to be useful in processes where neutrophil infiltration contributes to toxicity, such as ARDS."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:36.670Z",
+  "source_id": "DB00145",
+  "source_url": "https://go.drugbank.com/drugs/DB00145",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/750#section=Mechanism-of-Action"
+ },
+ "DB02709": {
+  "drugbank_id": "DB02709",
+  "name": "Resveratrol",
+  "pubchem_cid": 445154,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB02709",
+  "text": [
+   "Resveratrol suppresses NF-kappaB (NF-kappaB) activation in HSV infected cells. Reports have indicated that HSV activates NF-kappaB during productive infection and this may be an essential aspect of its replication scheme [PMID: 9705914]."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:37.567Z",
+  "source_id": "DB02709",
+  "source_url": "https://go.drugbank.com/drugs/DB02709",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/445154#section=Mechanism-of-Action"
+ },
+ "DB00131": {
+  "drugbank_id": "DB00131",
+  "name": "Adenosine phosphate",
+  "pubchem_cid": 6083,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00131",
+  "text": [
+   "Nucleotides such as Adenosine-5'-Monophosphate affect a number of immune functions, including the reversal of malnutrition and starvation-induced immunosuppression, the enhancement of T-cell maturation and function, the enhancement of natural killer cell activity, the improvement of delayed cutaneous hypersensitivity, helping resistance to such infectious agents as Staphylococcus aureus and Candida albicans, and finally the modulation of T-cell responses toward type 1 CD4 helper lymphocytes or Th1 cells. Studies have shown that mice fed a nucleotide-free diet have both impaired humoral and cellular immune responses. The addition of dietary nucleotides normalizes both types of responses. RNA, a delivery form of nucleotides, and ribonucleotides were used in these studies. The mechanism of the immune-enhancing activity of nucleic acids/nucleotides is not clear."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:38.576Z",
+  "source_id": "DB00131",
+  "source_url": "https://go.drugbank.com/drugs/DB00131",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/6083#section=Mechanism-of-Action"
+ },
+ "DB01065": {
+  "drugbank_id": "DB01065",
+  "name": "Melatonin",
+  "pubchem_cid": 896,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01065",
+  "text": [
+   "Melatonin is a derivative of tryptophan. It binds to melatonin receptor type 1A, which then acts on adenylate cylcase and the inhibition of a cAMP signal transduction pathway. Melatonin not only inhibits adenylate cyclase, but it also activates phosphilpase C. This potentiates the release of arachidonate. By binding to melatonin receptors 1 and 2, the downstream signallling cascades have various effects in the body. The melatonin receptors are G protein-coupled receptors and are expressed in various tissues of the body. There are two subtypes of the receptor in humans, melatonin receptor 1 (MT1) and melatonin receptor 2 (MT2). Melatonin and melatonin receptor agonists, on market or in clinical trials, all bind to and activate both receptor types.The binding of the agonists to the receptors has been investigated for over two decades or since 1986. It is somewhat known, but still not fully understood. When melatonin receptor agonists bind to and activate their receptors it causes numerous physiological processes. MT1 receptors are expressed in many regions of the central nervous system (CNS): suprachiasmatic nucleus of the hypothalamus (SNC), hippocampus, substantia nigra, cerebellum, central dopaminergic pathways, ventral tegmental area and nucleus accumbens. MT1 is also expressed in the retina, ovary, testis, mammary gland, coronary circulation and aorta, gallbladder, liver, kidney, skin and the immune system. MT2 receptors are expressed mainly in the CNS, also in the lung, cardiac, coronary and aortic tissue, myometrium and granulosa cells, immune cells, duodenum and adipocytes. The binding of melatonin to melatonin receptors activates a few signaling pathways. MT1 receptor activation inhibits the adenylyl cyclase and its inhibition causes a rippling effect of non activation; starting with decreasing formation of cyclic adenosine monophosphate (cAMP), and then progressing to less protein kinase A (PKA) activity, which in turn hinders the phosphorilation of cAMP responsive element-binding protein (CREB binding protein) into P-CREB. MT1 receptors also activate phospholipase C (PLC), affect ion channels and regulate ion flux inside the cell. The binding of melatonin to MT2 receptors inhibits adenylyl cyclase which decreases the formation of cAMP.[4] As well it hinders guanylyl cyclase and therefore the forming of cyclic guanosine monophosphate (cGMP). Binding to MT2 receptors probably affects PLC which increases protein kinase C (PKC) activity. Activation of the receptor can lead to ion flux inside the cell."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:39.455Z",
+  "source_id": "DB01065",
+  "source_url": "https://go.drugbank.com/drugs/DB01065",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/896#section=Mechanism-of-Action"
+ },
+ "DB00980": {
+  "drugbank_id": "DB00980",
+  "name": "Ramelteon",
+  "pubchem_cid": 208902,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00980",
+  "text": [
+   "Ramelteon is a melatonin receptor agonist with both high affinity for melatonin MT<sub>1</sub> and MT<sub>2</sub> receptors, and lower selectivity for the MT<sub>3</sub> receptor.  Melatonin production is concurrent with nocturnal sleep, meaning that an increase in melatonin levels is related to the onset of self-reported sleepiness and an increase in sleep propensity. MT<sub>1</sub> receptors are believed to be responsible for regulation of sleepiness and facilitation of sleep onset, and MT<sub>2</sub> receptors are believed to mediate phase-shifting effects of melatonin on the circadian rhythm. While MT<sub>1</sub> and MT<sub>2</sub> receptors are associated with the sleep-wake cycle, MT<sub>3</sub> has a completely different profile, and therefore is not likely to be involved in the sleep-wake cycle. Remelteon has no appreciable affinity for the gamma-aminobutyric acid (GABA) receptor complex or receptors that bind neuropeptides, cytokines, serotonin, dopamine, norepinephrine, acetylcholine, or opiates."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:40.480Z",
+  "source_id": "DB00980",
+  "source_url": "https://go.drugbank.com/drugs/DB00980",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/208902#section=Mechanism-of-Action"
+ },
+ "DB06594": {
+  "drugbank_id": "DB06594",
+  "name": "Agomelatine",
+  "pubchem_cid": 82148,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB06594",
+  "text": [
+   "The novel antidepressant agent, agomelatine, behaves as an agonist at melatonin receptors (MT1 and MT2) and as an antagonist at serotonin (5-HT)(2C) receptors."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:41.503Z",
+  "source_id": "DB06594",
+  "source_url": "https://go.drugbank.com/drugs/DB06594",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/82148#section=Mechanism-of-Action"
+ },
+ "DB00136": {
+  "drugbank_id": "DB00136",
+  "name": "Calcitriol",
+  "pubchem_cid": 5280453,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00136",
+  "text": [
+   "The mechanism of action of calcitriol in the treatment of psoriasis is accounted for by their antiproliferative activity for keratinocytes and their stimulation of epidermal cell differentiation. The anticarcinogenic activity of the active form of Calcitriol appears to be correlated with cellular vitamin D receptor (VDR) levels. Vitamin D receptors belong to the superfamily of steroid-hormone zinc-finger receptors. VDRs selectively bind 1,25-(OH)<sub>2</sub>-D3 and retinoic acid X receptor (RXR) to form a heterodimeric complex that interacts with specific DNA sequences known as vitamin D-responsive elements. VDRs are ligand-activated transcription factors. The receptors activate or repress the transcription of target genes upon binding their respective ligands. It is thought that the anticarcinogenic effect of Calcitriol is mediated via VDRs in cancer cells. The immunomodulatory activity of calcitriol is thought to be mediated by vitamin D receptors (VDRs) which are expressed constitutively in monocytes but induced upon activation of T and B lymphocytes. 1,25-(OH)<sub>2</sub>-D3 has also been found to enhance the activity of some vitamin D-receptor positive immune cells and to enhance the sensitivity of certain target cells to various cytokines secreted by immune cells.  A study suggests that calcitriol plays an immunoregulatry role by suppressing the aryl hydrocarbon receptor (AhR) expression in human Th9, a pro-inflammatory CD4 T cell subset. This suppression subsequently leads to repressed expression of BATF, a transcription factor essential for Th9. Calcitriol has also been found to induce monocyte differentiation and to inhibit lymphocyte proliferation and production of cytokines, including interleukin IL-1 and IL-2, as well as to suppress immunoglobulin secretion by B lymphocytes."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:42.409Z",
+  "source_id": "DB00136",
+  "source_url": "https://go.drugbank.com/drugs/DB00136",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5280453#section=Mechanism-of-Action"
+ },
+ "DB00877": {
+  "drugbank_id": "DB00877",
+  "name": "Sirolimus",
+  "pubchem_cid": 5284616,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00877",
+  "text": [
+   "Sirolimus works by inhibiting T-lymphocyte activation and proliferation stimulated by antigens and cytokines such as interleukin (IL)-2, IL-4, and IL-15. In target cells, sirolimus binds to the cytoplasmic receptor FK506-binding protein-12 (FKBP12), an immunophilin, to form an immunosuppressive complex. FKBP12-sirolimus complex binds to and inhibits the activation of the mammalian target of rapamycin (mTOR), which is a serine/threonine-specific protein kinase that regulates cell growth, proliferation, survival, mobility, and angiogenesis. mTOR regulates the downstream signalling pathways involved in cell survival, such as the phosphatidylinositol-3 kinase (PI3K)/Akt signalling pathway. Inhibition of mTOR leads to the suppression of cytokine-driven T-cell proliferation, thus the progression from the G1 to the S phase of the cell cycle is inhibited. Sirolimus also inhibits antibody production. _In vitro_, sirolimus and other mTOR inhibitors inhibit the production of certain growth factors that may affect angiogenesis, fibroblast proliferation, and vascular permeability.   Lymphangioleiomyomatosis is a disorder that primarily affects the lungs. It is characterized by lung tissue infiltration, unregulated alveolar smooth muscle proliferation, and cystic destruction of parenchyma. Although infrequent, it occurs as a symptomatic pulmonary complication in tuberous sclerosis complex (TSC), which is an inherited disorder caused by mutations in TSC genes. Loss of functional TSC gene leads to the aberrant activation of the mTOR signalling pathway, resulting in cellular proliferation and release of lymphangiogenic growth factors. Sirolimus inhibits the activated mTOR pathway and proliferation of alveolar smooth muscle cell proliferation."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:43.366Z",
+  "source_id": "DB00877",
+  "source_url": "https://go.drugbank.com/drugs/DB00877",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5284616#section=Mechanism-of-Action"
+ },
+ "DB00331": {
+  "drugbank_id": "DB00331",
+  "name": "Metformin",
+  "pubchem_cid": 4091,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00331",
+  "text": [
+   "Metformin's mechanisms of action are unique from other classes of oral antihyperglycemic drugs. Metformin decreases blood glucose levels by decreasing hepatic glucose production (also called gluconeogenesis), decreasing the intestinal absorption of glucose, and increasing insulin sensitivity by increasing peripheral glucose uptake and utilization. It is well established that metformin inhibits mitochondrial complex I activity, and it has since been generally postulated that its potent antidiabetic effects occur through this mechanism.   The above processes lead to a decrease in blood glucose, managing type II diabetes and exerting positive effects on glycemic control.  After ingestion, the organic cation transporter-1 (OCT1) is responsible for the uptake of metformin into hepatocytes (liver cells). As this drug is positively charged, it accumulates in cells and in the mitochondria because of the membrane potentials across the plasma membrane as well as the mitochondrial inner membrane. Metformin inhibits mitochondrial complex I, preventing the production of mitochondrial ATP leading to increased cytoplasmic ADP:ATP and AMP:ATP ratios. These changes activate AMP-activated protein kinase (AMPK), an enzyme that plays an important role in the regulation of glucose metabolism. Aside from this mechanism, AMPK can be activated by a lysosomal mechanism involving other activators.  Following this process, increases in AMP:ATP ratio also inhibit _fructose-1,6-bisphosphatase_ enzyme, resulting in the inhibition of gluconeogenesis, while also inhibiting _adenylate cyclase_ and decreasing the production of cyclic adenosine monophosphate (cAMP), a derivative of ATP used for cell signaling. Activated AMPK phosphorylates two isoforms of acetyl-CoA carboxylase enzyme, thereby inhibiting fat synthesis and leading to fat oxidation, reducing hepatic lipid stores and increasing liver sensitivity to insulin.   In the intestines, metformin increases anaerobic glucose metabolism in enterocytes (intestinal cells), leading to reduced net glucose uptake and increased delivery of lactate to the liver. Recent studies have also implicated the gut as a primary site of action of metformin and suggest that the liver may not be as important for metformin action in patients with type 2 diabetes. Some of the ways metformin may play a role on the intestines is by promoting the metabolism of glucose by increasing glucagon-like peptide I (GLP-1) as well as increasing gut utilization of glucose.   In addition to the above pathway, the mechanism of action of metformin may be explained by other ways, and its exact mechanism of action has been under extensive study in recent years."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:44.293Z",
+  "source_id": "DB00331",
+  "source_url": "https://go.drugbank.com/drugs/DB00331",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/4091#section=Mechanism-of-Action"
+ },
+ "DB00734": {
+  "drugbank_id": "DB00734",
+  "name": "Risperidone",
+  "pubchem_cid": 5073,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00734",
+  "text": [
+   "Though its precise mechanism of action is not fully understood, current focus is on the ability of risperidone to inhibit the D2 dopaminergic receptors and 5-HT2A serotonergic receptors in the brain. Schizophrenia is thought to result from an excess of dopaminergic D2 and serotonergic 5-HT2A activity, resulting in overactivity of central mesolimbic pathways and mesocortical pathways, respectively.  D2 dopaminergic receptors are transiently inhibited by risperidone, reducing dopaminergic neurotransmission, therefore decreasing positive symptoms of schizophrenia, such as delusions and hallucinations. Risperidone binds transiently and with loose affinity to the dopaminergic D2 receptor, with an ideal receptor occupancy of 60-70% for optimal effect. Rapid dissociation of risperidone from the D2 receptors contributes to decreased risk of extrapyramidal symptoms (EPS), which occur with permanent and high occupancy blockade of D2 dopaminergic receptors. Low-affinity binding and rapid dissociation from the D2 receptor distinguish risperidone from the traditional antipsychotic drugs. A higher occupancy rate of D2 receptors is said to increase the risk of extrapyramidal symptoms and is therefore to be avoided.    Increased serotonergic mesocortical activity in schizophrenia results in negative symptoms, such as depression and decreased motivation. The high-affinity binding of risperidone to 5-HT2A receptors leads to a decrease in serotonergic activity. In addition, 5-HT2A receptor blockade results in decreased risk of extrapyramidal symptoms, likely by increasing dopamine release from the frontal cortex, and not the nigrostriatal tract. Dopamine level is therefore not completely inhibited. Through the above mechanisms, both serotonergic and D2 blockade by risperidone are thought to synergistically work to decrease the risk of extrapyramidal symptoms.    Risperidone has also been said to be an antagonist of alpha-1 (α1), alpha-2 (α2), and histamine (H1) receptors. Blockade of these receptors is thought to improve symptoms of schizophrenia, however the exact mechanism of action on these receptors is not fully understood at this time."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:45.444Z",
+  "source_id": "DB00734",
+  "source_url": "https://go.drugbank.com/drugs/DB00734",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5073#section=Mechanism-of-Action"
+ },
+ "DB01238": {
+  "drugbank_id": "DB01238",
+  "name": "Aripiprazole",
+  "pubchem_cid": 60795,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01238",
+  "text": [
+   "The antipsychotic action of aripiprazole is likely due to its partial agonist activity on D2 and 5-HT<sub>1A</sub> receptors as well as its antagonist activity at 5-HT<sub>2A</sub> receptors; however, the exact mechanism has not been fully elucidated. One of the mechanisms that have been proposed is that aripiprazole both stimulates and inhibits dopamine as it engages the D2 receptor. It lowers dopamine neuronal firing at high dopamine concentrations and increases dopamine firing at low concentrations. Its partial agonist activity gives aripiprazole an intermediate level of dopaminergic neuronal tone between full agonist and antagonist of the D2 receptor. In addition, some adverse effects may be due to action on other receptors. For example, orthostatic hypotension may be explained by antagonism of the adrenergic alpha-1 receptors."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:46.382Z",
+  "source_id": "DB01238",
+  "source_url": "https://go.drugbank.com/drugs/DB01238",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/60795#section=Mechanism-of-Action"
+ },
+ "DB00246": {
+  "drugbank_id": "DB00246",
+  "name": "Ziprasidone",
+  "pubchem_cid": 60854,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00246",
+  "text": [
+   "The effects of ziprasidone are differentiated from other antispychotics based on its preference and affinity for certain receptors. Ziprasidone binds to serotonin-2A (5-HT2A) and dopamine D2 receptors in a similar fashion to other atypical antipsychotics; however, one key difference is that ziprasidone has a higher 5-HT2A/D2 receptor affinity ratio when compared to other antipsychotics such as olanzapine, quetiapine, risperidone, and aripiprazole.  Ziprasidone offers enhanced modulation of mood, notable negative symptom relief, overall cognitive improvement and reduced motor dysfunction which is linked to it's potent interaction with 5-HT2C, 5-HT1D, and 5-HT1A receptors in brain tissue. Ziprasidone can bind moderately to norepinephrine and serotonin reuptake sites which may contribute to its antidepressant and anxiolytic activity. Patient's taking ziprasidone will likely experience a lower incidence of orthostatic hypotension, cognitive disturbance, sedation, weight gain, and disruption in prolactin levels since ziprasidone has a lower affinity for histamine H1, muscarinic M1, and alpha1-adrenoceptors."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:48.126Z",
+  "source_id": "DB00246",
+  "source_url": "https://go.drugbank.com/drugs/DB00246",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/60854#section=Mechanism-of-Action"
+ },
+ "DB00334": {
+  "drugbank_id": "DB00334",
+  "name": "Olanzapine",
+  "pubchem_cid": 135398745,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00334",
+  "text": [
+   "The activity of olanzapine is achieved by the antagonism of multiple neuronal receptors including the dopamine receptor D1, D2, D3 and D4 in the brain, the serotonin receptors 5HT2A, 5HT2C, 5HT3 and 5HT6, the alpha-1 adrenergic receptor, the histamine receptor H1 and multiple muscarinic receptors.  As abovementioned, olanzapine presents a wide profile of targets, however, its antagonistic effect towards the dopamine D2 receptor in the mesolimbic pathway is key as it blocks dopamine from having a potential action at the post-synaptic receptor. The binding of olanzapine to the dopamine D2 receptors is easily dissociable and hence, it allows for a certain degree of dopamine neurotransmission.  On the other hand, olanzapine acts in the serotonin 5HT2A receptors in the frontal cortex in a similar manner than the reported on dopamine D2 receptors. This determined effect allows for a decrease in adverse effects."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:49.078Z",
+  "source_id": "DB00334",
+  "source_url": "https://go.drugbank.com/drugs/DB00334",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/135398745#section=Mechanism-of-Action"
+ },
+ "DB00176": {
+  "drugbank_id": "DB00176",
+  "name": "Fluvoxamine",
+  "pubchem_cid": 5324346,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00176",
+  "text": [
+   "The exact mechanism of action of fluvoxamine has not been fully determined, but appears to be linked to its inhibition of CNS neuronal uptake of serotonin. Fluvoxamine blocks the reuptake of serotonin at the serotonin reuptake pump of the neuronal membrane, enhancing the actions of serotonin on 5HT<sub>1A</sub> autoreceptors. Studies have also demonstrated that fluvoxamine has virtually no affinity for α<sub>1</sub>- or α<sub>2</sub>-adrenergic, β-adrenergic, muscarinic, dopamine D<sub>2</sub>, histamine H<sub>1</sub>, GABA-benzodiazepine, opiate, 5-HT<sub>1</sub>, or 5-HT<sub>2</sub> receptors, despite having an affinity for binding to σ1 receptors."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:50.093Z",
+  "source_id": "DB00176",
+  "source_url": "https://go.drugbank.com/drugs/DB00176",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5324346#section=Mechanism-of-Action"
+ },
+ "DB00740": {
+  "drugbank_id": "DB00740",
+  "name": "Riluzole",
+  "pubchem_cid": 5070,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00740",
+  "text": [
+   "The mode of action of riluzole is unknown. Its pharmacological properties include the following, some of which may be related to its effect: 1) an inhibitory effect on glutamate release (activation of glutamate reuptake), 2) inactivation of voltage-dependent sodium channels, and 3) ability to interfere with intracellular events that follow transmitter binding at excitatory amino acid receptors."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:51.041Z",
+  "source_id": "DB00740",
+  "source_url": "https://go.drugbank.com/drugs/DB00740",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5070#section=Mechanism-of-Action"
+ },
+ "DB00843": {
+  "drugbank_id": "DB00843",
+  "name": "Donepezil",
+  "pubchem_cid": 3152,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00843",
+  "text": [
+   "The commonly accepted cholinergic hypothesis proposes that a portion of the cognitive and behavioral decline associated with Alzheimer's are the result of decreased cholinergic transmission in the central nervous system. Donepezil selectively and reversibly inhibits the acetylcholinesterase enzyme, which normally breaks down acetylcholine. The main pharmacological actions of this drug are believed to occur as the result of this enzyme inhibition, enhancing cholinergic transmission, which relieves the symptoms of Alzheimer's dementia. In addition to the above, other mechanisms of action of donepezil are possible, including the opposition of glutamate-induced excitatory transmission via downregulation of NMDA receptors and the regulation of amyloid proteins, which have demonstrated significant effects on the disease process of Alzheimer's. Other possible targets for donepezil may also include the inhibition various inflammatory signaling pathways, exerting neuroprotective effects."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:52.065Z",
+  "source_id": "DB00843",
+  "source_url": "https://go.drugbank.com/drugs/DB00843",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/3152#section=Mechanism-of-Action"
+ },
+ "DB01043": {
+  "drugbank_id": "DB01043",
+  "name": "Memantine",
+  "pubchem_cid": 4054,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01043",
+  "text": [
+   "Continuous activation of the N-methyl-D-aspartate (NMDA) receptors in the central nervous system caused by _glutamate_ is thought to cause some of the Alzheimer's disease symptoms. This overactivation is thought to contribute to neurotoxicity due to the excitatory properties of glutamate. The pharmacological effect of memantine likely occurs via the drug's behavior as an uncompetitive (open-channel) NMDA receptor antagonist, preventing glutamate action on this receptor.  Memantine has a preference for the NMDA receptor-operated cation channels. Despite these antagonist effects, memantine has not been proven to prevent or retard the neurodegeneration seen in patients diagnosed with Alzheimer’s disease."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:53.045Z",
+  "source_id": "DB01043",
+  "source_url": "https://go.drugbank.com/drugs/DB01043",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/4054#section=Mechanism-of-Action"
+ },
+ "DB00514": {
+  "drugbank_id": "DB00514",
+  "name": "Dextromethorphan",
+  "pubchem_cid": 5360696,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00514",
+  "text": [
+   "Dextromethorphan is a low-affinity uncompetitive NMDA antagonist and sigma-1 receptor agonist. It is also an antagonist of α3/β4 nicotinic receptors. However, the mechanism by which dextromethorphan's receptor agonism and antagonism translate to a clinical effect is not well understood."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:54.012Z",
+  "source_id": "DB00514",
+  "source_url": "https://go.drugbank.com/drugs/DB00514",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5360696#section=Mechanism-of-Action"
+ },
+ "DB00783": {
+  "drugbank_id": "DB00783",
+  "name": "Estradiol",
+  "pubchem_cid": 5757,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00783",
+  "text": [
+   "Estrogen is found in the the breast, uterine, ovarian, skin, prostate, bone, fat, and brain tissues. The main source of estrogen in adult women during the reproductive period of life is the ovarian follicle, which secretes 70 to 500 mcg of estradiol each day. After menopause, however, the majority of endogenous estrogen is produced by transformation of androstenedione (which is secreted by the adrenal cortex) to estrone in the peripheral tissues. Both estrone and its sulphate conjugated form, estrone sulphate, represent the most abundant estrogens found in postmenopausal women.   Estradiol, however, is considerably more potent than estrone and estriol at the estrogen receptor (ER). As a result, the higher estrone concentration in postmenopausal population, can cause various undesirable effects. These effects may include hot flashes, chills, vaginal dryness, mood swings, irregular menstruation, and chills, in addition to sleep problems.  Estradiol workings by binding to subtypes of the estrogen receptor: estrogen receptor alpha (ERα) and estrogen receptor beta (ERβ). It also exerts potent agonism of G Protein-coupled estrogen receptor (GPER), which is recognized an important regulator of this drug's rapid effects. Once the estrogen receptor has bound to its ligand, it enters the nucleus of the target cell, regulating gene transcription and formation of of messenger RNA. This mRNA makes contact with ribosomes producing specific proteins that express the effect of estradiol upon the target cell. Agonism of estrogen receptors increases pro-estrogenic effects, leading to the relief of vasomotor and urogenital symptoms of a postmenopausal or low estradiol state."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:55.161Z",
+  "source_id": "DB00783",
+  "source_url": "https://go.drugbank.com/drugs/DB00783",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5757#section=Mechanism-of-Action"
+ },
+ "DB00655": {
+  "drugbank_id": "DB00655",
+  "name": "Estrone",
+  "pubchem_cid": 5870,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00655",
+  "text": [
+   "Estrogens enter the cells of responsive tissues (e.g. female organs, breasts, hypothalamus, pituitary) where they interact with estrogen receptors. Hormone-bound estrogen receptors dimerize, translocate to the nucleus of cells and bind to estrogen response elements (ERE) of genes. Binding to ERE alters the transcription rate of affected genes. Estrogens increase the hepatic synthesis of sex hormone binding globulin (SHBG), thyroid-binding globulin (TBG), and other serum proteins and suppress follicle-stimulating hormone (FSH) release from the anterior pituitary."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:56.325Z",
+  "source_id": "DB00655",
+  "source_url": "https://go.drugbank.com/drugs/DB00655",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5870#section=Mechanism-of-Action"
+ },
+ "DB04573": {
+  "drugbank_id": "DB04573",
+  "name": "Estriol",
+  "pubchem_cid": 5756,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB04573",
+  "text": [
+   "Estriol levels can be measured to give an indication of the general health of the fetus. DHEA-S is produced by the adrenal cortex of the fetus. This is converted to estriol by the placenta. If levels of \"unconjugated estriol\" are abnormally low in a pregnant woman, this may indicate a problem with the development of the child. The drug interacts with a target cell receptor. When the estrogen receptor has bound its ligand it can enter the nucleus of the target cell, and regulate gene transcription which leads to formation of messenger RNA. The mRNA interacts with ribosomes to produce specific proteins that express the effect of estriol upon the target cell. Estrogens increase the hepatic synthesis of sex hormone binding globulin (SHBG), thyroid-binding globulin (TBG), and other serum proteins and suppress follicle-stimulating hormone (FSH) from the anterior pituitary."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:57.294Z",
+  "source_id": "DB04573",
+  "source_url": "https://go.drugbank.com/drugs/DB04573",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5756#section=Mechanism-of-Action"
+ },
+ "DB00396": {
+  "drugbank_id": "DB00396",
+  "name": "Progesterone",
+  "pubchem_cid": 5994,
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00396",
+  "text": [
+   "Progesterone binds and activates its nuclear receptor, _PR_, which plays an important part in the signaling of stimuli that maintain the endometrium during its preparation for pregnancy.  Progesterone receptor (PR) is a member of the nuclear/steroid hormone receptor (SHR) family of ligand-dependent transcription factors that is expressed primarily in female reproductive tissue as well as the central nervous system. As a result of its binding its associated steroid hormone, progesterone, the progesterone receptor (PR) modulates the expression of genes that regulate the development, differentiation, and proliferation of target tissues. In humans, PR is found to be highly expressed in the stromal (connective tissue) cells during the secretory phase and during pregnancy.   Progesterone may prevent pregnancy by changing the consistency of cervical mucus to be unfavorable for sperm penetration, and by inhibiting follicle-stimulating hormone (FSH), which normally causes ovulation.  With perfect use, the first-year failure rate for progestin-only oral contraceptives is approximately 0.5%. The typical failure rate, however, is estimated to be approximately 5%, due to late or missed pills."
+  ],
+  "retrieved_utc": "2026-11-23T23:14:58.267Z",
+  "source_id": "DB00396",
+  "source_url": "https://go.drugbank.com/drugs/DB00396",
+  "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5994#section=Mechanism-of-Action"
+ }
+}

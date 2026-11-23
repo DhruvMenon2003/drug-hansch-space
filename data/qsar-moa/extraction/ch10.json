@@ -1,0 +1,52 @@
+{
+  "chapter_number": 10,
+  "chapter_title": "Future of Pharmacogenetics in Cardiovascular Diseases",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 219,
+  "pdf_page_last": 234,
+  "status": "read",
+  "pages_read": [219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 231,
+  "records": [
+    {
+      "drug": "R-130964",
+      "drug_kind": "not stated",
+      "target": "ADP P2Y12 receptors",
+      "target_class": "receptor",
+      "other_target_kind": "",
+      "mechanism_rule_name": "ADP P2Y12 Receptor Antagonist",
+      "naming_rule_applies": true,
+      "role_detail": "book's word is 'blocks'; no subtype (competitive, irreversible, etc.) is stated",
+      "mechanism_book_wording": "blocks the ADP P2Y12 receptors on the platelet surface, causing inhibition of platelet aggregation",
+      "quote": "thiol derivative R-130964, which blocks the ADP P2Y12 receptors on the platelet surface, causing inhibition of platelet aggregation.",
+      "pdf_page_index": 221,
+      "printed_page": 209,
+      "location_on_page": "body text",
+      "other_pages": [],
+      "numbers_given": "none",
+      "numbers_detail": "",
+      "notes": "The book describes R-130964 as 'the active thiol derivative' of clopidogrel, which 'is administered to patients as a prodrug' (same paragraph, PDF page 221). The receptor block is attributed to the metabolite, not to clopidogrel itself; clopidogrel is only called 'a platelet inhibitor (PI)' (PDF page 220), with no molecular target of its own. The quote runs over a line break on the page (after 'active' the next line starts 'thiol derivative'; after 'surface,' the next line starts 'causing'). 'Antagonist' is chosen from the book's word 'blocks' under the receptor naming rule."
+    },
+    {
+      "drug": "coumarins",
+      "drug_kind": "not stated",
+      "target": "VKORC1 (vitamin K epoxide reductase multiprotein complex 1)",
+      "target_class": "enzyme",
+      "other_target_kind": "",
+      "mechanism_rule_name": "Vitamin K Epoxide Reductase Inhibitor",
+      "naming_rule_applies": true,
+      "role_detail": "direction of action is NOT stated in the chapter; 'Inhibitor' is an inference",
+      "mechanism_book_wording": "target enzyme of the coumarins",
+      "quote": "A decade later, VKORC1 was identified as the target enzyme of the coumarins (Rost et al., 2004; Li et al., 2004)",
+      "pdf_page_index": 229,
+      "printed_page": 217,
+      "location_on_page": "body text",
+      "other_pages": [222],
+      "numbers_given": "none",
+      "numbers_detail": "",
+      "notes": "The chapter names VKORC1 only as 'the target enzyme' of coumarins / coumarin derivatives and never says in which direction they act on it. The role word 'Inhibitor' in mechanism_rule_name is my inference, not the book's wording. PDF page 222 has the fuller target name: 'the VKORC1 gene, encoding the target enzyme vitamin K epoxide reductase multiprotein complex 1'. The drug is named as a class ('coumarins', 'coumarin derivatives', 'Oral anticoagulants of the coumarin type'); warfarin, acenocoumarol and phenprocoumon appear in the chapter or its reference list but are not individually linked to VKORC1 in the body text. The quote runs over line breaks on the page."
+    }
+  ],
+  "chapter_notes": "A pharmacogenetics and health-policy chapter with only two mechanism statements and no potency or binding numbers. Not recorded because no molecular target with a direction of action is given: statins (only described as transported into the liver by OATP1B1, i.e. substrates), prasugrel and ticagrelor (only called 'PI', platelet inhibitor), aspirin, tamoxifen, and the CYP enzymes (CYP2C19, CYP2C9, CYP1A2, CYP2B6, CYP3A4, CYP2D6, CYP4F2, CYP2C18), which appear only as metabolizing enzymes or genotypes. The term 'P2Y12 inhibitors' occurs only in a reference title (PDF page 231) and was not extracted. The reference list starts partway down PDF page 231; body text ends on that page."
+}

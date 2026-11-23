@@ -1,0 +1,13 @@
+{
+  "chapter_number": 20,
+  "chapter_title": "Application of Matrix-Assisted Laser Desorption/Ionization Imaging Mass Spectrometry",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 449,
+  "pdf_page_last": 464,
+  "status": "read",
+  "pages_read": [449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 460,
+  "records": [],
+  "chapter_notes": "Chapter names no mechanisms of action. It is a methods review of MALDI imaging mass spectrometry (sample preparation, matrix choice, instruments, applications); the only drugs named in the body are cocaine (PDF pages 458, figure 5) and olanzapine with its N-desmethyl and 2-hydroxymethyl metabolites (PDF page 459, figure 6), both only as analytes whose tissue distribution was imaged, with no molecular target or direction of action stated. Numbers given for them are analytical or dosing values only (cocaine 5 ng/mg detection level and hair concentrations 130, 4.9 and 8.5 ng/mg on PDF page 458; olanzapine dose 8 mg/kg on PDF page 459), not mechanism data. The reference list runs from the lower part of PDF page 460 to 464 and was skipped as instructed; a cited paper title there contains the phrase 'HIV protease inhibitors' (PDF page 461), which was not recorded because it is in the reference list only. All 16 pages rendered legibly."
+}

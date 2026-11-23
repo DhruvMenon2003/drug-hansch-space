@@ -1,0 +1,25 @@
+{
+  "chapter_number": 17,
+  "chapter_title": "Mephedrone-Related Fatalities in the United Kingdom: Contextual, Clinical and Practical Issues",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 367,
+  "pdf_page_last": 392,
+  "status": "read",
+  "pages_read": [367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 387,
+  "records": [
+    {
+      "drug": "methcathinone",
+      "drug_kind": "not stated",
+      "target": "plasma membrane catecholamine transporters",
+      "target_class": "other",
+      "other_target_kind": "transporter",
+      "mechanism_rule_name": "Plasma Membrane Catecholamine Transporter Action (direction not stated)",
+      "naming_rule_applies": false,
+      "role_detail": "",
+      "mechanism_book_wording": "predominant action on plasma membrane catecholamine transporters",
+      "quote": "the main mechanism of action is very similar to that of amphetamine, being characterised by a predominant action on plasma membrane catecholamine transporters",
+      "pdf_page_index": 369,
+      "printed_page": 357,
+      "location

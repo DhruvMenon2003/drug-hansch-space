@@ -1,0 +1,27 @@
+{
+  "chapter_number": 11,
+  "chapter_title": "Warfarin Enantiomers Pharmacokinetics by CYP2C19",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 235,
+  "pdf_page_last": 242,
+  "status": "read",
+  "pages_read": [235, 236, 237, 238, 239, 240, 241, 242],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 241,
+  "records": [
+    {
+      "drug": "Warfarin",
+      "drug_kind": "approved drug",
+      "target": "vitamin K",
+      "target_class": "other",
+      "other_target_kind": "vitamin (cofactor)",
+      "mechanism_rule_name": "Vitamin K Antagonist",
+      "naming_rule_applies": false,
+      "role_detail": "",
+      "mechanism_book_wording": "coumarin vitamin K antagonist",
+      "quote": "Warfarin, a coumarin vitamin K antagonist, is the most widely prescribed anticoagulant agent",
+      "pdf_page_index": 235,
+      "printed_page": 223,
+      "location_on_page": "body text",
+      "other_pages": [],
+      "numbers_given": "potency
