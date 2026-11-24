@@ -1,0 +1,297 @@
+{
+  "sampling_rule": "Every 6th record counting from the first (1-based records 1, 7, 13, 19, ...) in each of ch01, ch09, ch12, ch13, ch14, taken in file order. Record counts in the files: ch01 90, ch09 21, ch12 19, ch13 15, ch14 29, so the sample is ch01 {1,7,...,85} (15), ch09 {1,7,13,19} (4), ch12 {1,7,13,19} (4), ch13 {1,7,13} (3), ch14 {1,7,13,19,25} (5). No file yielded fewer than 3 records, so the 'first 3' fallback was not used. Every sampled record was checked against its stated pdf_page_index (page images read, not text search).",
+  "files": ["ch01.json", "ch09.json", "ch12.json", "ch13.json", "ch14.json"],
+  "records_checked": 31,
+  "counts": {"correct": 19, "correct_but_inferred": 10, "wrong": 2, "quote_not_found": 0},
+  "summary_notes": [
+    "All 31 quotes were found on their stated PDF page. No quote was missing and no page index was off. Quotes match the page word for word, apart from line-break or hyphen handling noted per record.",
+    "The 2 'wrong' verdicts are role errors, not quote errors: (a) ch01 Ro 01-6128, where the page says the PAMs 'did not exhibit any agonist activity of their own' yet the record is named 'Agonist'; (b) ch09 aripiprazole, where the page calls the action 'stabilizing' and sets it apart from stimulation (= receptor agonism), yet the record is named 'Receptor Agonist'.",
+    "Systematic convention to review: allosteric modulators are mapped to Agonist (PAM) or Antagonist (NAM), and 'inverse agonist' to Antagonist. In this sample the page never uses the words agonist/antagonist for CPCCOEt (NAM), ADX47273 (PAM), MNI-135 (NAM) and the 5-HT2A 'inverse agonists'; these are graded 'correct but inferred'. If the dataset needs the exact book role, these four plus Ro 01-6128 are the affected records (5 of 15 in ch01).",
+    "Enzyme 'inducer' mapped to Activator (2 sampled records: ch09 phenobarbital on UDPG transferase, ch12 alcohol on CYP2E1) and 'serotonin reuptake' recorded as a transporter target (ch12 citalopram) are inference steps, graded 'correct but inferred'.",
+    "Several sampled records are class statements or nonspecific (no compound: ch01 x3, ch09 ACE, ch14 x2 ; unspecified receptor: ch09 adrenaline, ch14 olanzapine). They match the page but carry little target-level information."
+  ],
+  "records": [
+    {
+      "chapter": "ch01", "record_index": 1,
+      "drug": "glutamate", "mechanism_rule_name": "mGlu Receptor Agonist", "pdf_page_index": 17,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "partly: page says receptors are 'activated by' glutamate; the word agonist is not used",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "Fair reading of 'activated by the excitatory neurotransmitter'; Agonist is the nearest rule term."
+    },
+    {
+      "chapter": "ch01", "record_index": 7,
+      "drug": "", "mechanism_rule_name": "5-HT2A Receptor Antagonist", "pdf_page_index": 22,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "page says '5-HT2A receptor inverse agonists', not antagonists",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "Inverse agonist mapped to Antagonist; class statement about antipsychotic drugs, no compound named."
+    },
+    {
+      "chapter": "ch01", "record_index": 13,
+      "drug": "", "mechanism_rule_name": "Adenosine A2A Receptor Antagonist", "pdf_page_index": 21,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'antagonists of both mGlu5 and A2A'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "'adenosine A2A receptors' is named in the same paragraph; class statement, no compound."
+    },
+    {
+      "chapter": "ch01", "record_index": 19,
+      "drug": "CPCCOEt", "mechanism_rule_name": "mGlu1 Receptor Antagonist", "pdf_page_index": 25,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "page says 'negative allosteric modulator (NAM)'; the word antagonist is not used for CPCCOEt",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "NAM mapped to Antagonist."
+    },
+    {
+      "chapter": "ch01", "record_index": 25,
+      "drug": "Ro 01-6128", "mechanism_rule_name": "mGlu1 Receptor Agonist", "pdf_page_index": 25,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "no: page says these PAMs 'did not exhibit any agonist activity of their own' (word used: PAM, 'allosteric potentiation')",
+      "verdict": "wrong", "corrected_rule_name": "mGlu1 Receptor Positive Allosteric Modulator (the page rules out Agonist; neither allowed role fits)",
+      "comment": "Target mGlu1 is not in the sentence but is supported by the paragraph's closing line ('mGlu1 possesses multiple allosteric binding sites'); the Agonist label contradicts the page."
+    },
+    {
+      "chapter": "ch01", "record_index": 31,
+      "drug": "ADX47273", "mechanism_rule_name": "mGlu5 Receptor Agonist", "pdf_page_index": 25,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "page says 'mGlu5 PAMs'; agonist is not used for this compound",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "PAM mapped to Agonist; the page does not say whether it has intrinsic agonism (the same paragraph says the Ro PAMs do not)."
+    },
+    {
+      "chapter": "ch01", "record_index": 37,
+      "drug": "Dizolcipine (MK-801)", "mechanism_rule_name": "NMDA Receptor Antagonist", "pdf_page_index": 26,
+      "quote_found_on_page": true,
+      "quote_accurate": "substring only: the page reads 'competitive and non-/competitive antagonists of NMDA receptors, 2-amino-7-phosphonoheptanoic acid (AP-7) and Dizolcipine (MK-801)'; the quote starts at the second half of 'non-competitive', so read alone it says 'competitive'",
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'antagonists of NMDA receptors'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Role and target are right; the truncated quote is misleading about competitive vs non-competitive, though the record's role_detail already says the book does not assign which is which."
+    },
+    {
+      "chapter": "ch01", "record_index": 43,
+      "drug": "MNI-135", "mechanism_rule_name": "Group II mGlu Receptor Antagonist", "pdf_page_index": 27,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "page says 'potent negative allosteric modulators'; antagonist is not used for the MNI series",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "NAM mapped to Antagonist; quote spans the 'MNI-/137' line break; Group II context from the section heading 2.4.4."
+    },
+    {
+      "chapter": "ch01", "record_index": 49,
+      "drug": "MAP4", "mechanism_rule_name": "Group III mGlu Receptor Antagonist", "pdf_page_index": 28,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes, from the preceding sentence ('there are only selective antagonists for Group III mGlu receptors ... For example, ... MAP4 and MSOP')",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "The quote itself holds no role word; the role comes from the directly preceding sentence."
+    },
+    {
+      "chapter": "ch01", "record_index": 55,
+      "drug": "VU0155041", "mechanism_rule_name": "mGlu4 Receptor Agonist", "pdf_page_index": 30,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'an allosteric agonist and positive allosteric modulator'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Target mGlu4 from the preceding sentence ('a more recent PAM of mGlu4')."
+    },
+    {
+      "chapter": "ch01", "record_index": 61,
+      "drug": "AMN082", "mechanism_rule_name": "mGlu7 Receptor Agonist", "pdf_page_index": 31,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'The mGlu7 allosteric agonist, ... (AMN082)'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": ""
+    },
+    {
+      "chapter": "ch01", "record_index": 67,
+      "drug": "", "mechanism_rule_name": "mGlu2/3 Receptor Agonist", "pdf_page_index": 32,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'Non-selective mGlu2/mGlu3 agonists'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Class statement, no compound named."
+    },
+    {
+      "chapter": "ch01", "record_index": 73,
+      "drug": "AZD2516", "mechanism_rule_name": "mGlu5 Receptor Antagonist", "pdf_page_index": 32,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: Table 1 row 'mGlu5 | AZD2516 (Antagonist)'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "The row is printed faded but legible."
+    },
+    {
+      "chapter": "ch01", "record_index": 79,
+      "drug": "CGP27492", "mechanism_rule_name": "GABAB Receptor Agonist", "pdf_page_index": 35,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'some other agonists such as CGP27492'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "GABAB comes from the surrounding paragraph (section 3.3 on GABAB receptors)."
+    },
+    {
+      "chapter": "ch01", "record_index": 85,
+      "drug": "2-OH saclofen", "mechanism_rule_name": "GABAB Receptor Antagonist", "pdf_page_index": 36,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: listed among 'antagonists' (sentence: 'The number of antagonists is much greater than that of agonists, among these ...')",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "The sentence sits directly after a GABAC antagonist remark on the same page, but the paragraph and Fig. 5 context are GABAB."
+    },
+    {
+      "chapter": "ch09", "record_index": 1,
+      "drug": "adrenaline", "mechanism_rule_name": "Receptor Agonist", "pdf_page_index": 197,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'Through direct receptor agonism ... e.g. adrenaline stimulates heart'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Matches the page, but no receptor is named, so the record has no specific target (generic 'receptor (unspecified)')."
+    },
+    {
+      "chapter": "ch09", "record_index": 7,
+      "drug": "aripiprazole", "mechanism_rule_name": "Receptor Agonist", "pdf_page_index": 197,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": false, "target_class_correct": "page does not say (the page says 'general receptor activation', no receptor or receptor class for aripiprazole)",
+      "role_supported": "no: the page calls it 'stabilizing action' and says such drugs act 'neither as a stimulant nor as a depressant'; on the same page Stimulation is defined as receptor agonism, so the book places stabilizing outside agonism",
+      "verdict": "wrong", "corrected_rule_name": "Receptor Stabilizer (page names no agonist/antagonist role and no specific receptor)",
+      "comment": "The record's own note admits Agonist is an inference; the page's taxonomy contradicts it. Same issue applies to the buprenorphine record (not sampled)."
+    },
+    {
+      "chapter": "ch09", "record_index": 13,
+      "drug": "phenobarbital", "mechanism_rule_name": "UDP Glucuronyl Transferase Activator", "pdf_page_index": 200,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "page says 'Inducers include phenobarbital ...'; the word activator is not used",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "Enzyme inducer mapped to Activator; induction is not direct activation of the enzyme."
+    },
+    {
+      "chapter": "ch09", "record_index": 19,
+      "drug": "", "mechanism_rule_name": "Angiotensin Converting Enzyme Inhibitor", "pdf_page_index": 209,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'a target for ACE inhibitors'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Class statement, no compound named."
+    },
+    {
+      "chapter": "ch12", "record_index": 1,
+      "drug": "Disulfiram", "mechanism_rule_name": "Aldehyde Dehydrogenase Inhibitor", "pdf_page_index": 254,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'inhibition of liver aldehyde dehydrogenase'; the page also says it 'blocks ALDH activity'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Quote spans the 'aldehyde / dehydrogenase' line break."
+    },
+    {
+      "chapter": "ch12", "record_index": 7,
+      "drug": "Topiramate", "mechanism_rule_name": "AMPA Glutamate Receptor Antagonist", "pdf_page_index": 255,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'antagonizing ... (AMPA) and kainate glutamate receptors'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Quote spans the 'amino-3- / hydroxy' line break."
+    },
+    {
+      "chapter": "ch12", "record_index": 13,
+      "drug": "citalopram", "mechanism_rule_name": "Selective Serotonin Reuptake Inhibitor", "pdf_page_index": 255,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": "partly: the page names the process 'serotonin reuptake' (class name SSRI), not a protein",
+      "target_class_correct": "page does not say (transporter is the record's inference)",
+      "role_supported": "yes: 'reuptake inhibitors'",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "The mechanism is only the class name; the page gives no transporter and no citalopram-specific statement."
+    },
+    {
+      "chapter": "ch12", "record_index": 19,
+      "drug": "alcohol (ethanol)", "mechanism_rule_name": "CYP2E1 Activator", "pdf_page_index": 249,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "page says 'CYP2E1 is induced (increase in activity up to 10 fold) by chronic alcohol drinking'; activator is not used",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "Chronic induction mapped to Activator; the record itself flags it as borderline. Page prints 'alcohol', not 'ethanol'."
+    },
+    {
+      "chapter": "ch13", "record_index": 1,
+      "drug": "resveratrol", "mechanism_rule_name": "Sirtuin Activator", "pdf_page_index": 272,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'activation of sirtuins' (hedged: 'seem to be'; same sentence says action on Sirt1 'is indirect')",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Hedged and indirect per the book; the record notes this."
+    },
+    {
+      "chapter": "ch13", "record_index": 7,
+      "drug": "agomelatine", "mechanism_rule_name": "Melatonin Receptor Agonist", "pdf_page_index": 274,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'specific agonists ramelteon ... and agomelatine'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "The quoted sentence does not name the receptor; the preceding sentence names MT1/MT2 and a later sentence says 'Agomelatine binds to melatonin receptors'."
+    },
+    {
+      "chapter": "ch13", "record_index": 13,
+      "drug": "metformin", "mechanism_rule_name": "mTORC1 Inhibitor", "pdf_page_index": 282,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": "page does not say outright (same page mentions 'mTOR catalytic activity' for rapamycin; mTORC1 itself is not called an enzyme here)",
+      "role_supported": "hedged and indirect: 'may inhibit mTORC1 via modulation of Rag signaling'",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "Page does not say metformin directly inhibits the enzyme; it suggests an indirect effect via Rag signalling."
+    },
+    {
+      "chapter": "ch14", "record_index": 1,
+      "drug": "", "mechanism_rule_name": "Dopamine-2 Receptor Antagonist", "pdf_page_index": 299,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'dopamine-2 receptor antagonism'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Class statement (second generation antipsychotics, quoted from Schwartz & Stahl, 2011); no compound."
+    },
+    {
+      "chapter": "ch14", "record_index": 7,
+      "drug": "Aripiprazole", "mechanism_rule_name": "Dopamine Autoreceptor Agonist", "pdf_page_index": 302,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'presynaptic dopamine autoreceptor agonistic activity'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Table 3 row; 'autoreceptor' supports receptor."
+    },
+    {
+      "chapter": "ch14", "record_index": 13,
+      "drug": "Zyprexa (olanzapine)", "mechanism_rule_name": "Serotonin Receptor Antagonist", "pdf_page_index": 302,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'combined dopamine and serotonin receptor antagonist activity'",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "No receptor subtype given by the page; target is generic."
+    },
+    {
+      "chapter": "ch14", "record_index": 19,
+      "drug": "Riluzole", "mechanism_rule_name": "Glutamate Receptor Antagonist", "pdf_page_index": 303,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": "partly: page says 'A glutamate antagonist (receptors, glutamate)', no subtype",
+      "target_class_correct": true,
+      "role_supported": "yes: 'glutamate antagonist'",
+      "verdict": "correct but inferred", "corrected_rule_name": "",
+      "comment": "Reading the garbled bracket '(receptors, glutamate)' as 'glutamate receptors' is a fair but interpretive step."
+    },
+    {
+      "chapter": "ch14", "record_index": 25,
+      "drug": "", "mechanism_rule_name": "NMDA Receptor Antagonist", "pdf_page_index": 319,
+      "quote_found_on_page": true, "quote_accurate": true,
+      "target_correct": true, "target_class_correct": true,
+      "role_supported": "yes: 'NMDA antagonists' (page also says 'NMDA receptor' and 'NMDA glutamate receptors')",
+      "verdict": "correct", "corrected_rule_name": "",
+      "comment": "Class-level statement, no compound."
+    }
+  ]
+}

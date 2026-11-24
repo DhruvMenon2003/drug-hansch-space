@@ -1,0 +1,13 @@
+{
+  "chapter_number": 21,
+  "chapter_title": "Closed-Loop Control of Anaesthetic Effect",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 465,
+  "pdf_page_last": 488,
+  "status": "read",
+  "pages_read": [465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 486,
+  "records": [],
+  "chapter_notes": "Chapter is a control-engineering treatment of propofol infusion (PK/PD compartmental model, PI, Smith predictor, self-adaptive and model predictive control, BIS feedback); it names propofol, remifentanil, midazolam and rocuronium only as administered drugs and names no molecular target or mechanism of action, so there are no records. Skipped statements about non-receptor, non-enzyme targets: 0. PDF pages 486-488 are reference list and trailing blank pages (printed pp. 474-476)."
+}

@@ -1,0 +1,53 @@
+{
+  "Record": {
+    "RecordType": "CID",
+    "RecordNumber": 6083,
+    "RecordTitle": "Adenosine Monophosphate",
+    "Section": [
+      {
+        "TOCHeading": "Pharmacology and Biochemistry",
+        "Description": "Pharmacology and biochemistry information related to this compound, including the pharmacodynamics, pharmacokinetics, metabolism, mechanism of action, biological half-life, biochemical reactions, and many others.",
+        "Section": [
+          {
+            "TOCHeading": "Mechanism of Action",
+            "Description": "In medicine, the term \"mechanism of action\" (also called MOA) is used to describe how a drug or other substance produces an effect in the body. For example, a drug's mechanism of action could be how it affects a specific target in a cell, such as an enzyme, or a cell function, such as cell growth. Knowing the mechanism of action of a drug may help provide information about the safety of the drug and how it affects the body. It may also help identify the right dose of a drug and which patients are most likely to respond to treatment.",
+            "Information": [
+              {
+                "ReferenceNumber": 25,
+                "Value": {
+                  "StringWithMarkup": [
+                    {
+                      "String": "Nucleotides such as Adenosine-5'-Monophosphate affect a number of immune functions, including the reversal of malnutrition and starvation-induced immunosuppression, the enhancement of T-cell maturation and function, the enhancement of natural killer cell activity, the improvement of delayed cutaneous hypersensitivity, helping resistance to such infectious agents as Staphylococcus aureus and Candida albicans, and finally the modulation of T-cell responses toward type 1 CD4 helper lymphocytes or Th1 cells. Studies have shown that mice fed a nucleotide-free diet have both impaired humoral and cellular immune responses. The addition of dietary nucleotides normalizes both types of responses. RNA, a delivery form of nucleotides, and ribonucleotides were used in these studies. The mechanism of the immune-enhancing activity of nucleic acids/nucleotides is not clear.",
+                      "Markup": [
+                        {
+                          "Start": 20,
+                          "Length": 26,
+                          "URL": "https://pubchem.ncbi.nlm.nih.gov/compound/Adenosine-5%27-Monophosphate",
+                          "Type": "PubChem Internal Link",
+                          "Extra": "CID-6083"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "Reference": [
+      {
+        "ReferenceNumber": 25,
+        "SourceName": "DrugBank",
+        "SourceID": "DB00131",
+        "Name": "Adenosine phosphate",
+        "Description": "The DrugBank database is a unique bioinformatics and cheminformatics resource that combines detailed drug (i.e. chemical, pharmacological and pharmaceutical) data with comprehensive drug target (i.e. sequence, structure, and pathway) information.",
+        "URL": "https://go.drugbank.com/drugs/DB00131",
+        "LicenseNote": "Creative Common's Attribution-NonCommercial 4.0 International License (http://creativecommons.org/licenses/by-nc/4.0/legalcode)",
+        "LicenseURL": "https://www.drugbank.ca/legal/terms_of_use",
+        "ANID": 3599706
+      }
+    ]
+  }
+}

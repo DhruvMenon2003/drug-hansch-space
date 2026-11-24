@@ -1,0 +1,218 @@
+{
+ "note": "Body-text quotes not found in the stated page text layer. ch01 records 55 and 84 were examined by hand and are on the right page with a transcription slip; the rest are unexamined.",
+ "count": 21,
+ "records": [
+  {
+   "chapter": 1,
+   "record": 6,
+   "pdf_page_index": 18,
+   "printed_page": 6,
+   "drug": "Gd3+",
+   "mechanism_rule_name": "mGlu1 Receptor Agonist",
+   "location_on_page": "body text",
+   "quote": "in the presence of an antagonist or in the presence of a potentiator"
+  },
+  {
+   "chapter": 1,
+   "record": 55,
+   "pdf_page_index": 30,
+   "printed_page": 18,
+   "drug": "VU0155041",
+   "mechanism_rule_name": "mGlu4 Receptor Agonist",
+   "location_on_page": "body text",
+   "quote": "VU0155041 is an allosteric agonist and positive allosteric modulator with potency nearly 10-fold that of PHCCC",
+   "already_examined": "yes: on the stated page, minor transcription slip"
+  },
+  {
+   "chapter": 1,
+   "record": 56,
+   "pdf_page_index": 30,
+   "printed_page": 18,
+   "drug": "VU0155041",
+   "mechanism_rule_name": "mGlu4 Receptor Agonist",
+   "location_on_page": "body text",
+   "quote": "VU0155041 is an allosteric agonist and positive allosteric modulator with potency nearly 10-fold that of PHCCC"
+  },
+  {
+   "chapter": 1,
+   "record": 84,
+   "pdf_page_index": 36,
+   "printed_page": 24,
+   "drug": "saclofen",
+   "mechanism_rule_name": "GABAB Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "among these there are the baclofen derivatives, saclofen and 2-OH saclofen; CGP54626, the most common of the antagonists; and CGP71872",
+   "already_examined": "yes: on the stated page, minor transcription slip"
+  },
+  {
+   "chapter": 1,
+   "record": 85,
+   "pdf_page_index": 36,
+   "printed_page": 24,
+   "drug": "2-OH saclofen",
+   "mechanism_rule_name": "GABAB Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "among these there are the baclofen derivatives, saclofen and 2-OH saclofen; CGP54626, the most common of the antagonists; and CGP71872"
+  },
+  {
+   "chapter": 1,
+   "record": 86,
+   "pdf_page_index": 36,
+   "printed_page": 24,
+   "drug": "CGP54626",
+   "mechanism_rule_name": "GABAB Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "among these there are the baclofen derivatives, saclofen and 2-OH saclofen; CGP54626, the most common of the antagonists; and CGP71872"
+  },
+  {
+   "chapter": 1,
+   "record": 87,
+   "pdf_page_index": 36,
+   "printed_page": 24,
+   "drug": "CGP71872",
+   "mechanism_rule_name": "GABAB Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "among these there are the baclofen derivatives, saclofen and 2-OH saclofen; CGP54626, the most common of the antagonists; and CGP71872"
+  },
+  {
+   "chapter": 2,
+   "record": 1,
+   "pdf_page_index": 58,
+   "printed_page": 46,
+   "drug": "L-glutamic acid",
+   "mechanism_rule_name": "Glutamate Receptor Agonist",
+   "location_on_page": "body text (2.7 Drugs)",
+   "quote": "as Glu receptors agonists, L-glutamic acid; selective NMDA receptor agonist, NMDA;"
+  },
+  {
+   "chapter": 4,
+   "record": 11,
+   "pdf_page_index": 94,
+   "printed_page": 82,
+   "drug": "DAMGO",
+   "mechanism_rule_name": "Opioid Mu Receptor Agonist",
+   "location_on_page": "body text",
+   "quote": "Even in the presence of μ agonist DAMGO (100 nM) and δ agonist DPDPE (200 nM)"
+  },
+  {
+   "chapter": 4,
+   "record": 12,
+   "pdf_page_index": 94,
+   "printed_page": 82,
+   "drug": "DPDPE",
+   "mechanism_rule_name": "Opioid Delta Receptor Agonist",
+   "location_on_page": "body text",
+   "quote": "Even in the presence of μ agonist DAMGO (100 nM) and δ agonist DPDPE (200 nM)"
+  },
+  {
+   "chapter": 9,
+   "record": 1,
+   "pdf_page_index": 197,
+   "printed_page": 185,
+   "drug": "adrenaline",
+   "mechanism_rule_name": "Receptor Agonist",
+   "location_on_page": "body text (3.1 Principles of drug actions, Stimulation)",
+   "quote": "Through direct receptor agonism and downstream effect e.g. adrenaline stimulates heart, pilocarpine stimulates salivary glands."
+  },
+  {
+   "chapter": 9,
+   "record": 2,
+   "pdf_page_index": 197,
+   "printed_page": 185,
+   "drug": "pilocarpine",
+   "mechanism_rule_name": "Receptor Agonist",
+   "location_on_page": "body text (3.1 Principles of drug actions, Stimulation)",
+   "quote": "Through direct receptor agonism and downstream effect e.g. adrenaline stimulates heart, pilocarpine stimulates salivary glands."
+  },
+  {
+   "chapter": 23,
+   "record": 5,
+   "pdf_page_index": 543,
+   "printed_page": 531,
+   "drug": "DHAA and related derivatives (secondary metabolites, dehydroabietic acid)",
+   "mechanism_rule_name": "Glutamate Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "the observed pharmacological effects could be attributed to a potential antagonism with glutamate receptors and/or inhibition of noradrenalin-dopamine releasing"
+  },
+  {
+   "chapter": 24,
+   "record": 2,
+   "pdf_page_index": 555,
+   "printed_page": 543,
+   "drug": "carbon monoxide (CO)",
+   "mechanism_rule_name": "Nitric Oxide Synthase Inhibitor",
+   "location_on_page": "body text",
+   "quote": "CO has been shown to serve as a partial agonist of nitric oxide synthetase (NOS) and thus, may down-regulate the level of NOS-dependent signaling"
+  },
+  {
+   "chapter": 27,
+   "record": 9,
+   "pdf_page_index": 627,
+   "printed_page": 615,
+   "drug": "Ethanol",
+   "mechanism_rule_name": "RhoA Inhibitor",
+   "location_on_page": "body text",
+   "quote": "Ethanol reduced endogenous levels of active RhoA due to an increase in the activity of small Rho GTP-ases"
+  },
+  {
+   "chapter": 28,
+   "record": 23,
+   "pdf_page_index": 646,
+   "printed_page": 634,
+   "drug": "",
+   "mechanism_rule_name": "Adenosine Kinase Inhibitor",
+   "location_on_page": "body text",
+   "quote": "AK inhibitors are able to decrease pain levels when given peripherally or systemically"
+  },
+  {
+   "chapter": 29,
+   "record": 4,
+   "pdf_page_index": 681,
+   "printed_page": 669,
+   "drug": "Zn2+ complex of AMD3100",
+   "mechanism_rule_name": "CXCR4 Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "complex of AMD3100 has a 10-fold higher affinity to the receptor as compared to AMD3100 alone"
+  },
+  {
+   "chapter": 29,
+   "record": 24,
+   "pdf_page_index": 680,
+   "printed_page": 668,
+   "drug": "NSAIDs (nonsteroidal antiinflammatory drugs)",
+   "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+   "location_on_page": "body text",
+   "quote": "The pharmacological effects of NSAIDs stem from the inhibition of enzymes in the cyclooxygenase family (COX)."
+  },
+  {
+   "chapter": 29,
+   "record": 31,
+   "pdf_page_index": 684,
+   "printed_page": 672,
+   "drug": "Zn(alx)2 (bis(allixinato)zinc(II))",
+   "mechanism_rule_name": "Hormone-Sensitive Lipase Inhibitor",
+   "location_on_page": "body text",
+   "quote": "regulate the activation of HSL (hormone-sensitive lipase), resulting in suppression of free fatty acid release"
+  },
+  {
+   "chapter": 29,
+   "record": 32,
+   "pdf_page_index": 684,
+   "printed_page": 672,
+   "drug": "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))",
+   "mechanism_rule_name": "Hormone-Sensitive Lipase Inhibitor",
+   "location_on_page": "body text",
+   "quote": "regulate the activation of HSL (hormone-sensitive lipase), resulting in suppression of free fatty acid release"
+  },
+  {
+   "chapter": 31,
+   "record": 7,
+   "pdf_page_index": 725,
+   "printed_page": 713,
+   "drug": "1,3-dipropyl-8-cyclopentylxanthine (DPCPX)",
+   "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+   "location_on_page": "body text",
+   "quote": "was prevented by the selective adenosine A1 receptor antagonist DPCPX (3.0 mg/kg, i.p.), demonstrating"
+  }
+ ]
+}

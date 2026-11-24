@@ -1,0 +1,33 @@
+{
+  "chapter_number": 19,
+  "chapter_title": "Chemical and Physical Enhancers for Transdermal Drug Delivery",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 409,
+  "pdf_page_last": 446,
+  "status": "read",
+  "pages_read": [409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 432,
+  "records": [
+    {
+      "drug": "",
+      "drug_kind": "not stated",
+      "target": "stratum corneum intracellular keratin",
+      "target_class": "other",
+      "other_target_kind": "structural protein",
+      "mechanism_rule_name": "Keratin Denaturant",
+      "naming_rule_applies": false,
+      "role_detail": "denaturing it or modifying its conformation",
+      "mechanism_book_wording": "They act on the stratum corneum intracellular keratin by denaturing it or modifying its conformation",
+      "quote": "They act on the stratum corneum intracellular keratin by denaturing it or modifying its conformation, causing subsequent swelling and increased hydration",
+      "pdf_page_index": 411,
+      "printed_page": 399,
+      "location_on_page": "body text",
+      "other_pages": [],
+      "numbers_given": "none",
+      "numbers_detail": "",
+      "notes": "BORDERLINE record; a later reader may want to drop it. 'They' = chemical percutaneous penetration enhancers as a class (section 2.2, lipid-protein-partitioning theory); no individual compound is tied to this statement. This is an excipient/formulation effect on a skin barrier protein, not a pharmacological drug-target mechanism. Classing keratin as a structural protein is my inference; the page does not use that term. The rule name 'Keratin Denaturant' is constructed from the book's verb 'denaturing'; the book does not print that phrase."
+    }
+  ],
+  "chapter_notes": "The chapter is about skin-penetration enhancement (chemical enhancers, sonophoresis, iontophoresis, electroporation, microneedles, nanocarriers) and names no receptor or enzyme mechanism for any drug; the many drugs in Tables 2 and 4 are listed only as permeants, with no target stated. The single record is a borderline class-level statement about enhancers denaturing stratum corneum keratin; the same passage (PDF page 411) also says enhancers affect desmosomes and modify intercellular lipid domains / lipid bilayers, which were not recorded because no molecular target is named. Physical-method mechanisms (cavitation, electromigration, electroosmosis, pore formation) are not compound-target mechanisms and were not recorded."
+}
