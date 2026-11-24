@@ -1,0 +1,52 @@
+SEARCHES WITH NO PAPERS AT ALL (0)
+
+SEARCHES WITH 1 TO 9 PAPERS (5)
+"Histaminase Inhibitors" QSAR  -> 3
+"Protein Kinase C betaII Activators" QSAR  -> 3
+"Thiamine Diphosphokinase Inhibitors" QSAR  -> 1
+"mGlu7 Receptor Agonists" QSAR  -> 9
+"mGlu8 Receptor Agonists" QSAR  -> 7
+
+SEARCHES WHERE THE EXACT PHRASE MATCHED NOTHING AND THE LIST WAS FILLED WITHOUT QUOTATION MARKS (42)
+"Biogenic Amine Receptor Antagonists" QSAR
+"Biogenic Amine Receptor Antagonists" Pharmacokinetics
+"Cannabinoid 1 Receptor Agonists" QSAR
+"Collagenase Type IV Inhibitors" QSAR
+"Collagenase Type IV Inhibitors" Pharmacokinetics
+"GABAC Receptor Antagonists" QSAR
+"Group 1 mGlu Receptor Antagonists" QSAR
+"Group 1 mGlu Receptor Antagonists" Pharmacokinetics
+"Group 1 mGlu5 Receptor Antagonists" QSAR
+"Group 1 mGlu5 Receptor Antagonists" Pharmacokinetics
+"Group I mGlu Receptor Agonists" QSAR
+"Group I mGlu Receptor Antagonists" QSAR
+"Group III mGlu Receptor Agonists" QSAR
+"Group III mGlu Receptor Antagonists" QSAR
+"Histaminase Inhibitors" QSAR
+"Interleukin-6 Receptor Complex Agonists" QSAR
+"Interleukin-6 Receptor Complex Agonists" Pharmacokinetics
+"Interleukin-6 Receptor Complex Antagonists" QSAR
+"Interleukin-6 Receptor Complex Antagonists" Pharmacokinetics
+"Kainate/AMPA Receptor Antagonists" QSAR
+"Mannose 6-Phosphate/Insulin-like Growth Factor II Receptor Antagonists" QSAR
+"Mannose 6-Phosphate/Insulin-like Growth Factor II Receptor Antagonists" Pharmacokinetics
+"Opioid Delta Receptor Agonists" QSAR
+"Opioid Kappa Receptor Antagonists" QSAR
+"Opioid Mu Receptor Agonists" QSAR
+"Opioid Mu Receptor Antagonists" QSAR
+"P1 Adenosine Receptor Agonists" QSAR
+"P1 Adenosine Receptor Agonists" Pharmacokinetics
+"Protein Kinase C betaII Activators" QSAR
+"Protein Kinase C betaII Activators" Pharmacokinetics
+"Scavenger Receptor Antagonists" QSAR
+"Superoxide Dismutase Activators" QSAR
+"Thiamine Diphosphokinase Inhibitors" QSAR
+"Thiamine Diphosphokinase Inhibitors" Pharmacokinetics
+"dTMP Kinase Inhibitors" QSAR
+"dTMP Kinase Inhibitors" Pharmacokinetics
+"mGlu1 Receptor Agonists" QSAR
+"mGlu1 Receptor Agonists" Pharmacokinetics
+"mGlu1/5 Receptor Antagonists" QSAR
+"mGlu2 Receptor Agonists" QSAR
+"mGlu4 Receptor Agonists" QSAR
+"mGlu7 Receptor Agonists" QSAR

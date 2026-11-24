@@ -1,0 +1,6503 @@
+{
+  "verdict_files_read": [
+    "v-ch01-a.json",
+    "v-ch01-b.json",
+    "v-ch01-c.json",
+    "v-ch05-ch02-ch04.json",
+    "v-ch09-ch11.json",
+    "v-ch12-ch13-ch10.json",
+    "v-ch14.json",
+    "v-ch24-ch23.json",
+    "v-ch25-ch15.json",
+    "v-ch27-ch08.json",
+    "v-ch28-a.json",
+    "v-ch28b-ch26-rerun.json",
+    "v-ch29-ch03.json",
+    "v-ch30-ch06.json",
+    "v-ch31-ch18-ch19.json"
+  ],
+  "entries_before_dedup": 438,
+  "entries_keep_before_dedup": 268,
+  "entries_drop_before_dedup": 170,
+  "duplicates_removed": [
+    {
+      "chapter": 28,
+      "record_number": 18,
+      "drug": "Inosine",
+      "copies": 2,
+      "verdicts_seen": [
+        "drop",
+        "drop"
+      ],
+      "agreed": true,
+      "drop_reasons_seen": [
+        "indirect or uncertain: page says 'direct or indirect'; PDF 650 leaves open natural ligand or partial agonist",
+        "indirect or hypothesis: page itself says \"direct or indirect way\""
+      ],
+      "pdf_pages_seen": [
+        null,
+        649
+      ]
+    },
+    {
+      "chapter": 28,
+      "record_number": 22,
+      "drug": "Inosine",
+      "copies": 2,
+      "verdicts_seen": [
+        "drop",
+        "drop"
+      ],
+      "agreed": true,
+      "drop_reasons_seen": [
+        "indirect: effect 'depends on PKC inhibition' and 'it is not clear how it happens'",
+        "indirect or hypothesis: page says \"at least in part\" and \"it is not clear yet how it happens\"; inferred from inosine blocking pain caused by a PKC activator"
+      ],
+      "pdf_pages_seen": [
+        null,
+        651
+      ]
+    }
+  ],
+  "duplicates_note": "Both copies of ch28 18 and 22 are in v-ch28-a.json (kept) and under outside_assignment_checks.records in v-ch28b-ch26-rerun.json (removed). Verdicts agree; drop_reason wording and cited PDF page differ between copies (see drop_reasons_seen, pdf_pages_seen).",
+  "records_total": 436,
+  "kept": 268,
+  "dropped": 168,
+  "chNN_lookup": {
+    "method": "record_number-1 = array index in chNN.json records; bounds checked",
+    "kept_records_not_found_in_chNN": [],
+    "drug_or_rule_mismatches_vs_chNN": [
+      {
+        "chapter": 2,
+        "record_number": 3,
+        "verdict_file_drug": "AMPA",
+        "chNN_drug": "AMPA (alpha-amino-3-hydroxy-4-isoxazolepropionic acid)",
+        "verdict_file_rule": "AMPA Receptor Agonist",
+        "chNN_rule": "AMPA Receptor Agonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 6,
+        "verdict_file_drug": "L-AP4",
+        "chNN_drug": "L-AP4 (L-(+)-2-amino-4-phosphonobutyric acid)",
+        "verdict_file_rule": "Group III mGlu Receptor Agonist",
+        "chNN_rule": "Group III mGlu Receptor Agonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 7,
+        "verdict_file_drug": "MK801",
+        "chNN_drug": "(+)-MK-801 hydrogen maleate (MK801)",
+        "verdict_file_rule": "NMDA Receptor Antagonist",
+        "chNN_rule": "NMDA Receptor Antagonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 8,
+        "verdict_file_drug": "CNQX",
+        "chNN_drug": "CNQX (6-Cyano-7-nitroquinoxaline-2,3-dione disodium)",
+        "verdict_file_rule": "Kainate/AMPA Receptor Antagonist",
+        "chNN_rule": "Kainate/AMPA Receptor Antagonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 9,
+        "verdict_file_drug": "NBQX",
+        "chNN_drug": "NBQX (2,3-Dioxo-6-nitro-1,2,3,4-tetrahydrobenzo[f]quinoxaline-7-sulfonamide disodium salt)",
+        "verdict_file_rule": "Kainate/AMPA Receptor Antagonist",
+        "chNN_rule": "Kainate/AMPA Receptor Antagonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 10,
+        "verdict_file_drug": "CPCCOEt",
+        "chNN_drug": "CPCCOEt (7-(hydroxyimino) cyclopropa[b]chromen-1a-carboxylate ethyl ester)",
+        "verdict_file_rule": "Group 1 mGlu Receptor Antagonist",
+        "chNN_rule": "Group 1 mGlu Receptor Antagonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 11,
+        "verdict_file_drug": "MPEP",
+        "chNN_drug": "MPEP (2-Methyl-6-(phenylethynyl)pyridine hydrochloride)",
+        "verdict_file_rule": "Group 1 mGlu5 Receptor Antagonist",
+        "chNN_rule": "Group 1 mGlu5 Receptor Antagonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 12,
+        "verdict_file_drug": "MCCG",
+        "chNN_drug": "MCCG ((2S,3S,4S)-2-methyl-2-(carboxycyclopropyl) glycine)",
+        "verdict_file_rule": "Group II mGlu Receptor Antagonist",
+        "chNN_rule": "Group II mGlu Receptor Antagonist"
+      },
+      {
+        "chapter": 2,
+        "record_number": 13,
+        "verdict_file_drug": "MSOP",
+        "chNN_drug": "MSOP ((RS)-alpha-methylserine-O-phosphate)",
+        "verdict_file_rule": "Group III mGlu Receptor Antagonist",
+        "chNN_rule": "Group III mGlu Receptor Antagonist"
+      },
+      {
+        "chapter": 4,
+        "record_number": 14,
+        "verdict_file_drug": "5'-GNTI",
+        "chNN_drug": "5′-GNTI",
+        "verdict_file_rule": "Opioid Kappa Receptor Antagonist",
+        "chNN_rule": "Opioid Kappa Receptor Antagonist"
+      },
+      {
+        "chapter": 6,
+        "record_number": 4,
+        "verdict_file_drug": "(class, no compound named)",
+        "chNN_drug": "",
+        "verdict_file_rule": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+        "chNN_rule": "Peroxisome Proliferator Activated Receptor Alpha Agonist"
+      },
+      {
+        "chapter": 29,
+        "record_number": 22,
+        "verdict_file_drug": "Ni-NQTS",
+        "chNN_drug": "Ni-NQTS (nickel(II) complex of 1,2-naphtoquinone-based thiosemicarbazone ligand)",
+        "verdict_file_rule": "Topoisomerase II Inhibitor",
+        "chNN_rule": "Topoisomerase II Inhibitor"
+      },
+      {
+        "chapter": 30,
+        "record_number": 6,
+        "verdict_file_drug": "(class, no compound named)",
+        "chNN_drug": "",
+        "verdict_file_rule": "Angiotensin Receptor Antagonist",
+        "chNN_rule": "Angiotensin Receptor Antagonist"
+      },
+      {
+        "chapter": 30,
+        "record_number": 7,
+        "verdict_file_drug": "(class, no compound named)",
+        "chNN_drug": "",
+        "verdict_file_rule": "Angiotensin Converting Enzyme Inhibitor",
+        "chNN_rule": "Angiotensin Converting Enzyme Inhibitor"
+      },
+      {
+        "chapter": 30,
+        "record_number": 8,
+        "verdict_file_drug": "(class, no compound named)",
+        "chNN_drug": "",
+        "verdict_file_rule": "Cyclooxygenase Inhibitor",
+        "chNN_rule": "Cyclooxygenase Inhibitor"
+      },
+      {
+        "chapter": 31,
+        "record_number": 7,
+        "verdict_file_drug": "DPCPX",
+        "chNN_drug": "1,3-dipropyl-8-cyclopentylxanthine (DPCPX)",
+        "verdict_file_rule": "Adenosine A1 Receptor Antagonist",
+        "chNN_rule": "Adenosine A1 Receptor Antagonist"
+      },
+      {
+        "chapter": 31,
+        "record_number": 8,
+        "verdict_file_drug": "DMPX",
+        "chNN_drug": "3,7-Dimethyl-1-propargylxanthine (DMPX)",
+        "verdict_file_rule": "Adenosine A2A Receptor Antagonist",
+        "chNN_rule": "Adenosine A2A Receptor Antagonist"
+      },
+      {
+        "chapter": 31,
+        "record_number": 9,
+        "verdict_file_drug": "CCPA",
+        "chNN_drug": "2-chloro-N6-cyclopentyladenosine (CCPA)",
+        "verdict_file_rule": "Adenosine A1 Receptor Agonist",
+        "chNN_rule": "Adenosine A1 Receptor Agonist"
+      },
+      {
+        "chapter": 31,
+        "record_number": 10,
+        "verdict_file_drug": "DPMA",
+        "chNN_drug": "N6-[2-(3,5-dimethoxyphenyl)-2-(2-methylphenyl)ethyl]adenosine (DPMA)",
+        "verdict_file_rule": "Adenosine A2A Receptor Agonist",
+        "chNN_rule": "Adenosine A2A Receptor Agonist"
+      },
+      {
+        "chapter": 31,
+        "record_number": 11,
+        "verdict_file_drug": "R-PIA",
+        "chNN_drug": "R(−)-N6-phenylisopropyladenosine (R-PIA)",
+        "verdict_file_rule": "Adenosine A1 Receptor Agonist",
+        "chNN_rule": "Adenosine A1 Receptor Agonist"
+      },
+      {
+        "chapter": 31,
+        "record_number": 12,
+        "verdict_file_drug": "CHA",
+        "chNN_drug": "N6-cyclohexyladenosine (CHA)",
+        "verdict_file_rule": "Adenosine A1 Receptor Agonist",
+        "chNN_rule": "Adenosine A1 Receptor Agonist"
+      },
+      {
+        "chapter": 31,
+        "record_number": 15,
+        "verdict_file_drug": "beta-endorphin",
+        "chNN_drug": "β-endorphin",
+        "verdict_file_rule": "Opioid Mu Receptor Agonist",
+        "chNN_rule": "Opioid Mu Receptor Agonist"
+      }
+    ]
+  },
+  "surviving_records": [
+    {
+      "chapter": 1,
+      "record_number": 1,
+      "drug": "glutamate",
+      "mechanism_rule_name": "mGlu Receptor Agonist",
+      "target": "mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 17,
+      "drug_in_chNN": "glutamate"
+    },
+    {
+      "chapter": 1,
+      "record_number": 2,
+      "drug": "",
+      "mechanism_rule_name": "mGlu Receptor Agonist",
+      "target": "mGlu receptors (VFT, orthosteric site)",
+      "target_class": "receptor",
+      "pdf_page_index": 18,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 3,
+      "drug": "",
+      "mechanism_rule_name": "mGlu Receptor Antagonist",
+      "target": "mGlu receptors (VFT, orthosteric site)",
+      "target_class": "receptor",
+      "pdf_page_index": 18,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 8,
+      "drug": "",
+      "mechanism_rule_name": "mGlu2 Receptor Agonist",
+      "target": "mGlu2 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 22,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 11,
+      "drug": "5-HT",
+      "mechanism_rule_name": "5-HT2A Receptor Agonist",
+      "target": "5HT2A receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 22,
+      "drug_in_chNN": "5-HT"
+    },
+    {
+      "chapter": 1,
+      "record_number": 12,
+      "drug": "",
+      "mechanism_rule_name": "mGlu5 Receptor Antagonist",
+      "target": "mGlu5",
+      "target_class": "receptor",
+      "pdf_page_index": 21,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 13,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine A2A Receptor Antagonist",
+      "target": "adenosine A2A receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 21,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 14,
+      "drug": "LY354740",
+      "mechanism_rule_name": "mGlu2/3 Receptor Agonist",
+      "target": "mGlu2/3",
+      "target_class": "receptor",
+      "pdf_page_index": 24,
+      "drug_in_chNN": "LY354740"
+    },
+    {
+      "chapter": 1,
+      "record_number": 15,
+      "drug": "LY341495",
+      "mechanism_rule_name": "Group II mGlu Receptor Antagonist",
+      "target": "Group II mGlu receptors (mGlu2/3)",
+      "target_class": "receptor",
+      "pdf_page_index": 27,
+      "drug_in_chNN": "LY341495"
+    },
+    {
+      "chapter": 1,
+      "record_number": 16,
+      "drug": "(S)-3,5-DHPG",
+      "mechanism_rule_name": "mGlu1 Receptor Agonist",
+      "target": "mGlu1",
+      "target_class": "receptor",
+      "pdf_page_index": 24,
+      "drug_in_chNN": "(S)-3,5-DHPG"
+    },
+    {
+      "chapter": 1,
+      "record_number": 17,
+      "drug": "(S)-3,5-DHPG",
+      "mechanism_rule_name": "mGlu5 Receptor Agonist",
+      "target": "mGlu5",
+      "target_class": "receptor",
+      "pdf_page_index": 24,
+      "drug_in_chNN": "(S)-3,5-DHPG"
+    },
+    {
+      "chapter": 1,
+      "record_number": 18,
+      "drug": "Quisqualate",
+      "mechanism_rule_name": "Group I mGlu Receptor Agonist",
+      "target": "Group I mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 30,
+      "drug_in_chNN": "Quisqualate"
+    },
+    {
+      "chapter": 1,
+      "record_number": 26,
+      "drug": "R214127",
+      "mechanism_rule_name": "mGlu1 Receptor Antagonist",
+      "target": "mGlu1",
+      "target_class": "receptor",
+      "pdf_page_index": 25,
+      "drug_in_chNN": "R214127"
+    },
+    {
+      "chapter": 1,
+      "record_number": 33,
+      "drug": "AIDA",
+      "mechanism_rule_name": "mGlu1 Receptor Antagonist",
+      "target": "mGlu1",
+      "target_class": "receptor",
+      "pdf_page_index": 25,
+      "drug_in_chNN": "AIDA"
+    },
+    {
+      "chapter": 1,
+      "record_number": 34,
+      "drug": "S-4C3H-PG",
+      "mechanism_rule_name": "Group I mGlu Receptor Antagonist",
+      "target": "Group I mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 25,
+      "drug_in_chNN": "S-4C3H-PG"
+    },
+    {
+      "chapter": 1,
+      "record_number": 35,
+      "drug": "JNJ16259685",
+      "mechanism_rule_name": "mGlu1 Receptor Antagonist",
+      "target": "mGlu1",
+      "target_class": "receptor",
+      "pdf_page_index": 26,
+      "drug_in_chNN": "JNJ16259685"
+    },
+    {
+      "chapter": 1,
+      "record_number": 36,
+      "drug": "2-amino-7-phosphonoheptanoic acid (AP-7)",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 26,
+      "drug_in_chNN": "2-amino-7-phosphonoheptanoic acid (AP-7)"
+    },
+    {
+      "chapter": 1,
+      "record_number": 37,
+      "drug": "Dizolcipine (MK-801)",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 26,
+      "drug_in_chNN": "Dizolcipine (MK-801)"
+    },
+    {
+      "chapter": 1,
+      "record_number": 38,
+      "drug": "JNJ-16567083",
+      "mechanism_rule_name": "mGlu1 Receptor Antagonist",
+      "target": "mGlu1",
+      "target_class": "receptor",
+      "pdf_page_index": 26,
+      "drug_in_chNN": "JNJ-16567083"
+    },
+    {
+      "chapter": 1,
+      "record_number": 39,
+      "drug": "",
+      "mechanism_rule_name": "Biogenic Amine Receptor Antagonist",
+      "target": "biogenic amine (e.g. dopamine, serotonin, acetylcholine) receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 26,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 40,
+      "drug": "DCG-IV",
+      "mechanism_rule_name": "Group II mGlu Receptor Agonist",
+      "target": "Group II mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 27,
+      "drug_in_chNN": "DCG-IV"
+    },
+    {
+      "chapter": 1,
+      "record_number": 41,
+      "drug": "LY379268",
+      "mechanism_rule_name": "Group II mGlu Receptor Agonist",
+      "target": "Group II mGlu receptors (mGlu2/mGlu3)",
+      "target_class": "receptor",
+      "pdf_page_index": 27,
+      "drug_in_chNN": "LY379268"
+    },
+    {
+      "chapter": 1,
+      "record_number": 46,
+      "drug": "MGS0039",
+      "mechanism_rule_name": "Group II mGlu Receptor Antagonist",
+      "target": "Group II mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 27,
+      "drug_in_chNN": "MGS0039"
+    },
+    {
+      "chapter": 1,
+      "record_number": 47,
+      "drug": "L-AP4",
+      "mechanism_rule_name": "Group III mGlu Receptor Agonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 28,
+      "drug_in_chNN": "L-AP4"
+    },
+    {
+      "chapter": 1,
+      "record_number": 48,
+      "drug": "ACPT-I",
+      "mechanism_rule_name": "Group III mGlu Receptor Agonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 30,
+      "drug_in_chNN": "ACPT-I"
+    },
+    {
+      "chapter": 1,
+      "record_number": 49,
+      "drug": "MAP4",
+      "mechanism_rule_name": "Group III mGlu Receptor Antagonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 28,
+      "drug_in_chNN": "MAP4"
+    },
+    {
+      "chapter": 1,
+      "record_number": 50,
+      "drug": "MSOP",
+      "mechanism_rule_name": "Group III mGlu Receptor Antagonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 28,
+      "drug_in_chNN": "MSOP"
+    },
+    {
+      "chapter": 1,
+      "record_number": 51,
+      "drug": "DCG-IV",
+      "mechanism_rule_name": "Group III mGlu Receptor Antagonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 28,
+      "drug_in_chNN": "DCG-IV"
+    },
+    {
+      "chapter": 1,
+      "record_number": 52,
+      "drug": "LY341495",
+      "mechanism_rule_name": "Group III mGlu Receptor Antagonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 28,
+      "drug_in_chNN": "LY341495"
+    },
+    {
+      "chapter": 1,
+      "record_number": 53,
+      "drug": "DCG-IV",
+      "mechanism_rule_name": "Group I mGlu Receptor Antagonist",
+      "target": "Group I mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 30,
+      "drug_in_chNN": "DCG-IV"
+    },
+    {
+      "chapter": 1,
+      "record_number": 56,
+      "drug": "VU0155041",
+      "mechanism_rule_name": "mGlu4 Receptor Agonist",
+      "target": "mGlu4",
+      "target_class": "receptor",
+      "pdf_page_index": 30,
+      "drug_in_chNN": "VU0155041"
+    },
+    {
+      "chapter": 1,
+      "record_number": 60,
+      "drug": "LSP1-2093",
+      "mechanism_rule_name": "Group III mGlu Receptor Agonist",
+      "target": "Group III mGlu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 30,
+      "drug_in_chNN": "LSP1-2093"
+    },
+    {
+      "chapter": 1,
+      "record_number": 61,
+      "drug": "AMN082",
+      "mechanism_rule_name": "mGlu7 Receptor Agonist",
+      "target": "mGlu7",
+      "target_class": "receptor",
+      "pdf_page_index": 31,
+      "drug_in_chNN": "AMN082"
+    },
+    {
+      "chapter": 1,
+      "record_number": 62,
+      "drug": "",
+      "mechanism_rule_name": "mGlu8 Receptor Agonist",
+      "target": "mGlu8",
+      "target_class": "receptor",
+      "pdf_page_index": 31,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 63,
+      "drug": "(R,S)-3-4-DCPG",
+      "mechanism_rule_name": "mGlu8 Receptor Agonist",
+      "target": "mGlu8",
+      "target_class": "receptor",
+      "pdf_page_index": 31,
+      "drug_in_chNN": "(R,S)-3-4-DCPG"
+    },
+    {
+      "chapter": 1,
+      "record_number": 64,
+      "drug": "(R,S)-3-4-DCPG",
+      "mechanism_rule_name": "AMPA Receptor Antagonist",
+      "target": "AMPA (receptor)",
+      "target_class": "receptor",
+      "pdf_page_index": 31,
+      "drug_in_chNN": "(R,S)-3-4-DCPG"
+    },
+    {
+      "chapter": 1,
+      "record_number": 67,
+      "drug": "",
+      "mechanism_rule_name": "mGlu2/3 Receptor Agonist",
+      "target": "mGlu2/mGlu3",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 69,
+      "drug": "TS-032",
+      "mechanism_rule_name": "mGlu2 Receptor Agonist",
+      "target": "mGlu2",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": "TS-032"
+    },
+    {
+      "chapter": 1,
+      "record_number": 71,
+      "drug": "LY2140023",
+      "mechanism_rule_name": "mGlu2/3 Receptor Agonist",
+      "target": "mGlu2/3",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": "LY2140023"
+    },
+    {
+      "chapter": 1,
+      "record_number": 72,
+      "drug": "ADX48621",
+      "mechanism_rule_name": "mGlu5 Receptor Antagonist",
+      "target": "mGlu5",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": "ADX48621"
+    },
+    {
+      "chapter": 1,
+      "record_number": 73,
+      "drug": "AZD2516",
+      "mechanism_rule_name": "mGlu5 Receptor Antagonist",
+      "target": "mGlu5",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": "AZD2516"
+    },
+    {
+      "chapter": 1,
+      "record_number": 74,
+      "drug": "AZD2066",
+      "mechanism_rule_name": "mGlu5 Receptor Antagonist",
+      "target": "mGlu5",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": "AZD2066"
+    },
+    {
+      "chapter": 1,
+      "record_number": 75,
+      "drug": "",
+      "mechanism_rule_name": "mGlu1/5 Receptor Antagonist",
+      "target": "mGlu1/5",
+      "target_class": "receptor",
+      "pdf_page_index": 32,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 77,
+      "drug": "GABA",
+      "mechanism_rule_name": "GABAB Receptor Agonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 35,
+      "drug_in_chNN": "GABA"
+    },
+    {
+      "chapter": 1,
+      "record_number": 78,
+      "drug": "baclofen",
+      "mechanism_rule_name": "GABAB Receptor Agonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 35,
+      "drug_in_chNN": "baclofen"
+    },
+    {
+      "chapter": 1,
+      "record_number": 79,
+      "drug": "CGP27492",
+      "mechanism_rule_name": "GABAB Receptor Agonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 35,
+      "drug_in_chNN": "CGP27492"
+    },
+    {
+      "chapter": 1,
+      "record_number": 83,
+      "drug": "CGP35024",
+      "mechanism_rule_name": "GABAC Receptor Antagonist",
+      "target": "GABAC receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 36,
+      "drug_in_chNN": "CGP35024"
+    },
+    {
+      "chapter": 1,
+      "record_number": 84,
+      "drug": "saclofen",
+      "mechanism_rule_name": "GABAB Receptor Antagonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 36,
+      "drug_in_chNN": "saclofen"
+    },
+    {
+      "chapter": 1,
+      "record_number": 85,
+      "drug": "2-OH saclofen",
+      "mechanism_rule_name": "GABAB Receptor Antagonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 36,
+      "drug_in_chNN": "2-OH saclofen"
+    },
+    {
+      "chapter": 1,
+      "record_number": 86,
+      "drug": "CGP54626",
+      "mechanism_rule_name": "GABAB Receptor Antagonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 36,
+      "drug_in_chNN": "CGP54626"
+    },
+    {
+      "chapter": 1,
+      "record_number": 87,
+      "drug": "CGP71872",
+      "mechanism_rule_name": "GABAB Receptor Antagonist",
+      "target": "GABAB receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 36,
+      "drug_in_chNN": "CGP71872"
+    },
+    {
+      "chapter": 2,
+      "record_number": 1,
+      "drug": "L-glutamic acid",
+      "mechanism_rule_name": "Glutamate Receptor Agonist",
+      "target": "Glu receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "L-glutamic acid"
+    },
+    {
+      "chapter": 2,
+      "record_number": 2,
+      "drug": "NMDA",
+      "mechanism_rule_name": "NMDA Receptor Agonist",
+      "target": "NMDA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "NMDA"
+    },
+    {
+      "chapter": 2,
+      "record_number": 3,
+      "drug": "AMPA",
+      "mechanism_rule_name": "AMPA Receptor Agonist",
+      "target": "AMPA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "AMPA (alpha-amino-3-hydroxy-4-isoxazolepropionic acid)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 4,
+      "drug": "(S)-3,5-DHPG",
+      "mechanism_rule_name": "Group 1 mGlu Receptor Agonist",
+      "target": "group 1 mGlu receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "(S)-3,5-DHPG"
+    },
+    {
+      "chapter": 2,
+      "record_number": 5,
+      "drug": "L-CCG-I",
+      "mechanism_rule_name": "Group II mGlu Receptor Agonist",
+      "target": "group II mGlu receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "L-CCG-I"
+    },
+    {
+      "chapter": 2,
+      "record_number": 6,
+      "drug": "L-AP4",
+      "mechanism_rule_name": "Group III mGlu Receptor Agonist",
+      "target": "group III mGlu receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "L-AP4 (L-(+)-2-amino-4-phosphonobutyric acid)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 7,
+      "drug": "MK801",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 61,
+      "drug_in_chNN": "(+)-MK-801 hydrogen maleate (MK801)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 8,
+      "drug": "CNQX",
+      "mechanism_rule_name": "Kainate/AMPA Receptor Antagonist",
+      "target": "kainate/AMPA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "CNQX (6-Cyano-7-nitroquinoxaline-2,3-dione disodium)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 9,
+      "drug": "NBQX",
+      "mechanism_rule_name": "Kainate/AMPA Receptor Antagonist",
+      "target": "kainate/AMPA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 61,
+      "drug_in_chNN": "NBQX (2,3-Dioxo-6-nitro-1,2,3,4-tetrahydrobenzo[f]quinoxaline-7-sulfonamide disodium salt)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 10,
+      "drug": "CPCCOEt",
+      "mechanism_rule_name": "Group 1 mGlu Receptor Antagonist",
+      "target": "group 1 mGlu receptor (mGlu1)",
+      "target_class": "receptor",
+      "pdf_page_index": 61,
+      "drug_in_chNN": "CPCCOEt (7-(hydroxyimino) cyclopropa[b]chromen-1a-carboxylate ethyl ester)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 11,
+      "drug": "MPEP",
+      "mechanism_rule_name": "Group 1 mGlu5 Receptor Antagonist",
+      "target": "group 1 mGlu receptor, mGlu5 subtype",
+      "target_class": "receptor",
+      "pdf_page_index": 58,
+      "drug_in_chNN": "MPEP (2-Methyl-6-(phenylethynyl)pyridine hydrochloride)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 12,
+      "drug": "MCCG",
+      "mechanism_rule_name": "Group II mGlu Receptor Antagonist",
+      "target": "group II mGlu receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 61,
+      "drug_in_chNN": "MCCG ((2S,3S,4S)-2-methyl-2-(carboxycyclopropyl) glycine)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 13,
+      "drug": "MSOP",
+      "mechanism_rule_name": "Group III mGlu Receptor Antagonist",
+      "target": "group III mGlu receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 61,
+      "drug_in_chNN": "MSOP ((RS)-alpha-methylserine-O-phosphate)"
+    },
+    {
+      "chapter": 2,
+      "record_number": 14,
+      "drug": "",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA and non-NMDA receptors (class: antagonists)",
+      "target_class": "receptor",
+      "pdf_page_index": 70,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 3,
+      "record_number": 1,
+      "drug": "",
+      "mechanism_rule_name": "Nucleoside Reverse Transcriptase Inhibitor",
+      "target": "HIV-1 reverse transcriptase (RT)",
+      "target_class": "enzyme",
+      "pdf_page_index": 76,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 3,
+      "record_number": 2,
+      "drug": "",
+      "mechanism_rule_name": "Nucleoside Reverse Transcriptase Inhibitor",
+      "target": "HIV-1 reverse transcriptase (RT)",
+      "target_class": "enzyme",
+      "pdf_page_index": 76,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 3,
+      "record_number": 3,
+      "drug": "Zidovudine-MP (zidovudine monophosphate)",
+      "mechanism_rule_name": "dTMP Kinase Inhibitor",
+      "target": "thymidylate monophosphate kinase (dTMP kinase)",
+      "target_class": "enzyme",
+      "pdf_page_index": 76,
+      "drug_in_chNN": "Zidovudine-MP (zidovudine monophosphate)"
+    },
+    {
+      "chapter": 3,
+      "record_number": 5,
+      "drug": "Tenofovir-MP and tenofovir-DP (mono- and di-phosphate forms of tenofovir)",
+      "mechanism_rule_name": "Purine Nucleoside Phosphorylase Inhibitor",
+      "target": "purine nucleoside phosphorylase",
+      "target_class": "enzyme",
+      "pdf_page_index": 81,
+      "drug_in_chNN": "Tenofovir-MP and tenofovir-DP (mono- and di-phosphate forms of tenofovir)"
+    },
+    {
+      "chapter": 4,
+      "record_number": 1,
+      "drug": "TRK-820 (nalfurafine hydrochloride)",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "opioid κ receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 93,
+      "drug_in_chNN": "TRK-820 (nalfurafine hydrochloride)"
+    },
+    {
+      "chapter": 4,
+      "record_number": 4,
+      "drug": "",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "κ receptor (conventional arylacetamide κ agonists as a class)",
+      "target_class": "receptor",
+      "pdf_page_index": 93,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 4,
+      "record_number": 5,
+      "drug": "U-50,488H",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 96,
+      "drug_in_chNN": "U-50,488H"
+    },
+    {
+      "chapter": 4,
+      "record_number": 6,
+      "drug": "U-69,593",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 96,
+      "drug_in_chNN": "U-69,593"
+    },
+    {
+      "chapter": 4,
+      "record_number": 7,
+      "drug": "ICI-199,441",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 96,
+      "drug_in_chNN": "ICI-199,441"
+    },
+    {
+      "chapter": 4,
+      "record_number": 8,
+      "drug": "CI-977",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 96,
+      "drug_in_chNN": "CI-977"
+    },
+    {
+      "chapter": 4,
+      "record_number": 9,
+      "drug": "PD-117302",
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 96,
+      "drug_in_chNN": "PD-117302"
+    },
+    {
+      "chapter": 4,
+      "record_number": 10,
+      "drug": "morphine",
+      "mechanism_rule_name": "Opioid Mu Receptor Agonist",
+      "target": "μ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 97,
+      "drug_in_chNN": "morphine"
+    },
+    {
+      "chapter": 4,
+      "record_number": 11,
+      "drug": "DAMGO",
+      "mechanism_rule_name": "Opioid Mu Receptor Agonist",
+      "target": "μ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 94,
+      "drug_in_chNN": "DAMGO"
+    },
+    {
+      "chapter": 4,
+      "record_number": 12,
+      "drug": "DPDPE",
+      "mechanism_rule_name": "Opioid Delta Receptor Agonist",
+      "target": "δ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 94,
+      "drug_in_chNN": "DPDPE"
+    },
+    {
+      "chapter": 4,
+      "record_number": 13,
+      "drug": "nor-BNI",
+      "mechanism_rule_name": "Opioid Kappa Receptor Antagonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 96,
+      "drug_in_chNN": "nor-BNI"
+    },
+    {
+      "chapter": 4,
+      "record_number": 14,
+      "drug": "5'-GNTI",
+      "mechanism_rule_name": "Opioid Kappa Receptor Antagonist",
+      "target": "κ receptor (opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 104,
+      "drug_in_chNN": "5′-GNTI"
+    },
+    {
+      "chapter": 4,
+      "record_number": 15,
+      "drug": "phencyclidine (PCP)",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 104,
+      "drug_in_chNN": "phencyclidine (PCP)"
+    },
+    {
+      "chapter": 4,
+      "record_number": 16,
+      "drug": "MK-801",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 104,
+      "drug_in_chNN": "MK-801"
+    },
+    {
+      "chapter": 4,
+      "record_number": 17,
+      "drug": "",
+      "mechanism_rule_name": "Opioid Mu Receptor Agonist",
+      "target": "μ receptor (opioid), μ agonists as a class",
+      "target_class": "receptor",
+      "pdf_page_index": 101,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 5,
+      "record_number": 1,
+      "drug": "anandamide",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Agonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 120,
+      "drug_in_chNN": "anandamide"
+    },
+    {
+      "chapter": 5,
+      "record_number": 2,
+      "drug": "WIN 55, 212-2",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Agonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 120,
+      "drug_in_chNN": "WIN 55, 212-2"
+    },
+    {
+      "chapter": 5,
+      "record_number": 3,
+      "drug": "HU-210",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Agonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 120,
+      "drug_in_chNN": "HU-210"
+    },
+    {
+      "chapter": 5,
+      "record_number": 4,
+      "drug": "SR141716",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Antagonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 120,
+      "drug_in_chNN": "SR141716"
+    },
+    {
+      "chapter": 5,
+      "record_number": 5,
+      "drug": "AM251",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Antagonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 120,
+      "drug_in_chNN": "AM251"
+    },
+    {
+      "chapter": 5,
+      "record_number": 6,
+      "drug": "2-AG",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Agonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 116,
+      "drug_in_chNN": "2-AG"
+    },
+    {
+      "chapter": 5,
+      "record_number": 7,
+      "drug": "2-AG",
+      "mechanism_rule_name": "Cannabinoid 2 Receptor Agonist",
+      "target": "CB2R",
+      "target_class": "receptor",
+      "pdf_page_index": 119,
+      "drug_in_chNN": "2-AG"
+    },
+    {
+      "chapter": 5,
+      "record_number": 8,
+      "drug": "AEA",
+      "mechanism_rule_name": "Cannabinoid 2 Receptor Agonist",
+      "target": "CB2R",
+      "target_class": "receptor",
+      "pdf_page_index": 119,
+      "drug_in_chNN": "AEA"
+    },
+    {
+      "chapter": 5,
+      "record_number": 12,
+      "drug": "",
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Antagonist",
+      "target": "CB1R",
+      "target_class": "receptor",
+      "pdf_page_index": 126,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 5,
+      "record_number": 13,
+      "drug": "",
+      "mechanism_rule_name": "Cannabinoid 2 Receptor Agonist",
+      "target": "CB2R",
+      "target_class": "receptor",
+      "pdf_page_index": 125,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 6,
+      "record_number": 2,
+      "drug": "fatty acids and their derivates",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "Peroxisome Proliferator Activated Receptor alpha (PPARα)",
+      "target_class": "receptor",
+      "pdf_page_index": 139,
+      "drug_in_chNN": "fatty acids and their derivates"
+    },
+    {
+      "chapter": 6,
+      "record_number": 3,
+      "drug": "Fibrates",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "PPARα",
+      "target_class": "receptor",
+      "pdf_page_index": 140,
+      "drug_in_chNN": "Fibrates"
+    },
+    {
+      "chapter": 6,
+      "record_number": 4,
+      "drug": "(class, no compound named)",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "PPARα",
+      "target_class": "receptor",
+      "pdf_page_index": 141,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 6,
+      "record_number": 5,
+      "drug": "Clofibric acid",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "PPARα",
+      "target_class": "receptor",
+      "pdf_page_index": 141,
+      "drug_in_chNN": "Clofibric acid"
+    },
+    {
+      "chapter": 6,
+      "record_number": 6,
+      "drug": "Clofibric acid",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Gamma Agonist",
+      "target": "PPARγ",
+      "target_class": "receptor",
+      "pdf_page_index": 141,
+      "drug_in_chNN": "Clofibric acid"
+    },
+    {
+      "chapter": 6,
+      "record_number": 7,
+      "drug": "fenobibric acid",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "PPARα",
+      "target_class": "receptor",
+      "pdf_page_index": 141,
+      "drug_in_chNN": "fenobibric acid"
+    },
+    {
+      "chapter": 6,
+      "record_number": 8,
+      "drug": "fenobibric acid",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Gamma Agonist",
+      "target": "PPARγ",
+      "target_class": "receptor",
+      "pdf_page_index": 141,
+      "drug_in_chNN": "fenobibric acid"
+    },
+    {
+      "chapter": 6,
+      "record_number": 9,
+      "drug": "Bezafibrate",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "PPARα",
+      "target_class": "receptor",
+      "pdf_page_index": 141,
+      "drug_in_chNN": "Bezafibrate"
+    },
+    {
+      "chapter": 6,
+      "record_number": 10,
+      "drug": "clofibrate",
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "target": "PPARα",
+      "target_class": "receptor",
+      "pdf_page_index": 146,
+      "drug_in_chNN": "clofibrate"
+    },
+    {
+      "chapter": 8,
+      "record_number": 4,
+      "drug": "M6P-HSA",
+      "mechanism_rule_name": "Mannose 6-Phosphate/Insulin-like Growth Factor II Receptor Antagonist",
+      "target": "M6P/IGFII receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 177,
+      "drug_in_chNN": "M6P-HSA"
+    },
+    {
+      "chapter": 8,
+      "record_number": 5,
+      "drug": "sucHSA",
+      "mechanism_rule_name": "Scavenger Receptor Antagonist",
+      "target": "scavenger receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 177,
+      "drug_in_chNN": "sucHSA"
+    },
+    {
+      "chapter": 9,
+      "record_number": 1,
+      "drug": "adrenaline",
+      "mechanism_rule_name": "Receptor Agonist",
+      "target": "receptor (unspecified)",
+      "target_class": "receptor",
+      "pdf_page_index": 197,
+      "drug_in_chNN": "adrenaline"
+    },
+    {
+      "chapter": 9,
+      "record_number": 2,
+      "drug": "pilocarpine",
+      "mechanism_rule_name": "Receptor Agonist",
+      "target": "receptor (unspecified)",
+      "target_class": "receptor",
+      "pdf_page_index": 197,
+      "drug_in_chNN": "pilocarpine"
+    },
+    {
+      "chapter": 9,
+      "record_number": 3,
+      "drug": "barbiturates",
+      "mechanism_rule_name": "Receptor Agonist",
+      "target": "receptor (unspecified)",
+      "target_class": "receptor",
+      "pdf_page_index": 197,
+      "drug_in_chNN": "barbiturates"
+    },
+    {
+      "chapter": 9,
+      "record_number": 4,
+      "drug": "quinines",
+      "mechanism_rule_name": "Receptor Agonist",
+      "target": "receptor (unspecified)",
+      "target_class": "receptor",
+      "pdf_page_index": 197,
+      "drug_in_chNN": "quinines"
+    },
+    {
+      "chapter": 9,
+      "record_number": 5,
+      "drug": "",
+      "mechanism_rule_name": "Receptor Antagonist",
+      "target": "receptor (unspecified)",
+      "target_class": "receptor",
+      "pdf_page_index": 197,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 9,
+      "record_number": 8,
+      "drug": "Buthione – S – Sulfoxine",
+      "mechanism_rule_name": "Glutathione Transferase Inhibitor",
+      "target": "glutathione transferase (enzyme catalysing glutathione conjugation)",
+      "target_class": "enzyme",
+      "pdf_page_index": 199,
+      "drug_in_chNN": "Buthione – S – Sulfoxine"
+    },
+    {
+      "chapter": 9,
+      "record_number": 17,
+      "drug": "quinidine",
+      "mechanism_rule_name": "CYP2D6 Inhibitor",
+      "target": "CYP2D6",
+      "target_class": "enzyme",
+      "pdf_page_index": 193,
+      "drug_in_chNN": "quinidine"
+    },
+    {
+      "chapter": 9,
+      "record_number": 18,
+      "drug": "warfarin",
+      "mechanism_rule_name": "Vitamin K Epoxide Reductase Inhibitor",
+      "target": "vitamin K epoxide reductase (complex subunit 1, VKORC1)",
+      "target_class": "enzyme",
+      "pdf_page_index": 203,
+      "drug_in_chNN": "warfarin"
+    },
+    {
+      "chapter": 9,
+      "record_number": 19,
+      "drug": "",
+      "mechanism_rule_name": "Angiotensin Converting Enzyme Inhibitor",
+      "target": "angiotensin converting enzyme (ACE)",
+      "target_class": "enzyme",
+      "pdf_page_index": 209,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 9,
+      "record_number": 20,
+      "drug": "albuterol",
+      "mechanism_rule_name": "Beta 2 Receptor Agonist",
+      "target": "B2 receptor (beta 2 receptor)",
+      "target_class": "receptor",
+      "pdf_page_index": 208,
+      "drug_in_chNN": "albuterol"
+    },
+    {
+      "chapter": 10,
+      "record_number": 1,
+      "drug": "R-130964",
+      "mechanism_rule_name": "ADP P2Y12 Receptor Antagonist",
+      "target": "ADP P2Y12 receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 221,
+      "drug_in_chNN": "R-130964"
+    },
+    {
+      "chapter": 11,
+      "record_number": 1,
+      "drug": "omeprazole",
+      "mechanism_rule_name": "CYP2C19 Inhibitor",
+      "target": "CYP2C19",
+      "target_class": "enzyme",
+      "pdf_page_index": 235,
+      "drug_in_chNN": "omeprazole"
+    },
+    {
+      "chapter": 11,
+      "record_number": 2,
+      "drug": "omeprazole",
+      "mechanism_rule_name": "CYP2C9 Inhibitor",
+      "target": "CYP2C9",
+      "target_class": "enzyme",
+      "pdf_page_index": 240,
+      "drug_in_chNN": "omeprazole"
+    },
+    {
+      "chapter": 11,
+      "record_number": 3,
+      "drug": "lansoprazole",
+      "mechanism_rule_name": "CYP2C19 Inhibitor",
+      "target": "CYP2C19",
+      "target_class": "enzyme",
+      "pdf_page_index": 240,
+      "drug_in_chNN": "lansoprazole"
+    },
+    {
+      "chapter": 11,
+      "record_number": 4,
+      "drug": "fluvoxamine",
+      "mechanism_rule_name": "CYP2C19 Inhibitor",
+      "target": "CYP2C19",
+      "target_class": "enzyme",
+      "pdf_page_index": 240,
+      "drug_in_chNN": "fluvoxamine"
+    },
+    {
+      "chapter": 12,
+      "record_number": 1,
+      "drug": "Disulfiram",
+      "mechanism_rule_name": "Aldehyde Dehydrogenase Inhibitor",
+      "target": "liver aldehyde dehydrogenase (ALDH)",
+      "target_class": "enzyme",
+      "pdf_page_index": 254,
+      "drug_in_chNN": "Disulfiram"
+    },
+    {
+      "chapter": 12,
+      "record_number": 2,
+      "drug": "disulfiram",
+      "mechanism_rule_name": "Dopamine Beta-Hydroxylase Inhibitor",
+      "target": "dopamine–β–hydroxylase",
+      "target_class": "enzyme",
+      "pdf_page_index": 254,
+      "drug_in_chNN": "disulfiram"
+    },
+    {
+      "chapter": 12,
+      "record_number": 3,
+      "drug": "naltrexone",
+      "mechanism_rule_name": "Opioid Mu Receptor Antagonist",
+      "target": "µ−opioid receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 254,
+      "drug_in_chNN": "naltrexone"
+    },
+    {
+      "chapter": 12,
+      "record_number": 4,
+      "drug": "Acamprosate",
+      "mechanism_rule_name": "NMDA Glutamate Receptor Antagonist",
+      "target": "N-methyl D-aspartate (NMDA) glutamate receptor site",
+      "target_class": "receptor",
+      "pdf_page_index": 254,
+      "drug_in_chNN": "Acamprosate"
+    },
+    {
+      "chapter": 12,
+      "record_number": 5,
+      "drug": "Ondansetron",
+      "mechanism_rule_name": "5HT3 Receptor Antagonist",
+      "target": "5HT3 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 255,
+      "drug_in_chNN": "Ondansetron"
+    },
+    {
+      "chapter": 12,
+      "record_number": 6,
+      "drug": "Baclofen",
+      "mechanism_rule_name": "GABA B Receptor Antagonist",
+      "target": "GABA B receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 255,
+      "drug_in_chNN": "Baclofen"
+    },
+    {
+      "chapter": 12,
+      "record_number": 7,
+      "drug": "Topiramate",
+      "mechanism_rule_name": "AMPA Glutamate Receptor Antagonist",
+      "target": "α amino-3-hydroxy 5-methylisoxazole 4-propionic acid (AMPA) glutamate receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 255,
+      "drug_in_chNN": "Topiramate"
+    },
+    {
+      "chapter": 12,
+      "record_number": 8,
+      "drug": "Topiramate",
+      "mechanism_rule_name": "Kainate Glutamate Receptor Antagonist",
+      "target": "kainate glutamate receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 255,
+      "drug_in_chNN": "Topiramate"
+    },
+    {
+      "chapter": 13,
+      "record_number": 3,
+      "drug": "NAD+",
+      "mechanism_rule_name": "Sirt1 Activator",
+      "target": "Sirt1",
+      "target_class": "enzyme",
+      "pdf_page_index": 272,
+      "drug_in_chNN": "NAD+"
+    },
+    {
+      "chapter": 13,
+      "record_number": 4,
+      "drug": "AMP",
+      "mechanism_rule_name": "AMP-Activated Protein Kinase Activator",
+      "target": "AMPK (AMP-activated protein kinase)",
+      "target_class": "enzyme",
+      "pdf_page_index": 279,
+      "drug_in_chNN": "AMP"
+    },
+    {
+      "chapter": 13,
+      "record_number": 6,
+      "drug": "ramelteon",
+      "mechanism_rule_name": "Melatonin Receptor Agonist",
+      "target": "melatonin receptors (MT1 and MT2)",
+      "target_class": "receptor",
+      "pdf_page_index": 274,
+      "drug_in_chNN": "ramelteon"
+    },
+    {
+      "chapter": 13,
+      "record_number": 7,
+      "drug": "agomelatine",
+      "mechanism_rule_name": "Melatonin Receptor Agonist",
+      "target": "melatonin receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 274,
+      "drug_in_chNN": "agomelatine"
+    },
+    {
+      "chapter": 13,
+      "record_number": 8,
+      "drug": "agomelatine",
+      "mechanism_rule_name": "Serotonin 5-HT2C Receptor Antagonist",
+      "target": "serotonin 5-HT2C receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 274,
+      "drug_in_chNN": "agomelatine"
+    },
+    {
+      "chapter": 13,
+      "record_number": 10,
+      "drug": "rapamycin",
+      "mechanism_rule_name": "mTOR Inhibitor",
+      "target": "TOR (mTORC1)",
+      "target_class": "enzyme",
+      "pdf_page_index": 278,
+      "drug_in_chNN": "rapamycin"
+    },
+    {
+      "chapter": 13,
+      "record_number": 12,
+      "drug": "metformin",
+      "mechanism_rule_name": "AMP-Activated Protein Kinase Activator",
+      "target": "AMPK",
+      "target_class": "enzyme",
+      "pdf_page_index": 282,
+      "drug_in_chNN": "metformin"
+    },
+    {
+      "chapter": 13,
+      "record_number": 15,
+      "drug": "",
+      "mechanism_rule_name": "SIRT1 Activator",
+      "target": "SIRT1",
+      "target_class": "enzyme",
+      "pdf_page_index": 282,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 1,
+      "drug": "",
+      "mechanism_rule_name": "Dopamine-2 Receptor Antagonist",
+      "target": "dopamine-2 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 299,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 2,
+      "drug": "",
+      "mechanism_rule_name": "Serotonin-2a Receptor Antagonist",
+      "target": "serotonin-2a receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 299,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 5,
+      "drug": "Risperidone",
+      "mechanism_rule_name": "Dopamine D2 Receptor Antagonist",
+      "target": "dopamine d2 receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Risperidone"
+    },
+    {
+      "chapter": 14,
+      "record_number": 6,
+      "drug": "Risperidone",
+      "mechanism_rule_name": "Serotonin 5-HT2 Receptor Antagonist",
+      "target": "serotonin 5-ht2 receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Risperidone"
+    },
+    {
+      "chapter": 14,
+      "record_number": 7,
+      "drug": "Aripiprazole",
+      "mechanism_rule_name": "Dopamine Autoreceptor Agonist",
+      "target": "presynaptic dopamine autoreceptor",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Aripiprazole"
+    },
+    {
+      "chapter": 14,
+      "record_number": 8,
+      "drug": "Aripiprazole",
+      "mechanism_rule_name": "Dopamine D2 Receptor Antagonist",
+      "target": "postsynaptic D2 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Aripiprazole"
+    },
+    {
+      "chapter": 14,
+      "record_number": 10,
+      "drug": "Ziprasidone",
+      "mechanism_rule_name": "Dopamine Receptor Antagonist",
+      "target": "dopamine receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Ziprasidone"
+    },
+    {
+      "chapter": 14,
+      "record_number": 11,
+      "drug": "Ziprasidone",
+      "mechanism_rule_name": "Serotonin Receptor Antagonist",
+      "target": "serotonin receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Ziprasidone"
+    },
+    {
+      "chapter": 14,
+      "record_number": 12,
+      "drug": "Zyprexa (olanzapine)",
+      "mechanism_rule_name": "Dopamine Receptor Antagonist",
+      "target": "dopamine receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Zyprexa (olanzapine)"
+    },
+    {
+      "chapter": 14,
+      "record_number": 13,
+      "drug": "Zyprexa (olanzapine)",
+      "mechanism_rule_name": "Serotonin Receptor Antagonist",
+      "target": "serotonin receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 302,
+      "drug_in_chNN": "Zyprexa (olanzapine)"
+    },
+    {
+      "chapter": 14,
+      "record_number": 19,
+      "drug": "Riluzole",
+      "mechanism_rule_name": "Glutamate Receptor Antagonist",
+      "target": "glutamate (receptors, glutamate)",
+      "target_class": "receptor",
+      "pdf_page_index": 303,
+      "drug_in_chNN": "Riluzole"
+    },
+    {
+      "chapter": 14,
+      "record_number": 20,
+      "drug": "Donepezil hydrochloride",
+      "mechanism_rule_name": "Acetylcholinesterase Inhibitor",
+      "target": "AChe",
+      "target_class": "enzyme",
+      "pdf_page_index": 303,
+      "drug_in_chNN": "Donepezil hydrochloride"
+    },
+    {
+      "chapter": 14,
+      "record_number": 21,
+      "drug": "Memantine",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA (N-methyl-D-aspartate (NMDA) receptors)",
+      "target_class": "receptor",
+      "pdf_page_index": 303,
+      "drug_in_chNN": "Memantine"
+    },
+    {
+      "chapter": 14,
+      "record_number": 22,
+      "drug": "Dextromethorphan/quinidine (DM/Q)",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 320,
+      "drug_in_chNN": "Dextromethorphan/quinidine (DM/Q)"
+    },
+    {
+      "chapter": 14,
+      "record_number": 23,
+      "drug": "Dextromethorphan/quinidine (DM/Q)",
+      "mechanism_rule_name": "Sigma 1 Receptor Agonist",
+      "target": "Sigma 1 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 320,
+      "drug_in_chNN": "Dextromethorphan/quinidine (DM/Q)"
+    },
+    {
+      "chapter": 14,
+      "record_number": 25,
+      "drug": "",
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "target": "NMDA (NMDA glutamate receptors)",
+      "target_class": "receptor",
+      "pdf_page_index": 319,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 27,
+      "drug": "",
+      "mechanism_rule_name": "GABA B Receptor Agonist",
+      "target": "GABA B Recepter",
+      "target_class": "receptor",
+      "pdf_page_index": 301,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 29,
+      "drug": "",
+      "mechanism_rule_name": "Cholinesterase Inhibitor",
+      "target": "Cholinesterase",
+      "target_class": "enzyme",
+      "pdf_page_index": 303,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 18,
+      "record_number": 1,
+      "drug": "Cilastatin",
+      "mechanism_rule_name": "Dehydropeptidase I Inhibitor",
+      "target": "brush border dehydropeptidase I (DHP-I)",
+      "target_class": "enzyme",
+      "pdf_page_index": 394,
+      "drug_in_chNN": "Cilastatin"
+    },
+    {
+      "chapter": 23,
+      "record_number": 1,
+      "drug": "PTZ",
+      "mechanism_rule_name": "GABA Receptor Antagonist",
+      "target": "GABA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 539,
+      "drug_in_chNN": "PTZ"
+    },
+    {
+      "chapter": 23,
+      "record_number": 2,
+      "drug": "PTX",
+      "mechanism_rule_name": "GABA Receptor Antagonist",
+      "target": "GABA receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 539,
+      "drug_in_chNN": "PTX"
+    },
+    {
+      "chapter": 23,
+      "record_number": 3,
+      "drug": "",
+      "mechanism_rule_name": "Dopamine Receptor Antagonist",
+      "target": "dopamine receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 541,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 24,
+      "record_number": 1,
+      "drug": "carbon monoxide (CO)",
+      "mechanism_rule_name": "Guanylyl Cyclase Activator",
+      "target": "guanylyl cyclase",
+      "target_class": "enzyme",
+      "pdf_page_index": 555,
+      "drug_in_chNN": "carbon monoxide (CO)"
+    },
+    {
+      "chapter": 24,
+      "record_number": 3,
+      "drug": "carbon monoxide (CO) and CO-releasing molecules",
+      "mechanism_rule_name": "P38 MAPK Activator",
+      "target": "P38 MAPK pathway",
+      "target_class": "enzyme",
+      "pdf_page_index": 555,
+      "drug_in_chNN": "carbon monoxide (CO) and CO-releasing molecules"
+    },
+    {
+      "chapter": 24,
+      "record_number": 4,
+      "drug": "carbon monoxide (CO)",
+      "mechanism_rule_name": "JNK MAPK Inhibitor",
+      "target": "JNK MAPK",
+      "target_class": "enzyme",
+      "pdf_page_index": 555,
+      "drug_in_chNN": "carbon monoxide (CO)"
+    },
+    {
+      "chapter": 24,
+      "record_number": 6,
+      "drug": "carbon monoxide (CO)",
+      "mechanism_rule_name": "Mitochondrial Complex III Inhibitor",
+      "target": "complex III of the mitochondrial electron transport chain (terminal step of oxidative phosphorylation)",
+      "target_class": "enzyme",
+      "pdf_page_index": 556,
+      "drug_in_chNN": "carbon monoxide (CO)"
+    },
+    {
+      "chapter": 24,
+      "record_number": 7,
+      "drug": "carbon monoxide (CO)",
+      "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+      "target": "cyclooxygenase",
+      "target_class": "enzyme",
+      "pdf_page_index": 556,
+      "drug_in_chNN": "carbon monoxide (CO)"
+    },
+    {
+      "chapter": 24,
+      "record_number": 8,
+      "drug": "carbon monoxide (CO)",
+      "mechanism_rule_name": "Cytochrome P450 Inhibitor",
+      "target": "cytochromes P450",
+      "target_class": "enzyme",
+      "pdf_page_index": 556,
+      "drug_in_chNN": "carbon monoxide (CO)"
+    },
+    {
+      "chapter": 24,
+      "record_number": 10,
+      "drug": "biliverdin",
+      "mechanism_rule_name": "JNK Inhibitor",
+      "target": "c-Jun N-terminal kinase (JNK)",
+      "target_class": "enzyme",
+      "pdf_page_index": 559,
+      "drug_in_chNN": "biliverdin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 11,
+      "drug": "biliverdin",
+      "mechanism_rule_name": "Aryl Hydrocarbon Receptor Agonist",
+      "target": "aryl hydrocarbon receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 559,
+      "drug_in_chNN": "biliverdin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 12,
+      "drug": "bilirubin",
+      "mechanism_rule_name": "Aryl Hydrocarbon Receptor Agonist",
+      "target": "aryl hydrocarbon receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 559,
+      "drug_in_chNN": "bilirubin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 13,
+      "drug": "bilirubin",
+      "mechanism_rule_name": "NADPH Oxidase Inhibitor",
+      "target": "NADPH oxidase (superoxide-generating)",
+      "target_class": "enzyme",
+      "pdf_page_index": 558,
+      "drug_in_chNN": "bilirubin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 14,
+      "drug": "chromium mesoporphyrin",
+      "mechanism_rule_name": "Heme Oxygenase-1 Inhibitor",
+      "target": "HO-1 (heme oxygenase-1)",
+      "target_class": "enzyme",
+      "pdf_page_index": 551,
+      "drug_in_chNN": "chromium mesoporphyrin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 15,
+      "drug": "tin mesoporphyrin",
+      "mechanism_rule_name": "Heme Oxygenase-1 Inhibitor",
+      "target": "HO-1 (heme oxygenase-1)",
+      "target_class": "enzyme",
+      "pdf_page_index": 553,
+      "drug_in_chNN": "tin mesoporphyrin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 16,
+      "drug": "tin porphyrin",
+      "mechanism_rule_name": "Heme Oxygenase-1 Inhibitor",
+      "target": "HO-1 (heme oxygenase-1)",
+      "target_class": "enzyme",
+      "pdf_page_index": 552,
+      "drug_in_chNN": "tin porphyrin"
+    },
+    {
+      "chapter": 24,
+      "record_number": 17,
+      "drug": "metal porphyrins (class)",
+      "mechanism_rule_name": "Heme Oxygenase Inhibitor",
+      "target": "HO active site (heme oxygenase)",
+      "target_class": "enzyme",
+      "pdf_page_index": 551,
+      "drug_in_chNN": "metal porphyrins (class)"
+    },
+    {
+      "chapter": 24,
+      "record_number": 18,
+      "drug": "biliverdin reductase (BVR), phosphorylated",
+      "mechanism_rule_name": "Protein Kinase C betaII Activator",
+      "target": "protein kinase C betaII (PKC betaII)",
+      "target_class": "enzyme",
+      "pdf_page_index": 561,
+      "drug_in_chNN": "biliverdin reductase (BVR), phosphorylated"
+    },
+    {
+      "chapter": 24,
+      "record_number": 19,
+      "drug": "biliverdin reductase (BVR), phosphorylated",
+      "mechanism_rule_name": "Protein Kinase C zeta Activator",
+      "target": "protein kinase C zeta (PKC zeta)",
+      "target_class": "enzyme",
+      "pdf_page_index": 561,
+      "drug_in_chNN": "biliverdin reductase (BVR), phosphorylated"
+    },
+    {
+      "chapter": 24,
+      "record_number": 20,
+      "drug": "biliverdin reductase (BVR)",
+      "mechanism_rule_name": "ERK MAPK Activator",
+      "target": "ERK MAPK",
+      "target_class": "enzyme",
+      "pdf_page_index": 567,
+      "drug_in_chNN": "biliverdin reductase (BVR)"
+    },
+    {
+      "chapter": 25,
+      "record_number": 1,
+      "drug": "Camellia sinensis extract",
+      "mechanism_rule_name": "Phospholipase A2 Inhibitor",
+      "target": "phospholipase A2",
+      "target_class": "enzyme",
+      "pdf_page_index": 590,
+      "drug_in_chNN": "Camellia sinensis extract"
+    },
+    {
+      "chapter": 25,
+      "record_number": 2,
+      "drug": "Camellia sinensis extract",
+      "mechanism_rule_name": "Protease Inhibitor",
+      "target": "proteases",
+      "target_class": "enzyme",
+      "pdf_page_index": 590,
+      "drug_in_chNN": "Camellia sinensis extract"
+    },
+    {
+      "chapter": 25,
+      "record_number": 3,
+      "drug": "Camellia sinensis extract",
+      "mechanism_rule_name": "Hyaluronidase Inhibitor",
+      "target": "hyaluronidase",
+      "target_class": "enzyme",
+      "pdf_page_index": 590,
+      "drug_in_chNN": "Camellia sinensis extract"
+    },
+    {
+      "chapter": 25,
+      "record_number": 4,
+      "drug": "Camellia sinensis extract",
+      "mechanism_rule_name": "L-Amino Acid Oxidase Inhibitor",
+      "target": "L-amino acid oxidase",
+      "target_class": "enzyme",
+      "pdf_page_index": 590,
+      "drug_in_chNN": "Camellia sinensis extract"
+    },
+    {
+      "chapter": 26,
+      "record_number": 2,
+      "drug": "sIL-6R (soluble IL-6 receptor)",
+      "mechanism_rule_name": "Interleukin-6 Receptor Complex Agonist",
+      "target": "IL-6 / IL-6 receptor complex (IL-6+sIL-6R with gp130)",
+      "target_class": "receptor",
+      "pdf_page_index": 600,
+      "drug_in_chNN": "sIL-6R (soluble IL-6 receptor)"
+    },
+    {
+      "chapter": 26,
+      "record_number": 3,
+      "drug": "sgp130 (soluble gp130)",
+      "mechanism_rule_name": "Interleukin-6 Receptor Complex Antagonist",
+      "target": "complex IL-6+sIL-6R",
+      "target_class": "receptor",
+      "pdf_page_index": 600,
+      "drug_in_chNN": "sgp130 (soluble gp130)"
+    },
+    {
+      "chapter": 27,
+      "record_number": 1,
+      "drug": "Nitric oxide (NO)",
+      "mechanism_rule_name": "Guanylyl Cyclase Activator",
+      "target": "guanylilcyclase (as printed)",
+      "target_class": "enzyme",
+      "pdf_page_index": 621,
+      "drug_in_chNN": "Nitric oxide (NO)"
+    },
+    {
+      "chapter": 27,
+      "record_number": 5,
+      "drug": "Ethanol",
+      "mechanism_rule_name": "Superoxide Dismutase Activator",
+      "target": "superoxide-dismutase",
+      "target_class": "enzyme",
+      "pdf_page_index": 626,
+      "drug_in_chNN": "Ethanol"
+    },
+    {
+      "chapter": 27,
+      "record_number": 6,
+      "drug": "Ethanol",
+      "mechanism_rule_name": "Catalase Activator",
+      "target": "catalase",
+      "target_class": "enzyme",
+      "pdf_page_index": 626,
+      "drug_in_chNN": "Ethanol"
+    },
+    {
+      "chapter": 27,
+      "record_number": 7,
+      "drug": "Ethanol",
+      "mechanism_rule_name": "Glutathione Peroxidase Activator",
+      "target": "glutathione-peroxidase",
+      "target_class": "enzyme",
+      "pdf_page_index": 626,
+      "drug_in_chNN": "Ethanol"
+    },
+    {
+      "chapter": 27,
+      "record_number": 18,
+      "drug": "Ethanol",
+      "mechanism_rule_name": "Phospholipase D Inhibitor",
+      "target": "phospholipase D",
+      "target_class": "enzyme",
+      "pdf_page_index": 629,
+      "drug_in_chNN": "Ethanol"
+    },
+    {
+      "chapter": 28,
+      "record_number": 1,
+      "drug": "Adenosine",
+      "mechanism_rule_name": "P1 Adenosine Receptor Agonist",
+      "target": "P1 receptors (adenosine receptors)",
+      "target_class": "receptor",
+      "pdf_page_index": 640,
+      "drug_in_chNN": "Adenosine"
+    },
+    {
+      "chapter": 28,
+      "record_number": 2,
+      "drug": "Adenosine",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Adenosine"
+    },
+    {
+      "chapter": 28,
+      "record_number": 3,
+      "drug": "Adenosine",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Adenosine"
+    },
+    {
+      "chapter": 28,
+      "record_number": 6,
+      "drug": "ATP",
+      "mechanism_rule_name": "P2X Receptor Agonist",
+      "target": "P2X receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 640,
+      "drug_in_chNN": "ATP"
+    },
+    {
+      "chapter": 28,
+      "record_number": 7,
+      "drug": "ATP",
+      "mechanism_rule_name": "P2Y Receptor Agonist",
+      "target": "P2Y receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 640,
+      "drug_in_chNN": "ATP"
+    },
+    {
+      "chapter": 28,
+      "record_number": 8,
+      "drug": "R-PIA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 644,
+      "drug_in_chNN": "R-PIA"
+    },
+    {
+      "chapter": 28,
+      "record_number": 9,
+      "drug": "CHA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 645,
+      "drug_in_chNN": "CHA"
+    },
+    {
+      "chapter": 28,
+      "record_number": 10,
+      "drug": "CPA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 644,
+      "drug_in_chNN": "CPA"
+    },
+    {
+      "chapter": 28,
+      "record_number": 11,
+      "drug": "CCPA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 645,
+      "drug_in_chNN": "CCPA"
+    },
+    {
+      "chapter": 28,
+      "record_number": 12,
+      "drug": "CPT",
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 645,
+      "drug_in_chNN": "CPT"
+    },
+    {
+      "chapter": 28,
+      "record_number": 13,
+      "drug": "DPCPX",
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 649,
+      "drug_in_chNN": "DPCPX"
+    },
+    {
+      "chapter": 28,
+      "record_number": 14,
+      "drug": "8-PT",
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 649,
+      "drug_in_chNN": "8-PT"
+    },
+    {
+      "chapter": 28,
+      "record_number": 15,
+      "drug": "Methylxanthines (caffeine included)",
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 645,
+      "drug_in_chNN": "Methylxanthines (caffeine included)"
+    },
+    {
+      "chapter": 28,
+      "record_number": 16,
+      "drug": "Methylxanthines (caffeine included)",
+      "mechanism_rule_name": "Adenosine A2A Receptor Antagonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 645,
+      "drug_in_chNN": "Methylxanthines (caffeine included)"
+    },
+    {
+      "chapter": 28,
+      "record_number": 17,
+      "drug": "caffeine",
+      "mechanism_rule_name": "Adenosine Receptor Antagonist",
+      "target": "adenosine receptors (subtype not stated)",
+      "target_class": "receptor",
+      "pdf_page_index": 647,
+      "drug_in_chNN": "caffeine"
+    },
+    {
+      "chapter": 28,
+      "record_number": 19,
+      "drug": "Inosine",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 649,
+      "drug_in_chNN": "Inosine"
+    },
+    {
+      "chapter": 28,
+      "record_number": 23,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine Kinase Inhibitor",
+      "target": "adenosine kinase (AK)",
+      "target_class": "enzyme",
+      "pdf_page_index": 646,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 24,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine Deaminase Inhibitor",
+      "target": "adenosine deaminase (ADA)",
+      "target_class": "enzyme",
+      "pdf_page_index": 647,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 26,
+      "drug": "Selodenoson",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Selodenoson"
+    },
+    {
+      "chapter": 28,
+      "record_number": 27,
+      "drug": "Capadenoson",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Capadenoson"
+    },
+    {
+      "chapter": 28,
+      "record_number": 28,
+      "drug": "Tecadenoson",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Tecadenoson"
+    },
+    {
+      "chapter": 28,
+      "record_number": 29,
+      "drug": "Apadenoson",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Apadenoson"
+    },
+    {
+      "chapter": 28,
+      "record_number": 30,
+      "drug": "Binodenoson",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Binodenoson"
+    },
+    {
+      "chapter": 28,
+      "record_number": 31,
+      "drug": "Sonedenoson",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Sonedenoson"
+    },
+    {
+      "chapter": 28,
+      "record_number": 33,
+      "drug": "CF101",
+      "mechanism_rule_name": "Adenosine A3 Receptor Agonist",
+      "target": "adenosine A3 receptor (A3R)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "CF101"
+    },
+    {
+      "chapter": 28,
+      "record_number": 34,
+      "drug": "Cl-IB-MECA (CF102)",
+      "mechanism_rule_name": "Adenosine A3 Receptor Agonist",
+      "target": "adenosine A3 receptor (A3R)",
+      "target_class": "receptor",
+      "pdf_page_index": 651,
+      "drug_in_chNN": "Cl-IB-MECA (CF102)"
+    },
+    {
+      "chapter": 28,
+      "record_number": 35,
+      "drug": "CP-608,039",
+      "mechanism_rule_name": "Adenosine A3 Receptor Agonist",
+      "target": "adenosine A3 receptor (A3R)",
+      "target_class": "receptor",
+      "pdf_page_index": 652,
+      "drug_in_chNN": "CP-608,039"
+    },
+    {
+      "chapter": 28,
+      "record_number": 36,
+      "drug": "CP-532,903",
+      "mechanism_rule_name": "Adenosine A3 Receptor Agonist",
+      "target": "adenosine A3 receptor (A3R)",
+      "target_class": "receptor",
+      "pdf_page_index": 652,
+      "drug_in_chNN": "CP-532,903"
+    },
+    {
+      "chapter": 28,
+      "record_number": 38,
+      "drug": "SDZ WAG 994",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 652,
+      "drug_in_chNN": "SDZ WAG 994"
+    },
+    {
+      "chapter": 28,
+      "record_number": 39,
+      "drug": "GR79236X",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 652,
+      "drug_in_chNN": "GR79236X"
+    },
+    {
+      "chapter": 28,
+      "record_number": 40,
+      "drug": "GW493838",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 652,
+      "drug_in_chNN": "GW493838"
+    },
+    {
+      "chapter": 28,
+      "record_number": 42,
+      "drug": "BVT.115959",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 652,
+      "drug_in_chNN": "BVT.115959"
+    },
+    {
+      "chapter": 28,
+      "record_number": 43,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 644,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 44,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor (A2AR)",
+      "target_class": "receptor",
+      "pdf_page_index": 646,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 46,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine A2B Receptor Antagonist",
+      "target": "adenosine A2B receptor (A2BR)",
+      "target_class": "receptor",
+      "pdf_page_index": 646,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 48,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "target": "adenosine A1 receptor (A1R)",
+      "target_class": "receptor",
+      "pdf_page_index": 645,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 29,
+      "record_number": 3,
+      "drug": "AMD3100",
+      "mechanism_rule_name": "CXCR4 Receptor Antagonist",
+      "target": "CXCR4 receptor (chemokine receptor)",
+      "target_class": "receptor",
+      "pdf_page_index": 681,
+      "drug_in_chNN": "AMD3100"
+    },
+    {
+      "chapter": 29,
+      "record_number": 5,
+      "drug": "dipicolylamine-zinc(II) complex compounds",
+      "mechanism_rule_name": "CXCR4 Receptor Antagonist",
+      "target": "chemokine receptor CXCR4",
+      "target_class": "receptor",
+      "pdf_page_index": 683,
+      "drug_in_chNN": "dipicolylamine-zinc(II) complex compounds"
+    },
+    {
+      "chapter": 29,
+      "record_number": 7,
+      "drug": "ruthenium complex I (trans-[RuCl2(nic)4])",
+      "mechanism_rule_name": "Nitric Oxide Synthase Inhibitor",
+      "target": "nitric oxide synthase",
+      "target_class": "enzyme",
+      "pdf_page_index": 670,
+      "drug_in_chNN": "ruthenium complex I (trans-[RuCl2(nic)4])"
+    },
+    {
+      "chapter": 29,
+      "record_number": 8,
+      "drug": "ruthenium complex II (trans-[RuCl2 (i-nic)4])",
+      "mechanism_rule_name": "Nitric Oxide Synthase Inhibitor",
+      "target": "nitric oxide synthase",
+      "target_class": "enzyme",
+      "pdf_page_index": 670,
+      "drug_in_chNN": "ruthenium complex II (trans-[RuCl2 (i-nic)4])"
+    },
+    {
+      "chapter": 29,
+      "record_number": 9,
+      "drug": "ONCO4417",
+      "mechanism_rule_name": "Pim-1 Kinase Inhibitor",
+      "target": "Pim-1 kinase",
+      "target_class": "enzyme",
+      "pdf_page_index": 669,
+      "drug_in_chNN": "ONCO4417"
+    },
+    {
+      "chapter": 29,
+      "record_number": 10,
+      "drug": "DW1/2",
+      "mechanism_rule_name": "Pim-1 Kinase Inhibitor",
+      "target": "Pim-1 kinase",
+      "target_class": "enzyme",
+      "pdf_page_index": 669,
+      "drug_in_chNN": "DW1/2"
+    },
+    {
+      "chapter": 29,
+      "record_number": 12,
+      "drug": "gallium(III)",
+      "mechanism_rule_name": "Ribonucleotide Reductase Inhibitor",
+      "target": "ribonucleotide reductase",
+      "target_class": "enzyme",
+      "pdf_page_index": 671,
+      "drug_in_chNN": "gallium(III)"
+    },
+    {
+      "chapter": 29,
+      "record_number": 13,
+      "drug": "KP46 (tris(8-quinolinolato)gallium(III))",
+      "mechanism_rule_name": "Ribonucleotide Reductase Inhibitor",
+      "target": "ribonucleotide reductase",
+      "target_class": "enzyme",
+      "pdf_page_index": 671,
+      "drug_in_chNN": "KP46 (tris(8-quinolinolato)gallium(III))"
+    },
+    {
+      "chapter": 29,
+      "record_number": 14,
+      "drug": "titanocene dichloride",
+      "mechanism_rule_name": "Collagenase Type IV Inhibitor",
+      "target": "collagenase type IV",
+      "target_class": "enzyme",
+      "pdf_page_index": 672,
+      "drug_in_chNN": "titanocene dichloride"
+    },
+    {
+      "chapter": 29,
+      "record_number": 17,
+      "drug": "Ti(IV) compounds",
+      "mechanism_rule_name": "Protease Inhibitor",
+      "target": "proteases",
+      "target_class": "enzyme",
+      "pdf_page_index": 673,
+      "drug_in_chNN": "Ti(IV) compounds"
+    },
+    {
+      "chapter": 29,
+      "record_number": 18,
+      "drug": "Ti(IV) compounds",
+      "mechanism_rule_name": "Telomerase Inhibitor",
+      "target": "telomerases",
+      "target_class": "enzyme",
+      "pdf_page_index": 673,
+      "drug_in_chNN": "Ti(IV) compounds"
+    },
+    {
+      "chapter": 29,
+      "record_number": 19,
+      "drug": "[bpza][AuCl4]",
+      "mechanism_rule_name": "Reverse Transcriptase Inhibitor",
+      "target": "reverse transcriptase",
+      "target_class": "enzyme",
+      "pdf_page_index": 674,
+      "drug_in_chNN": "[bpza][AuCl4]"
+    },
+    {
+      "chapter": 29,
+      "record_number": 20,
+      "drug": "[bpza][AuCl4]",
+      "mechanism_rule_name": "HIV-1 Protease Inhibitor",
+      "target": "HIV-1 protease",
+      "target_class": "enzyme",
+      "pdf_page_index": 674,
+      "drug_in_chNN": "[bpza][AuCl4]"
+    },
+    {
+      "chapter": 29,
+      "record_number": 21,
+      "drug": "auranofin and other gold compounds",
+      "mechanism_rule_name": "Thioredoxin Reductase Inhibitor",
+      "target": "thioredoxin reductase (TrxR)",
+      "target_class": "enzyme",
+      "pdf_page_index": 674,
+      "drug_in_chNN": "auranofin and other gold compounds"
+    },
+    {
+      "chapter": 29,
+      "record_number": 22,
+      "drug": "Ni-NQTS",
+      "mechanism_rule_name": "Topoisomerase II Inhibitor",
+      "target": "topoisomerase II",
+      "target_class": "enzyme",
+      "pdf_page_index": 674,
+      "drug_in_chNN": "Ni-NQTS (nickel(II) complex of 1,2-naphtoquinone-based thiosemicarbazone ligand)"
+    },
+    {
+      "chapter": 29,
+      "record_number": 24,
+      "drug": "NSAIDs (nonsteroidal antiinflammatory drugs)",
+      "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+      "target": "cyclooxygenase family enzymes (COX)",
+      "target_class": "enzyme",
+      "pdf_page_index": 680,
+      "drug_in_chNN": "NSAIDs (nonsteroidal antiinflammatory drugs)"
+    },
+    {
+      "chapter": 29,
+      "record_number": 25,
+      "drug": "aspirin (acetylsalicylic acid)",
+      "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+      "target": "COX (cyclooxygenase)",
+      "target_class": "enzyme",
+      "pdf_page_index": 680,
+      "drug_in_chNN": "aspirin (acetylsalicylic acid)"
+    },
+    {
+      "chapter": 29,
+      "record_number": 26,
+      "drug": "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)",
+      "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+      "target": "COX (cyclooxygenase)",
+      "target_class": "enzyme",
+      "pdf_page_index": 680,
+      "drug_in_chNN": "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)"
+    },
+    {
+      "chapter": 29,
+      "record_number": 27,
+      "drug": "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)",
+      "mechanism_rule_name": "Caspase Activator",
+      "target": "caspase",
+      "target_class": "enzyme",
+      "pdf_page_index": 680,
+      "drug_in_chNN": "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)"
+    },
+    {
+      "chapter": 29,
+      "record_number": 28,
+      "drug": "VO(alx)2 (bis(allixinato)oxovanadium(IV))",
+      "mechanism_rule_name": "Akt/PKB Activator",
+      "target": "Akt/PKB",
+      "target_class": "enzyme",
+      "pdf_page_index": 684,
+      "drug_in_chNN": "VO(alx)2 (bis(allixinato)oxovanadium(IV))"
+    },
+    {
+      "chapter": 29,
+      "record_number": 29,
+      "drug": "Zn(alx)2 (bis(allixinato)zinc(II))",
+      "mechanism_rule_name": "Akt/PKB Activator",
+      "target": "Akt/PKB",
+      "target_class": "enzyme",
+      "pdf_page_index": 684,
+      "drug_in_chNN": "Zn(alx)2 (bis(allixinato)zinc(II))"
+    },
+    {
+      "chapter": 29,
+      "record_number": 30,
+      "drug": "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))",
+      "mechanism_rule_name": "Akt/PKB Activator",
+      "target": "Akt/PKB",
+      "target_class": "enzyme",
+      "pdf_page_index": 684,
+      "drug_in_chNN": "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))"
+    },
+    {
+      "chapter": 30,
+      "record_number": 1,
+      "drug": "Aminoguanidine",
+      "mechanism_rule_name": "Histaminase Inhibitor",
+      "target": "histaminases",
+      "target_class": "enzyme",
+      "pdf_page_index": 704,
+      "drug_in_chNN": "Aminoguanidine"
+    },
+    {
+      "chapter": 30,
+      "record_number": 2,
+      "drug": "Aminoguanidine",
+      "mechanism_rule_name": "Nitric Oxide Synthase Inhibitor",
+      "target": "nitric oxide synthase (NOS)",
+      "target_class": "enzyme",
+      "pdf_page_index": 704,
+      "drug_in_chNN": "Aminoguanidine"
+    },
+    {
+      "chapter": 30,
+      "record_number": 4,
+      "drug": "Alagebrium (ALT-711, alagebrium chloride)",
+      "mechanism_rule_name": "Thiamine Diphosphokinase Inhibitor",
+      "target": "thiamine diphosphokinase",
+      "target_class": "enzyme",
+      "pdf_page_index": 706,
+      "drug_in_chNN": "Alagebrium (ALT-711, alagebrium chloride)"
+    },
+    {
+      "chapter": 30,
+      "record_number": 5,
+      "drug": "Pioglitazone",
+      "mechanism_rule_name": "Peroxisome Proliferator-Activated Receptor Gamma Agonist",
+      "target": "peroxisome proliferator-activated receptor gamma (PPARgamma)",
+      "target_class": "receptor",
+      "pdf_page_index": 705,
+      "drug_in_chNN": "Pioglitazone"
+    },
+    {
+      "chapter": 30,
+      "record_number": 6,
+      "drug": "(class, no compound named)",
+      "mechanism_rule_name": "Angiotensin Receptor Antagonist",
+      "target": "angiotensin receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 705,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 30,
+      "record_number": 7,
+      "drug": "(class, no compound named)",
+      "mechanism_rule_name": "Angiotensin Converting Enzyme Inhibitor",
+      "target": "angiotensin converting enzyme",
+      "target_class": "enzyme",
+      "pdf_page_index": 705,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 30,
+      "record_number": 8,
+      "drug": "(class, no compound named)",
+      "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+      "target": "cyclooxygenase (spelled 'cycloxygenase' on the page)",
+      "target_class": "enzyme",
+      "pdf_page_index": 705,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 30,
+      "record_number": 9,
+      "drug": "Methylglyoxal (MG)",
+      "mechanism_rule_name": "NADPH Oxidase Activator",
+      "target": "NADPH oxidase",
+      "target_class": "enzyme",
+      "pdf_page_index": 699,
+      "drug_in_chNN": "Methylglyoxal (MG)"
+    },
+    {
+      "chapter": 30,
+      "record_number": 10,
+      "drug": "Methylglyoxal (MG)",
+      "mechanism_rule_name": "p38 MAPK Activator",
+      "target": "p38 MAPK",
+      "target_class": "enzyme",
+      "pdf_page_index": 699,
+      "drug_in_chNN": "Methylglyoxal (MG)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 2,
+      "drug": "Adenosine",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "A2AR (adenosine A2A receptor)",
+      "target_class": "receptor",
+      "pdf_page_index": 723,
+      "drug_in_chNN": "Adenosine"
+    },
+    {
+      "chapter": 31,
+      "record_number": 3,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine Receptor Agonist",
+      "target": "adenosine receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 721,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 31,
+      "record_number": 4,
+      "drug": "",
+      "mechanism_rule_name": "Adenosine Receptor Antagonist",
+      "target": "adenosine receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 721,
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 31,
+      "record_number": 5,
+      "drug": "Caffeine",
+      "mechanism_rule_name": "Adenosine Receptor Antagonist",
+      "target": "adenosine receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 721,
+      "drug_in_chNN": "Caffeine"
+    },
+    {
+      "chapter": 31,
+      "record_number": 6,
+      "drug": "Theophylline",
+      "mechanism_rule_name": "Adenosine Receptor Antagonist",
+      "target": "adenosine receptors",
+      "target_class": "receptor",
+      "pdf_page_index": 724,
+      "drug_in_chNN": "Theophylline"
+    },
+    {
+      "chapter": 31,
+      "record_number": 7,
+      "drug": "DPCPX",
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "target": "adenosine A1 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 725,
+      "drug_in_chNN": "1,3-dipropyl-8-cyclopentylxanthine (DPCPX)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 8,
+      "drug": "DMPX",
+      "mechanism_rule_name": "Adenosine A2A Receptor Antagonist",
+      "target": "A2A (adenosine A2A receptor)",
+      "target_class": "receptor",
+      "pdf_page_index": 726,
+      "drug_in_chNN": "3,7-Dimethyl-1-propargylxanthine (DMPX)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 9,
+      "drug": "CCPA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 725,
+      "drug_in_chNN": "2-chloro-N6-cyclopentyladenosine (CCPA)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 10,
+      "drug": "DPMA",
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "target": "adenosine A2A receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 725,
+      "drug_in_chNN": "N6-[2-(3,5-dimethoxyphenyl)-2-(2-methylphenyl)ethyl]adenosine (DPMA)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 11,
+      "drug": "R-PIA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "adenosine A1 receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 726,
+      "drug_in_chNN": "R(−)-N6-phenylisopropyladenosine (R-PIA)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 12,
+      "drug": "CHA",
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "target": "A1R (adenosine A1 receptor)",
+      "target_class": "receptor",
+      "pdf_page_index": 725,
+      "drug_in_chNN": "N6-cyclohexyladenosine (CHA)"
+    },
+    {
+      "chapter": 31,
+      "record_number": 13,
+      "drug": "Aminophylline",
+      "mechanism_rule_name": "Adenosine Receptor Antagonist",
+      "target": "adenosine receptor",
+      "target_class": "receptor",
+      "pdf_page_index": 725,
+      "drug_in_chNN": "Aminophylline"
+    },
+    {
+      "chapter": 31,
+      "record_number": 15,
+      "drug": "beta-endorphin",
+      "mechanism_rule_name": "Opioid Mu Receptor Agonist",
+      "target": "µtype receptors (mu opioid)",
+      "target_class": "receptor",
+      "pdf_page_index": 722,
+      "drug_in_chNN": "β-endorphin"
+    },
+    {
+      "chapter": 31,
+      "record_number": 16,
+      "drug": "Ethanol",
+      "mechanism_rule_name": "P2X4 and P2X2 Receptor Antagonist",
+      "target": "ionotropic ATP receptors, subtypes P2X4R and P2X2R",
+      "target_class": "receptor",
+      "pdf_page_index": 723,
+      "drug_in_chNN": "Ethanol"
+    },
+    {
+      "chapter": 31,
+      "record_number": 17,
+      "drug": "Ethanol",
+      "mechanism_rule_name": "5-HT3 Receptor Agonist",
+      "target": "5-HT3",
+      "target_class": "receptor",
+      "pdf_page_index": 723,
+      "drug_in_chNN": "Ethanol"
+    }
+  ],
+  "distinct_drugs": [
+    {
+      "drug": "(R,S)-3-4-DCPG",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 63
+        },
+        {
+          "chapter": 1,
+          "record_number": 64
+        }
+      ],
+      "drug_names_in_chNN": [
+        "(R,S)-3-4-DCPG"
+      ],
+      "mechanism_names": [
+        "AMPA Receptor Antagonist",
+        "mGlu8 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "(S)-3,5-DHPG",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 16
+        },
+        {
+          "chapter": 1,
+          "record_number": 17
+        },
+        {
+          "chapter": 2,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "(S)-3,5-DHPG"
+      ],
+      "mechanism_names": [
+        "Group 1 mGlu Receptor Agonist",
+        "mGlu1 Receptor Agonist",
+        "mGlu5 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "2-AG",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 6
+        },
+        {
+          "chapter": 5,
+          "record_number": 7
+        }
+      ],
+      "drug_names_in_chNN": [
+        "2-AG"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 1 Receptor Agonist",
+        "Cannabinoid 2 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "2-amino-7-phosphonoheptanoic acid (AP-7)",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 36
+        }
+      ],
+      "drug_names_in_chNN": [
+        "2-amino-7-phosphonoheptanoic acid (AP-7)"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "2-OH saclofen",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 85
+        }
+      ],
+      "drug_names_in_chNN": [
+        "2-OH saclofen"
+      ],
+      "mechanism_names": [
+        "GABAB Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "5'-GNTI",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 14
+        }
+      ],
+      "drug_names_in_chNN": [
+        "5′-GNTI"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "5-HT",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 11
+        }
+      ],
+      "drug_names_in_chNN": [
+        "5-HT"
+      ],
+      "mechanism_names": [
+        "5-HT2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "8-PT",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 14
+        }
+      ],
+      "drug_names_in_chNN": [
+        "8-PT"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "[bpza][AuCl4]",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 19
+        },
+        {
+          "chapter": 29,
+          "record_number": 20
+        }
+      ],
+      "drug_names_in_chNN": [
+        "[bpza][AuCl4]"
+      ],
+      "mechanism_names": [
+        "HIV-1 Protease Inhibitor",
+        "Reverse Transcriptase Inhibitor"
+      ]
+    },
+    {
+      "drug": "Acamprosate",
+      "records": [
+        {
+          "chapter": 12,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Acamprosate"
+      ],
+      "mechanism_names": [
+        "NMDA Glutamate Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "ACPT-I",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 48
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ACPT-I"
+      ],
+      "mechanism_names": [
+        "Group III mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Adenosine",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 1
+        },
+        {
+          "chapter": 28,
+          "record_number": 2
+        },
+        {
+          "chapter": 28,
+          "record_number": 3
+        },
+        {
+          "chapter": 31,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Adenosine"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist",
+        "Adenosine A2A Receptor Agonist",
+        "P1 Adenosine Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "adrenaline",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "adrenaline"
+      ],
+      "mechanism_names": [
+        "Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "ADX48621",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 72
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ADX48621"
+      ],
+      "mechanism_names": [
+        "mGlu5 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "AEA",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AEA"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 2 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "agomelatine",
+      "records": [
+        {
+          "chapter": 13,
+          "record_number": 7
+        },
+        {
+          "chapter": 13,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "agomelatine"
+      ],
+      "mechanism_names": [
+        "Melatonin Receptor Agonist",
+        "Serotonin 5-HT2C Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "AIDA",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 33
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AIDA"
+      ],
+      "mechanism_names": [
+        "mGlu1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Alagebrium (ALT-711, alagebrium chloride)",
+      "records": [
+        {
+          "chapter": 30,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Alagebrium (ALT-711, alagebrium chloride)"
+      ],
+      "mechanism_names": [
+        "Thiamine Diphosphokinase Inhibitor"
+      ]
+    },
+    {
+      "drug": "albuterol",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 20
+        }
+      ],
+      "drug_names_in_chNN": [
+        "albuterol"
+      ],
+      "mechanism_names": [
+        "Beta 2 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "AM251",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AM251"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "AMD3100",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AMD3100"
+      ],
+      "mechanism_names": [
+        "CXCR4 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Aminoguanidine",
+      "records": [
+        {
+          "chapter": 30,
+          "record_number": 1
+        },
+        {
+          "chapter": 30,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Aminoguanidine"
+      ],
+      "mechanism_names": [
+        "Histaminase Inhibitor",
+        "Nitric Oxide Synthase Inhibitor"
+      ]
+    },
+    {
+      "drug": "Aminophylline",
+      "records": [
+        {
+          "chapter": 31,
+          "record_number": 13
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Aminophylline"
+      ],
+      "mechanism_names": [
+        "Adenosine Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "AMN082",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 61
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AMN082"
+      ],
+      "mechanism_names": [
+        "mGlu7 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "AMP",
+      "records": [
+        {
+          "chapter": 13,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AMP"
+      ],
+      "mechanism_names": [
+        "AMP-Activated Protein Kinase Activator"
+      ]
+    },
+    {
+      "drug": "AMPA",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AMPA (alpha-amino-3-hydroxy-4-isoxazolepropionic acid)"
+      ],
+      "mechanism_names": [
+        "AMPA Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "anandamide",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "anandamide"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Apadenoson",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 29
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Apadenoson"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Aripiprazole",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 7
+        },
+        {
+          "chapter": 14,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Aripiprazole"
+      ],
+      "mechanism_names": [
+        "Dopamine Autoreceptor Agonist",
+        "Dopamine D2 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "aspirin (acetylsalicylic acid)",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 25
+        }
+      ],
+      "drug_names_in_chNN": [
+        "aspirin (acetylsalicylic acid)"
+      ],
+      "mechanism_names": [
+        "Cyclooxygenase Inhibitor"
+      ]
+    },
+    {
+      "drug": "ATP",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 6
+        },
+        {
+          "chapter": 28,
+          "record_number": 7
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ATP"
+      ],
+      "mechanism_names": [
+        "P2X Receptor Agonist",
+        "P2Y Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "auranofin and other gold compounds",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 21
+        }
+      ],
+      "drug_names_in_chNN": [
+        "auranofin and other gold compounds"
+      ],
+      "mechanism_names": [
+        "Thioredoxin Reductase Inhibitor"
+      ]
+    },
+    {
+      "drug": "AZD2066",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 74
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AZD2066"
+      ],
+      "mechanism_names": [
+        "mGlu5 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "AZD2516",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 73
+        }
+      ],
+      "drug_names_in_chNN": [
+        "AZD2516"
+      ],
+      "mechanism_names": [
+        "mGlu5 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "baclofen",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 78
+        },
+        {
+          "chapter": 12,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Baclofen",
+        "baclofen"
+      ],
+      "mechanism_names": [
+        "GABA B Receptor Antagonist",
+        "GABAB Receptor Agonist"
+      ],
+      "notes": "merged names differing only in case/whitespace: [\"Baclofen\",\"baclofen\"]"
+    },
+    {
+      "drug": "barbiturates",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "barbiturates"
+      ],
+      "mechanism_names": [
+        "Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "beta-endorphin",
+      "records": [
+        {
+          "chapter": 31,
+          "record_number": 15
+        }
+      ],
+      "drug_names_in_chNN": [
+        "β-endorphin"
+      ],
+      "mechanism_names": [
+        "Opioid Mu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Bezafibrate",
+      "records": [
+        {
+          "chapter": 6,
+          "record_number": 9
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Bezafibrate"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator Activated Receptor Alpha Agonist"
+      ]
+    },
+    {
+      "drug": "bilirubin",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 12
+        },
+        {
+          "chapter": 24,
+          "record_number": 13
+        }
+      ],
+      "drug_names_in_chNN": [
+        "bilirubin"
+      ],
+      "mechanism_names": [
+        "Aryl Hydrocarbon Receptor Agonist",
+        "NADPH Oxidase Inhibitor"
+      ]
+    },
+    {
+      "drug": "biliverdin",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 10
+        },
+        {
+          "chapter": 24,
+          "record_number": 11
+        }
+      ],
+      "drug_names_in_chNN": [
+        "biliverdin"
+      ],
+      "mechanism_names": [
+        "Aryl Hydrocarbon Receptor Agonist",
+        "JNK Inhibitor"
+      ]
+    },
+    {
+      "drug": "biliverdin reductase (BVR)",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 20
+        }
+      ],
+      "drug_names_in_chNN": [
+        "biliverdin reductase (BVR)"
+      ],
+      "mechanism_names": [
+        "ERK MAPK Activator"
+      ]
+    },
+    {
+      "drug": "biliverdin reductase (BVR), phosphorylated",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 18
+        },
+        {
+          "chapter": 24,
+          "record_number": 19
+        }
+      ],
+      "drug_names_in_chNN": [
+        "biliverdin reductase (BVR), phosphorylated"
+      ],
+      "mechanism_names": [
+        "Protein Kinase C betaII Activator",
+        "Protein Kinase C zeta Activator"
+      ]
+    },
+    {
+      "drug": "Binodenoson",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 30
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Binodenoson"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Buthione – S – Sulfoxine",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Buthione – S – Sulfoxine"
+      ],
+      "mechanism_names": [
+        "Glutathione Transferase Inhibitor"
+      ]
+    },
+    {
+      "drug": "BVT.115959",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 42
+        }
+      ],
+      "drug_names_in_chNN": [
+        "BVT.115959"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "caffeine",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 17
+        },
+        {
+          "chapter": 31,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Caffeine",
+        "caffeine"
+      ],
+      "mechanism_names": [
+        "Adenosine Receptor Antagonist"
+      ],
+      "notes": "merged names differing only in case/whitespace: [\"Caffeine\",\"caffeine\"]"
+    },
+    {
+      "drug": "Camellia sinensis extract",
+      "records": [
+        {
+          "chapter": 25,
+          "record_number": 1
+        },
+        {
+          "chapter": 25,
+          "record_number": 2
+        },
+        {
+          "chapter": 25,
+          "record_number": 3
+        },
+        {
+          "chapter": 25,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Camellia sinensis extract"
+      ],
+      "mechanism_names": [
+        "Hyaluronidase Inhibitor",
+        "L-Amino Acid Oxidase Inhibitor",
+        "Phospholipase A2 Inhibitor",
+        "Protease Inhibitor"
+      ]
+    },
+    {
+      "drug": "Capadenoson",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 27
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Capadenoson"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "carbon monoxide (CO)",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 1
+        },
+        {
+          "chapter": 24,
+          "record_number": 4
+        },
+        {
+          "chapter": 24,
+          "record_number": 6
+        },
+        {
+          "chapter": 24,
+          "record_number": 7
+        },
+        {
+          "chapter": 24,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "carbon monoxide (CO)"
+      ],
+      "mechanism_names": [
+        "Cyclooxygenase Inhibitor",
+        "Cytochrome P450 Inhibitor",
+        "Guanylyl Cyclase Activator",
+        "JNK MAPK Inhibitor",
+        "Mitochondrial Complex III Inhibitor"
+      ]
+    },
+    {
+      "drug": "carbon monoxide (CO) and CO-releasing molecules",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "carbon monoxide (CO) and CO-releasing molecules"
+      ],
+      "mechanism_names": [
+        "P38 MAPK Activator"
+      ]
+    },
+    {
+      "drug": "CCPA",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 11
+        },
+        {
+          "chapter": 31,
+          "record_number": 9
+        }
+      ],
+      "drug_names_in_chNN": [
+        "2-chloro-N6-cyclopentyladenosine (CCPA)",
+        "CCPA"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "CF101",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 33
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CF101"
+      ],
+      "mechanism_names": [
+        "Adenosine A3 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "CGP27492",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 79
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CGP27492"
+      ],
+      "mechanism_names": [
+        "GABAB Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "CGP35024",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 83
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CGP35024"
+      ],
+      "mechanism_names": [
+        "GABAC Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "CGP54626",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 86
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CGP54626"
+      ],
+      "mechanism_names": [
+        "GABAB Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "CGP71872",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 87
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CGP71872"
+      ],
+      "mechanism_names": [
+        "GABAB Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "CHA",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 9
+        },
+        {
+          "chapter": 31,
+          "record_number": 12
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CHA",
+        "N6-cyclohexyladenosine (CHA)"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "chromium mesoporphyrin",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 14
+        }
+      ],
+      "drug_names_in_chNN": [
+        "chromium mesoporphyrin"
+      ],
+      "mechanism_names": [
+        "Heme Oxygenase-1 Inhibitor"
+      ]
+    },
+    {
+      "drug": "CI-977",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CI-977"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Cilastatin",
+      "records": [
+        {
+          "chapter": 18,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Cilastatin"
+      ],
+      "mechanism_names": [
+        "Dehydropeptidase I Inhibitor"
+      ]
+    },
+    {
+      "drug": "Cl-IB-MECA (CF102)",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 34
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Cl-IB-MECA (CF102)"
+      ],
+      "mechanism_names": [
+        "Adenosine A3 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "clofibrate",
+      "records": [
+        {
+          "chapter": 6,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "clofibrate"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator Activated Receptor Alpha Agonist"
+      ]
+    },
+    {
+      "drug": "Clofibric acid",
+      "records": [
+        {
+          "chapter": 6,
+          "record_number": 5
+        },
+        {
+          "chapter": 6,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Clofibric acid"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+        "Peroxisome Proliferator Activated Receptor Gamma Agonist"
+      ]
+    },
+    {
+      "drug": "CNQX",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CNQX (6-Cyano-7-nitroquinoxaline-2,3-dione disodium)"
+      ],
+      "mechanism_names": [
+        "Kainate/AMPA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "CP-532,903",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 36
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CP-532,903"
+      ],
+      "mechanism_names": [
+        "Adenosine A3 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "CP-608,039",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 35
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CP-608,039"
+      ],
+      "mechanism_names": [
+        "Adenosine A3 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "CPA",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CPA"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "CPCCOEt",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CPCCOEt (7-(hydroxyimino) cyclopropa[b]chromen-1a-carboxylate ethyl ester)"
+      ],
+      "mechanism_names": [
+        "Group 1 mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "CPT",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 12
+        }
+      ],
+      "drug_names_in_chNN": [
+        "CPT"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "DAMGO",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 11
+        }
+      ],
+      "drug_names_in_chNN": [
+        "DAMGO"
+      ],
+      "mechanism_names": [
+        "Opioid Mu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "DCG-IV",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 40
+        },
+        {
+          "chapter": 1,
+          "record_number": 51
+        },
+        {
+          "chapter": 1,
+          "record_number": 53
+        }
+      ],
+      "drug_names_in_chNN": [
+        "DCG-IV"
+      ],
+      "mechanism_names": [
+        "Group I mGlu Receptor Antagonist",
+        "Group II mGlu Receptor Agonist",
+        "Group III mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Dextromethorphan/quinidine (DM/Q)",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 22
+        },
+        {
+          "chapter": 14,
+          "record_number": 23
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Dextromethorphan/quinidine (DM/Q)"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist",
+        "Sigma 1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "dipicolylamine-zinc(II) complex compounds",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "dipicolylamine-zinc(II) complex compounds"
+      ],
+      "mechanism_names": [
+        "CXCR4 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Disulfiram",
+      "records": [
+        {
+          "chapter": 12,
+          "record_number": 1
+        },
+        {
+          "chapter": 12,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Disulfiram",
+        "disulfiram"
+      ],
+      "mechanism_names": [
+        "Aldehyde Dehydrogenase Inhibitor",
+        "Dopamine Beta-Hydroxylase Inhibitor"
+      ],
+      "notes": "merged names differing only in case/whitespace: [\"Disulfiram\",\"disulfiram\"]"
+    },
+    {
+      "drug": "Dizolcipine (MK-801)",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 37
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Dizolcipine (MK-801)"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "DMPX",
+      "records": [
+        {
+          "chapter": 31,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "3,7-Dimethyl-1-propargylxanthine (DMPX)"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Donepezil hydrochloride",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 20
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Donepezil hydrochloride"
+      ],
+      "mechanism_names": [
+        "Acetylcholinesterase Inhibitor"
+      ]
+    },
+    {
+      "drug": "DPCPX",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 13
+        },
+        {
+          "chapter": 31,
+          "record_number": 7
+        }
+      ],
+      "drug_names_in_chNN": [
+        "1,3-dipropyl-8-cyclopentylxanthine (DPCPX)",
+        "DPCPX"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "DPDPE",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 12
+        }
+      ],
+      "drug_names_in_chNN": [
+        "DPDPE"
+      ],
+      "mechanism_names": [
+        "Opioid Delta Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "DPMA",
+      "records": [
+        {
+          "chapter": 31,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "N6-[2-(3,5-dimethoxyphenyl)-2-(2-methylphenyl)ethyl]adenosine (DPMA)"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "DW1/2",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "DW1/2"
+      ],
+      "mechanism_names": [
+        "Pim-1 Kinase Inhibitor"
+      ]
+    },
+    {
+      "drug": "Ethanol",
+      "records": [
+        {
+          "chapter": 27,
+          "record_number": 5
+        },
+        {
+          "chapter": 27,
+          "record_number": 6
+        },
+        {
+          "chapter": 27,
+          "record_number": 7
+        },
+        {
+          "chapter": 27,
+          "record_number": 18
+        },
+        {
+          "chapter": 31,
+          "record_number": 16
+        },
+        {
+          "chapter": 31,
+          "record_number": 17
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Ethanol"
+      ],
+      "mechanism_names": [
+        "5-HT3 Receptor Agonist",
+        "Catalase Activator",
+        "Glutathione Peroxidase Activator",
+        "P2X4 and P2X2 Receptor Antagonist",
+        "Phospholipase D Inhibitor",
+        "Superoxide Dismutase Activator"
+      ]
+    },
+    {
+      "drug": "fatty acids and their derivates",
+      "records": [
+        {
+          "chapter": 6,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "fatty acids and their derivates"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator Activated Receptor Alpha Agonist"
+      ]
+    },
+    {
+      "drug": "fenobibric acid",
+      "records": [
+        {
+          "chapter": 6,
+          "record_number": 7
+        },
+        {
+          "chapter": 6,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "fenobibric acid"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+        "Peroxisome Proliferator Activated Receptor Gamma Agonist"
+      ]
+    },
+    {
+      "drug": "Fibrates",
+      "records": [
+        {
+          "chapter": 6,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Fibrates"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator Activated Receptor Alpha Agonist"
+      ]
+    },
+    {
+      "drug": "fluvoxamine",
+      "records": [
+        {
+          "chapter": 11,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "fluvoxamine"
+      ],
+      "mechanism_names": [
+        "CYP2C19 Inhibitor"
+      ]
+    },
+    {
+      "drug": "GABA",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 77
+        }
+      ],
+      "drug_names_in_chNN": [
+        "GABA"
+      ],
+      "mechanism_names": [
+        "GABAB Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "gallium(III)",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 12
+        }
+      ],
+      "drug_names_in_chNN": [
+        "gallium(III)"
+      ],
+      "mechanism_names": [
+        "Ribonucleotide Reductase Inhibitor"
+      ]
+    },
+    {
+      "drug": "glutamate",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "glutamate"
+      ],
+      "mechanism_names": [
+        "mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "GR79236X",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 39
+        }
+      ],
+      "drug_names_in_chNN": [
+        "GR79236X"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "GW493838",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 40
+        }
+      ],
+      "drug_names_in_chNN": [
+        "GW493838"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 26
+        },
+        {
+          "chapter": 29,
+          "record_number": 27
+        }
+      ],
+      "drug_names_in_chNN": [
+        "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)"
+      ],
+      "mechanism_names": [
+        "Caspase Activator",
+        "Cyclooxygenase Inhibitor"
+      ]
+    },
+    {
+      "drug": "HU-210",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "HU-210"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "ICI-199,441",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 7
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ICI-199,441"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Inosine",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 19
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Inosine"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "JNJ-16567083",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 38
+        }
+      ],
+      "drug_names_in_chNN": [
+        "JNJ-16567083"
+      ],
+      "mechanism_names": [
+        "mGlu1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "JNJ16259685",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 35
+        }
+      ],
+      "drug_names_in_chNN": [
+        "JNJ16259685"
+      ],
+      "mechanism_names": [
+        "mGlu1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "KP46 (tris(8-quinolinolato)gallium(III))",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 13
+        }
+      ],
+      "drug_names_in_chNN": [
+        "KP46 (tris(8-quinolinolato)gallium(III))"
+      ],
+      "mechanism_names": [
+        "Ribonucleotide Reductase Inhibitor"
+      ]
+    },
+    {
+      "drug": "L-AP4",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 47
+        },
+        {
+          "chapter": 2,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "L-AP4",
+        "L-AP4 (L-(+)-2-amino-4-phosphonobutyric acid)"
+      ],
+      "mechanism_names": [
+        "Group III mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "L-CCG-I",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "L-CCG-I"
+      ],
+      "mechanism_names": [
+        "Group II mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "L-glutamic acid",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "L-glutamic acid"
+      ],
+      "mechanism_names": [
+        "Glutamate Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "lansoprazole",
+      "records": [
+        {
+          "chapter": 11,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "lansoprazole"
+      ],
+      "mechanism_names": [
+        "CYP2C19 Inhibitor"
+      ]
+    },
+    {
+      "drug": "LSP1-2093",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 60
+        }
+      ],
+      "drug_names_in_chNN": [
+        "LSP1-2093"
+      ],
+      "mechanism_names": [
+        "Group III mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "LY2140023",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 71
+        }
+      ],
+      "drug_names_in_chNN": [
+        "LY2140023"
+      ],
+      "mechanism_names": [
+        "mGlu2/3 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "LY341495",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 15
+        },
+        {
+          "chapter": 1,
+          "record_number": 52
+        }
+      ],
+      "drug_names_in_chNN": [
+        "LY341495"
+      ],
+      "mechanism_names": [
+        "Group II mGlu Receptor Antagonist",
+        "Group III mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "LY354740",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 14
+        }
+      ],
+      "drug_names_in_chNN": [
+        "LY354740"
+      ],
+      "mechanism_names": [
+        "mGlu2/3 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "LY379268",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 41
+        }
+      ],
+      "drug_names_in_chNN": [
+        "LY379268"
+      ],
+      "mechanism_names": [
+        "Group II mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "M6P-HSA",
+      "records": [
+        {
+          "chapter": 8,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "M6P-HSA"
+      ],
+      "mechanism_names": [
+        "Mannose 6-Phosphate/Insulin-like Growth Factor II Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "MAP4",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 49
+        }
+      ],
+      "drug_names_in_chNN": [
+        "MAP4"
+      ],
+      "mechanism_names": [
+        "Group III mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "MCCG",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 12
+        }
+      ],
+      "drug_names_in_chNN": [
+        "MCCG ((2S,3S,4S)-2-methyl-2-(carboxycyclopropyl) glycine)"
+      ],
+      "mechanism_names": [
+        "Group II mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Memantine",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 21
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Memantine"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "metal porphyrins (class)",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 17
+        }
+      ],
+      "drug_names_in_chNN": [
+        "metal porphyrins (class)"
+      ],
+      "mechanism_names": [
+        "Heme Oxygenase Inhibitor"
+      ]
+    },
+    {
+      "drug": "metformin",
+      "records": [
+        {
+          "chapter": 13,
+          "record_number": 12
+        }
+      ],
+      "drug_names_in_chNN": [
+        "metformin"
+      ],
+      "mechanism_names": [
+        "AMP-Activated Protein Kinase Activator"
+      ]
+    },
+    {
+      "drug": "Methylglyoxal (MG)",
+      "records": [
+        {
+          "chapter": 30,
+          "record_number": 9
+        },
+        {
+          "chapter": 30,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Methylglyoxal (MG)"
+      ],
+      "mechanism_names": [
+        "NADPH Oxidase Activator",
+        "p38 MAPK Activator"
+      ]
+    },
+    {
+      "drug": "Methylxanthines (caffeine included)",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 15
+        },
+        {
+          "chapter": 28,
+          "record_number": 16
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Methylxanthines (caffeine included)"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Antagonist",
+        "Adenosine A2A Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "MGS0039",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 46
+        }
+      ],
+      "drug_names_in_chNN": [
+        "MGS0039"
+      ],
+      "mechanism_names": [
+        "Group II mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "MK-801",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 16
+        }
+      ],
+      "drug_names_in_chNN": [
+        "MK-801"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "MK801",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 7
+        }
+      ],
+      "drug_names_in_chNN": [
+        "(+)-MK-801 hydrogen maleate (MK801)"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "morphine",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "morphine"
+      ],
+      "mechanism_names": [
+        "Opioid Mu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "MPEP",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 11
+        }
+      ],
+      "drug_names_in_chNN": [
+        "MPEP (2-Methyl-6-(phenylethynyl)pyridine hydrochloride)"
+      ],
+      "mechanism_names": [
+        "Group 1 mGlu5 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "MSOP",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 50
+        },
+        {
+          "chapter": 2,
+          "record_number": 13
+        }
+      ],
+      "drug_names_in_chNN": [
+        "MSOP",
+        "MSOP ((RS)-alpha-methylserine-O-phosphate)"
+      ],
+      "mechanism_names": [
+        "Group III mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "NAD+",
+      "records": [
+        {
+          "chapter": 13,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "NAD+"
+      ],
+      "mechanism_names": [
+        "Sirt1 Activator"
+      ]
+    },
+    {
+      "drug": "naltrexone",
+      "records": [
+        {
+          "chapter": 12,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "naltrexone"
+      ],
+      "mechanism_names": [
+        "Opioid Mu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "NBQX",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 9
+        }
+      ],
+      "drug_names_in_chNN": [
+        "NBQX (2,3-Dioxo-6-nitro-1,2,3,4-tetrahydrobenzo[f]quinoxaline-7-sulfonamide disodium salt)"
+      ],
+      "mechanism_names": [
+        "Kainate/AMPA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Ni-NQTS",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 22
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Ni-NQTS (nickel(II) complex of 1,2-naphtoquinone-based thiosemicarbazone ligand)"
+      ],
+      "mechanism_names": [
+        "Topoisomerase II Inhibitor"
+      ]
+    },
+    {
+      "drug": "Nitric oxide (NO)",
+      "records": [
+        {
+          "chapter": 27,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Nitric oxide (NO)"
+      ],
+      "mechanism_names": [
+        "Guanylyl Cyclase Activator"
+      ]
+    },
+    {
+      "drug": "NMDA",
+      "records": [
+        {
+          "chapter": 2,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "NMDA"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "nor-BNI",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 13
+        }
+      ],
+      "drug_names_in_chNN": [
+        "nor-BNI"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "NSAIDs (nonsteroidal antiinflammatory drugs)",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 24
+        }
+      ],
+      "drug_names_in_chNN": [
+        "NSAIDs (nonsteroidal antiinflammatory drugs)"
+      ],
+      "mechanism_names": [
+        "Cyclooxygenase Inhibitor"
+      ]
+    },
+    {
+      "drug": "omeprazole",
+      "records": [
+        {
+          "chapter": 11,
+          "record_number": 1
+        },
+        {
+          "chapter": 11,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "omeprazole"
+      ],
+      "mechanism_names": [
+        "CYP2C19 Inhibitor",
+        "CYP2C9 Inhibitor"
+      ]
+    },
+    {
+      "drug": "ONCO4417",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 9
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ONCO4417"
+      ],
+      "mechanism_names": [
+        "Pim-1 Kinase Inhibitor"
+      ]
+    },
+    {
+      "drug": "Ondansetron",
+      "records": [
+        {
+          "chapter": 12,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Ondansetron"
+      ],
+      "mechanism_names": [
+        "5HT3 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "PD-117302",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 9
+        }
+      ],
+      "drug_names_in_chNN": [
+        "PD-117302"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "phencyclidine (PCP)",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 15
+        }
+      ],
+      "drug_names_in_chNN": [
+        "phencyclidine (PCP)"
+      ],
+      "mechanism_names": [
+        "NMDA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "pilocarpine",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "pilocarpine"
+      ],
+      "mechanism_names": [
+        "Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Pioglitazone",
+      "records": [
+        {
+          "chapter": 30,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Pioglitazone"
+      ],
+      "mechanism_names": [
+        "Peroxisome Proliferator-Activated Receptor Gamma Agonist"
+      ]
+    },
+    {
+      "drug": "PTX",
+      "records": [
+        {
+          "chapter": 23,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "PTX"
+      ],
+      "mechanism_names": [
+        "GABA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "PTZ",
+      "records": [
+        {
+          "chapter": 23,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "PTZ"
+      ],
+      "mechanism_names": [
+        "GABA Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "quinidine",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 17
+        }
+      ],
+      "drug_names_in_chNN": [
+        "quinidine"
+      ],
+      "mechanism_names": [
+        "CYP2D6 Inhibitor"
+      ]
+    },
+    {
+      "drug": "quinines",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "quinines"
+      ],
+      "mechanism_names": [
+        "Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Quisqualate",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 18
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Quisqualate"
+      ],
+      "mechanism_names": [
+        "Group I mGlu Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "R-130964",
+      "records": [
+        {
+          "chapter": 10,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "R-130964"
+      ],
+      "mechanism_names": [
+        "ADP P2Y12 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "R-PIA",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 8
+        },
+        {
+          "chapter": 31,
+          "record_number": 11
+        }
+      ],
+      "drug_names_in_chNN": [
+        "R(−)-N6-phenylisopropyladenosine (R-PIA)",
+        "R-PIA"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "R214127",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 26
+        }
+      ],
+      "drug_names_in_chNN": [
+        "R214127"
+      ],
+      "mechanism_names": [
+        "mGlu1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "ramelteon",
+      "records": [
+        {
+          "chapter": 13,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ramelteon"
+      ],
+      "mechanism_names": [
+        "Melatonin Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "rapamycin",
+      "records": [
+        {
+          "chapter": 13,
+          "record_number": 10
+        }
+      ],
+      "drug_names_in_chNN": [
+        "rapamycin"
+      ],
+      "mechanism_names": [
+        "mTOR Inhibitor"
+      ]
+    },
+    {
+      "drug": "Riluzole",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 19
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Riluzole"
+      ],
+      "mechanism_names": [
+        "Glutamate Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Risperidone",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 5
+        },
+        {
+          "chapter": 14,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Risperidone"
+      ],
+      "mechanism_names": [
+        "Dopamine D2 Receptor Antagonist",
+        "Serotonin 5-HT2 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "ruthenium complex I (trans-[RuCl2(nic)4])",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 7
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ruthenium complex I (trans-[RuCl2(nic)4])"
+      ],
+      "mechanism_names": [
+        "Nitric Oxide Synthase Inhibitor"
+      ]
+    },
+    {
+      "drug": "ruthenium complex II (trans-[RuCl2 (i-nic)4])",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "ruthenium complex II (trans-[RuCl2 (i-nic)4])"
+      ],
+      "mechanism_names": [
+        "Nitric Oxide Synthase Inhibitor"
+      ]
+    },
+    {
+      "drug": "S-4C3H-PG",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 34
+        }
+      ],
+      "drug_names_in_chNN": [
+        "S-4C3H-PG"
+      ],
+      "mechanism_names": [
+        "Group I mGlu Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "saclofen",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 84
+        }
+      ],
+      "drug_names_in_chNN": [
+        "saclofen"
+      ],
+      "mechanism_names": [
+        "GABAB Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "SDZ WAG 994",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 38
+        }
+      ],
+      "drug_names_in_chNN": [
+        "SDZ WAG 994"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Selodenoson",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 26
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Selodenoson"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "sgp130 (soluble gp130)",
+      "records": [
+        {
+          "chapter": 26,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "sgp130 (soluble gp130)"
+      ],
+      "mechanism_names": [
+        "Interleukin-6 Receptor Complex Antagonist"
+      ]
+    },
+    {
+      "drug": "sIL-6R (soluble IL-6 receptor)",
+      "records": [
+        {
+          "chapter": 26,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "sIL-6R (soluble IL-6 receptor)"
+      ],
+      "mechanism_names": [
+        "Interleukin-6 Receptor Complex Agonist"
+      ]
+    },
+    {
+      "drug": "Sonedenoson",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 31
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Sonedenoson"
+      ],
+      "mechanism_names": [
+        "Adenosine A2A Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "SR141716",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 4
+        }
+      ],
+      "drug_names_in_chNN": [
+        "SR141716"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 1 Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "sucHSA",
+      "records": [
+        {
+          "chapter": 8,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "sucHSA"
+      ],
+      "mechanism_names": [
+        "Scavenger Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Tecadenoson",
+      "records": [
+        {
+          "chapter": 28,
+          "record_number": 28
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Tecadenoson"
+      ],
+      "mechanism_names": [
+        "Adenosine A1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Tenofovir-MP and tenofovir-DP (mono- and di-phosphate forms of tenofovir)",
+      "records": [
+        {
+          "chapter": 3,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Tenofovir-MP and tenofovir-DP (mono- and di-phosphate forms of tenofovir)"
+      ],
+      "mechanism_names": [
+        "Purine Nucleoside Phosphorylase Inhibitor"
+      ]
+    },
+    {
+      "drug": "Theophylline",
+      "records": [
+        {
+          "chapter": 31,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Theophylline"
+      ],
+      "mechanism_names": [
+        "Adenosine Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Ti(IV) compounds",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 17
+        },
+        {
+          "chapter": 29,
+          "record_number": 18
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Ti(IV) compounds"
+      ],
+      "mechanism_names": [
+        "Protease Inhibitor",
+        "Telomerase Inhibitor"
+      ]
+    },
+    {
+      "drug": "tin mesoporphyrin",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 15
+        }
+      ],
+      "drug_names_in_chNN": [
+        "tin mesoporphyrin"
+      ],
+      "mechanism_names": [
+        "Heme Oxygenase-1 Inhibitor"
+      ]
+    },
+    {
+      "drug": "tin porphyrin",
+      "records": [
+        {
+          "chapter": 24,
+          "record_number": 16
+        }
+      ],
+      "drug_names_in_chNN": [
+        "tin porphyrin"
+      ],
+      "mechanism_names": [
+        "Heme Oxygenase-1 Inhibitor"
+      ]
+    },
+    {
+      "drug": "titanocene dichloride",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 14
+        }
+      ],
+      "drug_names_in_chNN": [
+        "titanocene dichloride"
+      ],
+      "mechanism_names": [
+        "Collagenase Type IV Inhibitor"
+      ]
+    },
+    {
+      "drug": "Topiramate",
+      "records": [
+        {
+          "chapter": 12,
+          "record_number": 7
+        },
+        {
+          "chapter": 12,
+          "record_number": 8
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Topiramate"
+      ],
+      "mechanism_names": [
+        "AMPA Glutamate Receptor Antagonist",
+        "Kainate Glutamate Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "TRK-820 (nalfurafine hydrochloride)",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 1
+        }
+      ],
+      "drug_names_in_chNN": [
+        "TRK-820 (nalfurafine hydrochloride)"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "TS-032",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 69
+        }
+      ],
+      "drug_names_in_chNN": [
+        "TS-032"
+      ],
+      "mechanism_names": [
+        "mGlu2 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "U-50,488H",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 5
+        }
+      ],
+      "drug_names_in_chNN": [
+        "U-50,488H"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "U-69,593",
+      "records": [
+        {
+          "chapter": 4,
+          "record_number": 6
+        }
+      ],
+      "drug_names_in_chNN": [
+        "U-69,593"
+      ],
+      "mechanism_names": [
+        "Opioid Kappa Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "VO(alx)2 (bis(allixinato)oxovanadium(IV))",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 28
+        }
+      ],
+      "drug_names_in_chNN": [
+        "VO(alx)2 (bis(allixinato)oxovanadium(IV))"
+      ],
+      "mechanism_names": [
+        "Akt/PKB Activator"
+      ]
+    },
+    {
+      "drug": "VU0155041",
+      "records": [
+        {
+          "chapter": 1,
+          "record_number": 56
+        }
+      ],
+      "drug_names_in_chNN": [
+        "VU0155041"
+      ],
+      "mechanism_names": [
+        "mGlu4 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "warfarin",
+      "records": [
+        {
+          "chapter": 9,
+          "record_number": 18
+        }
+      ],
+      "drug_names_in_chNN": [
+        "warfarin"
+      ],
+      "mechanism_names": [
+        "Vitamin K Epoxide Reductase Inhibitor"
+      ]
+    },
+    {
+      "drug": "WIN 55, 212-2",
+      "records": [
+        {
+          "chapter": 5,
+          "record_number": 2
+        }
+      ],
+      "drug_names_in_chNN": [
+        "WIN 55, 212-2"
+      ],
+      "mechanism_names": [
+        "Cannabinoid 1 Receptor Agonist"
+      ]
+    },
+    {
+      "drug": "Zidovudine-MP (zidovudine monophosphate)",
+      "records": [
+        {
+          "chapter": 3,
+          "record_number": 3
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Zidovudine-MP (zidovudine monophosphate)"
+      ],
+      "mechanism_names": [
+        "dTMP Kinase Inhibitor"
+      ]
+    },
+    {
+      "drug": "Ziprasidone",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 10
+        },
+        {
+          "chapter": 14,
+          "record_number": 11
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Ziprasidone"
+      ],
+      "mechanism_names": [
+        "Dopamine Receptor Antagonist",
+        "Serotonin Receptor Antagonist"
+      ]
+    },
+    {
+      "drug": "Zn(alx)2 (bis(allixinato)zinc(II))",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 29
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Zn(alx)2 (bis(allixinato)zinc(II))"
+      ],
+      "mechanism_names": [
+        "Akt/PKB Activator"
+      ]
+    },
+    {
+      "drug": "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))",
+      "records": [
+        {
+          "chapter": 29,
+          "record_number": 30
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))"
+      ],
+      "mechanism_names": [
+        "Akt/PKB Activator"
+      ]
+    },
+    {
+      "drug": "Zyprexa (olanzapine)",
+      "records": [
+        {
+          "chapter": 14,
+          "record_number": 12
+        },
+        {
+          "chapter": 14,
+          "record_number": 13
+        }
+      ],
+      "drug_names_in_chNN": [
+        "Zyprexa (olanzapine)"
+      ],
+      "mechanism_names": [
+        "Dopamine Receptor Antagonist",
+        "Serotonin Receptor Antagonist"
+      ]
+    }
+  ],
+  "distinct_drug_count": 180,
+  "records_with_no_drug_named": [
+    {
+      "chapter": 1,
+      "record_number": 2,
+      "mechanism_rule_name": "mGlu Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 3,
+      "mechanism_rule_name": "mGlu Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 8,
+      "mechanism_rule_name": "mGlu2 Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 12,
+      "mechanism_rule_name": "mGlu5 Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 13,
+      "mechanism_rule_name": "Adenosine A2A Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 39,
+      "mechanism_rule_name": "Biogenic Amine Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 62,
+      "mechanism_rule_name": "mGlu8 Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 67,
+      "mechanism_rule_name": "mGlu2/3 Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 1,
+      "record_number": 75,
+      "mechanism_rule_name": "mGlu1/5 Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 2,
+      "record_number": 14,
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 3,
+      "record_number": 1,
+      "mechanism_rule_name": "Nucleoside Reverse Transcriptase Inhibitor",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 3,
+      "record_number": 2,
+      "mechanism_rule_name": "Nucleoside Reverse Transcriptase Inhibitor",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 4,
+      "record_number": 4,
+      "mechanism_rule_name": "Opioid Kappa Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 4,
+      "record_number": 17,
+      "mechanism_rule_name": "Opioid Mu Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 5,
+      "record_number": 12,
+      "mechanism_rule_name": "Cannabinoid 1 Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 5,
+      "record_number": 13,
+      "mechanism_rule_name": "Cannabinoid 2 Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 6,
+      "record_number": 4,
+      "mechanism_rule_name": "Peroxisome Proliferator Activated Receptor Alpha Agonist",
+      "drug_as_recorded_in_verdict_file": "(class, no compound named)",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 9,
+      "record_number": 5,
+      "mechanism_rule_name": "Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 9,
+      "record_number": 19,
+      "mechanism_rule_name": "Angiotensin Converting Enzyme Inhibitor",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 13,
+      "record_number": 15,
+      "mechanism_rule_name": "SIRT1 Activator",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 1,
+      "mechanism_rule_name": "Dopamine-2 Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 2,
+      "mechanism_rule_name": "Serotonin-2a Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 25,
+      "mechanism_rule_name": "NMDA Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 27,
+      "mechanism_rule_name": "GABA B Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 14,
+      "record_number": 29,
+      "mechanism_rule_name": "Cholinesterase Inhibitor",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 23,
+      "record_number": 3,
+      "mechanism_rule_name": "Dopamine Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 23,
+      "mechanism_rule_name": "Adenosine Kinase Inhibitor",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 24,
+      "mechanism_rule_name": "Adenosine Deaminase Inhibitor",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 43,
+      "mechanism_rule_name": "Adenosine A1 Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 44,
+      "mechanism_rule_name": "Adenosine A2A Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 46,
+      "mechanism_rule_name": "Adenosine A2B Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 28,
+      "record_number": 48,
+      "mechanism_rule_name": "Adenosine A1 Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 30,
+      "record_number": 6,
+      "mechanism_rule_name": "Angiotensin Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "(class, no compound named)",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 30,
+      "record_number": 7,
+      "mechanism_rule_name": "Angiotensin Converting Enzyme Inhibitor",
+      "drug_as_recorded_in_verdict_file": "(class, no compound named)",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 30,
+      "record_number": 8,
+      "mechanism_rule_name": "Cyclooxygenase Inhibitor",
+      "drug_as_recorded_in_verdict_file": "(class, no compound named)",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 31,
+      "record_number": 3,
+      "mechanism_rule_name": "Adenosine Receptor Agonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    },
+    {
+      "chapter": 31,
+      "record_number": 4,
+      "mechanism_rule_name": "Adenosine Receptor Antagonist",
+      "drug_as_recorded_in_verdict_file": "",
+      "drug_in_chNN": ""
+    }
+  ],
+  "already_have_drugbank_text": [
+    "Acamprosate",
+    "agomelatine",
+    "Aripiprazole",
+    "baclofen",
+    "Bezafibrate",
+    "clofibrate",
+    "Disulfiram",
+    "Ethanol",
+    "fluvoxamine",
+    "Memantine",
+    "metformin",
+    "naltrexone",
+    "Ondansetron",
+    "ramelteon",
+    "Riluzole",
+    "Risperidone",
+    "Topiramate",
+    "Ziprasidone"
+  ],
+  "already_have_drugbank_ids": [
+    {
+      "drug": "Acamprosate",
+      "drugbank_id": "DB00659"
+    },
+    {
+      "drug": "agomelatine",
+      "drugbank_id": "DB06594"
+    },
+    {
+      "drug": "Aripiprazole",
+      "drugbank_id": "DB01238"
+    },
+    {
+      "drug": "baclofen",
+      "drugbank_id": "DB00181"
+    },
+    {
+      "drug": "Bezafibrate",
+      "drugbank_id": "DB01393"
+    },
+    {
+      "drug": "clofibrate",
+      "drugbank_id": "DB00636"
+    },
+    {
+      "drug": "Disulfiram",
+      "drugbank_id": "DB00822"
+    },
+    {
+      "drug": "Ethanol",
+      "drugbank_id": "DB00898"
+    },
+    {
+      "drug": "fluvoxamine",
+      "drugbank_id": "DB00176"
+    },
+    {
+      "drug": "Memantine",
+      "drugbank_id": "DB01043"
+    },
+    {
+      "drug": "metformin",
+      "drugbank_id": "DB00331"
+    },
+    {
+      "drug": "naltrexone",
+      "drugbank_id": "DB00704"
+    },
+    {
+      "drug": "Ondansetron",
+      "drugbank_id": "DB00904"
+    },
+    {
+      "drug": "ramelteon",
+      "drugbank_id": "DB00980"
+    },
+    {
+      "drug": "Riluzole",
+      "drugbank_id": "DB00740"
+    },
+    {
+      "drug": "Risperidone",
+      "drugbank_id": "DB00734"
+    },
+    {
+      "drug": "Topiramate",
+      "drugbank_id": "DB00273"
+    },
+    {
+      "drug": "Ziprasidone",
+      "drugbank_id": "DB00246"
+    }
+  ],
+  "need_drugbank_lookup": [
+    "(R,S)-3-4-DCPG",
+    "(S)-3,5-DHPG",
+    "2-AG",
+    "2-amino-7-phosphonoheptanoic acid (AP-7)",
+    "2-OH saclofen",
+    "5'-GNTI",
+    "5-HT",
+    "8-PT",
+    "[bpza][AuCl4]",
+    "ACPT-I",
+    "Adenosine",
+    "adrenaline",
+    "ADX48621",
+    "AEA",
+    "AIDA",
+    "Alagebrium (ALT-711, alagebrium chloride)",
+    "albuterol",
+    "AM251",
+    "AMD3100",
+    "Aminoguanidine",
+    "Aminophylline",
+    "AMN082",
+    "AMP",
+    "AMPA",
+    "anandamide",
+    "Apadenoson",
+    "aspirin (acetylsalicylic acid)",
+    "ATP",
+    "auranofin and other gold compounds",
+    "AZD2066",
+    "AZD2516",
+    "barbiturates",
+    "beta-endorphin",
+    "bilirubin",
+    "biliverdin",
+    "biliverdin reductase (BVR)",
+    "biliverdin reductase (BVR), phosphorylated",
+    "Binodenoson",
+    "Buthione – S – Sulfoxine",
+    "BVT.115959",
+    "caffeine",
+    "Camellia sinensis extract",
+    "Capadenoson",
+    "carbon monoxide (CO)",
+    "carbon monoxide (CO) and CO-releasing molecules",
+    "CCPA",
+    "CF101",
+    "CGP27492",
+    "CGP35024",
+    "CGP54626",
+    "CGP71872",
+    "CHA",
+    "chromium mesoporphyrin",
+    "CI-977",
+    "Cilastatin",
+    "Cl-IB-MECA (CF102)",
+    "Clofibric acid",
+    "CNQX",
+    "CP-532,903",
+    "CP-608,039",
+    "CPA",
+    "CPCCOEt",
+    "CPT",
+    "DAMGO",
+    "DCG-IV",
+    "Dextromethorphan/quinidine (DM/Q)",
+    "dipicolylamine-zinc(II) complex compounds",
+    "Dizolcipine (MK-801)",
+    "DMPX",
+    "Donepezil hydrochloride",
+    "DPCPX",
+    "DPDPE",
+    "DPMA",
+    "DW1/2",
+    "fatty acids and their derivates",
+    "fenobibric acid",
+    "Fibrates",
+    "GABA",
+    "gallium(III)",
+    "glutamate",
+    "GR79236X",
+    "GW493838",
+    "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)",
+    "HU-210",
+    "ICI-199,441",
+    "Inosine",
+    "JNJ-16567083",
+    "JNJ16259685",
+    "KP46 (tris(8-quinolinolato)gallium(III))",
+    "L-AP4",
+    "L-CCG-I",
+    "L-glutamic acid",
+    "lansoprazole",
+    "LSP1-2093",
+    "LY2140023",
+    "LY341495",
+    "LY354740",
+    "LY379268",
+    "M6P-HSA",
+    "MAP4",
+    "MCCG",
+    "metal porphyrins (class)",
+    "Methylglyoxal (MG)",
+    "Methylxanthines (caffeine included)",
+    "MGS0039",
+    "MK-801",
+    "MK801",
+    "morphine",
+    "MPEP",
+    "MSOP",
+    "NAD+",
+    "NBQX",
+    "Ni-NQTS",
+    "Nitric oxide (NO)",
+    "NMDA",
+    "nor-BNI",
+    "NSAIDs (nonsteroidal antiinflammatory drugs)",
+    "omeprazole",
+    "ONCO4417",
+    "PD-117302",
+    "phencyclidine (PCP)",
+    "pilocarpine",
+    "Pioglitazone",
+    "PTX",
+    "PTZ",
+    "quinidine",
+    "quinines",
+    "Quisqualate",
+    "R-130964",
+    "R-PIA",
+    "R214127",
+    "rapamycin",
+    "ruthenium complex I (trans-[RuCl2(nic)4])",
+    "ruthenium complex II (trans-[RuCl2 (i-nic)4])",
+    "S-4C3H-PG",
+    "saclofen",
+    "SDZ WAG 994",
+    "Selodenoson",
+    "sgp130 (soluble gp130)",
+    "sIL-6R (soluble IL-6 receptor)",
+    "Sonedenoson",
+    "SR141716",
+    "sucHSA",
+    "Tecadenoson",
+    "Tenofovir-MP and tenofovir-DP (mono- and di-phosphate forms of tenofovir)",
+    "Theophylline",
+    "Ti(IV) compounds",
+    "tin mesoporphyrin",
+    "tin porphyrin",
+    "titanocene dichloride",
+    "TRK-820 (nalfurafine hydrochloride)",
+    "TS-032",
+    "U-50,488H",
+    "U-69,593",
+    "VO(alx)2 (bis(allixinato)oxovanadium(IV))",
+    "VU0155041",
+    "warfarin",
+    "WIN 55, 212-2",
+    "Zidovudine-MP (zidovudine monophosphate)",
+    "Zn(alx)2 (bis(allixinato)zinc(II))",
+    "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))",
+    "Zyprexa (olanzapine)"
+  ],
+  "near_miss_candidates_unmerged": [
+    {
+      "drug": "Adenosine",
+      "drugbank_name": "Adenosine phosphate",
+      "drugbank_id": "DB00131",
+      "suspected_same_substance": "no, probably different"
+    },
+    {
+      "drug": "Dextromethorphan/quinidine (DM/Q)",
+      "drugbank_name": "Dextromethorphan",
+      "drugbank_id": "DB00514",
+      "suspected_same_substance": "yes, suspected"
+    },
+    {
+      "drug": "Donepezil hydrochloride",
+      "drugbank_name": "Donepezil",
+      "drugbank_id": "DB00843",
+      "suspected_same_substance": "yes, suspected"
+    },
+    {
+      "drug": "MCCG",
+      "drugbank_name": "Glycine",
+      "drugbank_id": "DB00145",
+      "suspected_same_substance": "no, false positive"
+    },
+    {
+      "drug": "Zyprexa (olanzapine)",
+      "drugbank_name": "Olanzapine",
+      "drugbank_id": "DB00334",
+      "suspected_same_substance": "yes, suspected"
+    }
+  ],
+  "drugbank_file_names": [
+    "Rimonabant",
+    "Fenofibric acid",
+    "Bezafibrate",
+    "Clofibrate",
+    "Disulfiram",
+    "Naltrexone",
+    "Acamprosate",
+    "Ondansetron",
+    "Baclofen",
+    "Topiramate",
+    "Ethanol",
+    "Glycine",
+    "Resveratrol",
+    "Adenosine phosphate",
+    "Melatonin",
+    "Ramelteon",
+    "Agomelatine",
+    "Calcitriol",
+    "Sirolimus",
+    "Metformin",
+    "Risperidone",
+    "Aripiprazole",
+    "Ziprasidone",
+    "Olanzapine",
+    "Fluvoxamine",
+    "Riluzole",
+    "Donepezil",
+    "Memantine",
+    "Dextromethorphan",
+    "Estradiol",
+    "Estrone",
+    "Estriol",
+    "Progesterone"
+  ],
+  "drugbank_not_matched_by_any_surviving_drug": [
+    "Rimonabant",
+    "Fenofibric acid",
+    "Glycine",
+    "Resveratrol",
+    "Adenosine phosphate",
+    "Melatonin",
+    "Calcitriol",
+    "Sirolimus",
+    "Olanzapine",
+    "Donepezil",
+    "Dextromethorphan",
+    "Estradiol",
+    "Estrone",
+    "Estriol",
+    "Progesterone"
+  ],
+  "notes": [
+    "Order of verdict files is alphabetical; for duplicates the copy in .records (v-ch28-a.json) is kept and the outside_assignment_checks copy in v-ch28b-ch26-rerun.json is removed.",
+    "records_with_no_drug_named includes 3 ch30 and 1 ch06 records whose verdict-file drug field says \"(class, no compound named)\" while chNN.json has an empty drug field; they are treated as no drug named.",
+    "drug in surviving_records and distinct_drugs is the name as written in the verdict files; the longer form in chNN.json is in drug_in_chNN / drug_names_in_chNN (verdict files abbreviate some names, e.g. AMPA, MK801). Matching to DrugBank used the verdict-file name only.",
+    "Name merges (case/whitespace only): Baclofen/baclofen, Caffeine/caffeine, Disulfiram/disulfiram.",
+    "Near-misses NOT merged and NOT counted as matches: Adenosine vs DrugBank Adenosine phosphate (DB00131, probably AMP, a different substance); Dextromethorphan/quinidine (DM/Q) vs Dextromethorphan (DB00514); Donepezil hydrochloride vs Donepezil (DB00843, salt form of same drug, suspected same); Zyprexa (olanzapine) vs Olanzapine (DB00334, brand name of same drug, suspected same). The MCCG vs Glycine candidate is a false positive from the chNN long name containing glycine.",
+    "15 of the 33 DrugBank entries have no surviving drug of that name (all records for them were dropped or never extracted): see drugbank_not_matched_by_any_surviving_drug."
+  ]
+}

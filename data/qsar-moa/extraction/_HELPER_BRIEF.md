@@ -47,6 +47,9 @@ Always keep the book's own wording, unchanged, in `mechanism_book_wording`.
 many such statements you skipped and put that number in `chapter_notes`. Files written before this update still
 contain "other" records; they are filtered out later by `target_class`, so they need no rewrite.
 
+**Scope limit (Star, 2026-11-23 23:27 UTC):** this stage is raw extraction only. Write your `chNN.json` and nothing
+else. Do not build or edit any spreadsheet, do not search for papers, do not make diagrams.
+
 ## Accuracy rules (important)
 
 - Record only what the page says. Do not add mechanisms from your own knowledge, even if you are sure of them.

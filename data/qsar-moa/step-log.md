@@ -24,3 +24,19 @@ All times are UTC on 2026-11-23. Each line is one step, what was used, and what 
 | 18 | 23:17 | Set a DrugBank verdict for each drug and mechanism by reading the text. | Workbook, "DrugBank check" column | 24 confirmed, 9 target confirmed with direction implied, 3 direction not stated, 8 not stated, 4 disagree (acamprosate, baclofen, topiramate on GABA A, riluzole). |
 | 19 | 23:18 | Ran OpenAlex searches: 2 per mechanism, 10 papers each. | `openalex_papers.json`, `paper_list_openalex.csv` | 41 mechanisms, 82 searches, 820 rows (768 distinct works). 64 exact-phrase searches had 10 or more matches; 14 had 1 to 9 and 4 had none, so those lists were topped up without quotation marks (amber cells). |
 | 20 | 23:19 | Built the workbook and read it back. | `Drug-Leaderboard-v5-mechanism-of-action.xlsx` | 8 sheets. 75 drug rows in 41 mechanism groups. All 75 screenshot links point to existing files. |
+
+## 2026-11-24 (UTC)
+
+| # | Time | Step | Input | Result |
+|---|------|------|-------|--------|
+| 21 | 00:05 | All 31 chapters read by the reading thread. | `extraction/ch01.json` to `ch31.json` | 436 records, all files parse. |
+| 22 | 00:07 | Checked every quote against the book's text layer, no model calls. | `extraction/quote-location-check.json` | 415 of 436 match exactly after the reading thread restored 21 quotes to the printed wording. 21 sit inside figures or tables and cannot be matched as text. No record cites the wrong page. |
+| 23 | 00:16 | User ruling: only the four action words, drop everything else, verify with DrugBank. | Project chat | Applied. |
+| 24 | 04:19 | Reading thread re-read every record against its page, and compared every kept record with DrugBank. | `extraction/verify/surviving-records.json`, `consistency-pass.json`, `drugbank-comparison.json` | 270 kept, 166 dropped, 0 renamed. Recall sample: 50 of 50 found. I parse-checked the comparison file: 270 entries, no out-of-range record numbers, no duplicates. |
+| 25 | 11:00 | Built rows: one per drug, grouped by mechanism. | `rows.json` | 221 rows, 111 mechanisms. 17 records dropped as neither receptor nor enzyme; 149 dropped as outside the four words. |
+| 26 | 11:01 | Cropped one book screenshot per row. | `book-screenshots/` | 221 files: 208 cropped to the quoted lines, 13 whole pages where the text is inside a picture. |
+| 27 | 11:02 | Conflict rule from the user: DrugBank's direction in the main column, book wording beside it, flagged. | `rows.json` | 2 rows carry a direction conflict. 7 rows where DrugBank names a different target are flagged as "not a contradiction". |
+| 28 | 11:04 | Added sheet "Mechanism of Action" to the user's workbook by adding one worksheet part; no existing part rewritten. | `Drug-Leaderboard-v3-live-summary-fixed.xlsx` | 334 rows x 22 columns. All 4 existing sheets compared cell by cell with the backup: 128,390 cells, 0 differ. |
+| 29 | 11:05 | Backup kept. | `qsar-moa/Drug-Leaderboard-v3-live-summary-fixed.BACKUP-before-mechanism-sheet.xlsx` | Byte-identical to the workbook before the change. |
+| 30 | 11:16 | Ran the paper searches again from the complete mechanism list. | `paper-list-openalex-2026-11-24.csv` | 111 mechanisms, 222 searches, 2,193 rows. 0 empty searches, 5 short lists, 42 filled without quotation marks. |
+| 31 | 11:25 | Paused for the user to upload papers. No extraction started. | | |

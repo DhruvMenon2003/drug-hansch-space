@@ -1,0 +1,1477 @@
+{
+ "counted_utc": "2026-11-24T00:13:05.986Z",
+ "method": "keyword scan of role_detail and mechanism_book_wording only, over the 419 receptor/enzyme records; a count of how many records describe an action outside Star two naming pairs, not a judgement that any row is wrong",
+ "usable_records": 419,
+ "records_in_gap": 97,
+ "by_category": {
+  "enzyme induction (more enzyme made, not faster)": 20,
+  "allosteric modulator (PAM, NAM, potentiator)": 39,
+  "inverse agonist": 3,
+  "partial agonist or co-agonist": 10,
+  "no direction stated (binds, acts on, ligand)": 28,
+  "stabilizing": 2
+ },
+ "already_given_a_rule_name": 94,
+ "records": [
+  {
+   "chapter": 1,
+   "record": 2,
+   "drug": "",
+   "target": "mGlu receptors (VFT, orthosteric site)",
+   "target_class": "receptor",
+   "named_as": "mGlu Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "orthosteric agonist (induces closure of the venus-fly trap domain)",
+   "book_wording": "agonists induce the closure of the VFT",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 18
+  },
+  {
+   "chapter": 1,
+   "record": 4,
+   "drug": "",
+   "target": "class C GPCRs (allosteric site)",
+   "target_class": "receptor",
+   "named_as": "Class C GPCR Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator; non-competitive antagonist or inverse agonist",
+   "book_wording": "non-competitive antagonists or inverse agonists",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)",
+    "inverse agonist"
+   ],
+   "pdf_page_index": 19
+  },
+  {
+   "chapter": 1,
+   "record": 5,
+   "drug": "",
+   "target": "class C GPCRs (allosteric site)",
+   "target_class": "receptor",
+   "named_as": "Class C GPCR Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (potentiates agonist affinity and efficacy)",
+   "book_wording": "potentiated the effect of the agonists (increased affinity and efficacy)",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 19
+  },
+  {
+   "chapter": 1,
+   "record": 6,
+   "drug": "Gd3+",
+   "target": "mGlu1 (VFT dimer)",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "potentiator (positive modulator); direction inferred",
+   "book_wording": "potentiator",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 18
+  },
+  {
+   "chapter": 1,
+   "record": 7,
+   "drug": "",
+   "target": "5-HT2A receptor",
+   "target_class": "receptor",
+   "named_as": "5-HT2A Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "inverse agonist",
+   "book_wording": "5-HT2A receptor inverse agonists",
+   "gap_categories": [
+    "inverse agonist"
+   ],
+   "pdf_page_index": 22
+  },
+  {
+   "chapter": 1,
+   "record": 9,
+   "drug": "",
+   "target": "mGlu2 receptor",
+   "target_class": "receptor",
+   "named_as": "mGlu2 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "mGlu2 receptor agonists and PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 22
+  },
+  {
+   "chapter": 1,
+   "record": 10,
+   "drug": "BINA",
+   "target": "mGlu2 receptor",
+   "target_class": "receptor",
+   "named_as": "mGlu2 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "the mGlu2 PAM, biphenyl-indanone A (BINA)",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 22
+  },
+  {
+   "chapter": 1,
+   "record": 19,
+   "drug": "CPCCOEt",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "the first mGlu1 negative allosteric modulator (NAM)",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 20,
+   "drug": "BAY36-7620",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "structurally distinct NAMs for mGlu1",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 21,
+   "drug": "FTIDC",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "structurally distinct NAMs for mGlu1",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 22,
+   "drug": "MPEP",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "mGlu5 selective NAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 23,
+   "drug": "MTEP",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "mGlu5 selective NAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 24,
+   "drug": "Ro 67-4853",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "PAMs ... potentiated DHPG-mediated VOCC inhibition responses",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 25,
+   "drug": "Ro 01-6128",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "PAMs ... potentiated DHPG-mediated VOCC inhibition responses",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 26,
+   "drug": "R214127",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "allosteric antagonist",
+   "book_wording": "the well-characterised allosteric antagonist, R214127",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 27,
+   "drug": "DFB",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "mGlu5 PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 28,
+   "drug": "CPPHA",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "mGlu5 PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 29,
+   "drug": "CDPPB",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "mGlu5 PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 30,
+   "drug": "VU29",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "mGlu5 PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 31,
+   "drug": "ADX47273",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "mGlu5 PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 32,
+   "drug": "CDPPB",
+   "target": "mGlu1",
+   "target_class": "receptor",
+   "named_as": "mGlu1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM), described as 'some PAM activity'",
+   "book_wording": "with CDPPB also having some PAM activity at mGlu1",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 25
+  },
+  {
+   "chapter": 1,
+   "record": 42,
+   "drug": "LY487379",
+   "target": "Group II mGlu receptors (mGlu2 per Fig. 4)",
+   "target_class": "receptor",
+   "named_as": "Group II mGlu Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM), 'highly potent'",
+   "book_wording": "BINA and LY487379 are highly potent PAMs",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 27
+  },
+  {
+   "chapter": 1,
+   "record": 43,
+   "drug": "MNI-135",
+   "target": "Group II mGlu receptors",
+   "target_class": "receptor",
+   "named_as": "Group II mGlu Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM), 'potent'",
+   "book_wording": "potent negative allosteric modulators",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 27
+  },
+  {
+   "chapter": 1,
+   "record": 44,
+   "drug": "MNI-136",
+   "target": "Group II mGlu receptors",
+   "target_class": "receptor",
+   "named_as": "Group II mGlu Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM), 'potent'",
+   "book_wording": "potent negative allosteric modulators",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 27
+  },
+  {
+   "chapter": 1,
+   "record": 45,
+   "drug": "MNI-137",
+   "target": "Group II mGlu receptors",
+   "target_class": "receptor",
+   "named_as": "Group II mGlu Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM), 'potent'",
+   "book_wording": "potent negative allosteric modulators",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 27
+  },
+  {
+   "chapter": 1,
+   "record": 54,
+   "drug": "PHCCC",
+   "target": "mGlu4",
+   "target_class": "receptor",
+   "named_as": "mGlu4 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "the mGlu4 PAM, PHCCC",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 30
+  },
+  {
+   "chapter": 1,
+   "record": 55,
+   "drug": "VU0155041",
+   "target": "mGlu4",
+   "target_class": "receptor",
+   "named_as": "mGlu4 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "an allosteric agonist and positive allosteric modulator",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 30
+  },
+  {
+   "chapter": 1,
+   "record": 56,
+   "drug": "VU0155041",
+   "target": "mGlu4",
+   "target_class": "receptor",
+   "named_as": "mGlu4 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "allosteric agonist",
+   "book_wording": "an allosteric agonist and positive allosteric modulator",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 30
+  },
+  {
+   "chapter": 1,
+   "record": 57,
+   "drug": "MMPIP",
+   "target": "mGlu7",
+   "target_class": "receptor",
+   "named_as": "mGlu7 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "a NAM for mGlu7",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 28
+  },
+  {
+   "chapter": 1,
+   "record": 58,
+   "drug": "IMP (inosine monophosphate)",
+   "target": "umami receptor (sweet-umami receptor T1R1 VFT)",
+   "target_class": "receptor",
+   "named_as": "Umami Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator of L-glutamate action",
+   "book_wording": "potent positive allosteric modulators of the L-glutamate action at the umami receptor",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 29
+  },
+  {
+   "chapter": 1,
+   "record": 59,
+   "drug": "GMP (guanine monophosphate)",
+   "target": "umami receptor",
+   "target_class": "receptor",
+   "named_as": "Umami Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator of L-glutamate action",
+   "book_wording": "potent positive allosteric modulators of the L-glutamate action at the umami receptor",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 29
+  },
+  {
+   "chapter": 1,
+   "record": 61,
+   "drug": "AMN082",
+   "target": "mGlu7",
+   "target_class": "receptor",
+   "named_as": "mGlu7 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "allosteric agonist",
+   "book_wording": "The mGlu7 allosteric agonist",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 31
+  },
+  {
+   "chapter": 1,
+   "record": 65,
+   "drug": "",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "a NAM of mGlu5",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 31
+  },
+  {
+   "chapter": 1,
+   "record": 66,
+   "drug": "Fenobam",
+   "target": "mGlu5",
+   "target_class": "receptor",
+   "named_as": "mGlu5 Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "negative allosteric modulator (NAM)",
+   "book_wording": "an mGlu5 NAM",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 32
+  },
+  {
+   "chapter": 1,
+   "record": 68,
+   "drug": "ADX71149",
+   "target": "mGlu2",
+   "target_class": "receptor",
+   "named_as": "mGlu2 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "an mGlu2 PAM",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 32
+  },
+  {
+   "chapter": 1,
+   "record": 70,
+   "drug": "ADX1149",
+   "target": "mGlu2/3",
+   "target_class": "receptor",
+   "named_as": "mGlu2/3 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "ADX1149 (PAM)",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 32
+  },
+  {
+   "chapter": 1,
+   "record": 76,
+   "drug": "",
+   "target": "mGlu4",
+   "target_class": "receptor",
+   "named_as": "mGlu4 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "PAM",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 32
+  },
+  {
+   "chapter": 1,
+   "record": 80,
+   "drug": "GHB (gamma-hydroxybutyric acid)",
+   "target": "GABAB receptor",
+   "target_class": "receptor",
+   "named_as": "GABAB Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist",
+   "book_wording": "GABAB receptor partial agonists ... the most famous of which is the endogenous metabolite of GABA, γ-hydroxybutyric acid (GHB)",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 35
+  },
+  {
+   "chapter": 1,
+   "record": 81,
+   "drug": "CGP44532",
+   "target": "GABAB receptor",
+   "target_class": "receptor",
+   "named_as": "GABAB Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist",
+   "book_wording": "Other partial agonists include CGP44532 and CGP35024",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 35
+  },
+  {
+   "chapter": 1,
+   "record": 82,
+   "drug": "CGP35024",
+   "target": "GABAB receptor",
+   "target_class": "receptor",
+   "named_as": "GABAB Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist",
+   "book_wording": "Other partial agonists include CGP44532 and CGP35024",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 35
+  },
+  {
+   "chapter": 1,
+   "record": 88,
+   "drug": "CGP7930",
+   "target": "GABAB receptor",
+   "target_class": "receptor",
+   "named_as": "GABAB Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "Some PAMs of the GABAB receptor are CGP7930, GS39783 and the more recent, rac-BHFF",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 36
+  },
+  {
+   "chapter": 1,
+   "record": 89,
+   "drug": "GS39783",
+   "target": "GABAB receptor",
+   "target_class": "receptor",
+   "named_as": "GABAB Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "Some PAMs of the GABAB receptor are CGP7930, GS39783 and the more recent, rac-BHFF",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 36
+  },
+  {
+   "chapter": 1,
+   "record": 90,
+   "drug": "rac-BHFF",
+   "target": "GABAB receptor",
+   "target_class": "receptor",
+   "named_as": "GABAB Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (PAM)",
+   "book_wording": "Some PAMs of the GABAB receptor are CGP7930, GS39783 and the more recent, rac-BHFF",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 36
+  },
+  {
+   "chapter": 3,
+   "record": 1,
+   "drug": "",
+   "target": "HIV-1 reverse transcriptase (RT)",
+   "target_class": "enzyme",
+   "named_as": "Nucleoside Reverse Transcriptase Inhibitor",
+   "naming_rule_applies": true,
+   "role_detail": "competitive inhibitor of dNTP substrate binding/incorporation (NRTI-triphosphates, class statement)",
+   "book_wording": "NRTI-triphosphates (NRTI-TP) inhibit RT-catalyzed proviral DNA synthesis by two mechanisms. First, they are competitive inhibitors for binding and/or catalytic incorporation with respect to the analogous natural dNTP substrate.",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 76
+  },
+  {
+   "chapter": 4,
+   "record": 2,
+   "drug": "TRK-820 (nalfurafine hydrochloride)",
+   "target": "μ receptor (opioid)",
+   "target_class": "receptor",
+   "named_as": "Opioid Mu Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist",
+   "book_wording": "partial agonist for the μ and δ receptors",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 95
+  },
+  {
+   "chapter": 4,
+   "record": 3,
+   "drug": "TRK-820 (nalfurafine hydrochloride)",
+   "target": "δ receptor (opioid)",
+   "target_class": "receptor",
+   "named_as": "Opioid Delta Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist; potency very low at delta",
+   "book_wording": "partial agonist for the μ and δ receptors",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 95
+  },
+  {
+   "chapter": 5,
+   "record": 9,
+   "drug": "Δ9-THC",
+   "target": "CB1R",
+   "target_class": "receptor",
+   "named_as": "Cannabinoid 1 Receptor Ligand (direction not stated)",
+   "naming_rule_applies": false,
+   "role_detail": "binding only; the chapter does not call it agonist or antagonist",
+   "book_wording": "identification of a highly specific binding site in the body ... named the cannabinoid 1 receptor (CB1R)",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 112
+  },
+  {
+   "chapter": 5,
+   "record": 10,
+   "drug": "CP55940",
+   "target": "cannabinoid receptor",
+   "target_class": "receptor",
+   "named_as": "Cannabinoid Receptor Ligand (direction not stated)",
+   "naming_rule_applies": false,
+   "role_detail": "tritiated binding probe; the chapter does not call it agonist or antagonist",
+   "book_wording": "binding studies with Pfizer-developed cannabinoid CP55940, tritiated by Howlett's group",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 113
+  },
+  {
+   "chapter": 8,
+   "record": 1,
+   "drug": "M6P-IL10",
+   "target": "M6P/IGF-II receptor",
+   "target_class": "receptor",
+   "named_as": "Mannose 6-Phosphate/Insulin-like Growth Factor II Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "receptor-binding ligand used as a homing device; the book does not state agonist or antagonist",
+   "book_wording": "binds to the M6P/IGF-II receptor",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 175
+  },
+  {
+   "chapter": 8,
+   "record": 2,
+   "drug": "M6P-IL10",
+   "target": "scavenger receptor",
+   "target_class": "receptor",
+   "named_as": "Scavenger Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "receptor-binding ligand (uptake); the book does not state agonist or antagonist",
+   "book_wording": "M6P-IL10 binds to at least two receptors: the scavenger receptor and the M6P/IGF-II receptor",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 183
+  },
+  {
+   "chapter": 9,
+   "record": 5,
+   "drug": "",
+   "target": "receptor (unspecified)",
+   "target_class": "receptor",
+   "named_as": "Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "blocking/antagonizing action",
+   "book_wording": "Blocking/Antagonizing action: The drugs binds the receptor but does not activate it.",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 197
+  },
+  {
+   "chapter": 9,
+   "record": 6,
+   "drug": "buprenorphine",
+   "target": "receptor (unspecified, 'general receptor activation')",
+   "target_class": "receptor",
+   "named_as": "Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "book calls it 'stabilizing action' (neither stimulant nor depressant)",
+   "book_wording": "Stabilizing action: ... seem to act neither as a stimulant nor as a depressant but to stabilize general receptor activation",
+   "gap_categories": [
+    "stabilizing"
+   ],
+   "pdf_page_index": 197
+  },
+  {
+   "chapter": 9,
+   "record": 7,
+   "drug": "aripiprazole",
+   "target": "receptor (unspecified, 'general receptor activation')",
+   "target_class": "receptor",
+   "named_as": "Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "book calls it 'stabilizing action' (neither stimulant nor depressant)",
+   "book_wording": "Stabilizing action: ... seem to act neither as a stimulant nor as a depressant but to stabilize general receptor activation",
+   "gap_categories": [
+    "stabilizing"
+   ],
+   "pdf_page_index": 197
+  },
+  {
+   "chapter": 9,
+   "record": 9,
+   "drug": "3-methylcholanthrene",
+   "target": "glutathione S-transferase (GST)",
+   "target_class": "enzyme",
+   "named_as": "Glutathione S-Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers of the enzyme",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 10,
+   "drug": "phenobarbital",
+   "target": "glutathione S-transferase (GST)",
+   "target_class": "enzyme",
+   "named_as": "Glutathione S-Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers of the enzyme",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 11,
+   "drug": "corticosteroids",
+   "target": "glutathione S-transferase (GST)",
+   "target_class": "enzyme",
+   "named_as": "Glutathione S-Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers of the enzyme",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 12,
+   "drug": "antioxidants",
+   "target": "glutathione S-transferase (GST)",
+   "target_class": "enzyme",
+   "named_as": "Glutathione S-Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers of the enzyme",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 13,
+   "drug": "phenobarbital",
+   "target": "UDP glucuronyl transferase (UDPG transferase)",
+   "target_class": "enzyme",
+   "named_as": "UDP Glucuronyl Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers include phenobarbital, indoles, 3 methyl cholanthrene and cigarette smoke.",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 14,
+   "drug": "indoles",
+   "target": "UDP glucuronyl transferase (UDPG transferase)",
+   "target_class": "enzyme",
+   "named_as": "UDP Glucuronyl Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers include phenobarbital, indoles, 3 methyl cholanthrene and cigarette smoke.",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 15,
+   "drug": "3 methyl cholanthrene",
+   "target": "UDP glucuronyl transferase (UDPG transferase)",
+   "target_class": "enzyme",
+   "named_as": "UDP Glucuronyl Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers include phenobarbital, indoles, 3 methyl cholanthrene and cigarette smoke.",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 9,
+   "record": 16,
+   "drug": "cigarette smoke",
+   "target": "UDP glucuronyl transferase (UDPG transferase)",
+   "target_class": "enzyme",
+   "named_as": "UDP Glucuronyl Transferase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer",
+   "book_wording": "Inducers include phenobarbital, indoles, 3 methyl cholanthrene and cigarette smoke.",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 200
+  },
+  {
+   "chapter": 10,
+   "record": 2,
+   "drug": "coumarins",
+   "target": "VKORC1 (vitamin K epoxide reductase multiprotein complex 1)",
+   "target_class": "enzyme",
+   "named_as": "Vitamin K Epoxide Reductase Inhibitor",
+   "naming_rule_applies": true,
+   "role_detail": "direction of action is NOT stated in the chapter; 'Inhibitor' is an inference",
+   "book_wording": "target enzyme of the coumarins",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 229
+  },
+  {
+   "chapter": 12,
+   "record": 15,
+   "drug": "Alcohol",
+   "target": "NMDA receptor (glycine binding site)",
+   "target_class": "receptor",
+   "named_as": "NMDA Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "book: acts on glycine binding site, inhibiting the function of NMDA receptor",
+   "book_wording": "act on glycine binding site therefore, inhibiting the function of NMDA receptor",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 250
+  },
+  {
+   "chapter": 12,
+   "record": 16,
+   "drug": "Glycine",
+   "target": "NMDA receptor",
+   "target_class": "receptor",
+   "named_as": "NMDA Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "coagonist",
+   "book_wording": "acting as a coagonist",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 250
+  },
+  {
+   "chapter": 12,
+   "record": 19,
+   "drug": "alcohol (ethanol)",
+   "target": "CYP2E1",
+   "target_class": "enzyme",
+   "named_as": "CYP2E1 Activator",
+   "naming_rule_applies": true,
+   "role_detail": "inducer; book's word is 'induced (increase in activity up to 10 fold)'",
+   "book_wording": "CYP2E1 is induced (increase in activity up to 10 fold) by chronic alcohol drinking",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 249
+  },
+  {
+   "chapter": 13,
+   "record": 7,
+   "drug": "agomelatine",
+   "target": "melatonin receptors",
+   "target_class": "receptor",
+   "named_as": "Melatonin Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "specific agonist",
+   "book_wording": "specific agonists; binds to melatonin receptors",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 274
+  },
+  {
+   "chapter": 13,
+   "record": 9,
+   "drug": "calcitriol (1,25(OH)2-cholecalciferol)",
+   "target": "nuclear receptors (VDRs)",
+   "target_class": "receptor",
+   "named_as": "Vitamin D Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "",
+   "book_wording": "binds to nuclear receptors (VDRs) to modulate the transcription of genes",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 274
+  },
+  {
+   "chapter": 14,
+   "record": 9,
+   "drug": "Aripiprazole",
+   "target": "Dopamine",
+   "target_class": "receptor",
+   "named_as": "Dopamine Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist",
+   "book_wording": "Dopamine Partial Agonist",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 302
+  },
+  {
+   "chapter": 14,
+   "record": 28,
+   "drug": "",
+   "target": "Ampa Receptor",
+   "target_class": "receptor",
+   "named_as": "AMPA Receptor Modulator",
+   "naming_rule_applies": false,
+   "role_detail": "modulator; direction not stated",
+   "book_wording": "Ampa Receptor Modulator",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 301
+  },
+  {
+   "chapter": 23,
+   "record": 1,
+   "drug": "PTZ",
+   "target": "GABA receptor",
+   "target_class": "receptor",
+   "named_as": "GABA Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "",
+   "book_wording": "can induce convulsion via GABA receptor antagonism",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 539
+  },
+  {
+   "chapter": 23,
+   "record": 2,
+   "drug": "PTX",
+   "target": "GABA receptor",
+   "target_class": "receptor",
+   "named_as": "GABA Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "",
+   "book_wording": "can induce convulsion via GABA receptor antagonism",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 539
+  },
+  {
+   "chapter": 24,
+   "record": 2,
+   "drug": "carbon monoxide (CO)",
+   "target": "nitric oxide synthetase (NOS)",
+   "target_class": "enzyme",
+   "named_as": "Nitric Oxide Synthase Inhibitor",
+   "naming_rule_applies": true,
+   "role_detail": "partial agonist (book's word); book says it may down-regulate NOS-dependent signaling",
+   "book_wording": "serve as a partial agonist of nitric oxide synthetase (NOS) and thus, may down-regulate the level of NOS-dependent signaling",
+   "gap_categories": [
+    "partial agonist or co-agonist"
+   ],
+   "pdf_page_index": 555
+  },
+  {
+   "chapter": 26,
+   "record": 1,
+   "drug": "Interleukin-6 (IL-6)",
+   "target": "specific IL-6 receptors (IL-6R alpha / CD126 and gp130 / CD130)",
+   "target_class": "receptor",
+   "named_as": "Interleukin-6 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "endogenous ligand; direction (agonist) inferred from the signal cascade the book says the complex initiates",
+   "book_wording": "The biological activity of IL-6 depends on binding to its specific receptors. ... The complex IL-6+IL-6R+gp130 initiate a signal transduction cascade through JAKs (Janus kinases) and STATs",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 600
+  },
+  {
+   "chapter": 27,
+   "record": 4,
+   "drug": "Lipopolysaccharide",
+   "target": "Toll-like receptor",
+   "target_class": "receptor",
+   "named_as": "Toll-like Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "named as a Toll-like receptor ligand that triggers reactive astrogliosis; agonism is inferred",
+   "book_wording": "mediators of innate immunity such as lipopolysaccharide and other Toll-like receptor ligands",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 624
+  },
+  {
+   "chapter": 27,
+   "record": 11,
+   "drug": "Ethanol",
+   "target": "NMDA receptor (a subunit)",
+   "target_class": "receptor",
+   "named_as": "NMDA Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "chronic ethanol consumption up-regulates a subunit of the NMDA receptor (expression change, not ligand action); nearest of the two roles chosen",
+   "book_wording": "depicted an up-regulation of a subunit of the NMDA receptor",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 627
+  },
+  {
+   "chapter": 27,
+   "record": 21,
+   "drug": "Ethanol",
+   "target": "TLR4 (toll-like receptor 4)",
+   "target_class": "receptor",
+   "named_as": "Toll-like Receptor 4 Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "high ethanol concentrations inhibit ethanol-induced activation of the TLR4 signalling pathway",
+   "book_wording": "high ethanol concentrations or lipid raft-disrupting agents (streptolysin-O or saponin) inhibit ethanol-induced activation of the TLR4 signalling pathway",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 630
+  },
+  {
+   "chapter": 28,
+   "record": 18,
+   "drug": "Inosine",
+   "target": "adenosine A1 receptor (A1R)",
+   "target_class": "receptor",
+   "named_as": "Adenosine A1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "activator (direct or indirect); agonist/partial agonist status left open by the book",
+   "book_wording": "Inosine in a direct or indirect way activates A1R to induce analgesia",
+   "gap_categories": [
+    "partial agonist or co-agonist",
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 649
+  },
+  {
+   "chapter": 28,
+   "record": 19,
+   "drug": "Inosine",
+   "target": "adenosine A2A receptor (A2AR)",
+   "target_class": "receptor",
+   "named_as": "Adenosine A2A Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "activator; agonist/partial agonist status left open by the book",
+   "book_wording": "Inosine activates A2AR to induce analgesia",
+   "gap_categories": [
+    "partial agonist or co-agonist",
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 649
+  },
+  {
+   "chapter": 28,
+   "record": 20,
+   "drug": "Inosine",
+   "target": "adenosine A3 receptor (A3R)",
+   "target_class": "receptor",
+   "named_as": "Adenosine A3 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "binding reported; agonist role inferred",
+   "book_wording": "inosine binds to A3R in mast cells",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 650
+  },
+  {
+   "chapter": 28,
+   "record": 41,
+   "drug": "T-62",
+   "target": "adenosine A1 receptor (A1R)",
+   "target_class": "receptor",
+   "named_as": "Adenosine A1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "positive allosteric modulator (A1R-selective allosteric enhancer)",
+   "book_wording": "A1R-selective allosteric enhancer",
+   "gap_categories": [
+    "allosteric modulator (PAM, NAM, potentiator)"
+   ],
+   "pdf_page_index": 652
+  },
+  {
+   "chapter": 29,
+   "record": 1,
+   "drug": "hydroxytamoxifen",
+   "target": "ERα receptor",
+   "target_class": "receptor",
+   "named_as": "Estrogen Receptor Alpha Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "direction not stated by the page",
+   "book_wording": "was effective only against the cells having the ERα receptor",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 667
+  },
+  {
+   "chapter": 29,
+   "record": 2,
+   "drug": "ferrocifens",
+   "target": "estrogen receptor",
+   "target_class": "receptor",
+   "named_as": "Estrogen Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "direction not stated by the page; ferrocenyl tamoxifen analogues",
+   "book_wording": "have high affinity for estrogen receptor",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 667
+  },
+  {
+   "chapter": 29,
+   "record": 6,
+   "drug": "CXCL12/stromal cell-derived factor-1 (SDF-1)",
+   "target": "CXCR4 (chemokine receptor)",
+   "target_class": "receptor",
+   "named_as": "CXCR4 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "endogenous ligand whose signals the receptor transduces",
+   "book_wording": "transduces signals of its endogenous ligand",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 681
+  },
+  {
+   "chapter": 29,
+   "record": 23,
+   "drug": "[Ni(II)(3-methoxy-salophene)]",
+   "target": "CD95 receptor",
+   "target_class": "receptor",
+   "named_as": "CD95 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "direction not stated; involvement of CD95 receptor-mediated extrinsic pathway",
+   "book_wording": "involvement of CD95 receptor-mediated, extrinsic pathway",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 675
+  },
+  {
+   "chapter": 29,
+   "record": 31,
+   "drug": "Zn(alx)2 (bis(allixinato)zinc(II))",
+   "target": "HSL (hormone-sensitive lipase)",
+   "target_class": "enzyme",
+   "named_as": "Hormone-Sensitive Lipase Inhibitor",
+   "naming_rule_applies": true,
+   "role_detail": "direction not stated; regulates activation, suppressing free fatty acid release",
+   "book_wording": "regulate the activation of HSL (hormone-sensitive lipase), resulting in suppression of free fatty acid release",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 684
+  },
+  {
+   "chapter": 29,
+   "record": 32,
+   "drug": "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))",
+   "target": "HSL (hormone-sensitive lipase)",
+   "target_class": "enzyme",
+   "named_as": "Hormone-Sensitive Lipase Inhibitor",
+   "naming_rule_applies": true,
+   "role_detail": "direction not stated; regulates activation, suppressing free fatty acid release",
+   "book_wording": "regulate the activation of HSL (hormone-sensitive lipase), resulting in suppression of free fatty acid release",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 684
+  },
+  {
+   "chapter": 30,
+   "record": 3,
+   "drug": "Aminoguanidine",
+   "target": "S-adenosylmethionine decarboxylase",
+   "target_class": "enzyme",
+   "named_as": "S-adenosylmethionine Decarboxylase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "direction not stated; binds the enzyme",
+   "book_wording": "binds to the enzyme S-adenosylmethionine decarboxylase and increases synthesis of polyamines",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 704
+  },
+  {
+   "chapter": 30,
+   "record": 14,
+   "drug": "Advanced glycation endproducts (AGEs)",
+   "target": "receptor for AGEs (RAGE)",
+   "target_class": "receptor",
+   "named_as": "Receptor for AGEs Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "ligand binding that induces oxidative stress; agonist role inferred",
+   "book_wording": "AGEs bind to the receptor for AGEs (RAGE) ... to induce oxidative stress",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)",
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 701
+  },
+  {
+   "chapter": 30,
+   "record": 15,
+   "drug": "Advanced glycation endproducts (AGEs)",
+   "target": "scavenger receptors",
+   "target_class": "receptor",
+   "named_as": "Scavenger Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "ligand binding that induces oxidative stress; agonist role inferred",
+   "book_wording": "AGEs bind to ... scavenger receptors to induce oxidative stress",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)",
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 701
+  },
+  {
+   "chapter": 31,
+   "record": 1,
+   "drug": "Adenosine",
+   "target": "A1 receptor (adenosine A1 receptor)",
+   "target_class": "receptor",
+   "named_as": "Adenosine A1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "endogenous ligand acting via the receptor; role word agonist not used on this page",
+   "book_wording": "acts mainly via A1 receptor, which is a presynaptic inhibitor of the release of neurotransmitters",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 721
+  },
+  {
+   "chapter": 31,
+   "record": 3,
+   "drug": "",
+   "target": "adenosine receptor",
+   "target_class": "receptor",
+   "named_as": "Adenosine Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "class named without compound; accentuates ethanol-induced motor incoordination",
+   "book_wording": "adenosine receptor agonists",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 721
+  },
+  {
+   "chapter": 31,
+   "record": 4,
+   "drug": "",
+   "target": "adenosine receptor",
+   "target_class": "receptor",
+   "named_as": "Adenosine Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "class named without compound; blocks ethanol-induced motor incoordination",
+   "book_wording": "adenosine receptor agonists or antagonists",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 721
+  },
+  {
+   "chapter": 31,
+   "record": 5,
+   "drug": "Caffeine",
+   "target": "adenosine receptors",
+   "target_class": "receptor",
+   "named_as": "Adenosine Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "antagonist (subtype not stated here)",
+   "book_wording": "Adenosine antagonists, like caffeine",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 721
+  },
+  {
+   "chapter": 31,
+   "record": 6,
+   "drug": "Theophylline",
+   "target": "adenosine receptors",
+   "target_class": "receptor",
+   "named_as": "Adenosine Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "antagonist (subtype not stated)",
+   "book_wording": "as antagonists",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 724
+  },
+  {
+   "chapter": 31,
+   "record": 12,
+   "drug": "N6-cyclohexyladenosine (CHA)",
+   "target": "A1R (adenosine A1 receptor)",
+   "target_class": "receptor",
+   "named_as": "Adenosine A1 Receptor Agonist",
+   "naming_rule_applies": true,
+   "role_detail": "selective agonist; potentiates ethanol-induced motor incoordination",
+   "book_wording": "The selective A1R agonist N6-cyclohexyladenosine (CHA)",
+   "gap_categories": [
+    "enzyme induction (more enzyme made, not faster)"
+   ],
+   "pdf_page_index": 725
+  },
+  {
+   "chapter": 31,
+   "record": 14,
+   "drug": "Ro15-4513",
+   "target": "benzodiazepine (site; effect linked on the page to GABAA)",
+   "target_class": "receptor",
+   "named_as": "Benzodiazepine Receptor Antagonist",
+   "naming_rule_applies": true,
+   "role_detail": "weak partial inverse agonist (rule name uses the nearer role, antagonist)",
+   "book_wording": "a weak partial inverse agonist of the benzodiazepine class of drugs",
+   "gap_categories": [
+    "inverse agonist"
+   ],
+   "pdf_page_index": 722
+  },
+  {
+   "chapter": 31,
+   "record": 21,
+   "drug": "Taurine",
+   "target": "ATPases",
+   "target_class": "enzyme",
+   "named_as": "ATPase Activator",
+   "naming_rule_applies": true,
+   "role_detail": "normalizes activity in ethanol-pretreated tissues; direction not stated",
+   "book_wording": "normalizes the activity of ATPases in tissues pretreated with ethanol",
+   "gap_categories": [
+    "no direction stated (binds, acts on, ligand)"
+   ],
+   "pdf_page_index": 724
+  }
+ ]
+}

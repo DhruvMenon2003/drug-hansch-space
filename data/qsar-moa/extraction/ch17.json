@@ -8,18 +8,6 @@
   "pages_read": [367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390, 391, 392],
   "pages_unreadable": [],
   "reference_list_starts_pdf_page": 387,
-  "records": [
-    {
-      "drug": "methcathinone",
-      "drug_kind": "not stated",
-      "target": "plasma membrane catecholamine transporters",
-      "target_class": "other",
-      "other_target_kind": "transporter",
-      "mechanism_rule_name": "Plasma Membrane Catecholamine Transporter Action (direction not stated)",
-      "naming_rule_applies": false,
-      "role_detail": "",
-      "mechanism_book_wording": "predominant action on plasma membrane catecholamine transporters",
-      "quote": "the main mechanism of action is very similar to that of amphetamine, being characterised by a predominant action on plasma membrane catecholamine transporters",
-      "pdf_page_index": 369,
-      "printed_page": 357,
-      "location
+  "records": [],
+  "chapter_notes": "Chapter is an epidemiological case series of mephedrone fatalities; no receptor or enzyme mechanism is stated. Skipped 1 non-receptor, non-enzyme statement (methcathinone and methylone acting predominantly on plasma membrane catecholamine transporters, PDF page 369), per the 2026-11-23 update. Reference list begins at the end of PDF page 387 (printed p. 375)."
+}

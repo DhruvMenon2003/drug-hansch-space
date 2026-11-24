@@ -427,5 +427,1248 @@
   "source_id": "DB00396",
   "source_url": "https://go.drugbank.com/drugs/DB00396",
   "pubchem_url": "https://pubchem.ncbi.nlm.nih.gov/compound/5994#section=Mechanism-of-Action"
+ },
+ "name:5-ht": {
+  "pubchem_cid": 5202,
+  "text": [],
+  "drugbank_url": null,
+  "name": "5-HT",
+  "retrieved_utc": "2026-11-24T00:28:46.855Z"
+ },
+ "name:2-chloro-n6-cyclopentyladenosine (ccpa)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "2-chloro-N6-cyclopentyladenosine (CCPA)",
+  "retrieved_utc": "2026-11-24T00:28:47.379Z"
+ },
+ "name:capadenoson": {
+  "pubchem_cid": 9936489,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Capadenoson",
+  "retrieved_utc": "2026-11-24T00:28:48.241Z"
+ },
+ "name:ccpa": {
+  "pubchem_cid": 123807,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CCPA",
+  "retrieved_utc": "2026-11-24T00:28:49.082Z"
+ },
+ "name:cha": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CHA",
+  "retrieved_utc": "2026-11-24T00:28:49.448Z"
+ },
+ "name:gr79236x": {
+  "pubchem_cid": 9884817,
+  "text": [],
+  "drugbank_url": null,
+  "name": "GR79236X",
+  "retrieved_utc": "2026-11-24T00:28:50.313Z"
+ },
+ "name:gw493838": {
+  "pubchem_cid": 9810927,
+  "text": [],
+  "drugbank_url": null,
+  "name": "GW493838",
+  "retrieved_utc": "2026-11-24T00:28:51.243Z"
+ },
+ "name:r(−)-n6-phenylisopropyladenosine (r-pia)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "R(−)-N6-phenylisopropyladenosine (R-PIA)",
+  "retrieved_utc": "2026-11-24T00:28:51.729Z"
+ },
+ "name:sdz wag 994": {
+  "pubchem_cid": 164305,
+  "text": [],
+  "drugbank_url": null,
+  "name": "SDZ WAG 994",
+  "retrieved_utc": "2026-11-24T00:28:52.602Z"
+ },
+ "name:selodenoson": {
+  "pubchem_cid": 3082555,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Selodenoson",
+  "retrieved_utc": "2026-11-24T00:28:53.522Z"
+ },
+ "DB04954": {
+  "pubchem_cid": 158795,
+  "text": [
+   "Tecadenoson selectively stimulates the A1 adenosine receptor. Stimulation of the A1 adenosine receptor slows the conduction of electrical impulses in the AV node of the heart, a region that controls the transmission of electrical impulses from the atria to the ventricles."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB04954",
+  "name": "Tecadenoson",
+  "retrieved_utc": "2026-11-24T00:28:54.387Z"
+ },
+ "name:1,3-dipropyl-8-cyclopentylxanthine (dpcpx)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "1,3-dipropyl-8-cyclopentylxanthine (DPCPX)",
+  "retrieved_utc": "2026-11-24T00:28:54.862Z"
+ },
+ "name:8-pt": {
+  "pubchem_cid": 1922,
+  "text": [],
+  "drugbank_url": null,
+  "name": "8-PT",
+  "retrieved_utc": "2026-11-24T00:28:55.731Z"
+ },
+ "name:cpa": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CPA",
+  "retrieved_utc": "2026-11-24T00:28:56.136Z"
+ },
+ "name:cpt": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CPT",
+  "retrieved_utc": "2026-11-24T00:28:56.572Z"
+ },
+ "name:dpcpx": {
+  "pubchem_cid": 1329,
+  "text": [],
+  "drugbank_url": null,
+  "name": "DPCPX",
+  "retrieved_utc": "2026-11-24T00:28:57.429Z"
+ },
+ "name:methylxanthines (caffeine included)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Methylxanthines (caffeine included)",
+  "retrieved_utc": "2026-11-24T00:28:57.971Z"
+ },
+ "name:r-pia": {
+  "pubchem_cid": 5022,
+  "text": [],
+  "drugbank_url": null,
+  "name": "R-PIA",
+  "retrieved_utc": "2026-11-24T00:28:58.926Z"
+ },
+ "DB05009": {
+  "pubchem_cid": 9805430,
+  "text": [
+   "BMS068645 is designed to selectively stimulate the A2a adenosine receptor responsible for coronary vasodilation. Research to date suggests that this compound could potentially reduce or eliminate side effects associated with currently available pharmacologic stress agents that are not selective for the A2a adenosine receptor.",
+   "ATL146e can inhibit neutrophil, macrophage and T cell activation and thereby reduce inflammation caused autoimmune responses. It also inhibits TNF-α and IL-1/3 production, neutrophil accumulation in gastric injury induced by NSAIDS (such as aspirin) without affecting mucosal prostaglandin E2 (PGE2) concentration. The effects of adenosine A2A agonists can be enhanced by type IV phosphodiesterase inhibitors, such as rolipram."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB05191",
+  "name": "Apadenoson",
+  "retrieved_utc": "2026-11-24T00:29:00.209Z"
+ },
+ "DB04853": {
+  "pubchem_cid": 9576912,
+  "text": [
+   "Binodenoson is a highly selective adenosine A2A receptor agonist. The adenosine A2A receptor is necessary for increased cardiac blood flow, and specificity to this particular receptor allows binodenoson to deliver, in a single injection, a more effective dose of medication with fewer side effects than current treatments, which typically require a 15-20 minute infusion. Cardiac stress tests allow physicians to identify the presence of cardiovascular disease by examining the flow of blood through the heart."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB04853",
+  "name": "Binodenoson",
+  "retrieved_utc": "2026-11-24T00:29:01.076Z"
+ },
+ "name:bvt.115959": {
+  "pubchem_cid": 9796227,
+  "text": [],
+  "drugbank_url": null,
+  "name": "BVT.115959",
+  "retrieved_utc": "2026-11-24T00:29:02.057Z"
+ },
+ "name:n6-[2-(3,5-dimethoxyphenyl)-2-(2-methylphenyl)ethyl]adenosine (dpma)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "N6-[2-(3,5-dimethoxyphenyl)-2-(2-methylphenyl)ethyl]adenosine (DPMA)",
+  "retrieved_utc": "2026-11-24T00:29:02.708Z"
+ },
+ "DB12443": {
+  "pubchem_cid": 9910098,
+  "text": [],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB12443",
+  "name": "Sonedenoson",
+  "retrieved_utc": "2026-11-24T00:29:03.505Z"
+ },
+ "name:3,7-dimethyl-1-propargylxanthine (dmpx)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "3,7-Dimethyl-1-propargylxanthine (DMPX)",
+  "retrieved_utc": "2026-11-24T00:29:04.022Z"
+ },
+ "name:cf101": {
+  "pubchem_cid": 123683,
+  "text": [
+   "CF 101 is an A(3)AR agonist. A(3)AR is highly expressed in inflammatory cells and overexpressed in peripheral blood mononuclear cells, reflecting its role in the remote inflammatory process. In normal tissues, there is low adenoside A3 receptor expression. A(3)AR activation with a specific agonist deregulates the NF-kappaB signaling pathway in inflammatory cells and initiates immunomodulatory effects."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB05511",
+  "name": "CF101",
+  "retrieved_utc": "2026-11-24T00:29:04.907Z"
+ },
+ "name:cl-ib-meca (cf102)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Cl-IB-MECA (CF102)",
+  "retrieved_utc": "2026-11-24T00:29:05.369Z"
+ },
+ "name:cp-532,903": {
+  "pubchem_cid": 10479002,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CP-532,903",
+  "retrieved_utc": "2026-11-24T00:29:06.264Z"
+ },
+ "name:cp-608,039": {
+  "pubchem_cid": 73977920,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CP-608,039",
+  "retrieved_utc": "2026-11-24T00:29:07.149Z"
+ },
+ "DB04335": {
+  "pubchem_cid": 6021,
+  "text": [],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB04335",
+  "name": "Inosine",
+  "retrieved_utc": "2026-11-24T00:29:08.546Z"
+ },
+ "DB01223": {
+  "pubchem_cid": 9433,
+  "text": [
+   "Aminophylline is the ethylenediamine salt of theophylline. After ingestion, theophylline is released from aminophylline, and theophylline relaxes the smooth muscle of the bronchial airways and pulmonary blood vessels and reduces airway responsiveness to histamine, methacholine, adenosine, and allergen. Theophylline competitively inhibits type III and type IV phosphodiesterase (PDE), the enzyme responsible for breaking down cyclic AMP in smooth muscle cells, possibly resulting in bronchodilation. Theophylline also binds to the adenosine A2B receptor and blocks adenosine mediated bronchoconstriction. In inflammatory states, theophylline activates histone deacetylase to prevent transcription of inflammatory genes that require the acetylation of histones for transcription to begin."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01223",
+  "name": "Aminophylline",
+  "retrieved_utc": "2026-11-24T00:29:09.430Z"
+ },
+ "DB00201": {
+  "pubchem_cid": 2519,
+  "text": [
+   "The mechanism of action of caffeine is complex, as it impacts several body systems, which are listed below. The effects as they relate to various body systems are described as follows: **General and cellular actions** Caffeine exerts several actions on cells, but the clinical relevance is poorly understood. One probable mechanism is the inhibition of nucleotide phosphodiesterase enzymes, adenosine receptors, regulation of calcium handling in cells, and participates in adenosine receptor antagonism. Phosphodiesterase enzymes regulate cell function via actions on second messengers cAMP and cGMP. This causes lipolysis through activation of hormone-sensitive lipases, releasing fatty acids and glycerol. **Respiratory** The exact mechanism of action of caffeine in treating apnea related to prematurity is unknown, however, there are several proposed mechanisms, including respiratory center stimulation in the central nervous system, a reduced threshold to hypercapnia with increased response, and increased consumption of oxygen, among others. The blocking of the adenosine receptors enhances respiratory drive via an increase in brain medullary response to carbon dioxide, stimulating ventilation and respiratory drive, while increasing contractility of the diaphragm. **Central nervous system** Caffeine demonstrates antagonism of all 4 adenosine receptor subtypes (A1, A2a, A2b, A3) in the central nervous system. Caffeine's effects on alertness and combatting drowsiness are specifically related to the antagonism of the A2a receptor. **Renal system** Caffeine has diuretic effects due to is stimulatory effects on renal blood flow, increase in glomerular filtration, and increase in sodium excretion. **Cardiovascular system** Adenosine receptor antagonism at the A1 receptor by caffeine stimulates inotropic effects in the heart. Blocking of adenosine receptors promotes catecholamine release, leading to stimulatory effects occurring in the heart and the rest of the body. In the blood vessels, caffeine exerts direct antagonism of adenosine receptors, causing vasodilation. It stimulates the endothelial cells in the blood vessel wall to release nitric oxide, potentiating blood vessel relaxation. Catecholamine release, however, antagonizes this and exerts inotropic and chronotropic effects on the heart, ultimately leading to vasoconstriction. Finally, caffeine is shown to raise systolic blood pressure measurements by 5 to 10 mmHg when it is not taken regularly, versus no effect in those who consume it regularly. The vasoconstricting effects of caffeine are beneficial in migraines and other types of headache, which are normally caused by vasodilation in the brain."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00201",
+  "name": "caffeine",
+  "retrieved_utc": "2026-11-24T00:29:10.286Z"
+ },
+ "DB00277": {
+  "pubchem_cid": 2153,
+  "text": [
+   "Theophylline relaxes the smooth muscle of the bronchial airways and pulmonary blood vessels and reduces airway responsiveness to histamine, methacholine, adenosine, and allergen. Theophylline competitively inhibits type III and type IV phosphodiesterase (PDE), the enzyme responsible for breaking down cyclic AMP in smooth muscle cells, possibly resulting in bronchodilation. Theophylline also binds to the adenosine A2B receptor and blocks adenosine mediated bronchoconstriction. In inflammatory states, theophylline activates histone deacetylase to prevent transcription of inflammatory genes that require the acetylation of histones for transcription to begin."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00277",
+  "name": "Theophylline",
+  "retrieved_utc": "2026-11-24T00:29:11.288Z"
+ },
+ "name:r-130964": {
+  "pubchem_cid": 60606,
+  "text": [
+   "Clopidogrel is activated via a 2 steps reaction to an active thiol-containing metabolite. This active form is a platelet inhibitor that irreversibly binds to P2Y12 ADP receptors on platelets. This binding prevents ADP binding to P2Y12 receptors, activation of the glycoprotein GPIIb/IIIa complex, and platelet aggregation."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00758",
+  "name": "R-130964",
+  "retrieved_utc": "2026-11-24T00:29:12.126Z"
+ },
+ "name:vo(alx)2 (bis(allixinato)oxovanadium(iv))": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "VO(alx)2 (bis(allixinato)oxovanadium(IV))",
+  "retrieved_utc": "2026-11-24T00:29:12.539Z"
+ },
+ "name:zn(alx)2 (bis(allixinato)zinc(ii))": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Zn(alx)2 (bis(allixinato)zinc(II))",
+  "retrieved_utc": "2026-11-24T00:29:12.996Z"
+ },
+ "name:zn(tanm)2 (bis(thioallixin-n-methyl)zinc(ii))": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Zn(tanm)2 (bis(thioallixin-N-methyl)zinc(II))",
+  "retrieved_utc": "2026-11-24T00:29:13.425Z"
+ },
+ "name:ampa (alpha-amino-3-hydroxy-4-isoxazolepropionic acid)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AMPA (alpha-amino-3-hydroxy-4-isoxazolepropionic acid)",
+  "retrieved_utc": "2026-11-24T00:29:13.850Z"
+ },
+ "name:albuterol": {
+  "pubchem_cid": 2083,
+  "text": [
+   "In vitro studies and in vivo pharmacologic studies have shown that salbutamol has a preferential effect on beta2-adrenergic receptors compared with isoproterenol. Although beta2­ adrenoceptors are the predominant adrenergic receptors in bronchial smooth muscle and beta1 adrenoceptors are the predominant receptors in the heart, there are also beta2-adrenoceptors in the human heart comprising 10% to 50% of the total beta-adrenoceptors. The precise function of these receptors has not been established, but their presence raises the possibility that even selective beta2-agonists may have cardiac effects. Activation of beta2-adrenergic receptors on airway smooth muscle leads to the activation of adenyl cyclase and to an increase in the intracellular concentration of cyclic-3′,5′-adenosine monophosphate (cyclic AMP). This increase of cyclic AMP leads to the activation of protein kinase A, which inhibits the phosphorylation of myosin and lowers intracellular ionic calcium concentrations, resulting in relaxation. Salbutamol relaxes the smooth muscles of all airways, from the trachea to the terminal bronchioles. Salbutamol acts as a functional antagonist to relax the airway irrespective of the spasmogen involved, thus protecting against all bronchoconstrictor challenges. Increased cyclic AMP concentrations are also associated with the inhibition of release of mediators from mast cells in the airway. Salbutamol has been shown in most controlled clinical trials to have more effect on the respiratory tract, in the form of bronchial smooth muscle relaxation, than isoproterenol at comparable doses while producing fewer cardiovascular effects. Controlled clinical studies and other clinical experience have shown that inhaled albuterol, like other beta-adrenergic agonist drugs, can produce a significant cardiovascular effect in some patients, as measured by pulse rate, blood pressure, symptoms, and/or electrocardiographic changes. A measurable decrease in airway resistance is typically observed within 5 to 15 minutes after inhalation of salbutamol. The maximum improvement in pulmonary function usually occurs 60 to 90 minutes after salbutamol treatment, and significant bronchodilator activity has been observed to persist for 3 to 6 hours."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01001",
+  "name": "albuterol",
+  "retrieved_utc": "2026-11-24T00:29:14.682Z"
+ },
+ "name:2-ag": {
+  "pubchem_cid": 5282280,
+  "text": [],
+  "drugbank_url": null,
+  "name": "2-AG",
+  "retrieved_utc": "2026-11-24T00:29:15.578Z"
+ },
+ "name:anandamide": {
+  "pubchem_cid": 5281969,
+  "text": [],
+  "drugbank_url": null,
+  "name": "anandamide",
+  "retrieved_utc": "2026-11-24T00:29:16.633Z"
+ },
+ "name:hu-210": {
+  "pubchem_cid": 9821569,
+  "text": [],
+  "drugbank_url": null,
+  "name": "HU-210",
+  "retrieved_utc": "2026-11-24T00:29:17.519Z"
+ },
+ "name:win 55, 212-2": {
+  "pubchem_cid": 5311501,
+  "text": [],
+  "drugbank_url": null,
+  "name": "WIN 55, 212-2",
+  "retrieved_utc": "2026-11-24T00:29:18.398Z"
+ },
+ "name:am251": {
+  "pubchem_cid": 2125,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AM251",
+  "retrieved_utc": "2026-11-24T00:29:19.255Z"
+ },
+ "name:aea": {
+  "pubchem_cid": 5281969,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AEA",
+  "retrieved_utc": "2026-11-24T00:29:20.103Z"
+ },
+ "name:titanocene dichloride": {
+  "pubchem_cid": 76030824,
+  "text": [],
+  "drugbank_url": null,
+  "name": "titanocene dichloride",
+  "retrieved_utc": "2026-11-24T00:29:21.168Z"
+ },
+ "name:dipicolylamine-zinc(ii) complex compounds": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "dipicolylamine-zinc(II) complex compounds",
+  "retrieved_utc": "2026-11-24T00:29:21.594Z"
+ },
+ "name:hexacarbonyldicobalt-aspirin complex (co-aspirin)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "hexacarbonyldicobalt-aspirin complex (Co-Aspirin)",
+  "retrieved_utc": "2026-11-24T00:29:22.019Z"
+ },
+ "name:nsaids (nonsteroidal antiinflammatory drugs)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "NSAIDs (nonsteroidal antiinflammatory drugs)",
+  "retrieved_utc": "2026-11-24T00:29:22.384Z"
+ },
+ "DB00448": {
+  "pubchem_cid": 3883,
+  "text": [
+   "As a PPI, lansoprazole is a prodrug and requires protonation via an acidic environment to become activated. Once protonated, lansoprazole is able to react with cysteine residues, specifically Cys813 and Cys321, on parietal H+,K+-ATPase resulting in stable disulfides. PPI's in general are able to provide prolonged inhibition of acid secretion due to their ability to bind covalently to their targets."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00448",
+  "name": "lansoprazole",
+  "retrieved_utc": "2026-11-24T00:29:23.311Z"
+ },
+ "DB00338": {
+  "pubchem_cid": 4594,
+  "text": [
+   "Hydrochloric acid (HCl) secretion into the gastric lumen is a process regulated mainly by the H(+)/K(+)-ATPase of the proton pump, expressed in high quantities by the parietal cells of the stomach. ATPase is an enzyme on the parietal cell membrane that facilitates hydrogen and potassium exchange through the cell, which normally results in the extrusion of potassium and formation of HCl (gastric acid). Omeprazole is a member of a class of antisecretory compounds, the substituted _benzimidazoles_, that stop gastric acid secretion by selective inhibition of the _H+/K+ ATPase_ enzyme system. Proton-pump inhibitors such as omeprazole bind covalently to cysteine residues via disulfide bridges on the alpha subunit of the _H+/K+ ATPase_ pump, inhibiting gastric acid secretion for up to 36 hours. This antisecretory effect is dose-related and leads to the inhibition of both basal and stimulated acid secretion, regardless of the stimulus. **Mechanism of H. pylori eradication** Peptic ulcer disease (PUD) is frequently associated with _Helicobacter pylori_ bacterial infection (NSAIDs). The treatment of H. pylori infection may include the addition of omeprazole or other proton pump inhibitors as part of the treatment regimen,. _H. pylori_ replicates most effectively at a neutral pH. Acid inhibition in H. pylori eradication therapy, including proton-pump inhibitors such as omeprazole, raises gastric pH, discouraging the growth of H.pylori. It is generally believed that proton pump inhibitors inhibit the _urease_ enzyme, which increases the pathogenesis of H. pylori in gastric-acid related conditions."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00338",
+  "name": "omeprazole",
+  "retrieved_utc": "2026-11-24T00:29:24.215Z"
+ },
+ "DB00908": {
+  "pubchem_cid": 441074,
+  "text": [
+   "Quinidine has a complex electrophysiological profile that has not been fully elucidated. The antiarrhythmic actions of this drug are mediated through effects on sodium channels in Purkinje fibers. Quinidine blocks the rapid sodium channel (INa), decreasing the phase zero of rapid depolarization of the action potential. Quinidine also reduces repolarizing K+ currents (IKr, IKs), the inward rectifier potassium current (IK1), and the transient outward potassium current Ito, as well as the L-type calcium current ICa and the late INa inward current. The reduction of these currents leads to the prolongation of the action potential duration. By shortening the plateau but prolonging late depolarization, quinidine facilitates the formation of early afterdepolarisation (EAD). Additionally, in patients with malaria, quinidine acts primarily as an intra-erythrocytic schizonticide, and is gametocidal to _Plasmodium vivax_ and _P. malariae_, but not to _P. falciparum_."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00908",
+  "name": "quinidine",
+  "retrieved_utc": "2026-11-24T00:29:24.978Z"
+ },
+ "name:ho-1 (heme oxygenase-1)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "HO-1 (heme oxygenase-1)",
+  "retrieved_utc": "2026-11-24T00:29:25.387Z"
+ },
+ "DB01597": {
+  "pubchem_cid": 6435415,
+  "text": [
+   "Cilastatin is a renal dehydropeptidase-I inhibitor. Since the antibiotic, imipenem, is hydrolyzed by dehydropeptidase-I, which resides in the brush border of the renal tubule, cilastatin is administered with imipenem to block the metabolism of imipenem."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01597",
+  "name": "Cilastatin",
+  "retrieved_utc": "2026-11-24T00:29:26.184Z"
+ },
+ "name:colophony (sodium resinate, sr)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "colophony (sodium resinate, SR)",
+  "retrieved_utc": "2026-11-24T00:29:26.591Z"
+ },
+ "name:zidovudine-mp (zidovudine monophosphate)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Zidovudine-MP (zidovudine monophosphate)",
+  "retrieved_utc": "2026-11-24T00:29:27.024Z"
+ },
+ "name:biliverdin reductase (bvr)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "biliverdin reductase (BVR)",
+  "retrieved_utc": "2026-11-24T00:29:27.439Z"
+ },
+ "name:ptx": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "PTX",
+  "retrieved_utc": "2026-11-24T00:29:27.850Z"
+ },
+ "name:ptz": {
+  "pubchem_cid": 5917,
+  "text": [],
+  "drugbank_url": null,
+  "name": "PTZ",
+  "retrieved_utc": "2026-11-24T00:29:28.716Z"
+ },
+ "name:cgp27492": {
+  "pubchem_cid": 6335948,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CGP27492",
+  "retrieved_utc": "2026-11-24T00:29:29.546Z"
+ },
+ "name:gaba": {
+  "pubchem_cid": 119,
+  "text": [],
+  "drugbank_url": null,
+  "name": "GABA",
+  "retrieved_utc": "2026-11-24T00:29:30.371Z"
+ },
+ "name:2-oh saclofen": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "2-OH saclofen",
+  "retrieved_utc": "2026-11-24T00:29:30.765Z"
+ },
+ "name:cgp54626": {
+  "pubchem_cid": 197584,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CGP54626",
+  "retrieved_utc": "2026-11-24T00:29:31.588Z"
+ },
+ "name:cgp71872": {
+  "pubchem_cid": 6324595,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CGP71872",
+  "retrieved_utc": "2026-11-24T00:29:32.435Z"
+ },
+ "name:saclofen": {
+  "pubchem_cid": 122150,
+  "text": [],
+  "drugbank_url": null,
+  "name": "saclofen",
+  "retrieved_utc": "2026-11-24T00:29:33.247Z"
+ },
+ "name:cgp35024": {
+  "pubchem_cid": 5230,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CGP35024",
+  "retrieved_utc": "2026-11-24T00:29:34.099Z"
+ },
+ "name:l-glutamic acid": {
+  "pubchem_cid": 33032,
+  "text": [
+   "Glutamate activates both ionotropic and metabotropic glutamate receptors. The ionotropic ones being non-NMDA (AMPA and kainate) and NMDA receptors. Free glutamic acid cannot cross the blood-brain barrier in appreciable quantities; instead it is converted into L-glutamine, which the brain uses for fuel and protein synthesis. It is conjectured that glutamate is involved in cognitive functions like learning and memory in the brain, though excessive amounts may cause neuronal damage associated in diseases like amyotrophic lateral sclerosis, lathyrism, and Alzheimer's disease. Also, the drug phencyclidine (more commonly known as PCP) antagonizes glutamate at the NMDA receptor, causing behavior reminiscent of schizophrenia. Glutamate in action is extremely difficult to study due to its transient nature."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00142",
+  "name": "L-glutamic acid",
+  "retrieved_utc": "2026-11-24T00:29:35.072Z"
+ },
+ "name:dhaa and related derivatives (secondary metabolites, dehydroabietic acid)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "DHAA and related derivatives (secondary metabolites, dehydroabietic acid)",
+  "retrieved_utc": "2026-11-24T00:29:35.482Z"
+ },
+ "name:buthione – s – sulfoxine": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Buthione – S – Sulfoxine",
+  "retrieved_utc": "2026-11-24T00:29:35.932Z"
+ },
+ "name:cpccoet (7-(hydroxyimino) cyclopropa[b]chromen-1a-carboxylate ethyl ester)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CPCCOEt (7-(hydroxyimino) cyclopropa[b]chromen-1a-carboxylate ethyl ester)",
+  "retrieved_utc": "2026-11-24T00:29:36.372Z"
+ },
+ "name:mpep (2-methyl-6-(phenylethynyl)pyridine hydrochloride)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MPEP (2-Methyl-6-(phenylethynyl)pyridine hydrochloride)",
+  "retrieved_utc": "2026-11-24T00:29:36.784Z"
+ },
+ "name:quisqualate": {
+  "pubchem_cid": 40539,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Quisqualate",
+  "retrieved_utc": "2026-11-24T00:29:37.782Z"
+ },
+ "name:s-4c3h-pg": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "S-4C3H-PG",
+  "retrieved_utc": "2026-11-24T00:29:38.191Z"
+ },
+ "name:dcg-iv": {
+  "pubchem_cid": 5310979,
+  "text": [],
+  "drugbank_url": null,
+  "name": "DCG-IV",
+  "retrieved_utc": "2026-11-24T00:29:39.058Z"
+ },
+ "name:l-ccg-i": {
+  "pubchem_cid": 5310956,
+  "text": [],
+  "drugbank_url": null,
+  "name": "L-CCG-I",
+  "retrieved_utc": "2026-11-24T00:29:40.014Z"
+ },
+ "name:ly379268": {
+  "pubchem_cid": 10197984,
+  "text": [],
+  "drugbank_url": null,
+  "name": "LY379268",
+  "retrieved_utc": "2026-11-24T00:29:41.010Z"
+ },
+ "name:ly341495": {
+  "pubchem_cid": 9819927,
+  "text": [],
+  "drugbank_url": null,
+  "name": "LY341495",
+  "retrieved_utc": "2026-11-24T00:29:41.875Z"
+ },
+ "name:mccg ((2s,3s,4s)-2-methyl-2-(carboxycyclopropyl) glycine)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MCCG ((2S,3S,4S)-2-methyl-2-(carboxycyclopropyl) glycine)",
+  "retrieved_utc": "2026-11-24T00:29:42.283Z"
+ },
+ "name:mgs0039": {
+  "pubchem_cid": 9886034,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MGS0039",
+  "retrieved_utc": "2026-11-24T00:29:43.121Z"
+ },
+ "name:acpt-i": {
+  "pubchem_cid": 6604820,
+  "text": [],
+  "drugbank_url": null,
+  "name": "ACPT-I",
+  "retrieved_utc": "2026-11-24T00:29:43.918Z"
+ },
+ "name:l-ap4": {
+  "pubchem_cid": 179394,
+  "text": [],
+  "drugbank_url": null,
+  "name": "L-AP4",
+  "retrieved_utc": "2026-11-24T00:29:44.782Z"
+ },
+ "name:l-ap4 (l-(+)-2-amino-4-phosphonobutyric acid)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "L-AP4 (L-(+)-2-amino-4-phosphonobutyric acid)",
+  "retrieved_utc": "2026-11-24T00:29:45.228Z"
+ },
+ "name:lsp1-2093": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "LSP1-2093",
+  "retrieved_utc": "2026-11-24T00:29:45.707Z"
+ },
+ "name:map4": {
+  "pubchem_cid": 1795545,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MAP4",
+  "retrieved_utc": "2026-11-24T00:29:46.746Z"
+ },
+ "name:msop": {
+  "pubchem_cid": 3964633,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MSOP",
+  "retrieved_utc": "2026-11-24T00:29:47.659Z"
+ },
+ "name:msop ((rs)-alpha-methylserine-o-phosphate)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MSOP ((RS)-alpha-methylserine-O-phosphate)",
+  "retrieved_utc": "2026-11-24T00:29:48.015Z"
+ },
+ "name:carbon monoxide (co)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "carbon monoxide (CO)",
+  "retrieved_utc": "2026-11-24T00:29:48.431Z"
+ },
+ "name:nitric oxide (no)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Nitric oxide (NO)",
+  "retrieved_utc": "2026-11-24T00:29:48.786Z"
+ },
+ "name:metal porphyrins (class)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "metal porphyrins (class)",
+  "retrieved_utc": "2026-11-24T00:29:49.196Z"
+ },
+ "name:chromium mesoporphyrin": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "chromium mesoporphyrin",
+  "retrieved_utc": "2026-11-24T00:29:49.635Z"
+ },
+ "name:tin mesoporphyrin": {
+  "pubchem_cid": 15978579,
+  "text": [
+   "Kernicterus is attributed to high levels of bilirubin, a by-product of heme metabolism. Bilirubin is a bile pigment, which is normally eliminated from the body after conversion into a water-soluble form by the liver. Stannsoporfin's mechanism of action specifically inhibits the enzyme that blocks the conversion of heme into bilirubin."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB04912",
+  "name": "tin mesoporphyrin",
+  "retrieved_utc": "2026-11-24T00:29:50.485Z"
+ },
+ "name:tin porphyrin": {
+  "pubchem_cid": 57470937,
+  "text": [],
+  "drugbank_url": null,
+  "name": "tin porphyrin",
+  "retrieved_utc": "2026-11-24T00:29:51.325Z"
+ },
+ "name:aminoguanidine": {
+  "pubchem_cid": 2146,
+  "text": [
+   "Pimagedine reportedly inhibits the formation of glycosylated proteins (advanced glycosylation end-products) and has other actions including inhibition of aldose reductase."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB05383",
+  "name": "Aminoguanidine",
+  "retrieved_utc": "2026-11-24T00:29:52.152Z"
+ },
+ "name:nami-a": {
+  "pubchem_cid": 133082692,
+  "text": [],
+  "drugbank_url": null,
+  "name": "NAMI-A",
+  "retrieved_utc": "2026-11-24T00:29:53.144Z"
+ },
+ "name:vaqufrf (viscum album qufrf extract)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "VAQuFrF (Viscum album QuFrF extract)",
+  "retrieved_utc": "2026-11-24T00:29:53.550Z"
+ },
+ "name:sgp130 (soluble gp130)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "sgp130 (soluble gp130)",
+  "retrieved_utc": "2026-11-24T00:29:53.982Z"
+ },
+ "name:sil-6r (soluble il-6 receptor)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "sIL-6R (soluble IL-6 receptor)",
+  "retrieved_utc": "2026-11-24T00:29:54.384Z"
+ },
+ "DB00171": {
+  "pubchem_cid": 5957,
+  "text": [
+   "ATP is able to store and transport chemical energy within cells. ATP also plays an important role in the synthesis of nucleic acids. ATP can be produced by various cellular processes, most typically in mitochondria by oxidative phosphorylation under the catalytic influence of ATP synthase. The total quantity of ATP in the human body is about 0.1 mole. The energy used by human cells requires the hydrolysis of 200 to 300 moles of ATP daily. This means that each ATP molecule is recycled 2000 to 3000 times during a single day. ATP cannot be stored, hence its consumption must closely follow its synthesis."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00171",
+  "name": "ATP",
+  "retrieved_utc": "2026-11-24T00:29:55.096Z"
+ },
+ "name:biliverdin": {
+  "pubchem_cid": 5280353,
+  "text": [],
+  "drugbank_url": null,
+  "name": "biliverdin",
+  "retrieved_utc": "2026-11-24T00:29:56.001Z"
+ },
+ "name:cnqx (6-cyano-7-nitroquinoxaline-2,3-dione disodium)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CNQX (6-Cyano-7-nitroquinoxaline-2,3-dione disodium)",
+  "retrieved_utc": "2026-11-24T00:29:56.448Z"
+ },
+ "name:nbqx (2,3-dioxo-6-nitro-1,2,3,4-tetrahydrobenzo[f]quinoxaline-7-sulfonamide disodium salt)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "NBQX (2,3-Dioxo-6-nitro-1,2,3,4-tetrahydrobenzo[f]quinoxaline-7-sulfonamide disodium salt)",
+  "retrieved_utc": "2026-11-24T00:29:56.861Z"
+ },
+ "name:acetylcholine (nonquantal ach)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "acetylcholine (nonquantal ACh)",
+  "retrieved_utc": "2026-11-24T00:29:57.295Z"
+ },
+ "name:m6p-hsa": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "M6P-HSA",
+  "retrieved_utc": "2026-11-24T00:29:57.719Z"
+ },
+ "name:m6p-il10": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "M6P-IL10",
+  "retrieved_utc": "2026-11-24T00:29:58.252Z"
+ },
+ "name:bothropstoxin-i (bthtx-i)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "bothropstoxin-I (BthTX-I)",
+  "retrieved_utc": "2026-11-24T00:29:58.740Z"
+ },
+ "name:glutamate": {
+  "pubchem_cid": 33032,
+  "text": [
+   "Glutamate activates both ionotropic and metabotropic glutamate receptors. The ionotropic ones being non-NMDA (AMPA and kainate) and NMDA receptors. Free glutamic acid cannot cross the blood-brain barrier in appreciable quantities; instead it is converted into L-glutamine, which the brain uses for fuel and protein synthesis. It is conjectured that glutamate is involved in cognitive functions like learning and memory in the brain, though excessive amounts may cause neuronal damage associated in diseases like amyotrophic lateral sclerosis, lathyrism, and Alzheimer's disease. Also, the drug phencyclidine (more commonly known as PCP) antagonizes glutamate at the NMDA receptor, causing behavior reminiscent of schizophrenia. Glutamate in action is extremely difficult to study due to its transient nature."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00142",
+  "name": "glutamate",
+  "retrieved_utc": "2026-11-24T00:29:59.648Z"
+ },
+ "name:(s)-3,5-dhpg": {
+  "pubchem_cid": 443586,
+  "text": [],
+  "drugbank_url": null,
+  "name": "(S)-3,5-DHPG",
+  "retrieved_utc": "2026-11-24T00:30:00.527Z"
+ },
+ "name:aida": {
+  "pubchem_cid": 2071,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AIDA",
+  "retrieved_utc": "2026-11-24T00:30:01.488Z"
+ },
+ "name:jnj-16567083": {
+  "pubchem_cid": 9948645,
+  "text": [],
+  "drugbank_url": null,
+  "name": "JNJ-16567083",
+  "retrieved_utc": "2026-11-24T00:30:02.390Z"
+ },
+ "name:jnj16259685": {
+  "pubchem_cid": 11313361,
+  "text": [],
+  "drugbank_url": null,
+  "name": "JNJ16259685",
+  "retrieved_utc": "2026-11-24T00:30:03.237Z"
+ },
+ "name:ts-032": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "TS-032",
+  "retrieved_utc": "2026-11-24T00:30:03.755Z"
+ },
+ "DB05096": {
+  "pubchem_cid": 25195354,
+  "text": [],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB05096",
+  "name": "LY2140023",
+  "retrieved_utc": "2026-11-24T00:30:04.606Z"
+ },
+ "name:ly354740": {
+  "pubchem_cid": 213056,
+  "text": [],
+  "drugbank_url": null,
+  "name": "LY354740",
+  "retrieved_utc": "2026-11-24T00:30:05.494Z"
+ },
+ "name:adx48621": {
+  "pubchem_cid": 44557636,
+  "text": [],
+  "drugbank_url": null,
+  "name": "ADX48621",
+  "retrieved_utc": "2026-11-24T00:30:06.377Z"
+ },
+ "name:azd2066": {
+  "pubchem_cid": 16041426,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AZD2066",
+  "retrieved_utc": "2026-11-24T00:30:07.157Z"
+ },
+ "name:azd2516": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AZD2516",
+  "retrieved_utc": "2026-11-24T00:30:07.645Z"
+ },
+ "name:(r,s)-3-4-dcpg": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "(R,S)-3-4-DCPG",
+  "retrieved_utc": "2026-11-24T00:30:08.014Z"
+ },
+ "name:bilirubin": {
+  "pubchem_cid": 5280352,
+  "text": [],
+  "drugbank_url": null,
+  "name": "bilirubin",
+  "retrieved_utc": "2026-11-24T00:30:09.160Z"
+ },
+ "name:ruthenium complex i (trans-[rucl2(nic)4])": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "ruthenium complex I (trans-[RuCl2(nic)4])",
+  "retrieved_utc": "2026-11-24T00:30:09.666Z"
+ },
+ "name:ruthenium complex ii (trans-[rucl2 (i-nic)4])": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "ruthenium complex II (trans-[RuCl2 (i-nic)4])",
+  "retrieved_utc": "2026-11-24T00:30:10.127Z"
+ },
+ "name:nmda": {
+  "pubchem_cid": 22880,
+  "text": [],
+  "drugbank_url": null,
+  "name": "NMDA",
+  "retrieved_utc": "2026-11-24T00:30:11.015Z"
+ },
+ "name:(+)-mk-801 hydrogen maleate (mk801)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "(+)-MK-801 hydrogen maleate (MK801)",
+  "retrieved_utc": "2026-11-24T00:30:11.380Z"
+ },
+ "name:2-amino-7-phosphonoheptanoic acid (ap-7)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "2-amino-7-phosphonoheptanoic acid (AP-7)",
+  "retrieved_utc": "2026-11-24T00:30:11.814Z"
+ },
+ "name:dizolcipine (mk-801)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Dizolcipine (MK-801)",
+  "retrieved_utc": "2026-11-24T00:30:12.231Z"
+ },
+ "name:mk-801": {
+  "pubchem_cid": 6420042,
+  "text": [],
+  "drugbank_url": null,
+  "name": "MK-801",
+  "retrieved_utc": "2026-11-24T00:30:13.192Z"
+ },
+ "name:phencyclidine (pcp)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "phencyclidine (PCP)",
+  "retrieved_utc": "2026-11-24T00:30:13.655Z"
+ },
+ "name:dpdpe": {
+  "pubchem_cid": 104787,
+  "text": [],
+  "drugbank_url": null,
+  "name": "DPDPE",
+  "retrieved_utc": "2026-11-24T00:30:14.470Z"
+ },
+ "name:ci-977": {
+  "pubchem_cid": 60767,
+  "text": [],
+  "drugbank_url": null,
+  "name": "CI-977",
+  "retrieved_utc": "2026-11-24T00:30:15.454Z"
+ },
+ "name:ici-199,441": {
+  "pubchem_cid": 3082718,
+  "text": [],
+  "drugbank_url": null,
+  "name": "ICI-199,441",
+  "retrieved_utc": "2026-11-24T00:30:16.487Z"
+ },
+ "name:pd-117302": {
+  "pubchem_cid": 122115,
+  "text": [],
+  "drugbank_url": null,
+  "name": "PD-117302",
+  "retrieved_utc": "2026-11-24T00:30:17.553Z"
+ },
+ "name:trk-820 (nalfurafine hydrochloride)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "TRK-820 (nalfurafine hydrochloride)",
+  "retrieved_utc": "2026-11-24T00:30:18.021Z"
+ },
+ "name:u-50,488h": {
+  "pubchem_cid": 175910,
+  "text": [],
+  "drugbank_url": null,
+  "name": "U-50,488H",
+  "retrieved_utc": "2026-11-24T00:30:18.807Z"
+ },
+ "name:u-69,593": {
+  "pubchem_cid": 105104,
+  "text": [],
+  "drugbank_url": null,
+  "name": "U-69,593",
+  "retrieved_utc": "2026-11-24T00:30:19.677Z"
+ },
+ "name:5′-gnti": {
+  "pubchem_cid": 9853099,
+  "text": [],
+  "drugbank_url": null,
+  "name": "5′-GNTI",
+  "retrieved_utc": "2026-11-24T00:30:20.551Z"
+ },
+ "name:nor-bni": {
+  "pubchem_cid": 5480230,
+  "text": [],
+  "drugbank_url": null,
+  "name": "nor-BNI",
+  "retrieved_utc": "2026-11-24T00:30:21.431Z"
+ },
+ "name:damgo": {
+  "pubchem_cid": 5462471,
+  "text": [],
+  "drugbank_url": null,
+  "name": "DAMGO",
+  "retrieved_utc": "2026-11-24T00:30:22.213Z"
+ },
+ "name:β-endorphin": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "β-endorphin",
+  "retrieved_utc": "2026-11-24T00:30:22.646Z"
+ },
+ "DB00295": {
+  "pubchem_cid": 5288826,
+  "text": [
+   "Morphine-6-glucuronide is responsible for approximately 85% of the response observed by morphine administration. Morphine and its metabolites act as agonists of the mu and kappa opioid receptors. The mu-opioid receptor is integral to morphine's effects on the ventral tegmental area of the brain. Morphine's activation of the reward pathway is mediated by agonism of the delta-opioid receptor in the nucleus accumbens, while modification of the respiratory system and addiction disorder are mediated by agonism of the mu-opioid receptor."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00295",
+  "name": "morphine",
+  "retrieved_utc": "2026-11-24T00:30:23.597Z"
+ },
+ "DB00640": {
+  "pubchem_cid": 60961,
+  "text": [
+   "Agonism of adenosine receptors A1 and A2 reduces conduction time in the atrioventricular node of the heart. Conduction time is decreased by inducing potassium efflux and inhibiting calcium influx through channels in nerve cells, leading to hyperpolarization and and increased threshold for calcium dependent action potentials. Decreased conduction time leads to an antiarrhythmic effect. Inhibition of calcium influx, reduces the activity of adenylate cyclase, relaxing vascular smooth muscle. Relaxed vascular smooth muscle leads to increased blood flow through normal coronary arteries but not stenotic arteries, allowing thallium-201 to be more readily uptaken in normal coronary arteries."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00640",
+  "name": "Adenosine",
+  "retrieved_utc": "2026-11-24T00:30:24.433Z"
+ },
+ "name:carbon monoxide (co) and co-releasing molecules": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "carbon monoxide (CO) and CO-releasing molecules",
+  "retrieved_utc": "2026-11-24T00:30:24.801Z"
+ },
+ "name:clofibric acid": {
+  "pubchem_cid": 2797,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Clofibric acid",
+  "retrieved_utc": "2026-11-24T00:30:25.614Z"
+ },
+ "name:fatty acids and their derivates": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "fatty acids and their derivates",
+  "retrieved_utc": "2026-11-24T00:30:26.029Z"
+ },
+ "name:fibrates": {
+  "pubchem_cid": 2797,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Fibrates",
+  "retrieved_utc": "2026-11-24T00:30:26.836Z"
+ },
+ "DB01132": {
+  "pubchem_cid": 4829,
+  "text": [
+   "Pioglitazone is a selective agonist at peroxisome proliferator-activated receptor-gamma (PPARγ) in target tissues for insulin action such as adipose tissue, skeletal muscle, and liver. Activation of PPARγ increases the transcription of insulin-responsive genes involved in the control of glucose and lipid production, transport, and utilization. Through this mechanism, pioglitazone both enhances tissue sensitivity to insulin and reduces the hepatic production of glucose (i.e. gluconeogenesis) - insulin resistance associated with type 2 diabetes mellitus is therefore improved without an increase in insulin secretion by pancreatic beta cells."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01132",
+  "name": "Pioglitazone",
+  "retrieved_utc": "2026-11-24T00:30:27.685Z"
+ },
+ "name:camellia sinensis extract": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Camellia sinensis extract",
+  "retrieved_utc": "2026-11-24T00:30:28.169Z"
+ },
+ "name:melanin extracted from black tea (mebt)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "melanin extracted from black tea (MEBT)",
+  "retrieved_utc": "2026-11-24T00:30:28.596Z"
+ },
+ "name:dw1/2": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "DW1/2",
+  "retrieved_utc": "2026-11-24T00:30:29.008Z"
+ },
+ "name:onco4417": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "ONCO4417",
+  "retrieved_utc": "2026-11-24T00:30:29.455Z"
+ },
+ "name:ti(iv) compounds": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Ti(IV) compounds",
+  "retrieved_utc": "2026-11-24T00:30:29.874Z"
+ },
+ "name:biliverdin reductase (bvr), phosphorylated": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "biliverdin reductase (BVR), phosphorylated",
+  "retrieved_utc": "2026-11-24T00:30:30.291Z"
+ },
+ "name:tenofovir-mp and tenofovir-dp (mono- and di-phosphate forms of tenofovir)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Tenofovir-MP and tenofovir-DP (mono- and di-phosphate forms of tenofovir)",
+  "retrieved_utc": "2026-11-24T00:30:30.645Z"
+ },
+ "name:adrenaline": {
+  "pubchem_cid": 5816,
+  "text": [
+   "Epinephrine acts on alpha and beta-adrenergic receptors. Epinephrine acts on alpha and beta receptors and is the strongest alpha receptor activator. Through its action on alpha-adrenergic receptors, epinephrine minimizes the vasodilation and increased the vascular permeability that occurs during anaphylaxis, which can cause the loss of intravascular fluid volume as well as hypotension. Epinephrine relaxes the smooth muscle of the bronchi and iris and is a histamine antagonist, rendering it useful in treating the manifestations of allergic reactions and associated conditions. This drug also produces an increase in blood sugar and increases glycogenolysis in the liver. Through its action on beta-adrenergic receptors, epinephrine leads to bronchial smooth muscle relaxation that helps to relieve bronchospasm, wheezing, and dyspnea that may occur during anaphylaxis."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00668",
+  "name": "adrenaline",
+  "retrieved_utc": "2026-11-24T00:30:31.523Z"
+ },
+ "name:barbiturates": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "barbiturates",
+  "retrieved_utc": "2026-11-24T00:30:31.946Z"
+ },
+ "DB01085": {
+  "pubchem_cid": 5910,
+  "text": [
+   "The muscarinic M3 receptor is expressed in various endocrine and exocrine glands, including the gastric and salivary glands. It is also found in smooth muscle cells in pupillary sphincter and ciliary bodies. The M3 receptor is a Gq-protein-coupled receptor that activates phospholipase C and upregulates inositol trisphosphate and intracellular calcium. M3 receptor activation has been implicated in smooth muscle contraction and the stimulation of salivary glands. Pilocarpine is an agonist for M1 and M2 receptors, and is a full and partial agonist at the M3 receptor."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB01085",
+  "name": "pilocarpine",
+  "retrieved_utc": "2026-11-24T00:30:32.854Z"
+ },
+ "name:quinines": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "quinines",
+  "retrieved_utc": "2026-11-24T00:30:33.391Z"
+ },
+ "name:[bpza][aucl4]": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "[bpza][AuCl4]",
+  "retrieved_utc": "2026-11-24T00:30:33.748Z"
+ },
+ "name:gallium(iii)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "gallium(III)",
+  "retrieved_utc": "2026-11-24T00:30:34.151Z"
+ },
+ "name:kp46 (tris(8-quinolinolato)gallium(iii))": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "KP46 (tris(8-quinolinolato)gallium(III))",
+  "retrieved_utc": "2026-11-24T00:30:34.507Z"
+ },
+ "name:suchsa": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "sucHSA",
+  "retrieved_utc": "2026-11-24T00:30:34.867Z"
+ },
+ "name:nad+": {
+  "pubchem_cid": 439153,
+  "text": [
+   "NADH is synthesized by the body and thus is not an essential nutrient. It does require the essential nutrient nicotinamide for its synthesis, and its role in energy production is certainly an essential one. In addition to its role in the mitochondrial electron transport chain, NADH is produced in the cytosol. The mitochondrial membrane is impermeable to NADH, and this permeability barrier effectively separates the cytoplasmic from the mitochondrial NADH pools. However, cytoplasmic NADH can be used for biologic energy production. This occurs when the malate-aspartate shuttle introduces reducing equivalents from NADH in the cytosol to the electron transport chain of the mitochondria. This shuttle mainly occurs in the liver and heart."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00157",
+  "name": "NAD+",
+  "retrieved_utc": "2026-11-24T00:30:35.715Z"
+ },
+ "name:alagebrium (alt-711, alagebrium chloride)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Alagebrium (ALT-711, alagebrium chloride)",
+  "retrieved_utc": "2026-11-24T00:30:36.068Z"
+ },
+ "name:auranofin and other gold compounds": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "auranofin and other gold compounds",
+  "retrieved_utc": "2026-11-24T00:30:36.482Z"
+ },
+ "name:ni-nqts (nickel(ii) complex of 1,2-naphtoquinone-based thiosemicarbazone ligand)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Ni-NQTS (nickel(II) complex of 1,2-naphtoquinone-based thiosemicarbazone ligand)",
+  "retrieved_utc": "2026-11-24T00:30:36.892Z"
+ },
+ "DB00682": {
+  "pubchem_cid": 54678486,
+  "text": [
+   "Warfarin is a [vitamin K] antagonist which acts to inhibit the production of vitamin K by vitamin K epoxide reductase. The reduced form of vitamin K, vitamin KH2 is a cofactor used in the γ-carboxylation of coagulation factors VII, IX, X, and thrombin. Carboxylation induces a conformational change allowing the factors to bind Ca2+ and to phospholipid surfaces. Uncarboxylated factors VII, IX, X, and thrombin are biologically inactive and therefore serve to interrupt the coagulation cascade. The endogenous anticoagulation proteins C and S also require γ-carboxylation to function. This is particularly true in the case of thrombin which must be activated in order to form a thrombus. vitamin KH2 is converted to vitamin K epoxide as part of the γ-carboxylation reaction catalyzed by γ-glutamyl carboxylase. Vitamin K epoxide is then converted to vitamin K1 by vitamin K epoxide reductase then back to vitamin KH2 by vitamin K reductase. Warfarin binds to vitamin K epoxide reductase complex subunit 1 and irreversibly inhibits the enzyme thereby stopping the recycling of vitamin K by preventing the conversion of vitamin K epoxide to vitamin K1. This process creates a hypercoagulable state for a short time as proteins C and S degrade first with half lives of 8 and 24 hours, with the exception of factor VII which has a half life of 6 hours. Factors IX, X, and finally thrombin degrade later with half lives of 24, 36, and 50 hours resulting in a dominant anticoagulation effect. In order to reverse this anticoagulation vitamin K must be supplied, either exogenously or by removal of the vitamin K epoxide reductase inhibition, and time allowed for new coagulation factors to be synthesized. It takes approximately 2 days for new coagulation factors to be synthesized in the liver. Vitamin K2, functionally identical to vitamin K1, is synthesized by gut bacteria leading to interactions with antibiotics as elimination of these bacteria can reduce vitamin K2</sub supply and result in a greater anticoagulation effect."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB00682",
+  "name": "warfarin",
+  "retrieved_utc": "2026-11-24T00:30:37.792Z"
+ },
+ "name:n6-cyclohexyladenosine (cha)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "N6-cyclohexyladenosine (CHA)",
+  "retrieved_utc": "2026-11-24T04:20:10.655Z"
+ },
+ "name:amd3100": {
+  "pubchem_cid": 65015,
+  "text": [
+   "Plerixafor inhibits the C-X-C chemokine receptor type 4 (CXCR4) on CD34+ cells and reversibly blocks the binding of its ligand, stromal cell-derived factor-1-alpha (SDF-1α). SDF-1α and CXCR4 play a role in the trafficking and homing of human hematopoietic stem cells (HSCs) to the marrow compartment. In the marrow, stem cell CXCR4 can help anchor HSCs to the marrow matrix, either directly via SDF-1α or through the induction of other adhesion molecules. By blocking the interaction between SDF-1α and CXCR4 with plerixafor, the mobilization of progenitor cells is triggered. Adding granulocyte-colony stimulating factor (G-CSF) to enhance CD34+ cell mobilization increases the yield of stem cells, an important determinant of graft adequacy."
+  ],
+  "drugbank_url": "https://go.drugbank.com/drugs/DB06809",
+  "name": "AMD3100",
+  "retrieved_utc": "2026-11-24T04:20:11.536Z"
+ },
+ "name:aspirin (acetylsalicylic acid)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "aspirin (acetylsalicylic acid)",
+  "retrieved_utc": "2026-11-24T04:20:11.982Z"
+ },
+ "name:r214127": {
+  "pubchem_cid": 10470232,
+  "text": [],
+  "drugbank_url": null,
+  "name": "R214127",
+  "retrieved_utc": "2026-11-24T04:20:13.000Z"
+ },
+ "name:vu0155041": {
+  "pubchem_cid": 888023,
+  "text": [],
+  "drugbank_url": null,
+  "name": "VU0155041",
+  "retrieved_utc": "2026-11-24T04:20:13.985Z"
+ },
+ "name:amn082": {
+  "pubchem_cid": 1894361,
+  "text": [],
+  "drugbank_url": null,
+  "name": "AMN082",
+  "retrieved_utc": "2026-11-24T04:20:14.902Z"
+ },
+ "name:methylglyoxal (mg)": {
+  "pubchem_cid": null,
+  "text": [],
+  "drugbank_url": null,
+  "name": "Methylglyoxal (MG)",
+  "retrieved_utc": "2026-11-24T04:20:15.562Z"
  }
 }

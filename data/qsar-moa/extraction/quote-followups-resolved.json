@@ -1,0 +1,209 @@
+{
+ "cases_listed": 21,
+ "already_resolved": [
+  {"chapter": 1, "record_number": 55, "result": "found on the stated page (pdf 30), correct in substance, small transcription slip (carried forward from hand check)"},
+  {"chapter": 1, "record_number": 84, "result": "found on the stated page (pdf 36), correct in substance, small transcription slip (carried forward from hand check)"}
+ ],
+ "distinct_passages_checked": 14,
+ "passages_note": "Distinct (pdf_page_index, quote) groups: 14, covering all 21 listed records. Two of the 14 (pdf 30 and pdf 36) contain a hand-resolved record (ch01 55, ch01 84); I opened those pages again only to get the exact page wording and to judge the sibling records (ch01 56, 85, 86, 87). Counts below are per distinct passage; per-record counts are in counts_by_record. Method: opened each stated PDF page as an image and compared with pdftotext -raw output of the same page (read-only, nothing written) to confirm exact characters.",
+ "counts": {
+  "found_stated_page": 14,
+  "found_nearby": 0,
+  "not_found": 0,
+  "exact": 0,
+  "not_exact": 14,
+  "substance_ok": 13,
+  "substance_wrong": 1
+ },
+ "counts_by_record": {
+  "found_stated_page": 21,
+  "found_nearby": 0,
+  "not_found": 0,
+  "exact": 0,
+  "not_exact": 21,
+  "substance_ok": 20,
+  "substance_wrong": 1
+ },
+ "summary_notes": [
+  "Every quote is on its stated page; none needed a nearby page.",
+  "No quote matches the page word for word. In every case the difference is one to four words: an omitted or added word, a corrected or uncorrected typo in the book, or a changed preposition. The sentence in each record is the right sentence.",
+  "Only one record is wrong in substance: ch01 record 6 (Gd3+ labelled mGlu1 Receptor Agonist; the page calls Gd3+ a potentiator).",
+  "Five records are supported only with a caveat (see substance_caveat): ch23 r5 (hypothesis only), ch24 r2 (page says partial agonist of NOS), ch27 r9 (indirect effect on active RhoA), ch29 r31 and r32 (page says 'regulate the activation of HSL', suppression of FFA release is the stated outcome)."
+ ],
+ "passages": [
+  {
+   "pdf_page_index": 18,
+   "printed_page": 6,
+   "quote": "in the presence of an antagonist or in the presence of a potentiator",
+   "records": [{"chapter": 1, "record_number": 6}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "mGlu1 structures obtained in the presence of an antagonist (MCPG) or in the presence of a potentiator (Gd3+) in which the dimer orientation is R and A, respectively (Tsuchiya et al., 2002)",
+   "why_extraction_missed_it": "The record quote leaves out the parenthetical '(MCPG)' between 'antagonist' and 'or' without marking the gap, and the sentence wraps across a line break ('presence of an / antagonist'). The text layer contains the sentence intact.",
+   "substance_ok": false,
+   "substance_reasoning": "The page says Gd3+ is a potentiator (a positive allosteric modulator) of mGlu1, used to obtain the active (A) dimer structure; it does not call Gd3+ an agonist, so the mechanism name 'mGlu1 Receptor Agonist' is not supported. 'mGlu1 Receptor Positive Allosteric Modulator/Potentiator' is what the page supports."
+  },
+  {
+   "pdf_page_index": 30,
+   "printed_page": 18,
+   "quote": "VU0155041 is an allosteric agonist and positive allosteric modulator with potency nearly 10-fold that of PHCCC",
+   "records": [{"chapter": 1, "record_number": 55}, {"chapter": 1, "record_number": 56}],
+   "hand_resolved_records": [55],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "VU0155041 is an allosteric agonist and positive allosteric modulator with potency nearly 10-fold of that of PHCCC, moreover, VU0155041 concentration-dependently diminished haloperidol-induced catalepsy and reversed reserpine-mediated akinesia in mice",
+   "why_extraction_missed_it": "Transcription slip: the book reads 'nearly 10-fold of that of PHCCC' and the record dropped the word 'of'. The sentence also wraps across a line break after 'positive allosteric'.",
+   "substance_ok": true,
+   "substance_reasoning": "The page states VU0155041 is an allosteric agonist and PAM of mGlu4 (the preceding sentence introduces it as a 'more recent PAM of mGlu4'), which supports 'mGlu4 Receptor Agonist'."
+  },
+  {
+   "pdf_page_index": 36,
+   "printed_page": 24,
+   "quote": "among these there are the baclofen derivatives, saclofen and 2-OH saclofen; CGP54626, the most common of the antagonists; and CGP71872",
+   "records": [{"chapter": 1, "record_number": 84}, {"chapter": 1, "record_number": 85}, {"chapter": 1, "record_number": 86}, {"chapter": 1, "record_number": 87}],
+   "hand_resolved_records": [84],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "The number of antagonists is much greater than that of agonists, among these ligands there are the baclofen derivatives, saclofen and 2-OH saclofen; CGP54626, the most common of the antagonists; and CGP71872; the former two possessing high micromolar affinity, whilst the latter two exhibit low nanomolar affinity (Kaupmann et al., 1997).",
+   "why_extraction_missed_it": "Transcription slip: the record has 'among these there are' where the book has 'among these ligands there are'. In addition '2-OH saclofen' is split by a line-end hyphen ('2-' / 'OH saclofen') in the text layer.",
+   "substance_ok": true,
+   "substance_reasoning": "All four named compounds (saclofen, 2-OH saclofen, CGP54626, CGP71872) are listed as antagonists, in the GABAB discussion (Fig. 5 on the same page is GABAB agonists). The sentence follows a remark about a GABAC antagonist, but the list itself is under the GABAB section, so 'GABAB Receptor Antagonist' is supported for each drug."
+  },
+  {
+   "pdf_page_index": 58,
+   "printed_page": 46,
+   "quote": "as Glu receptors agonists, L-glutamic acid; selective NMDA receptor agonist, NMDA;",
+   "records": [{"chapter": 2, "record_number": 1}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "The list of drugs and chemicals were as follows: as Glu receptors agonist, L-glutamic acid; selective NMDA receptor agonist, NMDA; AMPA receptor agonist, alpha-amino-3-hydroxy-4-isoxazoleproprionic acid (AMPA);",
+   "why_extraction_missed_it": "Transcription slip: record has 'receptors agonists' (plural), book has 'receptors agonist'. The sentence also continues across a line break after 'L-glutamic acid;'.",
+   "substance_ok": true,
+   "substance_reasoning": "The list in section 2.7 Drugs names L-glutamic acid as the Glu receptor agonist, which supports 'Glutamate Receptor Agonist'."
+  },
+  {
+   "pdf_page_index": 94,
+   "printed_page": 82,
+   "quote": "Even in the presence of μ agonist DAMGO (100 nM) and δ agonist DPDPE (200 nM)",
+   "records": [{"chapter": 4, "record_number": 11}, {"chapter": 4, "record_number": 12}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "Even in the presence of μ agonist DAMDO (100 nM) and δ agonist DPDPE (200 nM), the Kd and Bmax values for [3H]TRK-820 did not change (Kd = 0.51±0.03 nM, Bmax = 265±27.2 fmol/mg protein) (Endoh et al., 2000).",
+   "why_extraction_missed_it": "Two causes visible in the text layer: the book prints the typo 'DAMDO' (the record has the intended 'DAMGO'), and the Greek letters μ and δ are stored as symbol-font private-use characters, not as ordinary U+03BC / U+03B4, so a string match fails even where the words agree.",
+   "substance_ok": true,
+   "substance_reasoning": "The page labels DAMDO (i.e. DAMGO) a μ agonist and DPDPE a δ agonist, matching 'Opioid Mu Receptor Agonist' and 'Opioid Delta Receptor Agonist'. Note the sentence is about the agonists being used as tools in a TRK-820 binding experiment, but the receptor-subtype labels are stated plainly."
+  },
+  {
+   "pdf_page_index": 197,
+   "printed_page": 185,
+   "quote": "Through direct receptor agonism and downstream effect e.g. adrenaline stimulates heart, pilocarpine stimulates salivary glands.",
+   "records": [{"chapter": 9, "record_number": 1}, {"chapter": 9, "record_number": 2}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "Stimulation: Through direct receptor agonism and downstream effect e.g. adrenaline stimulates heart, pilocarpine stimuates salivary glands.",
+   "why_extraction_missed_it": "The book has the typo 'stimuates'; the record silently corrected it to 'stimulates'. The sentence also wraps after 'adrenaline'.",
+   "substance_ok": true,
+   "substance_reasoning": "Section 3.1 lists adrenaline and pilocarpine as examples of stimulation through direct receptor agonism, which supports the generic 'Receptor Agonist' label for both. The page names no receptor subtype."
+  },
+  {
+   "pdf_page_index": 543,
+   "printed_page": 531,
+   "quote": "the observed pharmacological effects could be attributed to a potential antagonism with glutamate receptors and/or inhibition of noradrenalin-dopamine releasing",
+   "records": [{"chapter": 23, "record_number": 5}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "Taking into consideration the structural similarity, grosso modo,(molecular modeling are underway and are unpublished results yet) between secondary metabolites, DHAA, related derivatives and cannabinoids, the observed pharmacological effects could be attribute to a potential antagonism with glutamate receptors and/or inhibition of noradrenalin-dopamine releasing.",
+   "why_extraction_missed_it": "The book has the grammatical slip 'could be attribute to'; the record has 'could be attributed to'. The sentence is also split over line breaks.",
+   "substance_ok": true,
+   "substance_caveat": "Supported only as a hypothesis.",
+   "substance_reasoning": "The page does name glutamate-receptor antagonism for DHAA and related derivatives, but only as a possibility ('could be', 'potential'), inferred from structural similarity with cannabinoids, with the modelling stated to be unpublished. If the record presents it as an established mechanism, it overstates the page."
+  },
+  {
+   "pdf_page_index": 555,
+   "printed_page": 543,
+   "quote": "CO has been shown to serve as a partial agonist of nitric oxide synthetase (NOS) and thus, may down-regulate the level of NOS-dependent signaling",
+   "records": [{"chapter": 24, "record_number": 2}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "CO has been shown to serve as a partial agonist to nitric oxide synthetase (NOS) and thus, may down-regulate the level of NOS-dependent signaling (Hangai-Hoger et al., 2007; Ishikawa et al., 2005).",
+   "why_extraction_missed_it": "Transcription slip: the book says 'partial agonist to', the record says 'partial agonist of'. In addition the sentence wraps across lines at 'partial / agonist' and 'NOS- / dependent', which breaks a single-line search.",
+   "substance_ok": true,
+   "substance_caveat": "The page says 'partial agonist' of NOS, not inhibitor.",
+   "substance_reasoning": "The net effect stated is down-regulation of NOS-dependent signaling, which is consistent with the label 'Nitric Oxide Synthase Inhibitor' as a functional summary, but the page's own term is 'partial agonist'. The label is an interpretation."
+  },
+  {
+   "pdf_page_index": 627,
+   "printed_page": 615,
+   "quote": "Ethanol reduced endogenous levels of active RhoA due to an increase in the activity of small Rho GTP-ases",
+   "records": [{"chapter": 27, "record_number": 9}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "Ethanol reduced endogenous levels of acive RhoA due to an increase in the activity of small Rho GTP-ases, reduced phosphoinositides levels and induced changes in the dynamics and organization of the actin cytoskeleton.",
+   "why_extraction_missed_it": "The book has the typo 'acive'; the record silently corrected it to 'active'. The sentence also starts on the page's first line and is split by a line break.",
+   "substance_ok": true,
+   "substance_caveat": "Indirect effect, as stated by the page.",
+   "substance_reasoning": "The page says ethanol lowers the level of active RhoA, which supports a functional 'RhoA Inhibitor' label. It does not say ethanol binds or inhibits RhoA directly, and attributes the drop to increased activity of small Rho GTPases (wording as printed)."
+  },
+  {
+   "pdf_page_index": 646,
+   "printed_page": 634,
+   "quote": "AK inhibitors are able to decrease pain levels when given peripherally or systemically",
+   "records": [{"chapter": 28, "record_number": 23}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "AK inhibitors are able to decrease pain levels when given peripherally or sistemically (Kowaluk et al., 1999; Lynch et al., 1999; Sawynok, 1998).",
+   "why_extraction_missed_it": "The book has the typo 'sistemically'; the record silently corrected it to 'systemically'. The sentence also begins mid-line after a preceding sentence and wraps.",
+   "substance_ok": true,
+   "substance_reasoning": "Section 3.8.1 states that adenosine kinase (AK) inhibitors reduce pain behaviour, supporting 'Adenosine Kinase Inhibitor' as a class-level statement. The record's drug field is empty, which fits: the page names no specific compound in this sentence."
+  },
+  {
+   "pdf_page_index": 681,
+   "printed_page": 669,
+   "quote": "complex of AMD3100 has a 10-fold higher affinity to the receptor as compared to AMD3100 alone",
+   "records": [{"chapter": 29, "record_number": 4}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "Thus, the Zn2+ complex of AMD3100 binds with a 10-fold higher affinity to the receptor as compared to AMD3100 alone and has an up to 6-fold increased potency as an anti-HIV agent.",
+   "why_extraction_missed_it": "Transcription slip: the record has 'has a 10-fold', the book has 'binds with a 10-fold' (the record's 'has' appears to come from the later clause 'and has an up to 6-fold increased potency'). The sentence also wraps across lines.",
+   "substance_ok": true,
+   "substance_reasoning": "The page calls AMD3100 'a CXCR4 receptor inhibitor' and 'a symmetrical nonpeptide antagonist' of the CXCR4 chemokine receptor, and says the Zn2+ complex binds the receptor with higher affinity and is more potent, which supports 'CXCR4 Receptor Antagonist' for the complex."
+  },
+  {
+   "pdf_page_index": 680,
+   "printed_page": 668,
+   "quote": "The pharmacological effects of NSAIDs stem from the inhibition of enzymes in the cyclooxygenase family (COX).",
+   "records": [{"chapter": 29, "record_number": 24}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "Aspirin (acetylsalicylic acid) belongs to the family of nonsteroidal antirheumatics (NSAR), which have anti-inflammatory and pain-relieving effects The pharmacological effects of NSARs stem from the inhibition of enzymes in the cyclooxygenase family (COX).",
+   "why_extraction_missed_it": "The book uses the abbreviation 'NSAR' (nonsteroidal antirheumatics) throughout; the record rewrote it as 'NSAIDs'. There is also no full stop after 'effects' in the preceding clause, so the sentence boundary differs.",
+   "substance_ok": true,
+   "substance_reasoning": "The page states NSAR effects stem from inhibition of cyclooxygenase (COX) enzymes, supporting 'Cyclooxygenase Inhibitor'. Note the record's drug label expands to 'nonsteroidal antiinflammatory drugs' while the page says 'nonsteroidal antirheumatics'."
+  },
+  {
+   "pdf_page_index": 684,
+   "printed_page": 672,
+   "quote": "regulate the activation of HSL (hormone-sensitive lipase), resulting in suppression of free fatty acid release",
+   "records": [{"chapter": 29, "record_number": 31}, {"chapter": 29, "record_number": 32}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "VO(alx)2 regulates the activation of the FoxO1, while Zn(alx)2 and Zn(tanm)2 regulate the activation of HSL (hormone-sensitive lipase), resulting in the suppression of free fatty acid release.",
+   "why_extraction_missed_it": "Transcription slip: the record omits the word 'the' before 'suppression'. The sentence also wraps across several lines.",
+   "substance_ok": true,
+   "substance_caveat": "Page says 'regulate the activation of HSL', not 'inhibit HSL'.",
+   "substance_reasoning": "The page says both zinc complexes regulate HSL activation with the result that free fatty acid release is suppressed, and earlier says they inhibited epinephrine-induced FFA release. That is consistent with HSL inhibition, but the page never says the complexes inhibit HSL directly; 'Hormone-Sensitive Lipase Inhibitor' is an inference from the net effect."
+  },
+  {
+   "pdf_page_index": 725,
+   "printed_page": 713,
+   "quote": "was prevented by the selective adenosine A1 receptor antagonist DPCPX (3.0 mg/kg, i.p.), demonstrating",
+   "records": [{"chapter": 31, "record_number": 7}],
+   "found": "yes, on the stated page",
+   "exact": false,
+   "page_wording": "In addition, the effect of CCPA (0.05 mg/kg, i.p.) was prevented by the pretreatment with the selective adenosine A1 receptor antagonist DPCPX (3.0 mg/kg, i.p.), demonstrating that the activation of adenosine A1 receptors, but not adenosine A2A receptors, reduces the anxiogenic-like behaviour observed during acute ethanol withdrawal in mice.",
+   "why_extraction_missed_it": "Transcription slip: the record leaves out 'pretreatment with the' ('was prevented by the pretreatment with the selective ...') and joins 'was prevented by' to 'the selective'. The sentence also wraps across lines.",
+   "substance_ok": true,
+   "substance_reasoning": "The page calls DPCPX a selective adenosine A1 receptor antagonist and uses it to block an A1-mediated effect, supporting 'Adenosine A1 Receptor Antagonist'."
+  }
+ ]
+}

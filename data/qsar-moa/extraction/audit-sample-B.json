@@ -1,0 +1,195 @@
+{
+  "sampling_rule": "Every 6th record counting from the first (1-based record_index 1, 7, 13, 19, ...) of each file's `records` array, taken in file order. No file yielded fewer than 3 records, so the first-3 fallback was not used. Each record was checked against its stated pdf_page_index only, viewed as a rendered page image; no other page was searched. Judged against the page, not the record's own notes.",
+  "files": ["ch04.json", "ch24.json", "ch27.json", "ch28.json", "ch29.json", "ch31.json"],
+  "records_checked": 31,
+  "counts": {"correct": 20, "correct_but_inferred": 9, "wrong": 2, "quote_not_found": 0},
+  "other_counts": {"quote_found_on_stated_page": 31, "quote_not_verbatim": 2},
+  "records": [
+    {
+      "chapter": "ch04", "record_index": 1, "drug": "TRK-820 (nalfurafine hydrochloride)", "mechanism_rule_name": "Opioid Kappa Receptor Agonist", "pdf_page_index": 93,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: page says 'selective opioid κ receptor agonist'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "First sentence of the introduction; stated outright."
+    },
+    {
+      "chapter": "ch04", "record_index": 7, "drug": "ICI-199,441", "mechanism_rule_name": "Opioid Kappa Receptor Agonist", "pdf_page_index": 96,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'conventional κ agonists' (Table 3 caption).",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "The quote is the Table 3 caption, not body text; the word 'receptor' does not appear in it, but 'κ agonist' is the page's term."
+    },
+    {
+      "chapter": "ch04", "record_index": 13, "drug": "nor-BNI", "mechanism_rule_name": "Opioid Kappa Receptor Antagonist", "pdf_page_index": 96,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'selective κ antagonist nor-BNI'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Phrase sits inside the rat paw-pressure sentence."
+    },
+    {
+      "chapter": "ch04", "record_index": 19, "drug": "TRK-820 (nalfurafine hydrochloride)", "mechanism_rule_name": "Opioid Kappa3 Receptor Agonist", "pdf_page_index": 105,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "partly: page says 'another κ receptor subtype (perhaps κ3)', a hypothesis", "target_class_correct": true, "role_supported": "Not on this sentence ('may interact with'); page opens the conclusion with 'TRK-820 was a selective κ agonist'.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Speculative 'perhaps κ3' turned into a named target; weak record for any dataset needing a confirmed target."
+    },
+    {
+      "chapter": "ch24", "record_index": 1, "drug": "carbon monoxide (CO)", "mechanism_rule_name": "Guanylyl Cyclase Activator", "pdf_page_index": 555,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page does not say (name is an -ase enzyme; page never calls it an enzyme)", "role_supported": "Yes: page word is 'activate'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Printed page 543; sentence begins 'As indicated above, the CO formed by HO-1...'."
+    },
+    {
+      "chapter": "ch24", "record_index": 7, "drug": "carbon monoxide (CO)", "mechanism_rule_name": "Cyclooxygenase Inhibitor", "pdf_page_index": 556,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page does not say explicitly (heading says 'enzymes'; cyclooxygenase is an -ase)", "role_supported": "Yes: 'inhibit'. 'The molecule' refers back to CO released from HO-1 in the preceding sentence.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Hedged on the effect ('may provide an anti-inflammatory effect') but the inhibition itself is stated."
+    },
+    {
+      "chapter": "ch24", "record_index": 13, "drug": "bilirubin", "mechanism_rule_name": "NADPH Oxidase Inhibitor", "pdf_page_index": 558,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page does not say explicitly (-ase enzyme by name)", "role_supported": "Yes: 'inhibits'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": ""
+    },
+    {
+      "chapter": "ch24", "record_index": 19, "drug": "biliverdin reductase (BVR), phosphorylated", "mechanism_rule_name": "Protein Kinase C zeta Activator", "pdf_page_index": 561,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page calls them 'protein kinase C proteins'; enzyme class not stated outright", "role_supported": "Yes: 'activate'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "The actor is an enzyme (BVR), not a small-molecule drug; a protein-protein signalling statement, poor fit for a drug-mechanism dataset."
+    },
+    {
+      "chapter": "ch27", "record_index": 1, "drug": "Nitric oxide (NO)", "mechanism_rule_name": "Guanylyl Cyclase Activator", "pdf_page_index": 621,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page does not say (enzyme by name; page spells 'guanylilcyclase')", "role_supported": "Yes: 'activates'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": ""
+    },
+    {
+      "chapter": "ch27", "record_index": 7, "drug": "Ethanol", "mechanism_rule_name": "Glutathione Peroxidase Activator", "pdf_page_index": 626,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'increasing the enzymatic activities of ... glutathione-peroxidase' (page also says 'up-regulation of antioxidant defences').",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Effect on enzyme activity, possibly via expression, not necessarily direct activation; still a fair reading."
+    },
+    {
+      "chapter": "ch27", "record_index": 13, "drug": "glutamate", "mechanism_rule_name": "NMDA Receptor Agonist", "pdf_page_index": 628,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "yes in substance: Ca2+ influx 'through NMDA-gated channels'", "target_class_correct": "page does not say 'receptor' here (says 'NMDA-gated channels')", "role_supported": "Not stated: the page says high glutamate leads to excitotoxic death via Ca2+ influx; it never says agonist.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Chemically sensible, but both class and role are the extractor's inference from a pathology sentence."
+    },
+    {
+      "chapter": "ch27", "record_index": 19, "drug": "Ethanol", "mechanism_rule_name": "Caspase-3 Activator", "pdf_page_index": 630,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "only as an association", "target_class_correct": "yes: page calls caspase-3 'a key proteolytic enzyme' (same paragraph, not the quoted sentence)", "role_supported": "Weak: page says inflammatory processes occur 'concomitantly with caspase-3 activation' in ethanol-fed mice; no direct action of ethanol on caspase-3 is stated.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Borderline wrong: a downstream-effect association is recorded as a compound-target mechanism; unsuitable as a direct mechanism."
+    },
+    {
+      "chapter": "ch28", "record_index": 1, "drug": "Adenosine", "mechanism_rule_name": "P1 Adenosine Receptor Agonist", "pdf_page_index": 640,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'activation of P1 receptors by adenosine'; page also calls P1 receptor classes receptors.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Printed page 628."
+    },
+    {
+      "chapter": "ch28", "record_index": 7, "drug": "ATP", "mechanism_rule_name": "P2Y Receptor Agonist", "pdf_page_index": 640,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'P2X and P2Y receptor activation by ATP'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": ""
+    },
+    {
+      "chapter": "ch28", "record_index": 13, "drug": "DPCPX", "mechanism_rule_name": "Adenosine A1 Receptor Antagonist", "pdf_page_index": 649,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'A1R antagonists DPCPX and 8-PT'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "The page uses the abbreviation DPCPX only, no full name on this page."
+    },
+    {
+      "chapter": "ch28", "record_index": 19, "drug": "Inosine", "mechanism_rule_name": "Adenosine A2A Receptor Agonist", "pdf_page_index": 649,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "(quote ends mid-sentence at the page foot; continues 'model' overleaf)",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'Inosine activates A2AR'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Same paragraph says A2AR involvement in pain is 'quite controversial'; this sentence is stated as the model-specific finding."
+    },
+    {
+      "chapter": "ch28", "record_index": 25, "drug": "Ecto-5'-nucleotidase (NT5E), exogenous supply", "mechanism_rule_name": "Ecto-5'-Nucleotidase Activator", "pdf_page_index": 647,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "No: NT5E is the supplied agent, not a target of a ligand", "target_class_correct": "yes: page says 'Ecto-5'-nucleotidase (NT5E) is an enzyme'", "role_supported": "No: nothing on the page says anything is activating NT5E; it is administered exogenously to raise adenosine.",
+      "verdict": "wrong", "corrected_rule_name": "None valid (no ligand-target pair; the enzyme is the therapeutic agent). Drop the record or tag it non-ligand.", "comment": "The record's own note admits the Activator role was a forced choice."
+    },
+    {
+      "chapter": "ch28", "record_index": 31, "drug": "Sonedenoson", "mechanism_rule_name": "Adenosine A2A Receptor Agonist", "pdf_page_index": 651,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'selective A2AR agonist, Apadenoson, Binodenoson and Sonedenoson'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Printed page 639."
+    },
+    {
+      "chapter": "ch28", "record_index": 37, "drug": "MRS3558 (CF502)", "mechanism_rule_name": "Adenosine A3 Receptor Agonist", "pdf_page_index": 652,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "only by context: previous sentence 'Two other A3R agonists CP-608,039 ... CP-532,903'", "target_class_correct": true, "role_supported": "Not in the quoted sentence; 'Two other A3R agonists' in the preceding sentence suggests it by context.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "The quote itself names neither target nor role, so it does not support the record on its own."
+    },
+    {
+      "chapter": "ch28", "record_index": 43, "drug": "", "mechanism_rule_name": "Adenosine A1 Receptor Agonist", "pdf_page_index": 644,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'intrathecal injection of A1R agonists cause analgesia'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Class statement with no named compound (drug field is empty); correct as far as it goes."
+    },
+    {
+      "chapter": "ch28", "record_index": 49, "drug": "adenosine analog with preference for A2AR (Costenla et al.)", "mechanism_rule_name": "Adenosine A2A Receptor Agonist", "pdf_page_index": 651,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Page says 'preference for A2AR' only; agonist is inferred from 'adenosine analog'.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Unnamed compound; same sentence says it inhibits sodium current in NMDA receptors."
+    },
+    {
+      "chapter": "ch29", "record_index": 1, "drug": "hydroxytamoxifen", "mechanism_rule_name": "Estrogen Receptor Alpha Antagonist", "pdf_page_index": 667,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page says 'ERα receptor'", "role_supported": "Not stated: page says only 'effective only against the cells having the ERα receptor'.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Antagonist is the textbook role but the page does not use the word; page also treats it as a tamoxifen analogue comparator."
+    },
+    {
+      "chapter": "ch29", "record_index": 7, "drug": "ruthenium complex I (trans-[RuCl2(nic)4])", "mechanism_rule_name": "Nitric Oxide Synthase Inhibitor", "pdf_page_index": 670,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "yes, but on this page only 'ruthenium complexes' generally; the specific complex I is not named here", "target_class_correct": "page does not say (-ase enzyme by name)", "role_supported": "Yes: 'nitric oxide synthase inhibition capacity', hedged 'may be due to'.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Compound identity as 'complex I' depends on another page (not checked, per instructions); hedged on the page as a possible cause."
+    },
+    {
+      "chapter": "ch29", "record_index": 13, "drug": "KP46 (tris(8-quinolinolato)gallium(III))", "mechanism_rule_name": "Ribonucleotide Reductase Inhibitor", "pdf_page_index": 671,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "page does not say (-ase enzyme by name)", "role_supported": "Yes: 'inhibition of ribonucleotide reductase'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Page also gives KP46/FFC11."
+    },
+    {
+      "chapter": "ch29", "record_index": 19, "drug": "[bpza][AuCl4]", "mechanism_rule_name": "Reverse Transcriptase Inhibitor", "pdf_page_index": 674,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "yes: page says 'These enzymes function differently...'", "role_supported": "Yes: 'inhibits both reverse transcriptase and HIV-1 protease'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Printed page 662."
+    },
+    {
+      "chapter": "ch29", "record_index": 25, "drug": "aspirin (acetylsalicylic acid)", "mechanism_rule_name": "Cyclooxygenase Inhibitor", "pdf_page_index": 680,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": "yes: 'inhibition of enzymes in the cyclooxygenase family (COX)'", "role_supported": "Yes: page says NSAR effects 'stem from the inhibition of enzymes in the cyclooxygenase family' and aspirin acetylates the COX active-site serine.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Quote sentence itself says 'acetylation'; 'inhibition' is in the preceding sentence on the same page."
+    },
+    {
+      "chapter": "ch29", "record_index": 31, "drug": "Zn(alx)2 (bis(allixinato)zinc(II))", "mechanism_rule_name": "Hormone-Sensitive Lipase Inhibitor", "pdf_page_index": 684,
+      "quote_found_on_page": true, "quote_accurate": false, "page_wording": "Zn(alx)2 and Zn(tanm)2 regulate the activation of HSL (hormone-sensitive lipase), resulting in the suppression of free fatty acid release.",
+      "target_correct": true, "target_class_correct": "page says 'lipase' (-ase); not called an enzyme outright", "role_supported": "Not stated: page says 'regulate the activation of HSL'; inhibition is inferred from suppressed free fatty acid release.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "Quote drops the word 'the' before 'suppression' (minor); the page's verb is 'regulate', not 'inhibit' or 'activate'; Zn(tanm)2 shares the statement."
+    },
+    {
+      "chapter": "ch31", "record_index": 1, "drug": "Adenosine", "mechanism_rule_name": "Adenosine A1 Receptor Agonist", "pdf_page_index": 721,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Not stated: page says adenosine 'acts mainly via A1 receptor'.",
+      "verdict": "correct but inferred", "corrected_rule_name": "", "comment": "'Acts via' read as agonist; fair for the endogenous ligand."
+    },
+    {
+      "chapter": "ch31", "record_index": 7, "drug": "1,3-dipropyl-8-cyclopentylxanthine (DPCPX)", "mechanism_rule_name": "Adenosine A1 Receptor Antagonist", "pdf_page_index": 725,
+      "quote_found_on_page": true, "quote_accurate": false, "page_wording": "...was prevented by the pretreatment with the selective adenosine A1 receptor antagonist DPCPX (3.0 mg/kg, i.p.), demonstrating that...",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'selective adenosine A1 receptor antagonist DPCPX'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": "Quote omits 'pretreatment with' between 'by the' and 'the selective' without marking the gap; the mechanism is unaffected. The page gives DPCPX as an abbreviation only."
+    },
+    {
+      "chapter": "ch31", "record_index": 13, "drug": "Aminophylline", "mechanism_rule_name": "Adenosine Receptor Antagonist", "pdf_page_index": 725,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": true, "target_class_correct": true, "role_supported": "Yes: 'a non-selective adenosine receptor antagonist'.",
+      "verdict": "correct", "corrected_rule_name": "", "comment": ""
+    },
+    {
+      "chapter": "ch31", "record_index": 19, "drug": "Ethanol", "mechanism_rule_name": "Adenylate Cyclase-Coupled Receptor Agonist", "pdf_page_index": 722,
+      "quote_found_on_page": true, "quote_accurate": true, "page_wording": "",
+      "target_correct": "No: no specific receptor; a vague class ('receptors that have adenylate cyclase ... as intracellular signaling system')", "target_class_correct": "page says 'receptors'", "role_supported": "No: page says ethanol 'may facilitate the activation of' these receptors (a proposed indirect route via raised extracellular adenosine); it never calls ethanol an agonist.",
+      "verdict": "wrong", "corrected_rule_name": "None valid (no named receptor; indirect hypothetical facilitation, not agonism). Drop or flag as hypothesis.", "comment": "The record's own note says the role choice was the extractor's; the page presents a possible mechanism with 'may'."
+    }
+  ]
+}

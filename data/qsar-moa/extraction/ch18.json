@@ -1,0 +1,33 @@
+{
+  "chapter_number": 18,
+  "chapter_title": "Novel Strategies in Drug-Induced Acute Kidney Injury",
+  "source_pdf": "/mnt/project-files/Experimental Provenance for QSAR Dataset/Pharmacology (Luca Gallelli) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+  "pdf_page_first": 393,
+  "pdf_page_last": 408,
+  "status": "read",
+  "pages_read": [393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405],
+  "pages_unreadable": [],
+  "reference_list_starts_pdf_page": 406,
+  "records": [
+    {
+      "drug": "Cilastatin",
+      "drug_kind": "approved drug",
+      "target": "brush border dehydropeptidase I (DHP-I)",
+      "target_class": "enzyme",
+      "other_target_kind": "",
+      "mechanism_rule_name": "Dehydropeptidase I Inhibitor",
+      "naming_rule_applies": true,
+      "role_detail": "inhibitor of brush border dehydropeptidase I; also described as dehydropeptidase-I inhibitor used with imipenem",
+      "mechanism_book_wording": "Cilastatin is an inhibitor of brush border dehydropeptidase I (DHP-I)",
+      "quote": "Cilastatin is an inhibitor of brush border dehydropeptidase I (DHP-I), which is present in",
+      "pdf_page_index": 394,
+      "printed_page": 382,
+      "location_on_page": "body text",
+      "other_pages": [403, 404, 405],
+      "numbers_given": "dose, enzyme activity percentage (figure)",
+      "numbers_detail": "Cilastatin dose 200 ug/ml used in the experiments (PDF page 395, section 2.1 and 2.7); Fig. 9 on PDF page 404 shows DHP-I enzymatic activity as a percentage of untreated control with cilastatin, bar heights only, no values printed in the text",
+      "notes": "Other pages: 403 (conclusion: 'a powerful and specific inhibitor of DPH-I', spelled DPH-I in the book), 404 (Fig. 9 text: inhibits DPH-I but not DPH-4), 405 (Fig. 10 caption). Target class enzyme is inferred from the word 'dehydropeptidase' and 'inhibitor'; the page does not say 'enzyme' at this spot but PDF page 405 says 'DPH-I, an enzyme'."
+    }
+  ],
+  "chapter_notes": "Skipped 2 statements about non-receptor, non-enzyme targets (cilastatin interfering with cholesterol lipid raft internalization; cilastatin reducing cellular entry of nephrotoxic drugs). Cilastatin blocking Fas L/Fas internalization is described as a step blocked, with no agonist or antagonist role stated, so not recorded. The chapter is an experimental report on cilastatin protecting renal proximal tubule cells from nephrotoxins; the nephrotoxic drugs (gentamicin, vancomycin, cisplatin, cyclosporine, tacrolimus, paracetamol and others) are named as toxins, with no receptor or enzyme mechanism stated."
+}
