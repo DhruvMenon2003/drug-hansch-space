@@ -382,6 +382,40 @@ if DATASET == "leaderboard":
                           record it per drug. That is a real gap under principle
                           1 and is reported, not papered over.
     """).strip())
+    print(textwrap.dedent("""
+        A PROVENANCE PROBLEM WITH THIS ENDPOINT, CHECKED AGAINST THE SOURCE
+        -------------------------------------------------------------------
+        The worked example on the curation board (400 mg and 1600 mg, giving an
+        index of 4) traces to reference 5 on the board's own list:
+        Holdich T, Shiveley L, Sawyer J. Clin Drug Invest 2006;26(5):279-86.
+        Its text was read for this note, and verbatim it is:
+          * title: "Pharmacokinetics of Single Oral Doses of ... in Healthy
+            Volunteers"
+          * "Participants received single oral doses of ... 400mg, 800mg and
+            1600mg in ascending order at intervals of at least 1 week."
+          * "All doses ... were well tolerated."
+          * "There was no relationship between the incidence of adverse events
+            and the dose ... The total numbers of events reported with the
+            400mg, 800mg and 1600mg doses were 23 (reported by 17% of
+            participants), 34 (48%) and 10 (17%), respectively."
+        So 400 mg is the LOWEST dose studied, not a measured minimum effective
+        dose: there was no efficacy endpoint and the subjects were healthy. And
+        1600 mg is the HIGHEST dose studied, which was tolerated, with the
+        fewest events of the three. No toxic threshold was reached.
+
+        That makes 1600/400 = 4 the ratio of the top to the bottom of a
+        three-point dose escalation. It is a property of the trial design, not
+        of the drug, and the toxic axis is censored from above.
+
+        Consequence, stated and not acted on: where a row's "Minimum Toxic
+        Level" is the highest dose studied rather than an observed toxic dose,
+        the endpoint is a studied-dose-range ratio, and a model fitted to it
+        learns the dose ladders that trials happen to use. This script does not
+        rename anything in your workbook and does not decide the matter. It
+        refuses to train on this endpoint for this reason as well as for n, and
+        says so, so the refusal cannot be mistaken for a sample-size problem
+        alone. That decision is yours to make.
+    """).strip())
 else:
     print(textwrap.dedent("""
         Endpoint        : Therapeutic Index  (IN VITRO, nM potencies)
@@ -1127,6 +1161,21 @@ if underpowered:
 
         What would fix it: more rows with BOTH Minimum Therapeutic Level and
         Minimum Toxic Level filled in. Nothing else.
+
+        Two pieces of arithmetic that say the same thing from other directions,
+        for n = {N}:
+          * the common 5 observations per descriptor rule of thumb allows
+            {N} / 5 = {N // 5} descriptors in total. The descriptor count this
+            run actually kept is printed a few lines below; compare them.
+          * the applicability domain's own warning limit is h* = 3(p+1)/n. With
+            2 descriptors that is 3*3/{N} = {9.0 / max(N, 1):.2f}, and a hat
+            value cannot exceed 1, so the leverage test cannot reject anything.
+            An applicability domain that rejects nothing is vacuous, not passed.
+
+        And for this endpoint specifically, the provenance problem printed in
+        section 1 applies as well: on the project's own worked example the
+        "Minimum Toxic Level" is the highest dose studied, which was tolerated.
+        So this refusal is not only about sample size.
         """).strip()
     print("\n" + msg)
     if not CONFIG["ALLOW_UNDERPOWERED"]:
