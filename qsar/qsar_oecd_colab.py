@@ -197,6 +197,41 @@ CONFIG = {
         # but have no meaningful fingerprint or descriptor profile, so they are
         # dropped from a structure-based model by default, with a printed count.
         "REQUIRE_CARBON": True,
+
+        # Schulz is clinical AND forensic toxicology, so the table carries
+        # solvents and industrial poisons beside the drugs: methanol, acetone,
+        # chloroform, butanone, carbon tetrachloride, propylene glycol,
+        # 2,2,2-trichloroethanol, aniline, chloral hydrate. They sit far outside
+        # drug-like space and will stretch the applicability domain.
+        #
+        # A DrugBank-ID filter does NOT remove them, which was checked rather
+        # than assumed: propylene glycol has DrugBank ID DB01839, and it is the
+        # largest index in the whole set (4.30), so the one point the filter was
+        # wanted for is the one it keeps. Chloral hydrate, a real sedative, is
+        # flagged the other way by a spelling ("Chloralhydrate"). The DrugBank
+        # flag is therefore carried as PROVENANCE and reported, never used as a
+        # filter.
+        #
+        # What does separate them is size. Heavy-atom counts: methanol 2,
+        # acetone 4, chloroform 4, butanone 5, carbon tetrachloride 5, propylene
+        # glycol 5, trichloroethanol 6, chloral hydrate 6, aniline 7 — against
+        # 10 for valproic acid and metformin, 11 for paracetamol, 13 for
+        # aspirin. So the filter is a floor on heavy atoms, computed by RDKit at
+        # run time, and every dropped molecule is named in the output.
+        #
+        # SUBSET: "drug_like" applies the floor (the primary model).
+        #         "all" applies nothing (the sensitivity check).
+        # Run both and compare: the comparison helper at the end of section 10
+        # prints the two runs side by side from their saved summaries.
+        "SUBSET": "drug_like",
+        "MIN_HEAVY_ATOMS": 8,
+
+        # Molecules whose applicability-domain status is printed by name in
+        # every run, so the influential ones can be followed between the two
+        # subsets instead of argued about.
+        "WATCH": ["Propylene glycol", "Methanol", "Acetone", "Chloroform",
+                  "Butanone", "Carbon tetrachloride", "2,2,2-Trichloroethanol",
+                  "Aniline", "Chloralhydrate"],
         "SIBLING_FILES": {
             "extract": "/mnt/project-files/qsar-moa/schulz/schulz-extract.csv",
             "annotations":
@@ -566,6 +601,7 @@ elif DATASET == "schulz_plasma":
         "tox":         ("E", "E"),      # toxic mg/L       -> the numerator
         "logti":       ("C", "C"),
         "flag_carbon": ("K", "K"),
+        "flag_drug":   ("L", "L"),      # in the DrugBank dump: provenance only
     }
     CONFIG["USE_MOA_SHEET_FOR_TARGET"] = False
     CONFIG["ZERO_MEANS_MISSING"] = False
@@ -583,6 +619,10 @@ else:
 # every output file carries the dataset in its name, so a run on one endpoint
 # cannot overwrite or be mistaken for a run on the other
 CONFIG["OUT_PREFIX"] = f"{CONFIG['OUT_PREFIX']}_{DATASET}"
+if DATASET == "schulz_plasma":
+    # the subset goes in the name too, so the primary run and the sensitivity
+    # run cannot overwrite each other and can be compared afterwards
+    CONFIG["OUT_PREFIX"] += f"_{CONFIG['SCHULZ']['SUBSET']}"
 print(f"  output files will be named {CONFIG['OUT_PREFIX']}_*")
 
 
@@ -761,6 +801,9 @@ for _, row in body.iterrows():
         "has_carbon": (str(pick(row, "flag_carbon")).strip().lower()
                        if "flag_carbon" in CONFIG["COL"]
                        and pick(row, "flag_carbon") is not None else None),
+        "in_drugbank": (str(pick(row, "flag_drug")).strip().lower()
+                        if "flag_drug" in CONFIG["COL"]
+                        and pick(row, "flag_drug") is not None else None),
     })
 
 df = pd.DataFrame.from_records(records)
@@ -866,6 +909,15 @@ if DATASET == "schulz_plasma":
         if len(_inorg):
             step("    they were: " + ", ".join(sorted(_inorg["name"])[:20])
                  + ("..." if len(_inorg) > 20 else ""))
+    # provenance, reported and never used as a filter. Read the long comment in
+    # CONFIG["SCHULZ"] for why: the one molecule a DrugBank filter was wanted
+    # for is the one it keeps.
+    _ndb = int((df["in_drugbank"] == "yes").sum())
+    step(f"in the DrugBank dump: {_ndb} of {len(df)}; not in it: {len(df) - _ndb}. "
+         "Carried as provenance only. Absence is weak evidence, because that "
+         "dump holds a structure for just 3,542 distinct names: alprenolol, "
+         "amobarbital and astemizole are real drugs missing from it, and "
+         "chloral hydrate is marked absent only because of its spelling.")
 elif DATASET == "curated_invitro":
     # The file names no target column; the two targets are in the header names
     # of the potency columns. One constant target across the whole set means
@@ -960,6 +1012,7 @@ if n_dup_rows:
                 log_ti=("log_ti", "mean"),
                 preset_split=("preset_split", "first"),
                 has_carbon=("has_carbon", "first"),
+                in_drugbank=("in_drugbank", "first"),
                 n_merged=("name", "size")))
     agg["mol"] = [Chem.MolFromSmiles(s) for s in agg["canonical_smiles"]]
     work = agg[agg["mol"].notna()].reset_index(drop=True)
@@ -1126,6 +1179,38 @@ step(f"Bemis-Murcko scaffolds   : {work['scaffold'].nunique()} distinct "
 # =============================================================================
 
 banner("CONGENERIC SERIES: TANIMOTO MATRIX + HIERARCHICAL CLUSTERING")
+
+# --- the drug-likeness floor, for the plasma set only ----------------------
+# Size is what actually separates the solvents and industrial poisons in this
+# compilation from the drugs. See the long note in CONFIG["SCHULZ"].
+if DATASET == "schulz_plasma" and CONFIG["SCHULZ"]["SUBSET"] == "drug_like":
+    _floor = int(CONFIG["SCHULZ"]["MIN_HEAVY_ATOMS"])
+    _hac = np.array([m.GetNumHeavyAtoms() for m in work["mol"]])
+    _keep = _hac >= _floor
+    _dropped = work.loc[~_keep].copy()
+    _dropped_lab = _dropped[_dropped["log_ti"].notna()]
+    work = work.loc[_keep].reset_index(drop=True)
+    step(f"drug-likeness floor: dropped {int((~_keep).sum())} molecules with "
+         f"fewer than {_floor} heavy atoms, {len(_dropped_lab)} of which carried "
+         "an index")
+    if len(_dropped_lab):
+        for _, _r in _dropped_lab.sort_values("log_ti", ascending=False).iterrows():
+            step(f"    {_r['name']}: index {_r['log_ti']:.3f}, "
+                 f"{_r['mol'].GetNumHeavyAtoms()} heavy atoms, "
+                 f"in DrugBank dump: {_r.get('in_drugbank')}")
+    print(f"\n  CONFIG['SCHULZ']['SUBSET'] is 'drug_like'. Set it to 'all' and "
+          "run again to get the sensitivity check, then compare the two with "
+          "the helper at the end.")
+    print("  READ THIS WHEN YOU COMPARE THEM: the molecules this floor removes "
+          "are not a random subset. They are systematically smaller and simpler "
+          "than the drugs, so any difference between the two runs is confounded "
+          "with molecular size. It is not 'the effect of including solvents'.")
+elif DATASET == "schulz_plasma":
+    print("\n  CONFIG['SCHULZ']['SUBSET'] is 'all': no drug-likeness floor. "
+          "This is the sensitivity run. The solvents and industrial poisons are "
+          "included, and they sit outside drug-like space, so expect the "
+          "applicability domain to be wider and the statistics to shift for "
+          "reasons that are about size as much as about chemistry.")
 
 labelled = work[work["log_ti"].notna()].copy().reset_index(drop=True)
 unlabelled = work[work["log_ti"].isna()].copy().reset_index(drop=True)
@@ -1761,6 +1846,40 @@ if len(te_idx):
     step(f"external test set: {n_in} of {len(te_idx)} molecules in domain")
 else:
     te_dom = []
+
+# --- the watch list: named molecules, followed between the two subsets ------
+# These are the influential ones. Printing their domain status in every run
+# turns "the solvents stretch the domain" from an argument into a number you
+# can read off both runs and compare.
+_watch = CONFIG["SCHULZ"]["WATCH"] if DATASET == "schulz_plasma" else []
+if _watch:
+    print("\n  watch list, in this run "
+          f"(subset = {CONFIG['SCHULZ']['SUBSET']}):")
+    _lname = labelled["name"].astype(str).str.strip().str.lower()
+    _found = 0
+    for _w in _watch:
+        _hits = np.where(_lname.to_numpy() == _w.strip().lower())[0]
+        if not len(_hits):
+            print(f"    {_w:<26} not in this subset")
+            continue
+        _found += 1
+        _i = int(_hits[0])
+        _where = ("train" if _i in set(tr_idx.tolist())
+                  else "external test" if _i in set(te_idx.tolist()) else "neither")
+        _xr = X_all_raw.iloc[_i][FEATURES].to_numpy(dtype=float)
+        if np.isnan(_xr).any():
+            print(f"    {_w:<26} index {labelled['log_ti'].iloc[_i]:>7.3f}  "
+                  f"{_where:<14} REFUSED, a descriptor is undefined")
+            continue
+        _d = domain_check(scaler.transform(_xr.reshape(1, -1))[0],
+                          labelled["fp"].iloc[_i])
+        print(f"    {_w:<26} index {labelled['log_ti'].iloc[_i]:>7.3f}  "
+              f"{_where:<14} "
+              f"{'IN domain' if _d['in_domain'] else 'OUT of domain'}  "
+              f"leverage {_d['leverage']:.3f}, nearest-neighbour Tanimoto "
+              f"{_d['max_tanimoto_to_train']:.3f}, "
+              f"{_d['n_descriptors_out_of_box']} descriptors outside the box")
+    print(f"    ({_found} of {len(_watch)} present in this subset)")
 
 
 # =============================================================================
@@ -2682,6 +2801,65 @@ summary = {
 }
 with open(f"{CONFIG['OUT_PREFIX']}_run_summary.json", "w") as fh:
     json.dump(summary, fh, indent=2, default=str)
+
+# =============================================================================
+# 11. THE SENSITIVITY COMPARISON
+#     Run the plasma endpoint twice, once with SUBSET = "drug_like" and once
+#     with "all", and this prints the two side by side from their saved
+#     summaries. Two runs rather than one, because the split, the scaler, the
+#     descriptor pruning and the tuning all depend on which molecules are in,
+#     so a second model cannot honestly be bolted onto the first run's
+#     preprocessing.
+# =============================================================================
+
+if DATASET == "schulz_plasma":
+    banner("11. SENSITIVITY: DRUG-LIKE SUBSET vs EVERYTHING")
+    _pair = {}
+    for _sub in ("drug_like", "all"):
+        _f = f"qsar_oecd_schulz_plasma_{_sub}_run_summary.json"
+        if os.path.exists(_f):
+            try:
+                with open(_f) as _fh:
+                    _pair[_sub] = json.load(_fh)
+            except Exception as _e:              # noqa: BLE001
+                print(f"  could not read {_f}: {_e}")
+    if len(_pair) < 2:
+        _have = ", ".join(_pair) or "neither"
+        _missing = [s for s in ("drug_like", "all") if s not in _pair]
+        print(f"  only {_have} has been run so far. To get the comparison, set")
+        print(f"    CONFIG['SCHULZ']['SUBSET'] = '{_missing[0]}'")
+        print("  and run the notebook again. Both summaries are then read from "
+              "disk and printed here, with no need to keep anything in memory.")
+    else:
+        _keys = ["R2_fit_train", "Q2_grouped_CV_nested", "Q2_LOGO",
+                 "avg_rm2_LOGO", "delta_rm2_LOGO", "cRp2",
+                 "R2pred_Q2F1_in_domain", "avg_rm2_test", "CCC_test",
+                 "RMSE_test", "n_external", "n_external_in_domain"]
+        print(f"  {'statistic':<26}{'drug_like':>14}{'all':>14}   difference")
+        print("  " + "-" * 74)
+        print(f"  {'molecules (labelled)':<26}"
+              f"{_pair['drug_like']['counts']['labelled']:>14}"
+              f"{_pair['all']['counts']['labelled']:>14}")
+        for _k in _keys:
+            _a = _pair["drug_like"]["statistics"].get(_k)
+            _b = _pair["all"]["statistics"].get(_k)
+            _fmt = lambda v: ("n/a" if v is None else
+                              f"{v:.4f}" if isinstance(v, float) else str(v))
+            _d = (f"{_b - _a:+.4f}" if isinstance(_a, (int, float))
+                  and isinstance(_b, (int, float)) else "")
+            print(f"  {_k:<26}{_fmt(_a):>14}{_fmt(_b):>14}   {_d}")
+        print("\n  HOW TO READ THIS. The molecules in 'all' but not in "
+              "'drug_like' are systematically smaller and simpler than the "
+              "drugs: 2 to 7 heavy atoms against 10 and up. So a difference "
+              "between these columns is confounded with molecular size and is "
+              "NOT 'the effect of including solvents'. Read it as: the model "
+              "behaves differently on a chemically wider set, for reasons that "
+              "are about size at least as much as about what the molecules are "
+              "used for.")
+        print("  The watch list printed in section 6 of each run says, per "
+              "molecule, whether it was inside the domain in that run. That is "
+              "the part of this comparison that carries real information.")
+
 
 banner("DONE - WHAT EACH OECD PRINCIPLE WAS SATISFIED BY", char="-")
 print(textwrap.dedent(f"""

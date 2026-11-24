@@ -84,7 +84,9 @@ function candidates(name) {
   if (base.includes(',')) out.push(base.split(',')[0].trim());
   // a trailing "and metabolites" / "total" style suffix
   out.push(base.replace(/\s+(and|plus)\s+.*$/i, '').trim());
-  return [...new Set(out.filter(Boolean))];
+  // A one- or two-letter fragment is never a usable synonym: "Bismut(h)" once
+  // produced "h" and matched hydrogen. Reject that whole class.
+  return [...new Set(out.filter(Boolean))].filter(v => v.length >= 3);
 }
 
 function matchSchulz() {

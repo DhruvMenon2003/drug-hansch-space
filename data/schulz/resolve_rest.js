@@ -54,7 +54,9 @@ function variants(name) {
   out.add(base.replace(/\(([^)]*)\)/g, '').replace(/\s+/g, ' ').trim());
   if (base.includes(',')) out.add(base.split(',')[0].trim());
   out.add(base.replace(/\s+(and|plus)\s+.*$/i, '').trim());
-  return [...out].filter(Boolean);
+  // A one- or two-letter fragment is never a usable synonym: "Bismut(h)" once
+  // produced "h" and matched hydrogen. Reject that whole class.
+  return [...out].filter(Boolean).filter(v => v.length >= 3);
 }
 
 const pending = body
