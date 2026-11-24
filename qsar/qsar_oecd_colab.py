@@ -205,12 +205,20 @@ CONFIG = {
         # drug-like space and will stretch the applicability domain.
         #
         # A DrugBank-ID filter does NOT remove them, which was checked rather
-        # than assumed: propylene glycol has DrugBank ID DB01839, and it is the
-        # largest index in the whole set (4.30), so the one point the filter was
-        # wanted for is the one it keeps. Chloral hydrate, a real sedative, is
-        # flagged the other way by a spelling ("Chloralhydrate"). The DrugBank
-        # flag is therefore carried as PROVENANCE and reported, never used as a
-        # filter.
+        # than assumed, twice, against the project's own DrugBank file:
+        #   * DB01839 is propylene glycol, typed SmallMoleculeDrug, and it is
+        #     the largest index in the whole set (4.30). So the one point such a
+        #     filter was wanted for is the one it keeps. The reason generalises:
+        #     DrugBank LISTS EXCIPIENTS. In that same file propylene glycol
+        #     appears as an ingredient of artificial tears and contact-lens
+        #     solution. "Has a DrugBank ID" was never a definition of "is a
+        #     drug", so the idea is unsound in principle, not unlucky on a row.
+        #   * DB01563 is "Chloral hydrate", two words. This source writes
+        #     "Chloralhydrate", so a real sedative (index 1.43) reads as not a
+        #     drug because of a space.
+        # Wrong in both directions, on exactly the two rows that decide it. The
+        # DrugBank flag is therefore carried as PROVENANCE and reported, never
+        # used as a filter.
         #
         # What does separate them is size. Heavy-atom counts: methanol 2,
         # acetone 4, chloroform 4, butanone 5, carbon tetrachloride 5, propylene
