@@ -37,8 +37,29 @@
  plus the concordance correlation coefficient of
    Chirico N, Gramatica P. J Chem Inf Model. 2011;51(9):2320-35  (CCC > 0.85)
 
- HONEST WARNING, READ THIS FIRST
- -------------------------------
+ TWO ENDPOINTS, ONE AT A TIME
+ ----------------------------
+ CONFIG["DATASET"] picks which:
+
+   "leaderboard"      the clinical endpoint from your own workbook:
+                      log10(Minimum Toxic Level mg / Minimum Therapeutic Level
+                      mg), single dose, healthy subjects, oral or IV.
+                      19 molecules carry it, out of 1,373 rows.
+
+   "curated_invitro"  the in vitro endpoint from the project's curated file:
+                      log10(off-target nM / on-target nM), one congeneric
+                      series. 282 molecules carry it, and the file already
+                      fixes the split (234 training, 75 external), which the
+                      script uses as given rather than re-making.
+
+ They share a name and nothing else. One is a ratio of clinical doses in mg,
+ the other a ratio of in vitro potencies in nM. The script runs one at a time,
+ names every output file after the dataset, and prints the endpoint above the
+ ranked table so no number from one can be mistaken for a number from the
+ other. NEVER pool them, and never validate one against the other.
+
+ HONEST WARNING ABOUT THE CLINICAL ENDPOINT, READ THIS FIRST
+ -----------------------------------------------------------
  In Drug-Leaderboard-v3-live-summary-fixed.xlsx, sheet "Drug Leaderboard",
  1,373 drugs are listed but only 19 carry a Log Therapeutic Index. 1,074 carry a
  SMILES string. So the modelling set is n = 19 and the ranking set is ~1,055.
@@ -75,6 +96,24 @@
 # =============================================================================
 
 CONFIG = {
+    # ---- WHICH ENDPOINT ----------------------------------------------------
+    # "leaderboard"     the clinical mg-dose endpoint from your own workbook:
+    #                   log10(Minimum Toxic Level mg / Minimum Therapeutic
+    #                   Level mg), single dose, healthy volunteers, oral or IV.
+    #                   19 molecules carry it. The script will refuse to train.
+    # "curated_invitro" the in vitro endpoint from
+    #                   "Side effect prediction/curated dataset for therapeutic
+    #                   index prediction.xlsx": log10(off-target nM /
+    #                   on-target nM). 282 molecules carry it, with the split
+    #                   already decided in the file (234 training, 75 external).
+    #
+    # THESE TWO ARE DIFFERENT QUANTITIES AND MUST NEVER BE POOLED. One is a
+    # ratio of clinical doses in mg; the other a ratio of in vitro potencies in
+    # nM on one congeneric series. They share a name and nothing else. The
+    # script runs one at a time, labels every output with the endpoint it came
+    # from, and will not let you mix them.
+    "DATASET": "leaderboard",
+
     # ---- input -------------------------------------------------------------
     # Leave as None in Colab to get an upload button. Or set a path, e.g.
     # "/content/Drug-Leaderboard-v3-live-summary-fixed.xlsx"
@@ -102,10 +141,37 @@ CONFIG = {
     "MOA_COL": {"mechanism": "A", "drug": "B", "book_target": "C"},
     "USE_MOA_SHEET_FOR_TARGET": True,
 
+    # ---- the curated in vitro file, used only when DATASET is that ---------
+    "CURATED": {
+        "PATH": "/mnt/project-files/Side effect prediction/"
+                "curated dataset for therapeutic index prediction.xlsx",
+        "FALLBACK_PATHS": [
+            "curated dataset for therapeutic index prediction.xlsx",
+            "/content/curated dataset for therapeutic index prediction.xlsx",
+        ],
+        "SHEET": "curated_dataset",
+        "HEADER_ROW_EXCEL": 1,
+        # read by name, because this file has a proper header row
+        "COL_NAME": "compound_id",
+        "COL_SMILES": "smiles",
+        "COL_ENDPOINT": "therapeutic_index",
+        "COL_SPLIT": "set",              # "training" / "external", as given
+        "COL_SOURCE": "endpoint_source_type",
+        "COL_CITATION": "citation",
+        "COL_ACTIVITY_TYPE": "activity_standard_type",
+        "COL_TOXICITY_TYPE": "toxicity_standard_type",
+        # Honour the split in the file rather than making a new one.
+        "USE_FILE_SPLIT": True,
+    },
+
     # Strings that mean "not found" in this workbook. A literal 0 means
     # "not filled in" here, NOT a measured zero dose.
     "MISSING_TOKENS": ["", "0", "0.0", "n.f.", "n.a.", "na", "nan", "none",
                        "-", "--", "not found", "n/a"],
+    # True for the leaderboard, where a typed 0 is the "not filled in" marker.
+    # Switched off for the curated file, where 0 is a real value. Set by the
+    # dataset pre-pass below; do not edit by hand.
+    "ZERO_MEANS_MISSING": True,
 
     # ---- reproducibility ---------------------------------------------------
     "SEED": 20261124,
@@ -161,6 +227,8 @@ CONFIG = {
     "MIN_SERIES_N": 8,   # a series needs this many labelled drugs for its own model
 
     # ---- output ------------------------------------------------------------
+    # Outputs are prefixed with the dataset name too, so a run on one endpoint
+    # can never overwrite or be mistaken for a run on the other.
     "OUT_PREFIX": "qsar_oecd",
     "TOP_N_PRINT": 25,
     "MAX_QUERY_MOLECULES": None,   # set e.g. 300 to run faster on a first pass
@@ -285,18 +353,97 @@ print(f"shap available     : {HAVE_SHAP}")
 
 banner("OECD PRINCIPLE 1 - DEFINED ENDPOINT")
 
-print(textwrap.dedent("""
-    Endpoint        : Log Therapeutic Index
-    Definition      : log10( Minimum Toxic Level / Minimum Therapeutic Level )
-    Units of inputs : mg (dose), as recorded in the workbook
-    Direction       : higher is safer (a wider window between effective and toxic dose)
-    Source of truth : the typed columns of sheet "Drug Leaderboard"
-                      (AE = Minimum Therapeutic Level, AF = Minimum Toxic Level,
-                       AG = Log Therapeutic Index); columns A-Q are formula mirrors
-    Species/route   : NOT RECORDED in the workbook. This is a real gap in the
-                      endpoint definition under principle 1 and is reported, not
-                      papered over.
-""").strip())
+DATASET = CONFIG["DATASET"]
+if DATASET not in ("leaderboard", "curated_invitro"):
+    raise SystemExit(f"CONFIG['DATASET'] must be 'leaderboard' or "
+                     f"'curated_invitro', not {DATASET!r}.")
+
+if DATASET == "leaderboard":
+    print(textwrap.dedent("""
+        Endpoint        : Log Therapeutic Index  (CLINICAL, mg doses)
+        Definition      : log10( Minimum Toxic Level / Minimum Therapeutic Level )
+        Units of inputs : mg of dose
+        Study design    : single dose, healthy volunteers or subjects, oral or IV.
+                          Taken verbatim from the project's own curation board
+                          (Data Curation Workflow.excalidraw), whose worked example
+                          reads "Minimum Therapeutic Level = 400 mg",
+                          "Minimum Toxic Level = 1600 mg" under the heading
+                          "Single Dose Pharmacokinetics In Healthy
+                          Volunteers/Subjects", branching to "Oral" and "IV".
+                          So: NOT steady state, NOT patient data.
+        Direction       : higher is safer (a wider window between the dose that
+                          works and the dose that harms)
+        Source of truth : the typed columns of sheet "Drug Leaderboard"
+                          (AE = Minimum Therapeutic Level, AF = Minimum Toxic
+                          Level, AG = Log Therapeutic Index); A-Q are formula
+                          mirrors of those
+        Still undefined : which route each recorded pair used, and in whom. The
+                          board fixes the design in general; the sheet does not
+                          record it per drug. That is a real gap under principle
+                          1 and is reported, not papered over.
+    """).strip())
+else:
+    print(textwrap.dedent("""
+        Endpoint        : Therapeutic Index  (IN VITRO, nM potencies)
+        Definition      : log10( off-target nM / on-target nM ), which the file
+                          also stores as p_activity - p_toxicity. Verified on all
+                          282 labelled rows: both forms agree to 1e-6.
+        Units of inputs : nM concentration. The endpoint itself is a log10 ratio,
+                          so it is dimensionless and must NOT be logged again.
+        Study design    : in vitro binding and functional assays against two
+                          molecular targets, on one congeneric series, every row
+                          marked endpoint_source_type = experimental and carrying
+                          a citation. On-target potency is Ki throughout;
+                          off-target is IC50 for 207 rows and Ki for 75.
+        Direction       : higher is a wider margin between the wanted and the
+                          unwanted molecular effect
+        Source of truth : sheet "curated_dataset", column therapeutic_index
+        Split           : already decided in the file, column "set":
+                          234 training, 75 external. Used as given, not re-split.
+        NOT the same as  : the clinical mg-dose endpoint above. Same name,
+                          different quantity. Never pool the two, and never
+                          validate one against the other.
+    """).strip())
+
+# --- dataset pre-pass: point the reader at the right file and columns -------
+# This rewrites CONFIG so that one reader, one set of missing-value rules and
+# one set of counts serve both endpoints. Nothing below this line needs to know
+# which dataset is in use, except where the split comes from.
+if DATASET == "curated_invitro":
+    _cur = CONFIG["CURATED"]
+    CONFIG["XLSX_PATH"] = _cur["PATH"]
+    CONFIG["SHEET_NAME"] = _cur["SHEET"]
+    CONFIG["HEADER_ROW_EXCEL"] = _cur["HEADER_ROW_EXCEL"]
+    # by Excel letter, as the file is laid out:
+    #   A set | B compound_id | C smiles | D p_activity | E activity_type
+    #   F activity_nM | G p_toxicity | H toxicity_type | I toxicity_nM
+    #   J therapeutic_index | K endpoint_source_type | L citation
+    CONFIG["COL"] = {
+        "name":     ("B", "B"),
+        "drugbank": ("B", "B"),
+        "smiles":   ("C", "C"),
+        "target":   ("E", "E"),
+        "uniprot":  ("L", "L"),       # citation, carried through for provenance
+        "ther":     ("F", "F"),       # on-target nM  -> the denominator
+        "tox":      ("I", "I"),       # off-target nM -> the numerator
+        "logti":    ("J", "J"),
+        "split":    ("A", "A"),       # "training" / "external", as given
+    }
+    CONFIG["USE_MOA_SHEET_FOR_TARGET"] = False
+    CONFIG["ZERO_MEANS_MISSING"] = False   # 0 is a real index here
+    CONFIG["MISSING_TOKENS"] = [t for t in CONFIG["MISSING_TOKENS"]
+                                if t not in ("0", "0.0")]
+    print("\n  dataset pre-pass: reading the curated in vitro file, honouring "
+          "its own train/external split, and treating a literal 0 as a real "
+          "value rather than a blank.")
+else:
+    print("\n  dataset pre-pass: reading your leaderboard workbook, treating a "
+          "literal 0 as 'not filled in', as that sheet uses it.")
+
+# every output file carries the dataset in its name, so a run on one endpoint
+# cannot overwrite or be mistaken for a run on the other
+CONFIG["OUT_PREFIX"] = f"{CONFIG['OUT_PREFIX']}_{DATASET}"
+print(f"  output files will be named {CONFIG['OUT_PREFIX']}_*")
 
 
 def col_to_idx(letter):
@@ -311,11 +458,13 @@ def resolve_path():
     path = CONFIG["XLSX_PATH"]
     if path and os.path.exists(path):
         return path
-    for guess in (
-        "Drug-Leaderboard-v3-live-summary-fixed.xlsx",
-        "/content/Drug-Leaderboard-v3-live-summary-fixed.xlsx",
-        "/mnt/project-files/Drug-Leaderboard-v3-live-summary-fixed.xlsx",
-    ):
+    guesses = (list(CONFIG["CURATED"]["FALLBACK_PATHS"])
+               if DATASET == "curated_invitro" else [
+                   "Drug-Leaderboard-v3-live-summary-fixed.xlsx",
+                   "/content/Drug-Leaderboard-v3-live-summary-fixed.xlsx",
+                   "/mnt/project-files/Drug-Leaderboard-v3-live-summary-fixed.xlsx",
+               ])
+    for guess in guesses:
         if os.path.exists(guess):
             step(f"found workbook at {guess}")
             return guess
@@ -368,8 +517,10 @@ def is_missing(v):
     s = str(v).strip().lower()
     if s in MISSING:
         return True
-    try:                                 # a literal zero means "not filled in"
-        return float(s) == 0.0
+    try:
+        # In the leaderboard a literal zero IS the "not filled in" marker. In
+        # the curated file zero is a real index. One flag, set by the pre-pass.
+        return CONFIG["ZERO_MEANS_MISSING"] and float(s) == 0.0
     except (TypeError, ValueError):
         return False
 
@@ -456,6 +607,10 @@ for _, row in body.iterrows():
         "tox_mg": tox,
         "log_ti": logti,
         "endpoint_source": endpoint_source,
+        # only the curated file carries a split of its own
+        "preset_split": (str(pick(row, "split")).strip().lower()
+                         if "split" in CONFIG["COL"]
+                         and pick(row, "split") is not None else None),
     })
 
 df = pd.DataFrame.from_records(records)
@@ -540,6 +695,12 @@ def resolve_target(r):
 
 
 df["target"] = df.apply(resolve_target, axis=1)
+if DATASET == "curated_invitro":
+    # The file names no target column; the two targets are in the header names
+    # of the potency columns. One constant target across the whole set means
+    # routing reduces to routing by congeneric series, which is correct for a
+    # single series.
+    df["target"] = "on-target vs off-target, one congeneric series"
 
 N_LABELLED_RAW = int(df["log_ti"].notna().sum())
 print(f"\n  >>> endpoint present for {N_LABELLED_RAW} of {len(df)} drugs "
@@ -626,6 +787,7 @@ if n_dup_rows:
                 ther_mg=("ther_mg", "mean"),
                 tox_mg=("tox_mg", "mean"),
                 log_ti=("log_ti", "mean"),
+                preset_split=("preset_split", "first"),
                 n_merged=("name", "size")))
     agg["mol"] = [Chem.MolFromSmiles(s) for s in agg["canonical_smiles"]]
     work = agg[agg["mol"].notna()].reset_index(drop=True)
@@ -934,7 +1096,23 @@ print(f"  congeneric series groups : {n_groups_all}")
 print(f"  required by CONFIG       : n >= {CONFIG['MIN_TRAIN_N']} and "
       f"groups >= {CONFIG['MIN_GROUPS']}")
 
-underpowered = (N < CONFIG["MIN_TRAIN_N"]) or (n_groups_all < CONFIG["MIN_GROUPS"])
+# Does this dataset bring its own train/external split? Decided here, because
+# the refusal check below reads differently when the split is given to us.
+_preset = (labelled["preset_split"] if "preset_split" in labelled.columns
+           else pd.Series([None] * len(labelled)))
+use_preset = (DATASET == "curated_invitro"
+              and CONFIG["CURATED"]["USE_FILE_SPLIT"]
+              and _preset.notna().any())
+
+_few_groups = n_groups_all < CONFIG["MIN_GROUPS"]
+if _few_groups and use_preset and N >= CONFIG["MIN_TRAIN_N"]:
+    print(f"\n  Only {n_groups_all} congeneric series across {N} molecules. For "
+          "this dataset that is expected: it IS one congeneric series by "
+          "design. The external statistics come from the file's own split, so "
+          "the run is not stamped INDICATIVE for the series count alone. What "
+          "it does mean is that nothing here says how the model behaves on a "
+          "different scaffold.")
+underpowered = (N < CONFIG["MIN_TRAIN_N"]) or (_few_groups and not use_preset)
 if underpowered:
     msg = textwrap.dedent(f"""
         REFUSAL CHECK TRIPPED
@@ -973,8 +1151,27 @@ def make_group_cv(n_samples, groups, wanted_folds):
 
 
 # ---- external hold-out: whole series, never split ---------------------------
-has_external = n_groups_all >= 4
-if has_external:
+if use_preset:
+    _pv = _preset.fillna("").astype(str).str.strip().str.lower().to_numpy()
+    tr_idx = np.where(_pv == "training")[0]
+    te_idx = np.where(_pv == "external")[0]
+    has_external = len(te_idx) > 0 and len(tr_idx) >= 3
+    step(f"split taken from the file's own 'set' column, not re-made: "
+         f"{len(tr_idx)} training, {len(te_idx)} external")
+    _other = sorted(set(_pv) - {"training", "external"})
+    if _other:
+        step(f"rows whose 'set' value is neither training nor external and are "
+             f"therefore in NEITHER: {int(np.isin(_pv, _other).sum())} "
+             f"(values seen: {_other})")
+    if not has_external:
+        tr_idx = np.arange(N)
+        te_idx = np.array([], dtype=int)
+        step("the file's split left too little on one side; falling back to no "
+             "external set, and principle 4's external statistics will read "
+             "NOT AVAILABLE")
+else:
+    has_external = n_groups_all >= 4
+if (not use_preset) and has_external:
     gss = GroupShuffleSplit(n_splits=1,
                             test_size=CONFIG["EXTERNAL_TEST_FRACTION"],
                             random_state=SEED)
@@ -987,7 +1184,7 @@ if has_external:
     else:
         step(f"external hold-out: GroupShuffleSplit, "
              f"test_size={CONFIG['EXTERNAL_TEST_FRACTION']}, random_state={SEED}")
-if not has_external:
+if (not use_preset) and (not has_external):
     tr_idx = np.arange(N)
     te_idx = np.array([], dtype=int)
     step(f"external hold-out REFUSED: only {n_groups_all} series, so a grouped "
@@ -1002,8 +1199,17 @@ step(f"train: {len(tr_idx)} molecules in {len(np.unique(g_tr))} series | "
      f"{len(np.unique(groups_all[te_idx])) if len(te_idx) else 0} series")
 if len(te_idx):
     overlap = set(np.unique(g_tr)) & set(np.unique(groups_all[te_idx]))
-    step(f"series shared between train and test: {len(overlap)} "
-         f"(must be 0) -> {'OK' if not overlap else 'LEAK'}")
+    if use_preset:
+        step(f"series shared between train and test: {len(overlap)}. This split "
+             "came from the file, so a non-zero count is the file's own choice, "
+             "reported here and NOT silently repaired. Where it is non-zero the "
+             "external statistics are optimistic, because a test molecule's own "
+             "close analogues are in the training set. Set "
+             "CONFIG['CURATED']['USE_FILE_SPLIT'] = False to re-split by series "
+             "instead, at the cost of no longer matching the file.")
+    else:
+        step(f"series shared between train and test: {len(overlap)} "
+             f"(must be 0) -> {'OK' if not overlap else 'LEAK'}")
 
 # ---- descriptor pruning, fitted on TRAIN only ------------------------------
 keep = [c for c in X_tr_raw.columns if X_tr_raw[c].notna().all()]
@@ -2100,6 +2306,14 @@ if len(queries):
 
 ranked = pd.DataFrame(rows)
 banner("FINAL RANKED TABLE - HIGHEST PREDICTED LOG THERAPEUTIC INDEX FIRST")
+print("  endpoint ranked on: "
+      + ("CLINICAL log10(toxic mg / therapeutic mg), single dose, healthy "
+         "subjects, oral or IV" if DATASET == "leaderboard"
+         else "IN VITRO log10(off-target nM / on-target nM), one congeneric "
+              "series")
+      + f"\n  dataset           : {DATASET}"
+      + "\n  These two endpoints are different quantities. A number from one "
+        "cannot be compared with a number from the other.")
 
 if len(ranked) == 0:
     print("  No molecule to rank: every structure in the workbook already "
@@ -2231,6 +2445,14 @@ else:
 # machine-readable summary of the whole run
 summary = {
     "run_utc": RUN_STAMP,
+    "dataset": DATASET,
+    "endpoint": ("log10(Minimum Toxic Level mg / Minimum Therapeutic Level mg), "
+                 "single dose, healthy subjects, oral or IV"
+                 if DATASET == "leaderboard"
+                 else "log10(off-target nM / on-target nM), in vitro, one "
+                      "congeneric series"),
+    "split_source": ("the file's own 'set' column" if use_preset
+                     else "GroupShuffleSplit on congeneric series"),
     "workbook": os.path.abspath(XLSX),
     "sheet": CONFIG["SHEET_NAME"],
     "seed": SEED,
