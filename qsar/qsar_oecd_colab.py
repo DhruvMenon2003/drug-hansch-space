@@ -37,9 +37,16 @@
  plus the concordance correlation coefficient of
    Chirico N, Gramatica P. J Chem Inf Model. 2011;51(9):2320-35  (CCC > 0.85)
 
- TWO ENDPOINTS, ONE AT A TIME
- ----------------------------
+ THREE ENDPOINTS, ONE AT A TIME
+ ------------------------------
  CONFIG["DATASET"] picks which:
+
+   "schulz_plasma"    the best populated, and the one to try first:
+                      log10(toxic mg/L / therapeutic mg/L) from a compilation
+                      of therapeutic and toxic PLASMA CONCENTRATIONS. 949 rows,
+                      928 with a structure, 421 with both a structure and an
+                      index, 402 of those organic. Units mg/L, not mg: this
+                      cannot be converted to or compared with a dose.
 
    "leaderboard"      the clinical endpoint from your own workbook:
                       log10(Minimum Toxic Level mg / Minimum Therapeutic Level
@@ -52,11 +59,12 @@
                       fixes the split (234 training, 75 external), which the
                       script uses as given rather than re-making.
 
- They share a name and nothing else. One is a ratio of clinical doses in mg,
- the other a ratio of in vitro potencies in nM. The script runs one at a time,
- names every output file after the dataset, and prints the endpoint above the
- ranked table so no number from one can be mistaken for a number from the
- other. NEVER pool them, and never validate one against the other.
+ All three share a name and nothing else: a ratio of clinical doses in mg, a
+ ratio of plasma concentrations in mg/L, and a ratio of in vitro potencies in
+ nM. The script runs ONE at a time, names every output file after the dataset,
+ and prints the endpoint and its units above the ranked table, so no number
+ from one can be mistaken for a number from another. NEVER pool them, and
+ never validate one against another.
 
  HONEST WARNING ABOUT THE CLINICAL ENDPOINT, READ THIS FIRST
  -----------------------------------------------------------
@@ -97,6 +105,15 @@
 
 CONFIG = {
     # ---- WHICH ENDPOINT ----------------------------------------------------
+    # "schulz_plasma"   the plasma-concentration endpoint, and the best
+    #                   populated of the three: log10(toxic mg/L / therapeutic
+    #                   mg/L) from Schulz's compilation of therapeutic and
+    #                   toxic plasma concentrations. 421 molecules have both a
+    #                   value and a structure; 402 of those are organic, which
+    #                   is the n a structure-based model actually gets.
+    #                   Units are mg/L in plasma or serum, NOT mg of dose, and
+    #                   the two cannot be converted into each other without
+    #                   every drug's volume of distribution and bioavailability.
     # "leaderboard"     the clinical mg-dose endpoint from your own workbook:
     #                   log10(Minimum Toxic Level mg / Minimum Therapeutic
     #                   Level mg), single dose, healthy volunteers, oral or IV.
@@ -162,6 +179,32 @@ CONFIG = {
         "COL_TOXICITY_TYPE": "toxicity_standard_type",
         # Honour the split in the file rather than making a new one.
         "USE_FILE_SPLIT": True,
+    },
+
+    # ---- the plasma-concentration file, used only when DATASET is that -----
+    # This CSV was built in two steps, both recorded in it per row: Schulz's
+    # table was extracted to schulz-extract.csv, then each name was resolved to
+    # a structure, 596 from the project's DrugBank dump and 332 from a PubChem
+    # name lookup. The structure_source column says which, so a wrong salt or
+    # stereoisomer from a name lookup can be traced rather than guessed at.
+    "SCHULZ": {
+        "PATH": "/mnt/project-files/qsar-moa/schulz/schulz-structures.csv",
+        "FALLBACK_PATHS": [
+            "schulz-structures.csv",
+            "/content/schulz-structures.csv",
+        ],
+        # Inorganics (arsenic, bromide and the like) carry a real plasma index
+        # but have no meaningful fingerprint or descriptor profile, so they are
+        # dropped from a structure-based model by default, with a printed count.
+        "REQUIRE_CARBON": True,
+        "SIBLING_FILES": {
+            "extract": "/mnt/project-files/qsar-moa/schulz/schulz-extract.csv",
+            "annotations":
+                "/mnt/project-files/qsar-moa/schulz/schulz-extract-annotations.csv",
+            "report": "/mnt/project-files/qsar-moa/schulz/schulz-report.md",
+            "unresolved":
+                "/mnt/project-files/qsar-moa/schulz/schulz-unresolved-names.csv",
+        },
     },
 
     # Strings that mean "not found" in this workbook. A literal 0 means
@@ -354,9 +397,10 @@ print(f"shap available     : {HAVE_SHAP}")
 banner("OECD PRINCIPLE 1 - DEFINED ENDPOINT")
 
 DATASET = CONFIG["DATASET"]
-if DATASET not in ("leaderboard", "curated_invitro"):
-    raise SystemExit(f"CONFIG['DATASET'] must be 'leaderboard' or "
-                     f"'curated_invitro', not {DATASET!r}.")
+_VALID = ("leaderboard", "curated_invitro", "schulz_plasma")
+if DATASET not in _VALID:
+    raise SystemExit(f"CONFIG['DATASET'] must be one of {_VALID}, "
+                     f"not {DATASET!r}.")
 
 if DATASET == "leaderboard":
     print(textwrap.dedent("""
@@ -416,6 +460,38 @@ if DATASET == "leaderboard":
         says so, so the refusal cannot be mistaken for a sample-size problem
         alone. That decision is yours to make.
     """).strip())
+elif DATASET == "schulz_plasma":
+    print(textwrap.dedent("""
+        Endpoint        : Log Therapeutic Index  (PLASMA CONCENTRATIONS, mg/L)
+        Definition      : log10( toxic concentration / therapeutic concentration )
+                          Verified on all 426 rows that carry it: the stored
+                          value equals log10(toxic_low / therapeutic_low) to
+                          1e-6. It is ALREADY a log10 ratio and must not be
+                          logged again.
+        Units of inputs : mg/L in plasma or serum. NOT mg of dose. The two
+                          cannot be converted without each drug's volume of
+                          distribution and bioavailability, so do not try.
+        Which end        : the low end of each range, because the source column
+                          is "toxic (from)", and a minimum is what is wanted.
+        Study design    : a compilation of therapeutic and toxic plasma
+                          concentrations, every row carrying its own citation.
+        Structures      : the source has none. Names were resolved in two
+                          steps, recorded per row in structure_source:
+                          596 from the project's DrugBank dump, 332 from a
+                          PubChem name lookup. A name lookup can land on a
+                          different salt or stereoisomer than was measured, so
+                          treat the PubChem-sourced rows as the weaker half and
+                          check any row a conclusion rests on.
+        Counts          : 949 rows; 928 with a structure (97.8%); 421 with both
+                          a structure and an index; 402 of those organic, which
+                          is the n a structure-based model gets. The 19
+                          inorganic ones are dropped by default and counted.
+        Qualifiers      : 886 rows carry one ("approximate", "<", ">", "range").
+                          They are kept and reported, not filtered, because
+                          dropping them would quietly change what the set is.
+        NOT the same as : the clinical mg-dose endpoint, nor the in vitro nM
+                          one. Three different quantities. Never pooled.
+    """).strip())
 else:
     print(textwrap.dedent("""
         Endpoint        : Therapeutic Index  (IN VITRO, nM potencies)
@@ -470,6 +546,36 @@ if DATASET == "curated_invitro":
     print("\n  dataset pre-pass: reading the curated in vitro file, honouring "
           "its own train/external split, and treating a literal 0 as a real "
           "value rather than a blank.")
+elif DATASET == "schulz_plasma":
+    _sch = CONFIG["SCHULZ"]
+    CONFIG["XLSX_PATH"] = _sch["PATH"]
+    CONFIG["SHEET_NAME"] = "(a CSV, so there is no sheet)"
+    CONFIG["HEADER_ROW_EXCEL"] = 1
+    # by column position in schulz-structures.csv:
+    #   A substance | B has_log_index | C log_therapeutic_index
+    #   D therapeutic_low_mg_L | E toxic_low_mg_L | F units
+    #   G structure_source | H matched_name | I source_id | J smiles
+    #   K has_carbon
+    CONFIG["COL"] = {
+        "name":        ("A", "A"),
+        "drugbank":    ("I", "I"),      # DBxxxxx or CID:xxxxx, whichever it was
+        "smiles":      ("J", "J"),
+        "target":      ("G", "G"),      # overwritten with a constant below
+        "uniprot":     ("F", "F"),      # units string, carried for provenance
+        "ther":        ("D", "D"),      # therapeutic mg/L -> the denominator
+        "tox":         ("E", "E"),      # toxic mg/L       -> the numerator
+        "logti":       ("C", "C"),
+        "flag_carbon": ("K", "K"),
+    }
+    CONFIG["USE_MOA_SHEET_FOR_TARGET"] = False
+    CONFIG["ZERO_MEANS_MISSING"] = False
+    CONFIG["MISSING_TOKENS"] = [t for t in CONFIG["MISSING_TOKENS"]
+                                if t not in ("0", "0.0")]
+    print("\n  dataset pre-pass: reading the plasma-concentration CSV. Units "
+          "are mg/L, not mg. A literal 0 is a real value here. The split is "
+          "made by congeneric series, because this file brings none of its own.")
+    for _k, _p in _sch["SIBLING_FILES"].items():
+        print(f"    provenance ({_k}): {_p}")
 else:
     print("\n  dataset pre-pass: reading your leaderboard workbook, treating a "
           "literal 0 as 'not filled in', as that sheet uses it.")
@@ -493,7 +599,9 @@ def resolve_path():
     if path and os.path.exists(path):
         return path
     guesses = (list(CONFIG["CURATED"]["FALLBACK_PATHS"])
-               if DATASET == "curated_invitro" else [
+               if DATASET == "curated_invitro"
+               else list(CONFIG["SCHULZ"]["FALLBACK_PATHS"])
+               if DATASET == "schulz_plasma" else [
                    "Drug-Leaderboard-v3-live-summary-fixed.xlsx",
                    "/content/Drug-Leaderboard-v3-live-summary-fixed.xlsx",
                    "/mnt/project-files/Drug-Leaderboard-v3-live-summary-fixed.xlsx",
@@ -518,8 +626,12 @@ XLSX = resolve_path()
 step(f"reading {XLSX} (read-only; this script never writes to your workbook)")
 
 try:
-    raw = pd.read_excel(XLSX, sheet_name=CONFIG["SHEET_NAME"], header=None,
-                        engine="openpyxl")
+    if str(XLSX).lower().endswith(".csv"):
+        # Same reader downstream: a header row and columns addressed by letter.
+        raw = pd.read_csv(XLSX, header=None, dtype=str, keep_default_na=False)
+    else:
+        raw = pd.read_excel(XLSX, sheet_name=CONFIG["SHEET_NAME"], header=None,
+                            engine="openpyxl")
 except ValueError:
     _present = pd.ExcelFile(XLSX, engine="openpyxl").sheet_names
     raise SystemExit(
@@ -645,6 +757,10 @@ for _, row in body.iterrows():
         "preset_split": (str(pick(row, "split")).strip().lower()
                          if "split" in CONFIG["COL"]
                          and pick(row, "split") is not None else None),
+        # only the plasma file carries an organic/inorganic flag
+        "has_carbon": (str(pick(row, "flag_carbon")).strip().lower()
+                       if "flag_carbon" in CONFIG["COL"]
+                       and pick(row, "flag_carbon") is not None else None),
     })
 
 df = pd.DataFrame.from_records(records)
@@ -729,7 +845,28 @@ def resolve_target(r):
 
 
 df["target"] = df.apply(resolve_target, axis=1)
-if DATASET == "curated_invitro":
+if DATASET == "schulz_plasma":
+    # column G was read into target_raw; it is the structure's provenance, not
+    # a target, so report it and then put a truthful constant in target
+    _srcs = df["target_raw"].fillna("unknown").value_counts()
+    step("where each structure came from: "
+         + ", ".join(f"{k} {v}" for k, v in _srcs.items()))
+    step("a PubChem name lookup can land on a different salt or stereoisomer "
+         "than was measured, so those rows are the weaker half of this set")
+    df["target"] = "whole-body plasma exposure, no single molecular target"
+    if CONFIG["SCHULZ"]["REQUIRE_CARBON"]:
+        _before = len(df)
+        _inorg = df[(df["has_carbon"] == "no") & df["log_ti"].notna()]
+        df = df[df["has_carbon"] != "no"].reset_index(drop=True)
+        step(f"dropped {_before - len(df)} inorganic entries (no carbon in the "
+             f"structure), of which {len(_inorg)} carried an index. They have a "
+             "real plasma index but no meaningful fingerprint or descriptor "
+             "profile, so a structure-based model cannot speak about them. Set "
+             "CONFIG['SCHULZ']['REQUIRE_CARBON'] = False to keep them.")
+        if len(_inorg):
+            step("    they were: " + ", ".join(sorted(_inorg["name"])[:20])
+                 + ("..." if len(_inorg) > 20 else ""))
+elif DATASET == "curated_invitro":
     # The file names no target column; the two targets are in the header names
     # of the potency columns. One constant target across the whole set means
     # routing reduces to routing by congeneric series, which is correct for a
@@ -822,6 +959,7 @@ if n_dup_rows:
                 tox_mg=("tox_mg", "mean"),
                 log_ti=("log_ti", "mean"),
                 preset_split=("preset_split", "first"),
+                has_carbon=("has_carbon", "first"),
                 n_merged=("name", "size")))
     agg["mol"] = [Chem.MolFromSmiles(s) for s in agg["canonical_smiles"]]
     work = agg[agg["mol"].notna()].reset_index(drop=True)
@@ -2358,6 +2496,8 @@ banner("FINAL RANKED TABLE - HIGHEST PREDICTED LOG THERAPEUTIC INDEX FIRST")
 print("  endpoint ranked on: "
       + ("CLINICAL log10(toxic mg / therapeutic mg), single dose, healthy "
          "subjects, oral or IV" if DATASET == "leaderboard"
+         else "PLASMA log10(toxic mg/L / therapeutic mg/L), concentrations in "
+              "plasma or serum, NOT doses" if DATASET == "schulz_plasma"
          else "IN VITRO log10(off-target nM / on-target nM), one congeneric "
               "series")
       + f"\n  dataset           : {DATASET}"
@@ -2498,8 +2638,15 @@ summary = {
     "endpoint": ("log10(Minimum Toxic Level mg / Minimum Therapeutic Level mg), "
                  "single dose, healthy subjects, oral or IV"
                  if DATASET == "leaderboard"
+                 else "log10(toxic mg/L / therapeutic mg/L), plasma or serum "
+                      "concentrations, not doses"
+                 if DATASET == "schulz_plasma"
                  else "log10(off-target nM / on-target nM), in vitro, one "
                       "congeneric series"),
+    "endpoint_units": ("mg of dose" if DATASET == "leaderboard"
+                       else "mg/L plasma or serum" if DATASET == "schulz_plasma"
+                       else "nM (the endpoint itself is a dimensionless log10 "
+                            "ratio)"),
     "split_source": ("the file's own 'set' column" if use_preset
                      else "GroupShuffleSplit on congeneric series"),
     "workbook": os.path.abspath(XLSX),
